@@ -16,7 +16,7 @@ function landingpage() {
           <div className="flex flex-col-reverse lg:flex-row items-center mt-10 sm:mt-12 md:mt-16 lg:mt-12 xl:mt-1 justify-center">
             <div className="flex flex-1  flex-col items-center lg:items-start lg:p-10 ">
               <h2 className="text-3xl md:text-4xl  font-bold text-indigo-600 lg:text-5xl text-center lg:text-left mb-6 uppercase z-10">Discover, collect, and sell extraordinary NFTs</h2>
-              <h6 className="text-lg  text-white text-center lg:text-left mb-6 z-10">A new NFT marketplace ,to but and sell your art</h6>
+              <h6 className="text-lg  text-white text-center lg:text-left mb-6 z-10">A new NFT marketplace, to buy and sell your art</h6>
               <div className="flex justify-center flex-wrap gap-6">
                 <Link href="/home">
                   <button
