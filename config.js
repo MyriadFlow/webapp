@@ -1,0 +1,2 @@
+export const marketplaceAddress = "0xA3c64851558D85449B9C8aA88b217BE7Af9d7eFB"
+export const creatifyAddress = "0x975362c36b6842d48d02DBD3A077745Fc1C64175"
