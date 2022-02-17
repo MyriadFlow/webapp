@@ -228,7 +228,7 @@ export default function CreateItem() {
 
 
           </div>
-          <div class='flex items-center justify-center'>
+          <div className='flex items-center justify-center'>
             <img className="w-64 align-middle pt-3" src="/asset.svg"></img>
           </div>
 
@@ -245,25 +245,25 @@ export default function CreateItem() {
 
 
 
-      <div class="w-full relative mt-16 shadow-2xl rounded  overflow-hidden">
-        <div class="h-64 w-full bg-blue-600 overflow-hidden relative" >
-          <img src="https://images.unsplash.com/photo-1503264116251-35a269479413?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80" alt="" class="bg w-full h-full object-cover object-center absolute z-0" />
-          <div class="flex flex-col justify-center items-center relative h-full bg-black bg-opacity-50 text-white">
-            {/* <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80" class="h-24 w-24 object-cover rounded-full"/> */}
-            <h1 class="text-2xl font-semibold">CREATE YOUR ASSET</h1>
-            {/* <h4 class="text-sm font-semibold">Joined Since '19</h4> */}
+      <div className="w-full relative mt-16 shadow-2xl rounded  overflow-hidden">
+        <div className="h-64 w-full bg-blue-600 overflow-hidden relative" >
+          <img src="https://images.unsplash.com/photo-1503264116251-35a269479413?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80" alt="" className="bg w-full h-full object-cover object-center absolute z-0" />
+          <div className="flex flex-col justify-center items-center relative h-full bg-black bg-opacity-50 text-white">
+            {/* <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80" className="h-24 w-24 object-cover rounded-full"/> */}
+            <h1 className="text-2xl font-semibold">CREATE YOUR ASSET</h1>
+            {/* <h4 className="text-sm font-semibold">Joined Since '19</h4> */}
           </div>
         </div>
-        <div class="grid grid-cols-10 bg-white dark:bg-gray-800">
+        <div className="grid grid-cols-10 bg-white dark:bg-gray-800">
 
 
 
-          <div class="col-span-12 md:border-solid md:border-r md:border-black md:border-opacity-25 h-full md:col-span-6">
-            <div class="p-16 pt-10">
-              <form action="#" class="flex flex-col space-y-8">
+          <div className="col-span-12 md:border-solid md:border-r md:border-black md:border-opacity-25 h-full md:col-span-6">
+            <div className="p-16 pt-10">
+              <form action="#" className="flex flex-col space-y-8">
 
                 <div>
-                  <h3 class="text-2xl font-semibold pb-1">Your Asset Information</h3>
+                  <h3 className="text-2xl font-semibold pb-1">Your Asset Information</h3>
                   <hr />
                 </div>
 
@@ -273,27 +273,27 @@ export default function CreateItem() {
                   onChange={e => updateFormInput({ ...formInput, name: e.target.value })}
                 />
 
-                <div class="flex flex-col space-y-4 md:space-y-0 md:flex-row md:space-x-4">
+                <div className="flex flex-col space-y-4 md:space-y-0 md:flex-row md:space-x-4">
 
-                  <div class="form-item w-full">
-                    <textarea type="text" placeholder="Asset Description" class="w-full input_background bg-white  dark:bg-gray-900 rounded-md shadow-sm p-3 outline-none " 
+                  <div className="form-item w-full">
+                    <textarea type="text" placeholder="Asset Description" className="w-full input_background bg-white  dark:bg-gray-900 rounded-md shadow-sm p-3 outline-none " 
                     onChange={e => updateFormInput({ ...formInput, description: e.target.value })}
                     />
                   </div>
 
-                  <div class="form-item w-full">
-                    <input type="text" placeholder="Asset Price in Eth" class="w-full input_background bg-white dark:bg-gray-900 rounded-md shadow-sm p-3 outline-none " 
+                  <div className="form-item w-full">
+                    <input type="text" placeholder="Asset Price in Eth" className="w-full input_background bg-white dark:bg-gray-900 rounded-md shadow-sm p-3 outline-none " 
                     onChange={e => updateFormInput({ ...formInput, price: e.target.value })}
                     />
                   </div>
                 </div>
 
                 <div>
-                  <h3 class="text-2xl font-semibold pb-1">Upload File</h3>
+                  <h3 className="text-2xl font-semibold pb-1">Upload File</h3>
                   <hr />
                 </div>
 
-                <div class="w-full flex flex-col md:flex-row md:space-x-4 space-y-4 md:space-y-0">
+                <div className="w-full flex flex-col md:flex-row md:space-x-4 space-y-4 md:space-y-0">
                   <div className="w-full rounded-md  mt-6 upload flex justify-center bg-white dark:bg-gray-900 ">
                     <div className="flex flex-col items-center justify-center">
                       <p className="text-md mb-3 upload_p pl-2">PNG, GIF, WEBP, MP4 or MP3. Max 100mb.</p>
@@ -327,7 +327,7 @@ export default function CreateItem() {
             </div>
           </div>
 
-          <div class="col-span-12 w-full px-8 py-6 justify-center flex space-x-4 md:space-x-0 md:space-y-4 flex-col md:col-span-4 md:justify-start ">
+          <div className="col-span-12 w-full px-8 py-6 justify-center flex space-x-4 md:space-x-0 md:space-y-4 flex-col md:col-span-4 md:justify-start ">
 
             <div className="bg-gray-100 shadow-sm cursor-pointer  mt-10 p-4 flex justify-center hover:shadow-xl border-2 border-gray-300 rounded-xl font-semibold text-md  dark:bg-gray-800 border-dashed "
               onClick={() => Setadvancemenu(!advancemenu)}
@@ -339,7 +339,7 @@ export default function CreateItem() {
               <div>
                 <p className="text-md font-semibold mt-6"> Properties <span className="text-gray-400">(Optipnal) </span></p>
 
-                <div class="flex flex-col space-y-4 md:space-y-0 md:flex-row md:space-x-4">
+                <div className="flex flex-col space-y-4 md:space-y-0 md:flex-row md:space-x-4">
                   {/* <div className="flex items-center space-x-8"> */}
                   <input
                     placeholder="e.g. Size"
@@ -400,7 +400,7 @@ export default function CreateItem() {
 
               </div>}
 
-            <div class='flex items-center justify-center'>
+            <div className='flex items-center justify-center'>
               <img className="w-96 align-middle pt-3" src="/asset.svg"></img>
             </div>
           </div>
@@ -408,7 +408,7 @@ export default function CreateItem() {
 
 
         </div>
-        <div class='flex items-center justify-center mt-4 mb-12'>
+        <div className='flex items-center justify-center mt-4 mb-12'>
           <button onClick={createMarket} className="bg-blue-500 dark:bg-black text-white py-4 px-8 w-full md:w-1/3 mt-2 md:mt-3 rounded-md">
             Create Digital Artifact
           </button>
