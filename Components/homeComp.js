@@ -8,13 +8,13 @@ const homecomp = ({uri}) => {
 
     const metadata = async()=>{
         const { data } = await axios.get(
-            `https://ipfs.infura.io/ipfs/${uri}`
+            `https://ipfs.io/ipfs/${uri}`
         );
         setResponse(data);
         // setResponse(JSON.parse(data));
         setImage(data.image);
         // console.log(typeof data.image);
-        let pret = image.substr(7,50);
+        let preuri = image.substr(7,50);
         // console.log(data);
 
         
@@ -32,15 +32,15 @@ const homecomp = ({uri}) => {
     //   console.log(response.image);
 
     // console.log(image);
-    let pret = image.substr(7,50);
-    // console.log(pret);
+    let preuri = image.substr(7,50);
+    // console.log(preuri);
 
     return (
         <div>
             {/* <pre>{JSON.stringify(response)}</pre> */}
 
              <img
-                 src={`https://ipfs.io/ipfs/${pret}`}
+                 src={`https://ipfs.io/ipfs/${preuri}`}
                  alt="" className=" h-60  p-2 w-full object-fit" />
             </div>
     )

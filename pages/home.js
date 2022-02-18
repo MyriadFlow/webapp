@@ -223,15 +223,16 @@ function home({ marketItems }) {
 						{marketItems.map((item) => {
 
 							console.log(item);
+							console.log(item.metaDataUri.substr(7,50));
 
 							return (<div
 								key={item.itemId}
 								className="bg-white dark:bg-gray-900  rounded-lg shadow-lg w-full lg:w-72 hover:scale-105 duration-200 transform transition cursor-pointer border-2 dark:border-gray-800">
-								<HomeComp uri={item ? item.metaDataUri : ""} />
+								<HomeComp uri={item ? item.metaDataUri.substr(7,50) : ""} />
 
 
 								<div className="flex px-4 py-6">
-									<HomeComp2 uri={item ? item.metaDataUri : ""} />
+									<HomeComp2 uri={item ? item.metaDataUri.substr(7,50) : ""} />
 
 								</div>
 								<div className=" flex items-center justify-between px-4 mb-2">

@@ -7,7 +7,7 @@ const homecomp2 = ({uri}) => {
 
     const metadata = async()=>{
         const { data } = await axios.get(
-            `https://ipfs.infura.io/ipfs/${uri}`
+            `https://ipfs.io/ipfs/${uri}`
         );
         setResponse(data);
         console.log(data);
@@ -18,7 +18,7 @@ const homecomp2 = ({uri}) => {
       },[uri]);
 
     return (
-        <div  >
+        <div style={{minHeight:80}}>
             <p className="text-sm font-bold text-gray-500 font-1">{response && response.name}</p>
             <p className="text-gray-800 text-sm font-extrabold dark:text-gray-100 font-1 ">{response && response.description}</p>
         </div>
