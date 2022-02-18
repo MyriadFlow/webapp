@@ -47,7 +47,7 @@ export async function getStaticProps() {
 
 	return {
 		props: {
-			marketItems: data.marketItems.slice(6, 10),
+			marketItems: data.marketItems,
 		},
 	};
 }

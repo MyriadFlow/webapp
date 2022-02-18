@@ -31,47 +31,61 @@ export default function MyAssets() {
       
     const marketContract = new ethers.Contract(marketplaceAddress, Marketplace.abi, signer)
     const tokenContract = new ethers.Contract(creatifyAddress, Creatify.abi, provider)
-    const data = await marketContract.fetchMyNFTs()
+    // const data = await marketContract.fetchMyNFTs()
     
-    const items = await Promise.all(data.map(async i => {
-      const tokenUri = await tokenContract.tokenURI(i.tokenId)
-      const meta = await axios.get(tokenUri)
-      let price = ethers.utils.formatUnits(i.price.toString(), 'ether')
-      let item = {
-        price,
-        tokenId: i.tokenId.toNumber(),
-        seller: i.seller,
-        owner: i.owner,
-        image: meta.data.image,
-      }
-      return item
-    }))
-    console.log(items)
-    setNfts(items)
+    // const items = await Promise.all(data.map(async i => {
+    //   const tokenUri = await tokenContract.tokenURI(i.tokenId)
+    //   const meta = await axios.get(tokenUri)
+    //   let price = ethers.utils.formatUnits(i.price.toString(), 'ether')
+    //   let item = {
+    //     price,
+    //     tokenId: i.tokenId.toNumber(),
+    //     seller: i.seller,
+    //     owner: i.owner,
+    //     image: meta.data.image,
+    //   }
+    //   return item
+    // }))
+    // console.log(items)
+    // setNfts(items)
     setLoadingState('loaded') 
   }
-  if (loadingState === 'loaded' && !nfts.length) return (<h1 className="py-10 px-20 text-3xl">No assets owned</h1>)
+  // if (loadingState === 'loaded' && !nfts.length) return (<h1 className="py-10 px-20 text-3xl">No assets owned</h1>)
   return (
     <div >
       <Header />
       <div className="flex justify-center min-h-screen">
-      <div className="p-4">
+      <div className="p-4 pt-20">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-4">
           {
-            nfts.map((nft, i) => (
-              <div key={i} className="border shadow-md rounded-xl overflow-hidden hover:scale-105 transition transform ease-out duration-200 cursor-pointer group ">
-                <img src={nft.image} className="rounded p-2" />
-                <div className="p-4 bg-black  group-hover:bg-white flex justify-center ">
-                  <p className="text-md font-bold text-white  group-hover:text-black ">Price -</p> 
-                  <div className="flex">
-                  <FaEthereum className="h-6 w-6 text-white group-hover:text-black "/>
-                  <p className="text-white text-md  group-hover:text-black ">{nft.price} Eth</p>
-                  </div>
+            // nfts.map((nft, i) => (
+              // <div key={i} className="border shadow-md rounded-xl overflow-hidden hover:scale-105 transition transform ease-out duration-200 cursor-pointer group ">
+              //   <img src={nft.image} className="rounded p-2" />
+              //   <div className="p-4 bg-black  group-hover:bg-white flex justify-center ">
+              //     <p className="text-md font-bold text-white  group-hover:text-black ">Price -</p> 
+              //     <div className="flex">
+              //     <FaEthereum className="h-6 w-6 text-white group-hover:text-black "/>
+              //     <p className="text-white text-md  group-hover:text-black ">{nft.price} Eth</p>
+              //     </div>
                  
                   
-                </div>
-              </div>
-            ))
+              //   </div>
+              // </div>
+              <div
+						// key={i} 
+						className="border shadow-md rounded-xl overflow-hidden hover:scale-105 transition transform ease-out duration-200 cursor-pointer group ">
+						<img src="https://www.forbes.com/advisor/wp-content/uploads/2021/04/NFT.jpeg-900x510.jpg" className="rounded p-2 h-44 w-full" />
+						<div className="p-4 bg-blue-500 dark:bg-black group-hover:bg-gray-200 flex justify-center ">
+							<p className="text-md font-bold text-white group-hover:text-black ">Price -</p>
+							<div className="flex">
+								<FaEthereum className="h-6 w-6 text-white group-hover:text-black " />
+								<p className="text-white text-md  group-hover:text-black">0.1 ETH</p>
+							</div>
+
+
+						</div>
+					</div>
+          //   ))
           }
         </div>
       </div>

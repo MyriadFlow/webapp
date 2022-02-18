@@ -18,10 +18,10 @@ function landingpage() {
               <h2 className="text-3xl md:text-4xl  font-bold text-indigo-600 lg:text-5xl text-center lg:text-left mb-6 uppercase z-10">Discover, collect, and sell extraordinary NFTs</h2>
               <h6 className="text-lg  text-white text-center lg:text-left mb-6 z-10">A new NFT marketplace, to buy and sell your art</h6>
               <div className="flex justify-center flex-wrap gap-6">
-                <Link href="/home">
+                
                   <button
-                    className=" bg-blue-500 shadow-md py-3 px-6 rounded-md transition duration-300  ease-in text-white font-semibold hover:bg-purple-900 z-10">Explore</button>
-                </Link>
+                    className=" bg-blue-500 shadow-md py-3 px-6 rounded-md transition duration-300  ease-in text-white font-semibold hover:bg-purple-900 z-10"><Link href="/home">Explore</Link></button>
+                
               </div>
             </div>
             <div className="flex justify-center flex-1 mb-4 md:mb-10  lg:mb-0  z-10">
