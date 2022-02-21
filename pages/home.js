@@ -16,6 +16,7 @@ import Footer from "../Components/Footer"
 
 import Filter from '../Components/Filter'
 // import {FaRegHeart} from "react-icons/fa"
+import Link from "next/link";
 import { IoIosArrowDropright } from "react-icons/io"
 import { selectModel } from "../slices/modelSlice"
 import { useDispatch, useSelector } from "react-redux";
@@ -225,7 +226,9 @@ function home({ marketItems }) {
 							console.log(item);
 							console.log(item.metaDataUri.substr(7,50));
 
-							return (<div
+							return (
+							<Link href={`/assets/${item.itemId}`}>
+							<div
 								key={item.itemId}
 								className="bg-white dark:bg-gray-900  rounded-lg shadow-lg w-full lg:w-72 hover:scale-105 duration-200 transform transition cursor-pointer border-2 dark:border-gray-800">
 								<HomeComp uri={item ? item.metaDataUri.substr(7,50) : ""} />
@@ -247,7 +250,9 @@ function home({ marketItems }) {
 									<button onClick={() => buyNft(nft)} className="text-blue-500 hover:text-blue-400 font-bold">Buy now</button>
 								</div>
 
-							</div>)
+							</div>
+							</Link>
+							)
 						})}
 
 					</div>
