@@ -219,7 +219,7 @@ function home({ marketItems }) {
 
 				<div className=" mt-20 min-h-screen" >
 
-					<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 p-4 mt-28  h-auto">
+					<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 md:grid-cols-3 gap-4 lg:gap-24 p-4 mt-28  h-auto">
 
 						{marketItems.map((item) => {
 
