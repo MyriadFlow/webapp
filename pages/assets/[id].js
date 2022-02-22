@@ -33,7 +33,8 @@ function asset({ asset }) {
     let preuri = image.substr(7,50);
 
     const imgurl= `https://ipfs.io/ipfs/${preuri}`;
-    const transaction = `https://etherscan.io/token/${asset.marketItems[0].nftContract}?a=${asset.marketItems[0].tokenId}`;
+    const transaction = `https://mumbai.polygonscan.com/token/${asset.marketItems[0].nftContract}?a=${asset.marketItems[0].tokenId}`;
+    // const transaction = `https://etherscan.io/token/${asset.marketItems[0].nftContract}?a=${asset.marketItems[0].tokenId}`;
 
     return (
         <div className=" w-full">
@@ -66,7 +67,7 @@ function asset({ asset }) {
                                     </div>
                                     <div class="flex items-center justify-between my-4">
                                         <h3 class="text-gray-700 font-medium dark:text-gray-300">Blockchain</h3>
-                                        <span class="text-gray-600 text-sm dark:text-gray-400">ETHEREUM</span>
+                                        <span class="text-gray-600 text-sm dark:text-gray-400">Polygon Testnet</span>
                                     </div>
                                     <div class="flex items-center justify-between -my-4">
                                         <h3 class="text-gray-700 font-medium dark:text-gray-300">IPFS</h3>
