@@ -19,8 +19,8 @@ const homecomp2 = ({uri}) => {
 
     return (
         <div style={{minHeight:80}}>
-            <p className="text-3xl font-bold text-gray-800 font-1">{response && response.name}</p>
-            <p className=" text-md font-bold dark:text-gray-100 text-gray-500 font-1 ">{response && response.description}</p>
+            <p className="text-3xl font-bold text-gray-800 dark:text-white font-1">{response && response.name}</p>
+            <p className=" text-md font-bold dark:text-gray-300 text-gray-500 font-1 ">{response && response.description}</p>
         </div>
     )
 }
