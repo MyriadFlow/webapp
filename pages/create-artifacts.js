@@ -6,10 +6,11 @@ import { useRouter } from 'next/router'
 import Web3Modal from 'web3modal'
 import { MdOutlineColorLens } from "react-icons/md"
 import { CgGhostCharacter } from "react-icons/cg"
-import { FaVideo } from "react-icons/fa"
+import { FaVideo, FaPlusSquare,FaMinusSquare,FaHeart} from "react-icons/fa"
 import { MdSportsVolleyball } from "react-icons/md"
 import { MdMusicNote } from "react-icons/md"
-import { RiArrowDropDownLine } from "react-icons/ri"
+import { RiArrowDropDownLine } from "react-icons/ri";
+import { v4 as uuidv4 } from 'uuid';
 
 
 const client = ipfsHttpClient('https://ipfs.infura.io:5001/api/v0')
@@ -99,6 +100,37 @@ export default function CreateItem() {
 
   const [opendrop, Setopendrop] = useState(false);
   const [advancemenu, Setadvancemenu] = useState(false);
+
+
+  const [inputFields, setInputFields] = useState([
+    { id: uuidv4(), firstName: '', lastName: '' },
+  ]);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log("InputFields", inputFields);
+  };
+
+  const handleChangeInput = (id, event) => {
+    const newInputFields = inputFields.map(i => {
+      if(id === i.id) {
+        i[event.target.name] = event.target.value
+      }
+      return i;
+    })
+    
+    setInputFields(newInputFields);
+  }
+
+  const handleAddFields = () => {
+    setInputFields([...inputFields, { id: uuidv4(),  firstName: '', lastName: '' }])
+  }
+
+  const handleRemoveFields = id => {
+    const values  = [...inputFields];
+    values.splice(values.findIndex(value => value.id === id), 1);
+    setInputFields(values);
+  }
 
 
   return (
@@ -339,8 +371,7 @@ export default function CreateItem() {
               <div>
                 <p className="text-md font-semibold mt-6"> Properties <span className="text-gray-400">(Optipnal) </span></p>
 
-                <div className="flex flex-col space-y-4 md:space-y-0 md:flex-row md:space-x-4">
-                  {/* <div className="flex items-center space-x-8"> */}
+                {/* <div className="flex flex-col space-y-4 md:space-y-0 md:flex-row md:space-x-4">
                   <input
                     placeholder="e.g. Size"
                     className="mt-2 p-3 w-full text-sm input_background outline-none rounded-md dark:bg-gray-900  "
@@ -352,7 +383,49 @@ export default function CreateItem() {
                     className="mt-2 p-3 w-full text-sm input_background outline-none rounded-md dark:bg-gray-900  "
                     onChange={e => updateFormInput({ ...formInput, properties: e.target.value })}
                   />
-                </div>
+                </div> */}
+
+                <form onSubmit={handleSubmit}>
+        { inputFields.map(inputField => (
+          <div key={inputField.id}>
+            <div className="flex flex-col space-y-4 md:space-y-0 md:flex-row md:space-x-4 pb-2">
+            <input
+              name="firstName"
+              label="First Name"
+              placeholder="e.g. Size"
+              className="mt-2 p-3 w-full text-sm input_background outline-none rounded-md dark:bg-gray-900"
+              variant="filled"
+              value={inputField.firstName}
+              onChange={event => handleChangeInput(inputField.id, event)}
+            />
+            <input
+              name="lastName"
+              label="Last Name"
+              placeholder="e.g. M"
+              className="mt-2 p-3 w-full text-sm input_background outline-none rounded-md dark:bg-gray-900"
+              variant="filled"
+              value={inputField.lastName}
+              onChange={event => handleChangeInput(inputField.id, event)}
+            />
+            
+            <button disabled={inputFields.length === 1} onClick={() => handleRemoveFields(inputField.id)}>
+              <FaMinusSquare style={{color:'red'}}/>
+            </button>
+            <button
+              onClick={handleAddFields}
+            >
+              <FaPlusSquare style={{color:'green'}}/>
+            </button>
+            </div>
+          </div>
+        )) }
+        <button
+          variant="contained" 
+          color="primary" 
+          type="submit"
+          onClick={handleSubmit}
+        >Send</button>
+      </form>
 
 
 
@@ -395,6 +468,10 @@ export default function CreateItem() {
                   <div className="flex items-center p-2  px-8 space-x-2 group hover:bg-gray-200 cursor-pointer">
                     <CgGhostCharacter className="h-8 w-8 text-gray-400" />
                     <p className="text-md  text-gray-500 font-bold group-hover:text-black">Cartoon</p>
+                  </div>
+                  <div className="flex items-center p-2  px-8 space-x-2 group hover:bg-gray-200 cursor-pointer">
+                    <FaHeart className="h-6 w-6 text-gray-400 mx-1" />
+                    <p className="text-md  text-gray-500 font-bold group-hover:text-black">Others</p>
                   </div>
                 </div>}
 

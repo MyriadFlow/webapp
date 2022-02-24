@@ -43,6 +43,7 @@
     "react-redux": "^7.2.6",
     "react-responsive-carousel": "^3.2.22",
     "reactstrap": "^9.0.1",
+    "uuid": "^8.3.2",
     "web3modal": "^1.9.4"
   },
   "devDependencies": {
