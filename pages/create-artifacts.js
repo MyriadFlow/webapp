@@ -46,6 +46,7 @@ export default function CreateItem() {
         }
       )
       const url = `https://ipfs.infura.io/ipfs/${added.path}`
+      // const url = `ipfs://${added.path}`
       setFileUrl(url)
     } catch (error) {
       console.log('Error uploading file: ', error)
@@ -61,7 +62,9 @@ export default function CreateItem() {
     try {
       const added = await client.add(data)
       const ipfsHash = added.path;
-      const url = `https://ipfs.infura.io/ipfs/${added.path}`
+      // const url = `https://ipfs.infura.io/ipfs/${added.path}`
+      const url = `ipfs://${added.path}`
+
       /* after file is uploaded to IPFS, pass the URL to save it on Polygon */
       createSale(ipfsHash, url)
     } catch (error) {
