@@ -71,15 +71,15 @@ function asset({ asset }) {
                                     </div>
                                     <div class="flex items-center justify-between -my-4">
                                         <h3 class="text-gray-700 font-medium dark:text-gray-300">IPFS</h3>
-                                        <span class="text-gray-600 text-sm"><a href={imgurl} className="text-gray-600 dark:text-gray-400"><BsArrowUpRight/></a></span>
+                                        <span class="text-gray-600 text-sm"><a href={imgurl} target="_blank" className="text-gray-600 dark:text-gray-400"><BsArrowUpRight/></a></span>
                                     </div>
                                     <div class="flex items-center justify-between -my-4">
                                         <h3 class="text-gray-700 font-medium dark:text-gray-300">IPFS Metadata</h3>
-                                        <span class="text-gray-600 text-sm"><a href={nfturl} className="text-gray-600 dark:text-gray-400"><BsArrowUpRight/></a></span>
+                                        <span class="text-gray-600 text-sm"><a href={nfturl} target="_blank" className="text-gray-600 dark:text-gray-400"><BsArrowUpRight/></a></span>
                                     </div>
                                     <div class="flex items-center justify-between -my-4 pb-4">
                                         <h3 class="text-gray-700 font-medium dark:text-gray-300">Etherscan Transaction</h3>
-                                        <span class="text-gray-600 text-sm"><a href={transaction} className="text-gray-600 dark:text-gray-400"><BsArrowUpRight/></a></span>
+                                        <span class="text-gray-600 text-sm"><a href={transaction} target="_blank" className="text-gray-600 dark:text-gray-400"><BsArrowUpRight/></a></span>
                                     </div>
                                 </div>
                             </div>
