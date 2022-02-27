@@ -7,20 +7,12 @@ import store from "../pages/store";
 
 
 function Marketplace({ Component, pageProps }) {
-
-
   return (
-
-
-
 <ThemeProvider enableSystem={true} attribute="class">
   <Provider  store={store}>
-
     <Component {...pageProps} />
     </Provider>
 </ThemeProvider>
-
-
   );
 }
 
