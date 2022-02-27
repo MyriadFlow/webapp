@@ -33,7 +33,7 @@ export default function CreateItem() {
 
 
   const [fileUrl, setFileUrl] = useState(null)
-  const [formInput, updateFormInput] = useState({ price: '', name: '', description: '' })
+  const [formInput, updateFormInput] = useState({ price: '', name: '', description: '',  alternettext:'' })
   const router = useRouter()
 
   async function onChange(e) {
@@ -53,11 +53,11 @@ export default function CreateItem() {
     }
   }
   async function createMarket() {
-    const { name, description, price } = formInput
+    const { name, description, price , alternettext} = formInput
     if (!name || !description || !price || !fileUrl) return
     /* first, upload to IPFS */
     const data = JSON.stringify({
-      name, description, image: fileUrl
+      name, description, image: `ipfs://${fileUrl.substr(28,71)}`, alternettext
     })
     try {
       const added = await client.add(data)
