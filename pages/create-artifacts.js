@@ -97,7 +97,7 @@ export default function CreateItem() {
     // transaction = await contract.createMarketItem(creatifyAddress, tokenId, price, { value: listingPrice })
     transaction = await contract.createMarketItem(creatifyAddress, tokenId, price)
     await transaction.wait()
-    router.push('/')
+    router.push('/home')
   }
 
 
