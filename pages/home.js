@@ -33,7 +33,7 @@ export async function getStaticProps() {
 	const { data } = await client.query({
 		query: gql`
     query Query {
-      marketItems(first: 10) {
+      marketItems(first: 25) {
         price
         itemId
         seller

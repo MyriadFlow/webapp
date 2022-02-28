@@ -56,7 +56,7 @@ export default function CreateItem() {
     if (!name || !description || !price || !fileUrl) return
     /* first, upload to IPFS */
     const data = JSON.stringify({
-      name, description, image: `ipfs://${fileUrl.substr(28, 71)}`, alternettext
+      name, description, image: `ipfs://${fileUrl.substr(28, 71)}`, alternettext, attributes
     })
     try {
       const added = await client.add(data)
@@ -99,17 +99,17 @@ export default function CreateItem() {
   const [advancemenu, Setadvancemenu] = useState(false);
 
 
-  const [inputFields, setInputFields] = useState([
-    { id: uuidv4(), firstName: '', lastName: '' },
+  const [attributes, setInputFields] = useState([
+    { id: uuidv4(), display_type:'', trait_type: '', value: '' },
   ]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("InputFields", inputFields);
+    console.log("attributes", attributes);
   };
 
   const handleChangeInput = (id, event) => {
-    const newInputFields = inputFields.map(i => {
+    const newInputFields = attributes.map(i => {
       if (id === i.id) {
         i[event.target.name] = event.target.value
       }
@@ -120,11 +120,11 @@ export default function CreateItem() {
   }
 
   const handleAddFields = () => {
-    setInputFields([...inputFields, { id: uuidv4(), firstName: '', lastName: '' }])
+    setInputFields([...attributes, { id: uuidv4(), display_type:'', trait_type: '' , value: ''}])
   }
 
   const handleRemoveFields = id => {
-    const values = [...inputFields];
+    const values = [...attributes];
     values.splice(values.findIndex(value => value.id === id), 1);
     setInputFields(values);
   }
@@ -222,29 +222,38 @@ export default function CreateItem() {
               <div>
                 <p className="text-md font-semibold mt-6"> Properties <span className="text-gray-400">(Optipnal) </span></p>
                 <form onSubmit={handleSubmit}>
-                  {inputFields.map(inputField => (
+                  {attributes.map(inputField => (
                     <div key={inputField.id}>
                       <div className="flex flex-col space-y-4 md:space-y-0 md:flex-row md:space-x-4 pb-2">
-                        <input
-                          name="firstName"
+                      <input
+                          name="display_type"
                           label="First Name"
-                          placeholder="e.g. Size"
+                          placeholder="Display type"
                           className="mt-2 p-3 w-full text-sm input_background outline-none rounded-md dark:bg-gray-900"
                           variant="filled"
-                          value={inputField.firstName}
+                          value={inputField.display_type}
                           onChange={event => handleChangeInput(inputField.id, event)}
                         />
                         <input
-                          name="lastName"
+                          name="trait_type"
                           label="Last Name"
-                          placeholder="e.g. M"
+                          placeholder="Trait type"
                           className="mt-2 p-3 w-full text-sm input_background outline-none rounded-md dark:bg-gray-900"
                           variant="filled"
-                          value={inputField.lastName}
+                          value={inputField.trait_type}
+                          onChange={event => handleChangeInput(inputField.id, event)}
+                        />
+                        <input
+                          name="value"
+                          label="First Name"
+                          placeholder="Value"
+                          className="mt-2 p-3 w-full text-sm input_background outline-none rounded-md dark:bg-gray-900"
+                          variant="filled"
+                          value={inputField.value}
                           onChange={event => handleChangeInput(inputField.id, event)}
                         />
 
-                        <button disabled={inputFields.length === 1} onClick={() => handleRemoveFields(inputField.id)}>
+                        <button disabled={attributes.length === 1} onClick={() => handleRemoveFields(inputField.id)}>
                           <FaMinusSquare style={{ color: 'red' }} />
                         </button>
                         <button
