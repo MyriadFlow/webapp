@@ -5,6 +5,7 @@ import HomeComp2 from "../../Components/homecomp2";
 import AssetImage from "../../Components/assetImage";
 import AssetDesc from "../../Components/assetDesc";
 import AssetHead from "../../Components/assetHead";
+import AssetProps from "../../Components/assetProperties";
 import { BsArrowUpRight } from "react-icons/bs"
 import { gql } from "@apollo/client";
 import client from "../../apollo-client";
@@ -51,6 +52,11 @@ function asset({ asset }) {
                 <main class="my-10">
                     <div class="container mx-auto px-6">
                         <h3 class="text-gray-700 text-2xl font-medium"><AssetHead uri={asset.marketItems[0] ? asset.marketItems[0].metaDataUri.substr(7, 50) : ""} /></h3>
+                            <div class="w-full lg:w-1/2 order-2">
+                                <div class="border rounded-md w-full px-4 py-3">
+                                <AssetProps uri={asset.marketItems[0] ? asset.marketItems[0].metaDataUri.substr(7, 50) : ""} />
+                                </div>
+                            </div>
                         <div class="flex flex-col lg:flex-row mt-8">
                             <div class="w-full lg:w-1/2 order-2">
                                 <div class="border rounded-md w-full px-4 py-3">

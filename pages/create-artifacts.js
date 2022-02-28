@@ -245,6 +245,7 @@ export default function CreateItem() {
                         />
                         <input
                           name="value"
+                          type="number"
                           label="First Name"
                           placeholder="Value"
                           className="mt-2 p-3 w-full text-sm input_background outline-none rounded-md dark:bg-gray-900"
@@ -264,12 +265,12 @@ export default function CreateItem() {
                       </div>
                     </div>
                   ))}
-                  <button
+                  {/* <button
                     variant="contained"
                     color="primary"
                     type="submit"
                     onClick={handleSubmit}
-                  >Send</button>
+                  >Send</button> */}
                 </form>
 
 
