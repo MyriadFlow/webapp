@@ -6,41 +6,42 @@ import AssetImage from "../../Components/assetImage";
 import AssetDesc from "../../Components/assetDesc";
 import AssetHead from "../../Components/assetHead";
 import AssetProps from "../../Components/assetProperties";
+import AssetCategories from "../../Components/AssetCategories";
 import { BsArrowUpRight } from "react-icons/bs"
 import { gql } from "@apollo/client";
 import client from "../../apollo-client";
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
 function asset({ asset }) {
     console.log(asset);
-    const nfturl= `https://ipfs.io/ipfs/${asset.marketItems[0].metaDataUri.substr(7, 50)}`;
+    const nfturl = `https://ipfs.io/ipfs/${asset.marketItems[0].metaDataUri.substr(7, 50)}`;
 
-    const [response,setResponse] = useState([]);
+    const [response, setResponse] = useState([]);
     const [image, setImage] = useState("");
 
-    const metadata = async()=>{
+    const metadata = async () => {
         const { data } = await axios.get(
             `https://ipfs.io/ipfs/${asset.marketItems[0].metaDataUri.substr(7, 50)}`
         );
         setResponse(data);
         setImage(data.image);
-        let preuri = image.substr(7,50);    
+        let preuri = image.substr(7, 50);
     }
 
     useEffect(() => {
-        metadata();   
-      },[asset.marketItems[0].metaDataUri.substr(7, 50)]);
-    let preuri = image.substr(7,50);
+        metadata();
+    }, [asset.marketItems[0].metaDataUri.substr(7, 50)]);
+    let preuri = image.substr(7, 50);
 
-    const imgurl= `https://ipfs.io/ipfs/${preuri}`;
+    const imgurl = `https://ipfs.io/ipfs/${preuri}`;
     const transaction = `https://mumbai.polygonscan.com/token/${asset.marketItems[0].nftContract}?a=${asset.marketItems[0].tokenId}`;
     // const transaction = `https://etherscan.io/token/${asset.marketItems[0].nftContract}?a=${asset.marketItems[0].tokenId}`;
 
     return (
         <div className=" w-full">
             <Header />
-            <div class="grid place-items-center h-screen bg-gray-100 dark:bg-gray-300">
+            <div className="grid place-items-center h-screen bg-gray-100 dark:bg-gray-300">
                 <div className="scale-125 hover:scale-150 cursor-pointer">
                     <div className="scale-150">
                         <HomeComp uri={asset.marketItems[0] ? asset.marketItems[0].metaDataUri.substr(7, 50) : ""} />
@@ -48,63 +49,63 @@ function asset({ asset }) {
                 </div>
             </div>
 
-            <div class="bg-white md:mx-40 dark:bg-gray-900">
-                <main class="my-10">
-                    <div class="container mx-auto px-6">
-                        <h3 class="text-gray-700 text-2xl font-medium"><AssetHead uri={asset.marketItems[0] ? asset.marketItems[0].metaDataUri.substr(7, 50) : ""} /></h3>
-                           
-                        <div class="flex flex-col lg:flex-row my-8">
-                            <div class="w-full lg:w-1/2 order-2">
-                                <div class="border rounded-md w-full px-4 py-3">
-                                    <div class="flex items-center justify-between my-3">
-                                        <h3 class="text-gray-500 font-medium dark:text-white">NFT Details</h3>
+            <div className="bg-white md:mx-40 dark:bg-gray-900">
+                <main className="my-10">
+                    <div className="container mx-auto px-6">
+                        <h3 className="text-gray-700 text-2xl font-medium"><AssetHead uri={asset.marketItems[0] ? asset.marketItems[0].metaDataUri.substr(7, 50) : ""} /></h3>
+
+                        <div className="flex flex-col lg:flex-row my-8">
+                            <div className="w-full lg:w-1/2 order-2">
+                                <div className="border rounded-md w-full px-4 py-3">
+                                    <div className="flex items-center justify-between my-3">
+                                        <h3 className="text-gray-500 font-medium dark:text-white">NFT Details</h3>
                                     </div>
-                                    <div class="flex items-center justify-between my-4">
-                                        <h3 class="text-gray-700 font-medium dark:text-gray-300">Contract Address</h3>
-                                        <span class="text-gray-600 text-sm dark:text-gray-400">{asset.marketItems[0].nftContract}</span>
+                                    <div className="flex items-center justify-between my-4">
+                                        <h3 className="text-gray-700 font-medium dark:text-gray-300">Contract Address</h3>
+                                        <span className="text-gray-600 text-sm dark:text-gray-400">{asset.marketItems[0].nftContract}</span>
                                     </div>
-                                    <div class="flex items-center justify-between my-4">
-                                        <h3 class="text-gray-700 font-medium dark:text-gray-300">Token ID</h3>
-                                        <span class="text-gray-600 text-sm dark:text-gray-400">{asset.marketItems[0].tokenId}</span>
+                                    <div className="flex items-center justify-between my-4">
+                                        <h3 className="text-gray-700 font-medium dark:text-gray-300">Token ID</h3>
+                                        <span className="text-gray-600 text-sm dark:text-gray-400">{asset.marketItems[0].tokenId}</span>
                                     </div>
-                                    <div class="flex items-center justify-between my-4">
-                                        <h3 class="text-gray-700 font-medium dark:text-gray-300">Blockchain</h3>
-                                        <span class="text-gray-600 text-sm dark:text-gray-400">Polygon Testnet</span>
+                                    <div className="flex items-center justify-between my-4">
+                                        <h3 className="text-gray-700 font-medium dark:text-gray-300">Blockchain</h3>
+                                        <span className="text-gray-600 text-sm dark:text-gray-400">Polygon Testnet</span>
                                     </div>
-                                    <div class="flex items-center justify-between -my-4">
-                                        <h3 class="text-gray-700 font-medium dark:text-gray-300">IPFS</h3>
-                                        <span class="text-gray-600 text-sm"><a href={imgurl} target="_blank" className="text-gray-600 dark:text-gray-400"><BsArrowUpRight/></a></span>
+                                    <div className="flex items-center justify-between -my-4">
+                                        <h3 className="text-gray-700 font-medium dark:text-gray-300">IPFS</h3>
+                                        <span className="text-gray-600 text-sm"><a href={imgurl} target="_blank" className="text-gray-600 dark:text-gray-400"><BsArrowUpRight /></a></span>
                                     </div>
-                                    <div class="flex items-center justify-between -my-4">
-                                        <h3 class="text-gray-700 font-medium dark:text-gray-300">IPFS Metadata</h3>
-                                        <span class="text-gray-600 text-sm"><a href={nfturl} target="_blank" className="text-gray-600 dark:text-gray-400"><BsArrowUpRight/></a></span>
+                                    <div className="flex items-center justify-between -my-4">
+                                        <h3 className="text-gray-700 font-medium dark:text-gray-300">IPFS Metadata</h3>
+                                        <span className="text-gray-600 text-sm"><a href={nfturl} target="_blank" className="text-gray-600 dark:text-gray-400"><BsArrowUpRight /></a></span>
                                     </div>
-                                    <div class="flex items-center justify-between -my-4 pb-4">
-                                        <h3 class="text-gray-700 font-medium dark:text-gray-300">Etherscan Transaction</h3>
-                                        <span class="text-gray-600 text-sm"><a href={transaction} target="_blank" className="text-gray-600 dark:text-gray-400"><BsArrowUpRight/></a></span>
+                                    <div className="flex items-center justify-between -my-4 pb-4">
+                                        <h3 className="text-gray-700 font-medium dark:text-gray-300">Etherscan Transaction</h3>
+                                        <span className="text-gray-600 text-sm"><a href={transaction} target="_blank" className="text-gray-600 dark:text-gray-400"><BsArrowUpRight /></a></span>
                                     </div>
                                 </div>
                             </div>
-                            <div class="w-full mb-8 flex-shrink-0 order-1 lg:w-1/2 lg:mb-0 lg:order-2">
-                                <div class="flex justify-center lg:justify-end">
-                                    <div class="border rounded-md max-w-md w-full px-4 py-3">
-                                        <div class="flex items-center justify-between">
-                                            <h3 class="text-gray-700 font-medium dark:text-white">Asset Worth</h3>
-                                            <span class="text-gray-600 text-sm dark:text-white">Price</span>
+                            <div className="w-full mb-8 flex-shrink-0 order-1 lg:w-1/2 lg:mb-0 lg:order-2">
+                                <div className="flex justify-center lg:justify-end">
+                                    <div className="border rounded-md max-w-md w-full px-4 py-3">
+                                        <div className="flex items-center justify-between">
+                                            <h3 className="text-gray-700 font-medium dark:text-white">Asset Worth</h3>
+                                            <span className="text-gray-600 text-sm dark:text-white">Price</span>
                                         </div>
-                                        <div class="flex justify-between mt-6">
-                                            <div class="flex">
+                                        <div className="flex justify-between mt-6">
+                                            <div className="flex">
                                                 <div className="h-20 w-20">
                                                     <AssetImage uri={asset.marketItems[0] ? asset.marketItems[0].metaDataUri.substr(7, 50) : ""} />
                                                 </div>
-                                                <div class="mx-3 mt-6">
-                                                    <h3 class="text-sm text-gray-600"><AssetDesc uri={asset.marketItems[0] ? asset.marketItems[0].metaDataUri.substr(7, 50) : ""} /></h3>
+                                                <div className="mx-3 mt-6">
+                                                    <h3 className="text-sm text-gray-600"><AssetDesc uri={asset.marketItems[0] ? asset.marketItems[0].metaDataUri.substr(7, 50) : ""} /></h3>
                                                 </div>
                                             </div>
-                                            <span class="text-gray-600 mt-6 dark:text-gray-400">{asset.marketItems[0].price}</span>
+                                            <span className="text-gray-600 mt-6 dark:text-gray-400">{asset.marketItems[0].price}</span>
                                         </div>
                                         <div className="flex items-center justify-end">
-                                            <button class="px-3 py-2 w-1/3 bg-blue-600 text-white text-sm font-medium rounded-md hover:bg-blue-500 focus:outline-none focus:bg-blue-500">
+                                            <button className="px-3 py-2 w-1/3 bg-blue-600 text-white text-sm font-medium rounded-md hover:bg-blue-500 focus:outline-none focus:bg-blue-500">
                                                 <span>Buy NFT</span>
                                             </button>
                                         </div>
@@ -113,11 +114,27 @@ function asset({ asset }) {
                             </div>
                         </div>
 
-                        <div class="w-full lg:w-1/2 order-2">
-                                <div class="border rounded-md w-full px-4 py-3">
-                                <AssetProps uri={asset.marketItems[0] ? asset.marketItems[0].metaDataUri.substr(7, 50) : ""} />
+                        <div className="flex flex-col lg:flex-row my-8">
+                            <div className="w-full lg:w-1/2 order-2">
+                                <div className="border rounded-md w-full px-4 py-3">
+                                <h3 className="text-gray-700 font-medium dark:text-white">Properties</h3>
+                                {/* <div className="flex flex-row justify-between mt-6"> */}
+                                    <AssetProps uri={asset.marketItems[0] ? asset.marketItems[0].metaDataUri.substr(7, 50) : ""} />
+                                {/* </div> */}
                                 </div>
                             </div>
+                            <div className="w-full mb-8 flex-shrink-0 order-1 lg:w-1/2 lg:mb-0 lg:order-2">
+                                <div className="flex justify-center lg:justify-end">
+                                    <div className="border rounded-md max-w-md w-full px-4 py-3">
+                                        <h3 className="text-gray-700 font-medium dark:text-white">Categories</h3>
+                                        <div className="flex flex-row justify-between mt-6">
+                                        <AssetCategories uri={asset.marketItems[0] ? asset.marketItems[0].metaDataUri.substr(7, 50) : ""} />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                 </main>
             </div>

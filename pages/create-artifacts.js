@@ -11,6 +11,7 @@ import { MdSportsVolleyball } from "react-icons/md"
 import { MdMusicNote } from "react-icons/md"
 import { RiArrowDropDownLine } from "react-icons/ri";
 import { v4 as uuidv4 } from 'uuid';
+import Multiselect from "multiselect-react-dropdown";
 
 
 const client = ipfsHttpClient('https://ipfs.infura.io:5001/api/v0')
@@ -56,7 +57,7 @@ export default function CreateItem() {
     if (!name || !description || !price || !fileUrl) return
     /* first, upload to IPFS */
     const data = JSON.stringify({
-      name, description, image: `ipfs://${fileUrl.substr(28, 71)}`, alternettext, attributes
+      name, description, image: `ipfs://${fileUrl.substr(28, 71)}`, alternettext, attributes, categories
     })
     try {
       const added = await client.add(data)
@@ -128,6 +129,9 @@ export default function CreateItem() {
     values.splice(values.findIndex(value => value.id === id), 1);
     setInputFields(values);
   }
+
+  const [options, setOptions] = useState(["Art", "Music", "Sports", "Video", "Cartoon", "Others"]);
+  const [categories, setCategory] = useState([]);
 
 
   return (
@@ -277,6 +281,21 @@ export default function CreateItem() {
                   onChange={e => updateFormInput({ ...formInput, alternettext: e.target.value })}
                 />
 
+
+<Multiselect
+        isObject={false}
+        onRemove={(event) => {
+          setCategory(event);
+          // console.log(event);
+        }}
+        onSelect={(event) => {
+          setCategory(event);
+          // console.log(event);
+        }}
+        options={options}
+        selectedValues={[]}
+        showCheckbox
+      />
 
                 <div
                   onClick={() => Setopendrop(!opendrop)}
