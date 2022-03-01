@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { CircularProgressBar } from "@tomik23/react-circular-progress-bar";
 
 const assetProperties = ({ uri }) => {
 
@@ -32,12 +33,19 @@ const assetProperties = ({ uri }) => {
                             <p className="font-extralight">{item && item.trait_type}</p>
                         </div>
                     </div>
-                    {/* (
-                        item.display_type == boost_number && (
-                    <div class="w-full bg-gray-200 rounded-full">
-                        <div class="bg-blue-600 text-xs font-medium text-blue-100 text-center p-0.5 leading-none rounded-l-full" style={{ width: `${width}%` }}> {width}%</div>
-                    </div>)
-                    ) */}
+                    {
+                        item.display_type === "boost_number" && (
+                            <div class="w-full bg-gray-200 rounded-full">
+                                <div class="bg-blue-600 text-xs font-medium text-blue-100 text-center p-0.5 leading-none rounded-l-full" style={{ width: `${width}%` }}> {width}%</div>
+                            </div>)
+                    }
+                    {
+                        item.display_type === "boost_percentage" && (
+                            <div style={{padding:10}}>
+                            <CircularProgressBar percent= {width} size="100" fontColor= "green"/>
+                            </div>
+                        )
+                    }
                     
                 </div>)
             }) : null}
