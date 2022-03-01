@@ -265,12 +265,6 @@ export default function CreateItem() {
                       </div>
                     </div>
                   ))}
-                  {/* <button
-                    variant="contained"
-                    color="primary"
-                    type="submit"
-                    onClick={handleSubmit}
-                  >Send</button> */}
                 </form>
 
 
