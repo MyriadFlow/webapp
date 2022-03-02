@@ -39,7 +39,7 @@ function asset({ asset }) {
     // const transaction = `https://etherscan.io/token/${asset.marketItems[0].nftContract}?a=${asset.marketItems[0].tokenId}`;
 
     return (
-        <div className=" w-full">
+        <div className="w-full">
             <Header />
             <div className="grid place-items-center h-screen bg-gray-100 dark:bg-gray-300">
                 <div className="scale-125 hover:scale-150 cursor-pointer">
@@ -118,9 +118,7 @@ function asset({ asset }) {
                             <div className="w-full lg:w-1/2 order-2">
                                 <div className="border rounded-md w-full px-4 py-3">
                                 <h3 className="text-gray-700 font-medium dark:text-white">Properties</h3>
-                                {/* <div className="flex flex-row justify-between mt-6"> */}
                                     <AssetProps uri={asset.marketItems[0] ? asset.marketItems[0].metaDataUri.substr(7, 50) : ""} />
-                                {/* </div> */}
                                 </div>
                             </div>
                             <div className="w-full mb-8 flex-shrink-0 order-1 lg:w-1/2 lg:mb-0 lg:order-2">

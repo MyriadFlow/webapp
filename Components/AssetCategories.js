@@ -18,7 +18,7 @@ const assetProperties = ({ uri }) => {
     }, [uri]);
 
     return (
-        <div style={{ minHeight: 80 }}>
+        <div style={{ minHeight: 80 }} className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-3 md:grid-cols-2 gap-4 h-auto w-full ">
             {response ? response.map((item) => {
 
                 console.log(item);
@@ -26,14 +26,9 @@ const assetProperties = ({ uri }) => {
                 return (<div
                     // key={item.id}
                     className="my-4 bg-white dark:bg-gray-900 rounded-lg shadow-lg w-full hover:scale-105 duration-200 transform transition cursor-pointer">
-                    <div className=" flex items-center justify-between px-4 mb-2">
-                        <div className="flex items-center">
-                            {/* {
-                                item ? item.map((i) => {
-                                    return(
-                                        <p className="font-extralight">{i}</p>
-                                    )
-                                }):null} */}
+                    <div className=" flex items-center justify-between w-full ">  
+                        <div className="flex flex-col items-center justify-center border bg-blue-500 p-5 w-full ">
+                        <p className="font-extralight text-center">{item}</p>
                         </div>
                     </div>
                 </div>)
