@@ -1,13 +1,14 @@
 import Header from "../../Components/Header";
 import Footer from "../../Components/Footer";
-import HomeComp from "../../Components/homeComp";
+import AssetComp from "../../Components/assetComp";
 import HomeComp2 from "../../Components/homecomp2";
 import AssetImage from "../../Components/assetImage";
 import AssetDesc from "../../Components/assetDesc";
 import AssetHead from "../../Components/assetHead";
 import AssetProps from "../../Components/assetProperties";
 import AssetCategories from "../../Components/AssetCategories";
-import { BsArrowUpRight } from "react-icons/bs"
+import { BsArrowUpRight } from "react-icons/bs";
+import {FaCopy} from "react-icons/fa";
 import { gql } from "@apollo/client";
 import client from "../../apollo-client";
 import React, { useEffect, useState } from 'react';
@@ -38,14 +39,15 @@ function asset({ asset }) {
     const transaction = `https://mumbai.polygonscan.com/token/${asset.marketItems[0].nftContract}?a=${asset.marketItems[0].tokenId}`;
     // const transaction = `https://etherscan.io/token/${asset.marketItems[0].nftContract}?a=${asset.marketItems[0].tokenId}`;
 
+    const copy = asset.marketItems[0].nftContract;
     return (
         <div className="w-full">
             <Header />
             <div className="grid place-items-center h-screen bg-gray-100 dark:bg-gray-300">
-                <div className="scale-125 hover:scale-150 cursor-pointer">
-                    <div className="scale-150">
-                        <HomeComp uri={asset.marketItems[0] ? asset.marketItems[0].metaDataUri.substr(7, 50) : ""} />
-                    </div>
+                <div className="cursor-pointer w-full lg:w-1/2 md:w-1/2">
+                    {/* <div className="scale-150"> */}
+                        <AssetComp uri={asset.marketItems[0] ? asset.marketItems[0].metaDataUri.substr(7, 50) : ""} />
+                    {/* </div> */}
                 </div>
             </div>
 
@@ -62,7 +64,8 @@ function asset({ asset }) {
                                     </div>
                                     <div className="flex items-center justify-between my-4">
                                         <h3 className="text-gray-700 font-medium dark:text-gray-300">Contract Address</h3>
-                                        <span className="text-gray-600 text-sm dark:text-gray-400">{asset.marketItems[0].nftContract}</span>
+                                        {/* <span className="text-gray-600 text-sm dark:text-gray-400">{asset.marketItems[0].nftContract}</span> */}
+                                        <span className="text-gray-600 text-sm dark:text-gray-400 cursor-pointer" onClick={() => {navigator.clipboard.writeText(copy)}}><FaCopy/></span>
                                     </div>
                                     <div className="flex items-center justify-between my-4">
                                         <h3 className="text-gray-700 font-medium dark:text-gray-300">Token ID</h3>
