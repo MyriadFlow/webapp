@@ -282,6 +282,7 @@ export default function CreateItem() {
                 />
 
 
+<p className="font-semibold text-lg my-6">Category</p>
 <Multiselect
         isObject={false}
         onRemove={(event) => {
@@ -297,7 +298,7 @@ export default function CreateItem() {
         showCheckbox
       />
 
-                <div
+                {/* <div
                   onClick={() => Setopendrop(!opendrop)}
                   className="flex items-center cursor-pointer justify-between border-b-2 shadow-sm p-2 px-4 group mt-8">
                   <p className="font-semibold text-lg">Category</p>
@@ -332,7 +333,7 @@ export default function CreateItem() {
                     <FaHeart className="h-6 w-6 text-gray-400 mx-1" />
                     <p className="text-md  text-gray-500 font-bold group-hover:text-black">Others</p>
                   </div>
-                </div>}
+                </div>} */}
 
               </div>}
 
