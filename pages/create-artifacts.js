@@ -24,20 +24,27 @@ import Creatify from '../artifacts/contracts/Creatify.sol/Creatify.json'
 import Marketplace from '../artifacts/contracts/Marketplace.sol/Marketplace.json'
 import Header from '../Components/Header'
 import Footer from "../Components/Footer"
+import BuyAsset from "../Components/buyAssetModal";
+import { Alert, Snackbar } from "@mui/material";
 
 export default function CreateItem() {
 
-  const filepicker = () => {
+  const [model, setmodel] = useState(false);
+  const [modelmsg, setmodelmsg] = useState("Transaction in progress!");
+
+  const filepicker = (e) => {
+    e.preventDefault();
     const default_btn = document.querySelector("#default_btn");
     default_btn.click()
-  }
+  };
 
 
   const [fileUrl, setFileUrl] = useState(null)
-  const [formInput, updateFormInput] = useState({ price: '', name: '', description: '', alternettext: '' })
-  const router = useRouter()
+  const [formInput, updateFormInput] = useState({ price: '', name: '', description: '', alternettext: '' });
+  const router = useRouter();
 
   async function onChange(e) {
+    e.preventDefault();
     const file = e.target.files[0]
     try {
       const added = await client.add(
@@ -45,16 +52,23 @@ export default function CreateItem() {
         {
           progress: (prog) => console.log(`received: ${prog}`)
         }
-      )
+      );
       const url = `https://ipfs.infura.io/ipfs/${added.path}`
-      setFileUrl(url)
+      setFileUrl(url);
     } catch (error) {
-      console.log('Error uploading file: ', error)
+      console.log('Error uploading file: ', error);
     }
   }
   async function createMarket() {
-    const { name, description, price, alternettext } = formInput
-    if (!name || !description || !price || !fileUrl) return
+    const { name, description, price, alternettext } = formInput;
+    if (!name || !description || !price || !fileUrl) {
+      setAlertMsg("Please Fill All Fields");
+      setOpen(true);
+      return;
+    }
+    setmodelmsg("Transaction 1 in  progress");
+    setmodel(true);
+
     /* first, upload to IPFS */
     const data = JSON.stringify({
       name, description, image: `ipfs://${fileUrl.substr(28, 71)}`, alternettext, attributes, categories
@@ -67,6 +81,7 @@ export default function CreateItem() {
       /* after file is uploaded to IPFS, pass the URL to save it on Polygon */
       createSale(ipfsHash, url)
     } catch (error) {
+      setmodelmsg("Transaction failed");
       console.log('Error uploading file: ', error)
     }
   }
@@ -80,22 +95,50 @@ export default function CreateItem() {
     /* next, create the item */
     let contract = new ethers.Contract(creatifyAddress, Creatify.abi, signer)
     console.log("ipfs://" + ipfsHash);
-    let transaction = await contract.createArtifact(url);
-    let tx = await transaction.wait();
-    let event = tx.events[0]
-    let value = event.args[2]
 
+    try{
+      let transaction = await contract.createArtifact(url);
+      let tx = await transaction.wait();
+      setmodelmsg("Transaction 1 Complete");
+      let event = tx.events[0]
+    let value = event.args[2]
     let tokenId = value.toNumber()
     const price = ethers.utils.parseUnits(formInput.price, 'ether')
+    await listItem(transaction, contract, tokenId, price , signer);
+    } catch (e) {
+      console.log(e);
+      setmodelmsg("Transaction 1 failed");
+      return;
+    }
 
     /* then list the item for sale on the marketplace */
-    contract = new ethers.Contract(marketplaceAddress, Marketplace.abi, signer)
-    transaction = await contract.createMarketItem(creatifyAddress, tokenId, price)
-    await transaction.wait()
+    // contract = new ethers.Contract(marketplaceAddress, Marketplace.abi, signer)
+    // transaction = await contract.createMarketItem(creatifyAddress, tokenId, price)
+    // await transaction.wait()
     router.push('/home')
   }
 
-
+  const listItem = async(transaction, contract, tokenId, price, signer) => {
+    try {
+      setmodelmsg("Transaction 2 in progress");
+      contract = new ethers.Contract(
+        marketplaceAddress,
+        Marketplace.abi,
+        signer
+      );
+      transaction = await contract.createMarketItem(
+        creatifyAddress,
+        tokenId,
+        price
+      );
+      await transaction.wait();
+      console.log("transaction completed");
+      setmodelmsg("Transaction 2 Complete !!");
+    } catch (e) {
+      console.log(e);
+      setmodelmsg("Transaction 2 failed");
+    }
+  };
   const [opendrop, Setopendrop] = useState(false);
   const [advancemenu, Setadvancemenu] = useState(false);
 
@@ -130,6 +173,21 @@ export default function CreateItem() {
     setInputFields(values);
   }
 
+  const [open, setOpen] = useState(false);
+  const [alertMsg, setAlertMsg] = useState("Something went wrong");
+
+  const handleClick = () => {
+    setOpen(true);
+  };
+
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setOpen(false);
+  }
+
   const [options, setOptions] = useState(["Art", "Music", "Sports", "Video", "Cartoon", "Others"]);
   const [categories, setCategory] = useState([]);
 
@@ -137,6 +195,19 @@ export default function CreateItem() {
   return (
     <div className="dark:bg-gray-800" style={{ minHeight: '100vh' }}>
       <Header />
+
+      <Snackbar
+        anchorOrigin={{ vertical: "top", horizontal: "right" }}
+        open={open}
+        autoHideDuration={6000}
+        onClose={handleClose}
+      >
+        <Alert onClose={handleClose} severity="error" sx={{ width: "100%" }}>
+          {alertMsg}
+        </Alert>
+      </Snackbar>
+      {model && <BuyAsset open={model} setOpen={setmodel} message={modelmsg} />}
+
       <div className="w-full relative mt-16 shadow-2xl rounded  overflow-hidden">
         <div className="h-64 w-full bg-blue-600 overflow-hidden relative" >
           <img src="https://images.unsplash.com/photo-1503264116251-35a269479413?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80" alt="" className="bg w-full h-full object-cover object-center absolute z-0" />
@@ -204,8 +275,18 @@ export default function CreateItem() {
                     <p className="text-lg font-semibold dark:text-white">Preview</p>
                     <div className={fileUrl ? "h-auto w-full mt-4 rounded-md upload" : "h-80 w-full mt-4 rounded-md upload bg-white dark:bg-gray-900 flex justify-center items-center"}>
 
-                      {fileUrl ? <img src={fileUrl} alt="" className="w-full h-72 flex justify-center" /> : <p className="flex justify-center upload_p">Upload file to preview your brand new NFT</p>}
-
+                      {/* {fileUrl ? <img src={fileUrl} alt="" className="w-full h-72 flex justify-center" /> : <p className="flex justify-center upload_p">Upload file to preview your brand new NFT</p>} */}
+                      {fileUrl ? (
+                        <img
+                          src={fileUrl}
+                          alt=""
+                          className="w-full h-72 flex justify-center"
+                        />
+                      ) : (
+                        <p className="flex justify-center upload_p">
+                          Upload file to preview your brand new NFT
+                        </p>
+                      )}
 
                     </div>
                   </div>
@@ -222,11 +303,11 @@ export default function CreateItem() {
               {advancemenu ? " Hide advanced menu" : "Show advanced menu"}
             </div>
 
-            {advancemenu &&
+            {advancemenu && (
               <div>
-                <p className="text-md font-semibold mt-6"> Properties <span className="text-gray-400">(Optipnal) </span></p>
+                <p className="text-md font-semibold mt-6">{" "} Properties <span className="text-gray-400">(Optipnal) </span></p>
                 <form onSubmit={handleSubmit}>
-                  {attributes.map(inputField => (
+                  {attributes.map((inputField) => (
                     <div key={inputField.id}>
                       <div className="flex flex-col space-y-4 md:space-y-0 md:flex-row md:space-x-4 pb-2">
                       <input
@@ -236,7 +317,7 @@ export default function CreateItem() {
                           className="mt-2 p-3 w-full text-sm input_background outline-none rounded-md dark:bg-gray-900"
                           variant="filled"
                           value={inputField.display_type}
-                          onChange={event => handleChangeInput(inputField.id, event)}
+                          onChange={(event) => handleChangeInput(inputField.id, event)}
                         />
                         <input
                           name="trait_type"
@@ -245,7 +326,7 @@ export default function CreateItem() {
                           className="mt-2 p-3 w-full text-sm input_background outline-none rounded-md dark:bg-gray-900"
                           variant="filled"
                           value={inputField.trait_type}
-                          onChange={event => handleChangeInput(inputField.id, event)}
+                          onChange={(event) => handleChangeInput(inputField.id, event)}
                         />
                         <input
                           name="value"
@@ -255,7 +336,7 @@ export default function CreateItem() {
                           className="mt-2 p-3 w-full text-sm input_background outline-none rounded-md dark:bg-gray-900"
                           variant="filled"
                           value={inputField.value}
-                          onChange={event => handleChangeInput(inputField.id, event)}
+                          onChange={(event) => handleChangeInput(inputField.id, event)}
                         />
 
                         <button disabled={attributes.length === 1} onClick={() => handleRemoveFields(inputField.id)}>
@@ -278,7 +359,7 @@ export default function CreateItem() {
                 <input
                   placeholder="Image description in details"
                   className="mt-2 p-3 w-full text-sm input_background outline-none rounded-md dark:bg-gray-900  "
-                  onChange={e => updateFormInput({ ...formInput, alternettext: e.target.value })}
+                  onChange={(e) => updateFormInput({ ...formInput, alternettext: e.target.value })}
                 />
 
 
@@ -296,6 +377,10 @@ export default function CreateItem() {
         options={options}
         selectedValues={[]}
         showCheckbox
+        // optionContainer={ 
+        //   backgroundColor='red'
+        //   }
+        
       />
 
                 {/* <div
@@ -335,7 +420,7 @@ export default function CreateItem() {
                   </div>
                 </div>} */}
 
-              </div>}
+              </div>)}
 
             <div className='flex items-center justify-center'>
               <img className="w-96 align-middle pt-3" src="/asset.svg"></img>
