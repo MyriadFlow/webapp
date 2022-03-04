@@ -43,7 +43,7 @@ function asset({ asset }) {
     return (
         <div className="w-full">
             <Header />
-            <div className="grid place-items-center h-screen bg-gray-100 dark:bg-gray-300">
+            <div className="grid place-items-center h-max bg-gray-100 dark:bg-gray-300">
                 <div className="cursor-pointer w-full lg:w-1/2 md:w-1/2">
                     {/* <div className="scale-150"> */}
                         <AssetComp uri={asset.marketItems[0] ? asset.marketItems[0].metaDataUri.substr(7, 50) : ""} />
@@ -119,19 +119,15 @@ function asset({ asset }) {
 
                         <div className="flex flex-col lg:flex-row my-8">
                             <div className="w-full lg:w-1/2 order-2">
-                                <div className="border rounded-md w-full px-4 py-3">
-                                <h3 className="text-gray-700 font-medium dark:text-white">Properties</h3>
+                               
                                     <AssetProps uri={asset.marketItems[0] ? asset.marketItems[0].metaDataUri.substr(7, 50) : ""} />
-                                </div>
+                                
                             </div>
                             <div className="w-full mb-8 flex-shrink-0 order-1 lg:w-1/2 lg:mb-0 lg:order-2">
                                 <div className="flex justify-center lg:justify-end">
-                                    <div className="border rounded-md max-w-md w-full px-4 py-3">
-                                        <h3 className="text-gray-700 font-medium dark:text-white">Categories</h3>
-                                        <div className="flex flex-row justify-between mt-6">
+                                    
                                         <AssetCategories uri={asset.marketItems[0] ? asset.marketItems[0].metaDataUri.substr(7, 50) : ""} />
-                                        </div>
-                                    </div>
+                                        
                                 </div>
                             </div>
                         </div>

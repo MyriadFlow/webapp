@@ -10,7 +10,7 @@ const assetProperties = ({ uri }) => {
         const { data } = await axios.get(
             `https://ipfs.io/ipfs/${uri}`
         );
-        setResponse(data.attributes);
+        setResponse(data.attributes?data.attributes:'');
         // console.log(data);
     }
 
@@ -19,6 +19,9 @@ const assetProperties = ({ uri }) => {
     }, [uri]);
 
     return (
+        response && (
+        <div className="border rounded-md w-full px-4 py-3">
+        <h3 className="text-gray-700 font-medium dark:text-white">Properties</h3>
         <div style={{ minHeight: 80 }}>
             {response.length > 0 ? response.map((item) => {
 
@@ -50,6 +53,7 @@ const assetProperties = ({ uri }) => {
                 </div>)
             }) : null}
         </div>
+        </div>)
     )
 }
 
