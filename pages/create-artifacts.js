@@ -96,15 +96,15 @@ export default function CreateItem() {
     let contract = new ethers.Contract(creatifyAddress, Creatify.abi, signer)
     console.log("ipfs://" + ipfsHash);
 
-    try{
+    try {
       let transaction = await contract.createArtifact(url);
       let tx = await transaction.wait();
       setmodelmsg("Transaction 1 Complete");
       let event = tx.events[0]
-    let value = event.args[2]
-    let tokenId = value.toNumber()
-    const price = ethers.utils.parseUnits(formInput.price, 'ether')
-    await listItem(transaction, contract, tokenId, price , signer);
+      let value = event.args[2]
+      let tokenId = value.toNumber()
+      const price = ethers.utils.parseUnits(formInput.price, 'ether')
+      await listItem(transaction, contract, tokenId, price, signer);
     } catch (e) {
       console.log(e);
       setmodelmsg("Transaction 1 failed");
@@ -118,7 +118,7 @@ export default function CreateItem() {
     router.push('/home')
   }
 
-  const listItem = async(transaction, contract, tokenId, price, signer) => {
+  const listItem = async (transaction, contract, tokenId, price, signer) => {
     try {
       setmodelmsg("Transaction 2 in progress");
       contract = new ethers.Contract(
@@ -144,7 +144,7 @@ export default function CreateItem() {
 
 
   const [attributes, setInputFields] = useState([
-    { id: uuidv4(), display_type:'', trait_type: '', value: '' },
+    { id: uuidv4(), display_type: '', trait_type: '', value: '' },
   ]);
 
   const handleSubmit = (e) => {
@@ -164,7 +164,7 @@ export default function CreateItem() {
   }
 
   const handleAddFields = () => {
-    setInputFields([...attributes, { id: uuidv4(), display_type:'', trait_type: '' , value: ''}])
+    setInputFields([...attributes, { id: uuidv4(), display_type: '', trait_type: '', value: '' }])
   }
 
   const handleRemoveFields = id => {
@@ -208,7 +208,7 @@ export default function CreateItem() {
       </Snackbar>
       {model && <BuyAsset open={model} setOpen={setmodel} message={modelmsg} />}
 
-      <div className="w-full relative mt-16 shadow-2xl rounded  overflow-hidden">
+      <div className="w-full relative lg:mt-16 shadow-2xl rounded  overflow-hidden mt-0">
         <div className="h-64 w-full bg-blue-600 overflow-hidden relative" >
           <img src="https://images.unsplash.com/photo-1503264116251-35a269479413?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80" alt="" className="bg w-full h-full object-cover object-center absolute z-0" />
           <div className="flex flex-col justify-center items-center relative h-full bg-black bg-opacity-50 text-white">
@@ -220,7 +220,7 @@ export default function CreateItem() {
 
 
           <div className="col-span-12 md:border-solid md:border-r md:border-black md:border-opacity-25 h-full md:col-span-6">
-            <div className="p-16 pt-10">
+            <div className="lg:p-16 pt-10 p-4">
               <form action="#" className="flex flex-col space-y-8">
 
                 <div>
@@ -271,7 +271,7 @@ export default function CreateItem() {
                         className="upload_color bg-purple-500 dark:bg-gray-500 hover:bg-purple-300 py-2 px-4 rounded-md text-white">Choose File</button>
                     </div>
                   </div>
-                  <div className="w-full" style={{ marginTop: -20 }}>
+                  <div className="w-full pt-10 lg:pt-0 md:pt-0" style={{ marginTop: -20 }}>
                     <p className="text-lg font-semibold dark:text-white">Preview</p>
                     <div className={fileUrl ? "h-auto w-full mt-4 rounded-md upload" : "h-80 w-full mt-4 rounded-md upload bg-white dark:bg-gray-900 flex justify-center items-center"}>
 
@@ -310,7 +310,7 @@ export default function CreateItem() {
                   {attributes.map((inputField) => (
                     <div key={inputField.id}>
                       <div className="flex flex-col space-y-4 md:space-y-0 md:flex-row md:space-x-4 pb-2">
-                      <input
+                        <input
                           name="display_type"
                           label="First Name"
                           placeholder="Display type"
@@ -363,25 +363,26 @@ export default function CreateItem() {
                 />
 
 
-<p className="font-semibold text-lg my-6">Category</p>
-<Multiselect
-        isObject={false}
-        onRemove={(event) => {
-          setCategory(event);
-          // console.log(event);
-        }}
-        onSelect={(event) => {
-          setCategory(event);
-          // console.log(event);
-        }}
-        options={options}
-        selectedValues={[]}
-        showCheckbox
-        // optionContainer={ 
-        //   backgroundColor='red'
-        //   }
-        
-      />
+                <p className="font-semibold text-lg my-6">Category</p>
+                <Multiselect
+                  isObject={false}
+                  onRemove={(event) => {
+                    setCategory(event);
+                  }}
+                  onSelect={(event) => {
+                    setCategory(event);
+                  }}
+                  options={options}
+                  selectedValues={[]}
+                  showCheckbox
+                  style={{
+                    optionContainer: {
+                      background: '#42C2FF',
+                      color: 'white',
+                    },
+                  }}
+
+                />
 
                 {/* <div
                   onClick={() => Setopendrop(!opendrop)}
@@ -430,8 +431,8 @@ export default function CreateItem() {
 
 
         </div>
-        <div className='flex items-center justify-center mt-4 mb-12'>
-          <button onClick={createMarket} className="bg-blue-500 dark:bg-black text-white py-4 px-8 w-full md:w-1/3 mt-2 md:mt-3 rounded-md">
+        <div className='flex items-center justify-center mt-4 lg:mb-12 md:mb-12'>
+          <button onClick={createMarket} className="bg-blue-500 dark:bg-black text-white py-4 px-8 w-full md:w-1/3 mt-2 md:mt-3 lg:rounded-md md:rounded-md">
             Create Digital Artifact
           </button>
         </div>
