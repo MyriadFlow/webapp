@@ -28,6 +28,7 @@ import HomeComp2 from "../Components/homecomp2";
 
 import { gql } from "@apollo/client";
 import client from "../apollo-client";
+import Layout from "../Components/Layout";
 
 export async function getStaticProps() {
 	const { data } = await client.query({
@@ -120,8 +121,7 @@ function Home({ marketItems }) {
 		loadNFTs()
 	}
 	return (
-		<div >
-			<Header />
+		<Layout>
 			{model &&
 				<div className="flex items-center  shadow-md justify-center w-full h-screen model-overlay fixed z-50">
 					<div className="h-56 w-80 bg-white shadow-lg rounded-md fixed z-50 flex items-center justify-center  ring-offset-2 ring-2 ring-blue-400">
@@ -208,8 +208,7 @@ function Home({ marketItems }) {
 					</div>
 				</div>
 			</main>
-			<Footer />
-		</div>
+			</Layout>
 	)
 }
 export default Home

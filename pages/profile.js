@@ -7,6 +7,7 @@ import { BiReset } from "react-icons/bi"
 import { useSelector } from "react-redux";
 import { selectUser } from "../slices/userSlice"
 import { useState } from 'react';
+import Layout from "../Components/Layout";
 
 function Profile() {
 
@@ -14,9 +15,7 @@ function Profile() {
     const [page, setPage] = useState("collected");
 
     return (
-        <div className=" w-full">
-            <Header />
-
+        <Layout>
             <div
                 className="w-full h-64 object-cover" style={{ backgroundColor: '#005bbd', backgroundImage: 'url("https://www.transparenttextures.com/patterns/food.png")' }}>
             </div>
@@ -70,13 +69,7 @@ function Profile() {
                 <div className="min-h-screen text-center">activity</div>
             )}
 
-            <Footer />
-        </div>
-
-
-
-
-
+</Layout>
     )
 }
 

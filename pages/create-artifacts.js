@@ -12,6 +12,7 @@ import { MdMusicNote } from "react-icons/md"
 import { RiArrowDropDownLine } from "react-icons/ri";
 import { v4 as uuidv4 } from 'uuid';
 import Multiselect from "multiselect-react-dropdown";
+import Layout from "../Components/Layout";
 
 
 const client = ipfsHttpClient('https://ipfs.infura.io:5001/api/v0')
@@ -193,8 +194,8 @@ export default function CreateItem() {
 
 
   return (
+    <Layout>
     <div className="dark:bg-gray-800" style={{ minHeight: '100vh' }}>
-      <Header />
 
       <Snackbar
         anchorOrigin={{ vertical: "top", horizontal: "right" }}
@@ -437,8 +438,7 @@ export default function CreateItem() {
           </button>
         </div>
       </div>
-
-      <Footer />
     </div>
+    </Layout>
   )
 }

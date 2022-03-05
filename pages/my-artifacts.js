@@ -13,6 +13,7 @@ import {
 
 import Creatify from '../artifacts/contracts/Creatify.sol/Creatify.json'
 import Marketplace from '../artifacts/contracts/Marketplace.sol/Marketplace.json'
+import Layout from "../Components/Layout";
 
 export default function MyAssets() {
   const [nfts, setNfts] = useState([])
@@ -34,8 +35,7 @@ export default function MyAssets() {
     setLoadingState('loaded') 
   }
   return (
-    <div >
-      <Header />
+    <Layout>
       <div className="flex justify-center min-h-screen">
       <div className="p-4 pt-20">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-4">
@@ -72,8 +72,6 @@ export default function MyAssets() {
         </div>
       </div>
     </div>
-    <Footer />
-    </div>
-   
+    </Layout> 
   )
 }

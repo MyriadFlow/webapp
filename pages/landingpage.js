@@ -2,6 +2,7 @@ import Head from "next/head"
 import Link from "next/link";
 import Header from "../Components/Header";
 import Footer from "../Components/Footer";
+import Layout from "../Components/Layout";
 
 function landingpage() {
   return (
@@ -9,7 +10,7 @@ function landingpage() {
       <Head>
         <title>Marketplace</title>
       </Head>
-      <Header />
+      <Layout>
       <div className="background"></div>
       <div className="flex items-center justify-center px-3 sm:px-6 md:px-10" style={{marginTop:-650}}>
         <div className="rounded-lg">
@@ -31,6 +32,7 @@ function landingpage() {
         </div>
       </div>
       {/* <Footer /> */}
+      </Layout>
     </div>
   )
 }

@@ -13,6 +13,7 @@ import {
 
 import Creatify from '../artifacts/contracts/Creatify.sol/Creatify.json'
 import Marketplace from '../artifacts/contracts/Marketplace.sol/Marketplace.json'
+import Layout from "../Components/Layout";
 
 export default function CreatorDashboard() {
 	const [nfts, setNfts] = useState([])
@@ -56,8 +57,7 @@ export default function CreatorDashboard() {
 	}
 	// if (loadingState === 'loaded' && !nfts.length) return (<h1 className="py-10 px-20 text-3xl">No assets created</h1>)
 	return (
-		<div>
-			<Header />
+		<Layout>
 			<div className="p-4 px-10 min-h-screen">
 				<h2 className="text-xl pt-20 pb-4 border-b-2">Items Created</h2>
 				<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-4">
@@ -105,7 +105,6 @@ export default function CreatorDashboard() {
 					)
 				}
 			</div>
-			<Footer />
-		</div>
+			</Layout>
 	)
 }
