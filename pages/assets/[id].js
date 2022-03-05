@@ -13,6 +13,7 @@ import { gql } from "@apollo/client";
 import client from "../../apollo-client";
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import Layout from "../../Components/Layout";
 
 function Asset({ asset }) {
     console.log(asset);
@@ -41,8 +42,8 @@ function Asset({ asset }) {
 
     const copy = asset.marketItems[0].nftContract;
     return (
-        <div className="w-full">
-            <Header />
+        // <div className="w-full">
+            <Layout>
             <div className="grid place-items-center h-max bg-gray-100 dark:bg-gray-300">
                 <div className="cursor-pointer w-full lg:w-1/2 md:w-1/2">
                     {/* <div className="scale-150"> */}
@@ -135,8 +136,8 @@ function Asset({ asset }) {
                     </div>
                 </main>
             </div>
-            <Footer />
-        </div>
+            </Layout>
+        // </div>
     )
 }
 
