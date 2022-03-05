@@ -79,14 +79,14 @@ export default function CreateItem() {
       const url = `ipfs://${added.path}`
 
       /* after file is uploaded to IPFS, pass the URL to save it on Polygon */
-      createSale(ipfsHash, url)
+      createItem(ipfsHash, url)
     } catch (error) {
       setmodelmsg("Transaction failed");
       console.log('Error uploading file: ', error)
     }
   }
 
-  async function createSale(ipfsHash, url) {
+  async function createItem(ipfsHash, url) {
     const web3Modal = new Web3Modal()
     const connection = await web3Modal.connect()
     const provider = new ethers.providers.Web3Provider(connection)
@@ -153,7 +153,7 @@ export default function CreateItem() {
   };
 
   const handleChangeInput = (id, event) => {
-    const newInputFields = attributes.map(i => {
+    const newInputFields = attributes.map((i) => {
       if (id === i.id) {
         i[event.target.name] = event.target.value
       }
@@ -167,9 +167,9 @@ export default function CreateItem() {
     setInputFields([...attributes, { id: uuidv4(), display_type: '', trait_type: '', value: '' }])
   }
 
-  const handleRemoveFields = id => {
+  const handleRemoveFields = (id) => {
     const values = [...attributes];
-    values.splice(values.findIndex(value => value.id === id), 1);
+    values.splice(values.findIndex((value) => value.id === id), 1);
     setInputFields(values);
   }
 
@@ -231,20 +231,20 @@ export default function CreateItem() {
                 <input
                   placeholder="Asset Name"
                   className="mt-8 w-full input_background  rounded-md p-3 bg-white  dark:bg-gray-900 outline-none shadow-sm"
-                  onChange={e => updateFormInput({ ...formInput, name: e.target.value })}
+                  onChange={(e) => updateFormInput({ ...formInput, name: e.target.value })}
                 />
 
                 <div className="flex flex-col space-y-4 md:space-y-0 md:flex-row md:space-x-4">
 
                   <div className="form-item w-full">
                     <textarea type="text" placeholder="Asset Description" className="w-full input_background bg-white  dark:bg-gray-900 rounded-md shadow-sm p-3 outline-none "
-                      onChange={e => updateFormInput({ ...formInput, description: e.target.value })}
+                      onChange={(e) => updateFormInput({ ...formInput, description: e.target.value })}
                     />
                   </div>
 
                   <div className="form-item w-full">
                     <input type="text" placeholder="Asset Price in Eth" className="w-full input_background bg-white dark:bg-gray-900 rounded-md shadow-sm p-3 outline-none "
-                      onChange={e => updateFormInput({ ...formInput, price: e.target.value })}
+                      onChange={(e) => updateFormInput({ ...formInput, price: e.target.value })}
                     />
                   </div>
                 </div>
@@ -267,7 +267,7 @@ export default function CreateItem() {
                         hidden
                       />
                       <button
-                        onClick={filepicker}
+                        onClick={(e) => filepicker(e)}
                         className="upload_color bg-purple-500 dark:bg-gray-500 hover:bg-purple-300 py-2 px-4 rounded-md text-white">Choose File</button>
                     </div>
                   </div>
