@@ -195,197 +195,197 @@ export default function CreateItem() {
 
   return (
     <Layout>
-    <div className="dark:bg-gray-800" style={{ minHeight: '100vh' }}>
+      <div className="dark:bg-gray-800" style={{ minHeight: '100vh' }}>
 
-      <Snackbar
-        anchorOrigin={{ vertical: "top", horizontal: "right" }}
-        open={open}
-        autoHideDuration={6000}
-        onClose={handleClose}
-      >
-        <Alert onClose={handleClose} severity="error" sx={{ width: "100%" }}>
-          {alertMsg}
-        </Alert>
-      </Snackbar>
-      {model && <BuyAsset open={model} setOpen={setmodel} message={modelmsg} />}
+        <Snackbar
+          anchorOrigin={{ vertical: "top", horizontal: "right" }}
+          open={open}
+          autoHideDuration={6000}
+          onClose={handleClose}
+        >
+          <Alert onClose={handleClose} severity="error" sx={{ width: "100%" }}>
+            {alertMsg}
+          </Alert>
+        </Snackbar>
+        {model && <BuyAsset open={model} setOpen={setmodel} message={modelmsg} />}
 
-      <div className="w-full relative lg:mt-16 shadow-2xl rounded  overflow-hidden mt-0">
-        <div className="h-64 w-full bg-blue-600 overflow-hidden relative" >
-          <img src="https://images.unsplash.com/photo-1503264116251-35a269479413?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80" alt="" className="bg w-full h-full object-cover object-center absolute z-0" />
-          <div className="flex flex-col justify-center items-center relative h-full bg-black bg-opacity-50 text-white">
-            <h1 className="text-2xl font-semibold">CREATE YOUR ASSET</h1>
+        <div className="w-full relative lg:mt-16 shadow-2xl rounded  overflow-hidden mt-0">
+          <div className="h-64 w-full bg-blue-600 overflow-hidden relative" >
+            <img src="https://images.unsplash.com/photo-1503264116251-35a269479413?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80" alt="" className="bg w-full h-full object-cover object-center absolute z-0" />
+            <div className="flex flex-col justify-center items-center relative h-full bg-black bg-opacity-50 text-white">
+              <h1 className="text-2xl font-semibold">CREATE YOUR ASSET</h1>
+            </div>
           </div>
-        </div>
-        <div className="grid grid-cols-10 bg-white dark:bg-gray-800">
+          <div className="grid grid-cols-10 bg-white dark:bg-gray-800">
 
 
 
-          <div className="col-span-12 md:border-solid md:border-r md:border-black md:border-opacity-25 h-full md:col-span-6">
-            <div className="lg:p-16 pt-10 p-4">
-              <form action="#" className="flex flex-col space-y-8">
+            <div className="col-span-12 md:border-solid md:border-r md:border-black md:border-opacity-25 h-full md:col-span-6">
+              <div className="lg:p-16 pt-10 p-4">
+                <form action="#" className="flex flex-col space-y-8">
 
-                <div>
-                  <h3 className="text-2xl font-semibold pb-1">Your Asset Information</h3>
-                  <hr />
-                </div>
-
-                <input
-                  placeholder="Asset Name"
-                  className="mt-8 w-full input_background  rounded-md p-3 bg-white  dark:bg-gray-900 outline-none shadow-sm"
-                  onChange={(e) => updateFormInput({ ...formInput, name: e.target.value })}
-                />
-
-                <div className="flex flex-col space-y-4 md:space-y-0 md:flex-row md:space-x-4">
-
-                  <div className="form-item w-full">
-                    <textarea type="text" placeholder="Asset Description" className="w-full input_background bg-white  dark:bg-gray-900 rounded-md shadow-sm p-3 outline-none "
-                      onChange={(e) => updateFormInput({ ...formInput, description: e.target.value })}
-                    />
+                  <div>
+                    <h3 className="text-2xl font-semibold pb-1">Your Asset Information</h3>
+                    <hr />
                   </div>
 
-                  <div className="form-item w-full">
-                    <input type="text" placeholder="Asset Price in Eth" className="w-full input_background bg-white dark:bg-gray-900 rounded-md shadow-sm p-3 outline-none "
-                      onChange={(e) => updateFormInput({ ...formInput, price: e.target.value })}
-                    />
-                  </div>
-                </div>
+                  <input
+                    placeholder="Asset Name"
+                    className="mt-8 w-full input_background  rounded-md p-3 bg-white  dark:bg-gray-900 outline-none shadow-sm"
+                    onChange={(e) => updateFormInput({ ...formInput, name: e.target.value })}
+                  />
 
-                <div>
-                  <h3 className="text-2xl font-semibold pb-1">Upload File</h3>
-                  <hr />
-                </div>
+                  <div className="flex flex-col space-y-4 md:space-y-0 md:flex-row md:space-x-4">
 
-                <div className="w-full flex flex-col md:flex-row md:space-x-4 space-y-4 md:space-y-0">
-                  <div className="w-full rounded-md  mt-6 upload flex justify-center bg-white dark:bg-gray-900 ">
-                    <div className="flex flex-col items-center justify-center">
-                      <p className="text-md mb-3 upload_p pl-2">PNG, GIF, WEBP, MP4 or MP3. Max 100mb.</p>
-                      <input
-                        type="file"
-                        name="Asset"
-                        classsName="ml-32"
-                        onChange={onChange}
-                        id="default_btn"
-                        hidden
+                    <div className="form-item w-full">
+                      <textarea type="text" placeholder="Asset Description" className="w-full input_background bg-white  dark:bg-gray-900 rounded-md shadow-sm p-3 outline-none "
+                        onChange={(e) => updateFormInput({ ...formInput, description: e.target.value })}
                       />
-                      <button
-                        onClick={(e) => filepicker(e)}
-                        className="upload_color bg-purple-500 dark:bg-gray-500 hover:bg-purple-300 py-2 px-4 rounded-md text-white">Choose File</button>
+                    </div>
+
+                    <div className="form-item w-full">
+                      <input type="text" placeholder="Asset Price in Eth" className="w-full input_background bg-white dark:bg-gray-900 rounded-md shadow-sm p-3 outline-none "
+                        onChange={(e) => updateFormInput({ ...formInput, price: e.target.value })}
+                      />
                     </div>
                   </div>
-                  <div className="w-full pt-10 lg:pt-0 md:pt-0" style={{ marginTop: -20 }}>
-                    <p className="text-lg font-semibold dark:text-white">Preview</p>
-                    <div className={fileUrl ? "h-auto w-full mt-4 rounded-md upload" : "h-80 w-full mt-4 rounded-md upload bg-white dark:bg-gray-900 flex justify-center items-center"}>
 
-                      {/* {fileUrl ? <img src={fileUrl} alt="" className="w-full h-72 flex justify-center" /> : <p className="flex justify-center upload_p">Upload file to preview your brand new NFT</p>} */}
-                      {fileUrl ? (
-                        <img
-                          src={fileUrl}
-                          alt=""
-                          className="w-full h-72 flex justify-center"
-                        />
-                      ) : (
-                        <p className="flex justify-center upload_p">
-                          Upload file to preview your brand new NFT
-                        </p>
-                      )}
-
-                    </div>
+                  <div>
+                    <h3 className="text-2xl font-semibold pb-1">Upload File</h3>
+                    <hr />
                   </div>
-                </div>
-              </form>
-            </div>
-          </div>
 
-          <div className="col-span-12 w-full px-8 py-6 justify-center flex space-x-4 md:space-x-0 md:space-y-4 flex-col md:col-span-4 md:justify-start ">
-
-            <div className="bg-gray-100 shadow-sm cursor-pointer  mt-10 p-4 flex justify-center hover:shadow-xl border-2 border-gray-300 rounded-xl font-semibold text-md  dark:bg-gray-800 border-dashed "
-              onClick={() => Setadvancemenu(!advancemenu)}
-            >
-              {advancemenu ? " Hide advanced menu" : "Show advanced menu"}
-            </div>
-
-            {advancemenu && (
-              <div>
-                <p className="text-md font-semibold mt-6">{" "} Properties <span className="text-gray-400">(Optipnal) </span></p>
-                <form onSubmit={handleSubmit}>
-                  {attributes.map((inputField) => (
-                    <div key={inputField.id}>
-                      <div className="flex flex-col space-y-4 md:space-y-0 md:flex-row md:space-x-4 pb-2">
+                  <div className="w-full flex flex-col md:flex-row md:space-x-4 space-y-4 md:space-y-0">
+                    <div className="w-full rounded-md  mt-6 upload flex justify-center bg-white dark:bg-gray-900 ">
+                      <div className="flex flex-col items-center justify-center">
+                        <p className="text-md mb-3 upload_p pl-2">PNG, GIF, WEBP, MP4 or MP3. Max 100mb.</p>
                         <input
-                          name="display_type"
-                          label="First Name"
-                          placeholder="Display type"
-                          className="mt-2 p-3 w-full text-sm input_background outline-none rounded-md dark:bg-gray-900"
-                          variant="filled"
-                          value={inputField.display_type}
-                          onChange={(event) => handleChangeInput(inputField.id, event)}
+                          type="file"
+                          name="Asset"
+                          classsName="ml-32"
+                          onChange={onChange}
+                          id="default_btn"
+                          hidden
                         />
-                        <input
-                          name="trait_type"
-                          label="Last Name"
-                          placeholder="Trait type"
-                          className="mt-2 p-3 w-full text-sm input_background outline-none rounded-md dark:bg-gray-900"
-                          variant="filled"
-                          value={inputField.trait_type}
-                          onChange={(event) => handleChangeInput(inputField.id, event)}
-                        />
-                        <input
-                          name="value"
-                          type="number"
-                          label="First Name"
-                          placeholder="Value"
-                          className="mt-2 p-3 w-full text-sm input_background outline-none rounded-md dark:bg-gray-900"
-                          variant="filled"
-                          value={inputField.value}
-                          onChange={(event) => handleChangeInput(inputField.id, event)}
-                        />
-
-                        <button disabled={attributes.length === 1} onClick={() => handleRemoveFields(inputField.id)}>
-                          <FaMinusSquare style={{ color: 'red' }} />
-                        </button>
                         <button
-                          onClick={handleAddFields}
-                        >
-                          <FaPlusSquare style={{ color: 'green' }} />
-                        </button>
+                          onClick={(e) => filepicker(e)}
+                          className="upload_color bg-purple-500 dark:bg-gray-500 hover:bg-purple-300 py-2 px-4 rounded-md text-white">Choose File</button>
                       </div>
                     </div>
-                  ))}
+                    <div className="w-full pt-10 lg:pt-0 md:pt-0" style={{ marginTop: -20 }}>
+                      <p className="text-lg font-semibold dark:text-white">Preview</p>
+                      <div className={fileUrl ? "h-auto w-full mt-4 rounded-md upload" : "h-80 w-full mt-4 rounded-md upload bg-white dark:bg-gray-900 flex justify-center items-center"}>
+
+                        {/* {fileUrl ? <img src={fileUrl} alt="" className="w-full h-72 flex justify-center" /> : <p className="flex justify-center upload_p">Upload file to preview your brand new NFT</p>} */}
+                        {fileUrl ? (
+                          <img
+                            src={fileUrl}
+                            alt=""
+                            className="w-full h-72 flex justify-center"
+                          />
+                        ) : (
+                          <p className="flex justify-center upload_p">
+                            Upload file to preview your brand new NFT
+                          </p>
+                        )}
+
+                      </div>
+                    </div>
+                  </div>
                 </form>
+              </div>
+            </div>
+
+            <div className="col-span-12 w-full px-8 py-6 justify-center flex space-x-4 md:space-x-0 md:space-y-4 flex-col md:col-span-4 md:justify-start ">
+
+              <div className="bg-gray-100 shadow-sm cursor-pointer  mt-10 p-4 flex justify-center hover:shadow-xl border-2 border-gray-300 rounded-xl font-semibold text-md  dark:bg-gray-800 border-dashed "
+                onClick={() => Setadvancemenu(!advancemenu)}
+              >
+                {advancemenu ? " Hide advanced menu" : "Show advanced menu"}
+              </div>
+
+              {advancemenu && (
+                <div>
+                  <p className="text-md font-semibold mt-6">{" "} Properties <span className="text-gray-400">(Optipnal) </span></p>
+                  <form onSubmit={handleSubmit}>
+                    {attributes.map((inputField) => (
+                      <div key={inputField.id}>
+                        <div className="flex flex-col space-y-4 md:space-y-0 md:flex-row md:space-x-4 pb-2">
+                          <input
+                            name="display_type"
+                            label="First Name"
+                            placeholder="Display type"
+                            className="mt-2 p-3 w-full text-sm input_background outline-none rounded-md dark:bg-gray-900"
+                            variant="filled"
+                            value={inputField.display_type}
+                            onChange={(event) => handleChangeInput(inputField.id, event)}
+                          />
+                          <input
+                            name="trait_type"
+                            label="Last Name"
+                            placeholder="Trait type"
+                            className="mt-2 p-3 w-full text-sm input_background outline-none rounded-md dark:bg-gray-900"
+                            variant="filled"
+                            value={inputField.trait_type}
+                            onChange={(event) => handleChangeInput(inputField.id, event)}
+                          />
+                          <input
+                            name="value"
+                            type="number"
+                            label="First Name"
+                            placeholder="Value"
+                            className="mt-2 p-3 w-full text-sm input_background outline-none rounded-md dark:bg-gray-900"
+                            variant="filled"
+                            value={inputField.value}
+                            onChange={(event) => handleChangeInput(inputField.id, event)}
+                          />
+
+                          <button disabled={attributes.length === 1} onClick={() => handleRemoveFields(inputField.id)}>
+                            <FaMinusSquare style={{ color: 'red' }} />
+                          </button>
+                          <button
+                            onClick={handleAddFields}
+                          >
+                            <FaPlusSquare style={{ color: 'green' }} />
+                          </button>
+                        </div>
+                      </div>
+                    ))}
+                  </form>
 
 
 
 
-                <p className="text-md font-semibold mt-6"> Alternative text for NFT <span className="text-gray-400">(Optipnal) </span></p>
-                <input
-                  placeholder="Image description in details"
-                  className="mt-2 p-3 w-full text-sm input_background outline-none rounded-md dark:bg-gray-900  "
-                  onChange={(e) => updateFormInput({ ...formInput, alternettext: e.target.value })}
-                />
+                  <p className="text-md font-semibold mt-6"> Alternative text for NFT <span className="text-gray-400">(Optipnal) </span></p>
+                  <input
+                    placeholder="Image description in details"
+                    className="mt-2 p-3 w-full text-sm input_background outline-none rounded-md dark:bg-gray-900  "
+                    onChange={(e) => updateFormInput({ ...formInput, alternettext: e.target.value })}
+                  />
 
 
-                <p className="font-semibold text-lg my-6">Category</p>
-                <Multiselect
-                  isObject={false}
-                  onRemove={(event) => {
-                    setCategory(event);
-                  }}
-                  onSelect={(event) => {
-                    setCategory(event);
-                  }}
-                  options={options}
-                  selectedValues={[]}
-                  showCheckbox
-                  style={{
-                    optionContainer: {
-                      background: '#42C2FF',
-                      color: 'white',
-                    },
-                  }}
+                  <p className="font-semibold text-lg my-6">Category</p>
+                  <Multiselect
+                    isObject={false}
+                    onRemove={(event) => {
+                      setCategory(event);
+                    }}
+                    onSelect={(event) => {
+                      setCategory(event);
+                    }}
+                    options={options}
+                    selectedValues={[]}
+                    showCheckbox
+                    style={{
+                      optionContainer: {
+                        background: '#42C2FF',
+                        color: 'white',
+                      },
+                    }}
 
-                />
+                  />
 
-                {/* <div
+                  {/* <div
                   onClick={() => Setopendrop(!opendrop)}
                   className="flex items-center cursor-pointer justify-between border-b-2 shadow-sm p-2 px-4 group mt-8">
                   <p className="font-semibold text-lg">Category</p>
@@ -422,23 +422,23 @@ export default function CreateItem() {
                   </div>
                 </div>} */}
 
-              </div>)}
+                </div>)}
 
-            <div className='flex items-center justify-center'>
-              <img className="w-96 align-middle pt-3" src="/asset.svg"></img>
+              <div className='flex items-center justify-center'>
+                <img className="w-96 align-middle pt-3" src="/asset.svg"></img>
+              </div>
             </div>
+
+
+
           </div>
-
-
-
-        </div>
-        <div className='flex items-center justify-center mt-4 lg:mb-12 md:mb-12'>
-          <button onClick={createMarket} className="bg-blue-500 dark:bg-black text-white py-4 px-8 w-full md:w-1/3 mt-2 md:mt-3 lg:rounded-md md:rounded-md">
-            Create Digital Artifact
-          </button>
+          <div className='flex items-center justify-center mt-4 lg:mb-12 md:mb-12'>
+            <button onClick={createMarket} className="bg-blue-500 dark:bg-black text-white py-4 px-8 w-full md:w-1/3 mt-2 md:mt-3 lg:rounded-md md:rounded-md">
+              Create Digital Artifact
+            </button>
+          </div>
         </div>
       </div>
-    </div>
     </Layout>
   )
 }

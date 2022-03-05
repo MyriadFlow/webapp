@@ -8,7 +8,7 @@ import AssetHead from "../../Components/assetHead";
 import AssetProps from "../../Components/assetProperties";
 import AssetCategories from "../../Components/AssetCategories";
 import { BsArrowUpRight } from "react-icons/bs";
-import {FaCopy} from "react-icons/fa";
+import { FaCopy } from "react-icons/fa";
 import { gql } from "@apollo/client";
 import client from "../../apollo-client";
 import React, { useEffect, useState } from 'react';
@@ -19,7 +19,7 @@ import Layout from "../../Components/Layout";
 
 function Asset({ asset }) {
     const [model, setmodel] = useState(false);
-  const [modelmsg, setmodelmsg] = useState("buying in progress!");
+    const [modelmsg, setmodelmsg] = useState("buying in progress!");
     console.log(asset);
     const nfturl = `https://ipfs.io/ipfs/${asset.marketItems[0].metaDataUri.substr(7, 50)}`;
 
@@ -47,11 +47,11 @@ function Asset({ asset }) {
     const copy = asset.marketItems[0].nftContract;
     return (
         // <div className="w-full">
-            <Layout>
+        <Layout>
             <div className="grid place-items-center h-max bg-gray-100 dark:bg-gray-300">
                 <div className="cursor-pointer w-full lg:w-1/2 md:w-1/2">
                     {/* <div className="scale-150"> */}
-                        <AssetComp uri={asset.marketItems[0] ? asset.marketItems[0].metaDataUri.substr(7, 50) : ""} />
+                    <AssetComp uri={asset.marketItems[0] ? asset.marketItems[0].metaDataUri.substr(7, 50) : ""} />
                     {/* </div> */}
                 </div>
             </div>
@@ -70,7 +70,7 @@ function Asset({ asset }) {
                                     <div className="flex items-center justify-between my-4">
                                         <h3 className="text-gray-700 font-medium dark:text-gray-300">Contract Address</h3>
                                         {/* <span className="text-gray-600 text-sm dark:text-gray-400">{asset.marketItems[0].nftContract}</span> */}
-                                        <span className="text-gray-600 text-sm dark:text-gray-400 cursor-pointer" onClick={() => {navigator.clipboard.writeText(copy)}}><FaCopy/></span>
+                                        <span className="text-gray-600 text-sm dark:text-gray-400 cursor-pointer" onClick={() => { navigator.clipboard.writeText(copy) }}><FaCopy /></span>
                                     </div>
                                     <div className="flex items-center justify-between my-4">
                                         <h3 className="text-gray-700 font-medium dark:text-gray-300">Token ID</h3>
@@ -113,11 +113,11 @@ function Asset({ asset }) {
                                             <span className="text-gray-600 mt-6 dark:text-gray-400">{asset.marketItems[0].price}</span>
                                         </div>
                                         <div className="flex items-center justify-end">
-                                            <button 
-                                            onClick={() =>
-                                                buyNFT(asset.marketItems[0], setmodel, setmodelmsg)
-                                              }
-                                            className="px-3 py-2 w-1/3 bg-blue-600 text-white text-sm font-medium rounded-md hover:bg-blue-500 focus:outline-none focus:bg-blue-500">
+                                            <button
+                                                onClick={() =>
+                                                    buyNFT(asset.marketItems[0], setmodel, setmodelmsg)
+                                                }
+                                                className="px-3 py-2 w-1/3 bg-blue-600 text-white text-sm font-medium rounded-md hover:bg-blue-500 focus:outline-none focus:bg-blue-500">
                                                 <span>Buy NFT</span>
                                             </button>
                                         </div>
@@ -128,24 +128,24 @@ function Asset({ asset }) {
 
                         <div className="flex flex-col lg:flex-row my-8">
                             <div className="w-full lg:w-1/2 order-2">
-                               
-                                    <AssetProps uri={asset.marketItems[0] ? asset.marketItems[0].metaDataUri.substr(7, 50) : ""} />
-                                
+
+                                <AssetProps uri={asset.marketItems[0] ? asset.marketItems[0].metaDataUri.substr(7, 50) : ""} />
+
                             </div>
                             <div className="w-full mb-8 flex-shrink-0 order-1 lg:w-1/2 lg:mb-0 lg:order-2">
                                 <div className="flex justify-center lg:justify-end">
-                                    
-                                        <AssetCategories uri={asset.marketItems[0] ? asset.marketItems[0].metaDataUri.substr(7, 50) : ""} />
-                                        
+
+                                    <AssetCategories uri={asset.marketItems[0] ? asset.marketItems[0].metaDataUri.substr(7, 50) : ""} />
+
                                 </div>
                             </div>
                         </div>
 
                     </div>
                 </main>
-                {model && <BuyAsset open={model} setOpen={setmodel} message={modelmsg} /> }
+                {model && <BuyAsset open={model} setOpen={setmodel} message={modelmsg} />}
             </div>
-            </Layout>
+        </Layout>
         // </div>
     )
 }

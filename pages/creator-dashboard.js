@@ -105,6 +105,6 @@ export default function CreatorDashboard() {
 					)
 				}
 			</div>
-			</Layout>
+		</Layout>
 	)
 }

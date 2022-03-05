@@ -106,7 +106,7 @@ function Home({ marketItems }) {
 	}
 	async function buyNft(nft) {
 		console.log(nft.price)
-	  setmodelmsg("Buying in Progress")
+		setmodelmsg("Buying in Progress")
 		/* needs the user to sign the transaction, so will use Web3Provider and sign it */
 		// const web3Modal = new Web3Modal()
 		// const connection = await web3Modal.connect()
@@ -137,7 +137,7 @@ function Home({ marketItems }) {
 					</div>
 				</div>} */}
 
-				{model && <BuyAsset open={model} setOpen={setmodel} message={modelmsg} />}
+			{model && <BuyAsset open={model} setOpen={setmodel} message={modelmsg} />}
 
 
 			{/* logout model  */}
@@ -175,46 +175,46 @@ function Home({ marketItems }) {
 						{marketItems.map((item) => {
 
 							console.log(item);
-							console.log(item.metaDataUri.substr(7,50));
+							console.log(item.metaDataUri.substr(7, 50));
 
 							return (
-							
-							<div
-								key={item.itemId}
-								className="bg-white dark:bg-gray-900  rounded-lg shadow-lg w-full lg:w-72 hover:scale-105 duration-200 transform transition cursor-pointer border-2 dark:border-gray-800">
-								
-								<Link key={item.itemId} href={`/assets/${item.itemId}`}>
-									<div>
-								<HomeComp uri={item ? item.metaDataUri.substr(7,50) : ""} />
+
+								<div
+									key={item.itemId}
+									className="bg-white dark:bg-gray-900  rounded-lg shadow-lg w-full lg:w-72 hover:scale-105 duration-200 transform transition cursor-pointer border-2 dark:border-gray-800">
+
+									<Link key={item.itemId} href={`/assets/${item.itemId}`}>
+										<div>
+											<HomeComp uri={item ? item.metaDataUri.substr(7, 50) : ""} />
 
 
-								<div className="flex px-4 py-6">
-									<HomeComp2 uri={item ? item.metaDataUri.substr(7,50) : ""} />
+											<div className="flex px-4 py-6">
+												<HomeComp2 uri={item ? item.metaDataUri.substr(7, 50) : ""} />
 
-								</div>
-								<div className=" flex items-center justify-between px-4 mb-2">
-									<p className="font-1 text-sm font-bold">Price </p>
-									<div className="flex items-center">
-										<FaEthereum className="h-4 w-4 text-blue-400" />
-										<p className="font-extralight dark:text-gray-400">{item.price}</p>
+											</div>
+											<div className=" flex items-center justify-between px-4 mb-2">
+												<p className="font-1 text-sm font-bold">Price </p>
+												<div className="flex items-center">
+													<FaEthereum className="h-4 w-4 text-blue-400" />
+													<p className="font-extralight dark:text-gray-400">{item.price}</p>
+												</div>
+											</div>
+
+
+
+										</div>
+									</Link>
+									<div className="px-4 py-4 bg-gray-100 dark:bg-gray-700 flex justify-between">
+										<button onClick={() => buyNft(item)} className="text-blue-500 hover:text-blue-400 font-bold">Buy now</button>
 									</div>
 								</div>
-
-								
-
-							</div>
-							</Link>
-							<div className="px-4 py-4 bg-gray-100 dark:bg-gray-700 flex justify-between">
-							<button onClick={() => buyNft(item)} className="text-blue-500 hover:text-blue-400 font-bold">Buy now</button>
-						</div>
-						</div>
 							)
 						})}
 
 					</div>
 				</div>
 			</main>
-			</Layout>
+		</Layout>
 	)
 }
 export default Home
