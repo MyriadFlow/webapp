@@ -24,7 +24,7 @@ const assetImage = ({uri}) => {
         <div>
              <img
                  src={`https://ipfs.io/ipfs/${preuri}`}
-                 alt="" className="h-20 p-2 w-20 object-fit" />
+                 alt="" className="h-40 p-2 w-40 object-fit" />
             </div>
     )
 }

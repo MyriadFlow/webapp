@@ -103,14 +103,14 @@ function Asset({ asset }) {
                                         </div>
                                         <div className="flex justify-between mt-6">
                                             <div className="flex">
-                                                <div className="h-20 w-20">
+                                                <div className="lg:h-40 lg:w-40">
                                                     <AssetImage uri={asset.marketItems[0] ? asset.marketItems[0].metaDataUri.substr(7, 50) : ""} />
                                                 </div>
-                                                <div className="mx-3 mt-6">
+                                                <div className="mx-3 mt-16">
                                                     <h3 className="text-sm text-gray-600"><AssetDesc uri={asset.marketItems[0] ? asset.marketItems[0].metaDataUri.substr(7, 50) : ""} /></h3>
                                                 </div>
                                             </div>
-                                            <span className="text-gray-600 mt-6 dark:text-gray-400">{asset.marketItems[0].price}</span>
+                                            <span className="text-gray-600 mt-16 dark:text-gray-400">{asset.marketItems[0].price}</span>
                                         </div>
                                         <div className="flex items-center justify-end">
                                             <button
