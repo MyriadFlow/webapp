@@ -21,12 +21,14 @@ export default function CreatorDashboard() {
 	const [loadingState, setLoadingState] = useState('not-loaded')
 	useEffect(() => {
 		loadNFTs()
-	}, [])
+	}, []);
+
 	async function loadNFTs() {
 		const web3Modal = new Web3Modal({
 			network: "mainnet",
 			cacheProvider: true,
-		})
+		});
+
 		const connection = await web3Modal.connect()
 		const provider = new ethers.providers.Web3Provider(connection)
 		const signer = provider.getSigner()
@@ -74,8 +76,6 @@ export default function CreatorDashboard() {
 								<FaEthereum className="h-6 w-6 text-white group-hover:text-black " />
 								<p className="text-white text-md  group-hover:text-black">0.1 ETH</p>
 							</div>
-
-
 						</div>
 					</div>
 

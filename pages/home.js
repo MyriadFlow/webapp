@@ -28,6 +28,8 @@ import HomeComp2 from "../Components/homecomp2";
 
 import { gql } from "@apollo/client";
 import client from "../apollo-client";
+import BuyAsset from "../Components/buyAssetModal";
+import { buyNFT } from "./api/buyNFT";
 import Layout from "../Components/Layout";
 
 export async function getStaticProps() {
@@ -81,6 +83,7 @@ function Home({ marketItems }) {
 	const [nfts, setNfts] = useState([])
 	const [filter, Setfilter] = useState(false);
 	const [model, setmodel] = useState(false);
+	const [modelmsg, setmodelmsg] = useState("buying in progress!");
 	// const [dropmenu, setdropmenu] = useState(false);
 
 
@@ -92,9 +95,8 @@ function Home({ marketItems }) {
 	const [loadingState, setLoadingState] = useState('not-loaded')
 	useEffect(() => {
 		loadNFTs()
-	}, [
+	}, []);
 
-	])
 	async function loadNFTs() {
 		/* create a generic provider and query for unsold market items */
 		const provider = new ethers.providers.JsonRpcProvider({ url: "https://rpc-mumbai.maticvigil.com/v1/6b26aad1d887708c0004394c103f8b27c1141540" })
@@ -103,26 +105,29 @@ function Home({ marketItems }) {
 		setLoadingState('loaded')
 	}
 	async function buyNft(nft) {
+		console.log(nft.price)
+	  setmodelmsg("Buying in Progress")
 		/* needs the user to sign the transaction, so will use Web3Provider and sign it */
-		const web3Modal = new Web3Modal()
-		const connection = await web3Modal.connect()
-		const provider = new ethers.providers.Web3Provider(connection)
-		const signer = provider.getSigner()
-		const contract = new ethers.Contract(marketplaceAddress, Marketplace.abi, signer)
+		// const web3Modal = new Web3Modal()
+		// const connection = await web3Modal.connect()
+		// const provider = new ethers.providers.Web3Provider(connection)
+		// const signer = provider.getSigner()
+		// const contract = new ethers.Contract(marketplaceAddress, Marketplace.abi, signer)
 
-		/* user will be prompted to pay the asking proces to complete the transaction */
-		setmodel(true)
-		const price = ethers.utils.parseUnits(nft.price.toString(), 'ether')
-		const transaction = await contract.createMarketSale(creatifyAddress, nft.tokenId, {
-			value: price
-		})
-		await transaction.wait()
-		setmodel(false);
-		loadNFTs()
+		// /* user will be prompted to pay the asking proces to complete the transaction */
+		// setmodel(true)
+		// const price = ethers.utils.parseUnits(nft.price.toString(), 'ether')
+		// const transaction = await contract.createMarketSale(creatifyAddress, nft.tokenId, {
+		// 	value: price
+		// })
+		// await transaction.wait()
+		// setmodel(false);
+		await buyNFT(nft, setmodel, setmodelmsg);
+		loadNFTs();
 	}
 	return (
 		<Layout>
-			{model &&
+			{/* {model &&
 				<div className="flex items-center  shadow-md justify-center w-full h-screen model-overlay fixed z-50">
 					<div className="h-56 w-80 bg-white shadow-lg rounded-md fixed z-50 flex items-center justify-center  ring-offset-2 ring-2 ring-blue-400">
 						<div className="flex flex-col justify-center items-center">
@@ -130,21 +135,19 @@ function Home({ marketItems }) {
 							<p className="text-lg font-semibold"> Buying in Process </p>
 						</div>
 					</div>
-				</div>}
+				</div>} */}
 
-
+				{model && <BuyAsset open={model} setOpen={setmodel} message={modelmsg} />}
 
 
 			{/* logout model  */}
 
-			{logoutmodel &&
+			{logoutmodel && (
 
 				<div className="flex items-center  shadow-md justify-center w-full h-screen model-overlay fixed  top-0 z-50">
 					<div className="h-56 w-80 bg-white  dark:bg-gray-800 shadow-lg rounded-md fixed z-50 flex items-center justify-center  ring-offset-2 ring-2 ring-blue-400">
-
 						<div className="flex flex-col justify-center items-center">
-
-							<p className="text-lg font-semibold dark:text-gray-200"> Are you sure wana logout ?</p>
+							<p className="text-lg font-semibold dark:text-gray-200"> Are you sure wanna logout ?</p>
 							<div className="flex items-center space-x-8 mt-10 ">
 								<div><button
 									onClick={logoutmetamask}
@@ -153,12 +156,10 @@ function Home({ marketItems }) {
 									onClick={closelogoutmodel}
 									className="font-semibold bg-gray-200 hover:bg-gray-300  dark:text-gray-400 flex items-center p-1 px-4 rounded-md shadow-md">Cancel</button></div>
 							</div>
-
 						</div>
 
-
 					</div>
-				</div>}
+				</div>)}
 
 			<main className=" bg:gray-100 dark:bg-gray-800 h-auto">
 				<div className="bg-gray-100 dark:bg-gray-700   w-full h-12 z-30  fixed top-16 px-10  ">
@@ -177,10 +178,13 @@ function Home({ marketItems }) {
 							console.log(item.metaDataUri.substr(7,50));
 
 							return (
-							<Link key={item.itemId} href={`/assets/${item.itemId}`}>
+							
 							<div
 								key={item.itemId}
 								className="bg-white dark:bg-gray-900  rounded-lg shadow-lg w-full lg:w-72 hover:scale-105 duration-200 transform transition cursor-pointer border-2 dark:border-gray-800">
+								
+								<Link key={item.itemId} href={`/assets/${item.itemId}`}>
+									<div>
 								<HomeComp uri={item ? item.metaDataUri.substr(7,50) : ""} />
 
 
@@ -196,12 +200,14 @@ function Home({ marketItems }) {
 									</div>
 								</div>
 
-								<div className="px-4 py-4 bg-gray-100 dark:bg-gray-700 flex justify-between">
-									<button onClick={() => buyNft(nft)} className="text-blue-500 hover:text-blue-400 font-bold">Buy now</button>
-								</div>
+								
 
 							</div>
 							</Link>
+							<div className="px-4 py-4 bg-gray-100 dark:bg-gray-700 flex justify-between">
+							<button onClick={() => buyNft(item)} className="text-blue-500 hover:text-blue-400 font-bold">Buy now</button>
+						</div>
+						</div>
 							)
 						})}
 

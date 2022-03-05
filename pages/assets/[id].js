@@ -13,9 +13,13 @@ import { gql } from "@apollo/client";
 import client from "../../apollo-client";
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { buyNFT } from "../api/buyNFT";
+import BuyAsset from "../../Components/buyAssetModal";
 import Layout from "../../Components/Layout";
 
 function Asset({ asset }) {
+    const [model, setmodel] = useState(false);
+  const [modelmsg, setmodelmsg] = useState("buying in progress!");
     console.log(asset);
     const nfturl = `https://ipfs.io/ipfs/${asset.marketItems[0].metaDataUri.substr(7, 50)}`;
 
@@ -109,7 +113,11 @@ function Asset({ asset }) {
                                             <span className="text-gray-600 mt-6 dark:text-gray-400">{asset.marketItems[0].price}</span>
                                         </div>
                                         <div className="flex items-center justify-end">
-                                            <button className="px-3 py-2 w-1/3 bg-blue-600 text-white text-sm font-medium rounded-md hover:bg-blue-500 focus:outline-none focus:bg-blue-500">
+                                            <button 
+                                            onClick={() =>
+                                                buyNFT(asset.marketItems[0], setmodel, setmodelmsg)
+                                              }
+                                            className="px-3 py-2 w-1/3 bg-blue-600 text-white text-sm font-medium rounded-md hover:bg-blue-500 focus:outline-none focus:bg-blue-500">
                                                 <span>Buy NFT</span>
                                             </button>
                                         </div>
@@ -135,6 +143,7 @@ function Asset({ asset }) {
 
                     </div>
                 </main>
+                {model && <BuyAsset open={model} setOpen={setmodel} message={modelmsg} /> }
             </div>
             </Layout>
         // </div>

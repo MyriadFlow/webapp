@@ -12,7 +12,6 @@ import { MdMusicNote } from "react-icons/md"
 import { RiArrowDropDownLine } from "react-icons/ri";
 import { v4 as uuidv4 } from 'uuid';
 import Multiselect from "multiselect-react-dropdown";
-import Layout from "../Components/Layout";
 
 
 const client = ipfsHttpClient('https://ipfs.infura.io:5001/api/v0')
@@ -27,6 +26,7 @@ import Header from '../Components/Header'
 import Footer from "../Components/Footer"
 import BuyAsset from "../Components/buyAssetModal";
 import { Alert, Snackbar } from "@mui/material";
+import Layout from "../Components/Layout";
 
 export default function CreateItem() {
 
