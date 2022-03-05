@@ -177,7 +177,7 @@ function Home({ marketItems }) {
 							console.log(item.metaDataUri.substr(7,50));
 
 							return (
-							<Link href={`/assets/${item.itemId}`}>
+							<Link key={item.itemId} href={`/assets/${item.itemId}`}>
 							<div
 								key={item.itemId}
 								className="bg-white dark:bg-gray-900  rounded-lg shadow-lg w-full lg:w-72 hover:scale-105 duration-200 transform transition cursor-pointer border-2 dark:border-gray-800">

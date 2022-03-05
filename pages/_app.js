@@ -2,7 +2,7 @@
 import "../styles/globals.css";
 import {ThemeProvider} from "next-themes"
 import {Provider} from "react-redux"; 
-import store from "../pages/store";
+import store from "../store";
 
 
 
