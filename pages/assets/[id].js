@@ -14,7 +14,7 @@ import client from "../../apollo-client";
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
-function asset({ asset }) {
+function Asset({ asset }) {
     console.log(asset);
     const nfturl = `https://ipfs.io/ipfs/${asset.marketItems[0].metaDataUri.substr(7, 50)}`;
 
@@ -77,15 +77,15 @@ function asset({ asset }) {
                                     </div>
                                     <div className="flex items-center justify-between -my-4">
                                         <h3 className="text-gray-700 font-medium dark:text-gray-300">IPFS</h3>
-                                        <span className="text-gray-600 text-sm"><a href={imgurl} target="_blank" className="text-gray-600 dark:text-gray-400"><BsArrowUpRight /></a></span>
+                                        <span className="text-gray-600 text-sm"><a href={imgurl} target="_blank" rel="noreferrer" className="text-gray-600 dark:text-gray-400"><BsArrowUpRight /></a></span>
                                     </div>
                                     <div className="flex items-center justify-between -my-4">
                                         <h3 className="text-gray-700 font-medium dark:text-gray-300">IPFS Metadata</h3>
-                                        <span className="text-gray-600 text-sm"><a href={nfturl} target="_blank" className="text-gray-600 dark:text-gray-400"><BsArrowUpRight /></a></span>
+                                        <span className="text-gray-600 text-sm"><a href={nfturl} target="_blank" rel="noreferrer" className="text-gray-600 dark:text-gray-400"><BsArrowUpRight /></a></span>
                                     </div>
                                     <div className="flex items-center justify-between -my-4 pb-4">
                                         <h3 className="text-gray-700 font-medium dark:text-gray-300">Etherscan Transaction</h3>
-                                        <span className="text-gray-600 text-sm"><a href={transaction} target="_blank" className="text-gray-600 dark:text-gray-400"><BsArrowUpRight /></a></span>
+                                        <span className="text-gray-600 text-sm"><a href={transaction} target="_blank" rel="noreferrer" className="text-gray-600 dark:text-gray-400"><BsArrowUpRight /></a></span>
                                     </div>
                                 </div>
                             </div>
@@ -168,4 +168,4 @@ export async function getServerSideProps(context) {
 }
 
 
-export default asset
+export default Asset

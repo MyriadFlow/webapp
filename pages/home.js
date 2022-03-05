@@ -53,7 +53,7 @@ export async function getStaticProps() {
 }
 
 
-function home({ marketItems }) {
+function Home({ marketItems }) {
 
 	const logoutmodel = useSelector(selectModel)
 	const dispatch = useDispatch();
@@ -212,4 +212,4 @@ function home({ marketItems }) {
 		</div>
 	)
 }
-export default home
+export default Home

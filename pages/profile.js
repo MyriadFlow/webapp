@@ -8,7 +8,7 @@ import { useSelector } from "react-redux";
 import { selectUser } from "../slices/userSlice"
 import { useState } from 'react';
 
-function profile() {
+function Profile() {
 
     const user = useSelector(selectUser);
     const [page, setPage] = useState("collected");
@@ -80,4 +80,4 @@ function profile() {
     )
 }
 
-export default profile
+export default Profile
