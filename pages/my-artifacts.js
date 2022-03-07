@@ -19,33 +19,53 @@ import { useDispatch, useSelector } from "react-redux";
 import HomeComp from "../Components/homeComp";
 import HomeComp2 from "../Components/homecomp2";
 
-import { gql } from "@apollo/client";
+// import { gql } from "@apollo/client";
 import client from "../apollo-client";
+import { request, gql } from 'graphql-request'
 
-export async function getStaticProps() {
-  const { data } = await client.query({
-    query: gql`
+const graphqlAPI = "https://query.graph.lazarus.network/subgraphs/name/MyriadFlow"
+
+// export async function getStaticProps() {
+//   const { data } = await client.query({
+//     query: gql`
+//     query Query($where: MarketItem_filter) {
+//       marketItems(first: 20, where: {seller: "0x313bfad1c87946bf893e2ecad141620eaa54943a"}) {
+//         price
+//         itemId
+//         seller
+//         forSale
+//         tokenId
+//         metaDataUri
+//       }
+//     }
+//     `,
+//   });
+
+//   return {
+//     props: {
+//       marketItems: data.marketItems,
+//     },
+//   };
+// }
+
+// export default function MyAssets({ marketItems}) {
+
+export const MyAssets = async () => {
+  const query = gql`
     query Query($where: MarketItem_filter) {
-      marketItems(first: 20, where: {seller: "0x313bfad1c87946bf893e2ecad141620eaa54943a"}) {
-        price
-        itemId
-        seller
-        forSale
-        tokenId
-        metaDataUri
-      }
-    }
-    `,
-  });
+            marketItems(first: 20, where: {seller: "0x313bfad1c87946bf893e2ecad141620eaa54943a"}) {
+              price
+              itemId
+              seller
+              forSale
+              tokenId
+              metaDataUri
+            }
+          }
+          `
+  const result = await request(graphqlAPI, query);
+  console.log(result);
 
-  return {
-    props: {
-      marketItems: data.marketItems,
-    },
-  };
-}
-
-export default function MyAssets({ marketItems}) {
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
   console.log(user);
@@ -72,7 +92,7 @@ export default function MyAssets({ marketItems}) {
       <div className="flex justify-center min-h-screen">
         <div className="p-4">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 md:grid-cols-3 gap-4 lg:gap-24 p-4 mt-20  h-auto">
-            {marketItems.map((item) => {
+            {/* {marketItems.map((item) => {
 
               console.log(item);
               console.log(item.metaDataUri.substr(7, 50));
@@ -100,7 +120,7 @@ export default function MyAssets({ marketItems}) {
                 </div>
 
               </div>)
-            })}
+            })} */}
           </div>
         </div>
       </div>
