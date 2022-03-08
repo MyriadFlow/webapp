@@ -50,10 +50,12 @@ const graphqlAPI = "https://query.graph.lazarus.network/subgraphs/name/MyriadFlo
 
 // export default function MyAssets({ marketItems}) {
 
-export const MyAssets = async () => {
-  const query = gql`
+const MyAssets = () => {
+
+  const fetchUserAssests = async (walletAddr)=>{
+    const query = gql`
     query Query($where: MarketItem_filter) {
-            marketItems(first: 20, where: {seller: "0x313bfad1c87946bf893e2ecad141620eaa54943a"}) {
+            marketItems(first: 20, where: {seller: "${walletAddr}"}) {
               price
               itemId
               seller
@@ -65,10 +67,17 @@ export const MyAssets = async () => {
           `
   const result = await request(graphqlAPI, query);
   console.log(result);
-
+  }
+  
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
+
+  useEffect(()=>{
+  fetchUserAssests("0x876fa09c042e6ca0c2f73aae1dd7bf712b6bf8f0")
   console.log(user);
+  },[])
+
+ 
   const [nfts, setNfts] = useState([])
   const [loadingState, setLoadingState] = useState('not-loaded')
   useEffect(() => {
@@ -127,3 +136,4 @@ export const MyAssets = async () => {
     </Layout>
   )
 }
+export default MyAssets
