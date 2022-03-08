@@ -25,37 +25,17 @@ import { request, gql } from 'graphql-request'
 
 const graphqlAPI = "https://query.graph.lazarus.network/subgraphs/name/MyriadFlow"
 
-// export async function getStaticProps() {
-//   const { data } = await client.query({
-//     query: gql`
-//     query Query($where: MarketItem_filter) {
-//       marketItems(first: 20, where: {seller: "0x313bfad1c87946bf893e2ecad141620eaa54943a"}) {
-//         price
-//         itemId
-//         seller
-//         forSale
-//         tokenId
-//         metaDataUri
-//       }
-//     }
-//     `,
-//   });
-
-//   return {
-//     props: {
-//       marketItems: data.marketItems,
-//     },
-//   };
-// }
-
-// export default function MyAssets({ marketItems}) {
-
 const MyAssets = () => {
+  
+  const walletAddr = useSelector(selectUser);
+  console.log(walletAddr);
+
+  const [data,setData] = useState([]);
 
   const fetchUserAssests = async (walletAddr)=>{
     const query = gql`
     query Query($where: MarketItem_filter) {
-            marketItems(first: 20, where: {seller: "${walletAddr}"}) {
+            marketItems(first: 20, where: {seller: "0x876fa09c042e6ca0c2f73aae1dd7bf712b6bf8f0"}) {
               price
               itemId
               seller
@@ -66,15 +46,15 @@ const MyAssets = () => {
           }
           `
   const result = await request(graphqlAPI, query);
-  console.log(result);
+  setData(result.marketItems);
+  // console.log(result);
   }
   
-  const dispatch = useDispatch();
-  const user = useSelector(selectUser);
+  
 
   useEffect(()=>{
   fetchUserAssests("0x876fa09c042e6ca0c2f73aae1dd7bf712b6bf8f0")
-  console.log(user);
+  // console.log(user);
   },[])
 
  
@@ -101,10 +81,10 @@ const MyAssets = () => {
       <div className="flex justify-center min-h-screen">
         <div className="p-4">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 md:grid-cols-3 gap-4 lg:gap-24 p-4 mt-20  h-auto">
-            {/* {marketItems.map((item) => {
+            {data.map((item) => {
 
-              console.log(item);
-              console.log(item.metaDataUri.substr(7, 50));
+              // console.log(item);
+              // console.log(item.metaDataUri.substr(7, 50));
 
               return (<div
                 key={item.itemId}
@@ -129,7 +109,7 @@ const MyAssets = () => {
                 </div>
 
               </div>)
-            })} */}
+            })}
           </div>
         </div>
       </div>
