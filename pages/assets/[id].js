@@ -16,8 +16,13 @@ import axios from 'axios';
 import { buyNFT } from "../api/buyNFT";
 import BuyAsset from "../../Components/buyAssetModal";
 import Layout from "../../Components/Layout";
+import {ethers} from "ethers"
+
 
 function Asset({ asset }) {
+    function getEthPrice(price){
+        return ethers.utils.formatEther(price)
+    }
     const [model, setmodel] = useState(false);
     const [modelmsg, setmodelmsg] = useState("buying in progress!");
     console.log(asset);
@@ -110,7 +115,7 @@ function Asset({ asset }) {
                                                     <h3 className="text-sm text-gray-600"><AssetDesc uri={asset.marketItems[0] ? asset.marketItems[0].metaDataUri.substr(7, 50) : ""} /></h3>
                                                 </div>
                                             </div>
-                                            <span className="text-gray-600 mt-16 dark:text-gray-400">{asset.marketItems[0].price}</span>
+                                            <span className="text-gray-600 mt-16 dark:text-gray-400">{getEthPrice(asset.marketItems[0].price)}</span>
                                         </div>
                                         <div className="flex items-center justify-end">
                                             <button

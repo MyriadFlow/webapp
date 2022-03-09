@@ -19,21 +19,20 @@ export const buyNFT = async (nft, setmodel, setmodelmsg) => {
   /* user will be prompted to pay the asking proces to complete the transaction */
   setmodel(true);
   try {
-    
-    const price = ethers.utils.parseUnits(nft.price.toString(), "ether");
-    // const price = nft.price
-
+    const options = {
+      value: ethers.utils.parseEther("0.0000000001"),
+    };
     const transaction = await contract.createMarketSale(
       creatifyAddress,
-      nft.tokenId,
-      {
-        value: price,
-      }
+      nft.itemId,
+      options
     );
+    console.log(transaction);
     await transaction.wait();
     setmodel(false);
   } catch (e) {
     console.log(e?.data?.message);
+    console.error(e);
     setmodelmsg(" Buying failed");
   }
 };

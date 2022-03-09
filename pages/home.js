@@ -36,7 +36,7 @@ export async function getStaticProps() {
 	const { data } = await client.query({
 		query: gql`
     query Query {
-      marketItems(first: 25) {
+      marketItems(first: 25,where:{sold:false}) {
         price
         itemId
         seller
@@ -97,6 +97,10 @@ function Home({ marketItems }) {
 		loadNFTs()
 	}, []);
 
+	function getEthPrice(price){
+		return ethers.utils.formatEther(price)
+	}
+
 	async function loadNFTs() {
 		/* create a generic provider and query for unsold market items */
 		const provider = new ethers.providers.JsonRpcProvider({ url: "https://rpc-mumbai.maticvigil.com/v1/6b26aad1d887708c0004394c103f8b27c1141540" })
@@ -105,7 +109,7 @@ function Home({ marketItems }) {
 		setLoadingState('loaded')
 	}
 	async function buyNft(nft) {
-		console.log(nft.price)
+		// console.log(nft.price)
 		setmodelmsg("Buying in Progress")
 		/* needs the user to sign the transaction, so will use Web3Provider and sign it */
 		// const web3Modal = new Web3Modal()
@@ -174,8 +178,8 @@ function Home({ marketItems }) {
 
 						{marketItems.map((item) => {
 
-							console.log(item);
-							console.log(item.metaDataUri.substr(7, 50));
+							// console.log(item);
+							// console.log(item.metaDataUri.substr(7, 50));
 
 							return (
 
@@ -196,7 +200,7 @@ function Home({ marketItems }) {
 												<p className="font-1 text-sm font-bold">Price </p>
 												<div className="flex items-center">
 													<FaEthereum className="h-4 w-4 text-blue-400" />
-													<p className="font-extralight dark:text-gray-400">{item.price}</p>
+													<p className="font-extralight dark:text-gray-400">{getEthPrice(item.price)}</p>
 												</div>
 											</div>
 
