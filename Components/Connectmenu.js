@@ -14,6 +14,7 @@ import { selectBalance } from "../slices/balanceSlice"
 import { FaEthereum } from "react-icons/fa"
 import { FiLogOut } from "react-icons/fi"
 import { useTheme } from "next-themes";
+import { creatorRole } from "../pages/api/creatorRole";
 
 
 
@@ -164,13 +165,22 @@ function Connectmenu({ toogle }) {
 <div className="flex items-center justify-center mt-5">
 <img className="w-60 align-middle" src="/account.svg"></img>
 </div>
-                <div className="mt-20  flex justify-center  flex-col">
+                <div className="mt-6  flex justify-center  flex-col">
                 
                     <div className="flex justify-center"> 
                     <button
                     onClick={connectwallethandler}
                     className="bg-blue-500 hover:bg-gray-400 shadow-lg  px-10 py-4 rounded-lg text-white">{!user ? "Connect" :"Connected"}</button>
                     </div>
+
+                    {
+              user && 
+                    <div className="flex justify-center"> 
+                    <button
+                    onClick={() => creatorRole}
+                    className="bg-blue-800 hover:bg-gray-400 shadow-lg px-10 py-2 mt-2 rounded-lg text-white">Get creator role</button>
+                    </div>
+              }
                    
                     <div className="flex justify-center items-center mt-10 space-x-2">
                         <p className="text-gray-800 font-bold dark:text-blue-500">{theme === 'dark'?'LightMode': 'DarkMode'}</p>
