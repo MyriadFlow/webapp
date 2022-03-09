@@ -28,14 +28,19 @@ const graphqlAPI = "https://query.graph.lazarus.network/subgraphs/name/MyriadFlo
 const MyAssets = () => {
   
   const walletAddr = useSelector(selectUser);
-  console.log(walletAddr);
+  console.log(walletAddr?walletAddr[0]:"");
+  var wallet = walletAddr?walletAddr[0]:'';
+
+  useEffect(()=>{
+    wallet = walletAddr?walletAddr[0]:'';
+  },[walletAddr])
 
   const [data,setData] = useState([]);
 
-  const fetchUserAssests = async (walletAddr)=>{
+  const fetchUserAssests = async ()=>{
     const query = gql`
     query Query($where: MarketItem_filter) {
-            marketItems(first: 20, where: {seller: "0x876fa09c042e6ca0c2f73aae1dd7bf712b6bf8f0"}) {
+            marketItems(first: 20, where: {seller: "${wallet}"}) {
               price
               itemId
               seller
@@ -49,14 +54,6 @@ const MyAssets = () => {
   setData(result.marketItems);
   // console.log(result);
   }
-  
-  
-
-  useEffect(()=>{
-  fetchUserAssests("0x876fa09c042e6ca0c2f73aae1dd7bf712b6bf8f0")
-  // console.log(user);
-  },[])
-
  
   const [nfts, setNfts] = useState([])
   const [loadingState, setLoadingState] = useState('not-loaded')
