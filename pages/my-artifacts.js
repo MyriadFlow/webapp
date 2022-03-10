@@ -1,4 +1,4 @@
-/* pages/my-artifacts.js */
+// /* pages/my-artifacts.js */
 import { ethers } from 'ethers'
 import { useEffect, useState } from 'react'
 import axios from 'axios'
@@ -28,19 +28,16 @@ const graphqlAPI = "https://query.graph.lazarus.network/subgraphs/name/MyriadFlo
 const MyAssets = () => {
   
   const walletAddr = useSelector(selectUser);
+  // console.log(walletAddr);
   console.log(walletAddr?walletAddr[0]:"");
   var wallet = walletAddr?walletAddr[0]:'';
 
-  useEffect(()=>{
-    wallet = walletAddr?walletAddr[0]:'';
-  },[walletAddr])
-
   const [data,setData] = useState([]);
 
-  const fetchUserAssests = async ()=>{
+  const fetchUserAssests = async (walletAddr)=>{
     const query = gql`
     query Query($where: MarketItem_filter) {
-            marketItems(first: 20, where: {seller: "${wallet}"}) {
+            marketItems(first: 20, where: {seller: "${walletAddr}"}) {
               price
               itemId
               seller
@@ -54,6 +51,14 @@ const MyAssets = () => {
   setData(result.marketItems);
   // console.log(result);
   }
+  
+  
+
+  useEffect(()=>{
+  fetchUserAssests(`${wallet}`)
+  // console.log(user);
+  })
+
  
   const [nfts, setNfts] = useState([])
   const [loadingState, setLoadingState] = useState('not-loaded')
