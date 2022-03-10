@@ -104,19 +104,25 @@ function Asset({ asset }) {
                                     <div className="border rounded-md max-w-md w-full px-4 py-3">
                                         <div className="flex items-center justify-between">
                                             <h3 className="text-gray-700 font-medium dark:text-white">Asset Worth</h3>
-                                            <span className="text-gray-600 text-sm dark:text-white">Price</span>
+                                            
                                         </div>
-                                        <div className="flex justify-between mt-6">
-                                            <div className="flex">
+                                        <div className="flex justify-between mt-6 flex-row">
+                                        <div className="text-gray-600 text-sm dark:text-white">Price</div>
+                                            <div className="text-gray-600 dark:text-gray-400">{getEthPrice(asset.marketItems[0].price)}</div>
+                                            
+                                            
+                                        </div>
+                                        <div className="flex">
                                                 <div className="lg:h-40 lg:w-40">
                                                     <AssetImage uri={asset.marketItems[0] ? asset.marketItems[0].metaDataUri.substr(7, 50) : ""} />
+                                                    <div className="mx-3 my-3">
                                                 </div>
-                                                <div className="mx-3 mt-16">
-                                                    <h3 className="text-sm text-gray-600"><AssetDesc uri={asset.marketItems[0] ? asset.marketItems[0].metaDataUri.substr(7, 50) : ""} /></h3>
                                                 </div>
+                                                
+                                                
                                             </div>
-                                            <span className="text-gray-600 mt-16 dark:text-gray-400">{getEthPrice(asset.marketItems[0].price)}</span>
-                                        </div>
+                                        <h3 className="text-sm text-gray-600"><AssetDesc uri={asset.marketItems[0] ? asset.marketItems[0].metaDataUri.substr(7, 50) : ""} /></h3>
+
                                         <div className="flex items-center justify-end">
                                             <button
                                                 onClick={() =>

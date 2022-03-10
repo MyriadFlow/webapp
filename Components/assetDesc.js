@@ -18,7 +18,7 @@ const assetDesc = ({uri}) => {
       },[uri]);
 
     return (
-        <div style={{minHeight:148}}>
+        <div style={{minHeight:26}}>
             <p className="text-sm font-bold text-gray-500 font-1 dark:text-gray-300">{response && response.name}</p>
         </div>
     )
