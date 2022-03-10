@@ -86,6 +86,31 @@ function Connectmenu({ toogle }) {
             "https://marketplace-engine.lazarus.network/api/v1.0/flowid?walletAddress=0x313bfad1c87946bf893e2ecad141620eaa54943a"
         );
         console.log(data);
+
+        var signdata = JSON.stringify({
+            flowId : flow_id,
+            signature:signed_msg,
+        })
+
+        const config = {
+             url:"",
+             method:"POST",
+             headers:{
+                 "Content-Type":"application/json",
+             },
+             data:data,
+        };
+        try{
+            const response = await axios(config);
+            const token = await response.data?.payload?.token;
+            localStorage.setItem("platform_token",token);
+            console.log(response);
+            return true;
+        }catch(e){
+            console.log(e);
+            return false;
+        }
+        // const result = await web3.eth.personal.sign(hexMsg, address);
     };
 
 
