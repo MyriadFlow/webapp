@@ -61,7 +61,7 @@ function Asset({ asset }) {
                 </div>
             </div>
 
-            <div className="bg-white md:mx-40 dark:bg-gray-900">
+            <div className="bg-white md:mx-20 dark:bg-gray-900">
                 <main className="my-10">
                     <div className="container mx-auto px-6">
                         <h3 className="text-gray-700 text-2xl font-medium"><AssetHead uri={asset.marketItems[0] ? asset.marketItems[0].metaDataUri.substr(7, 50) : ""} /></h3>
