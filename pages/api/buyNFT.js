@@ -20,7 +20,7 @@ export const buyNFT = async (nft, setmodel, setmodelmsg) => {
   setmodel(true);
   try {
     const options = {
-      value: ethers.utils.parseEther("0.0000000001"),
+      value: ethers.BigNumber.from(nft.price),
     };
     const transaction = await contract.createMarketSale(
       creatifyAddress,
