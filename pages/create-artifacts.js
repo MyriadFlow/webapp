@@ -4,12 +4,7 @@ import { ethers } from 'ethers'
 import { create as ipfsHttpClient } from 'ipfs-http-client'
 import { useRouter } from 'next/router'
 import Web3Modal from 'web3modal'
-import { MdOutlineColorLens } from "react-icons/md"
-import { CgGhostCharacter } from "react-icons/cg"
 import { FaVideo, FaPlusSquare, FaMinusSquare, FaHeart } from "react-icons/fa"
-import { MdSportsVolleyball } from "react-icons/md"
-import { MdMusicNote } from "react-icons/md"
-import { RiArrowDropDownLine } from "react-icons/ri";
 import { v4 as uuidv4 } from 'uuid';
 import Multiselect from "multiselect-react-dropdown";
 
@@ -22,8 +17,6 @@ import {
 
 import Creatify from '../artifacts/contracts/Creatify.sol/Creatify.json'
 import Marketplace from '../artifacts/contracts/Marketplace.sol/Marketplace.json'
-import Header from '../Components/Header'
-import Footer from "../Components/Footer"
 import BuyAsset from "../Components/buyAssetModal";
 import { Alert, Snackbar } from "@mui/material";
 import Layout from "../Components/Layout";

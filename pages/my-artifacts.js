@@ -3,8 +3,6 @@ import { ethers } from 'ethers'
 import { useEffect, useState } from 'react'
 import axios from 'axios'
 import Web3Modal from "web3modal"
-import Header from "../Components/Header"
-import Footer from "../Components/Footer"
 import { FaEthereum } from "react-icons/fa"
 
 import {

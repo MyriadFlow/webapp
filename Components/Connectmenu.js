@@ -143,10 +143,11 @@ function Connectmenu({ toogle }) {
         const hexMsg = convertUtf8ToHex(completemsg);
         console.log(hexMsg);
         const result = await web3.eth.personal.sign(hexMsg, "0x313bfad1c87946bf893e2ecad141620eaa54943a");
+        console.log(result);
 
         var signdata = JSON.stringify({
-            flowId : flow_id,
-            signature:signed_msg,
+            flowId : data.payload.flowId,
+            signature:result,
         })
 
         const config = {
@@ -159,9 +160,10 @@ function Connectmenu({ toogle }) {
         };
         try{
             const response = await axios(config);
-            const token = await response.data?.payload?.token;
-            localStorage.setItem("platform_token",token);
             console.log(response);
+            const token = await response?.payload?.token;
+            localStorage.setItem("platform_token",token);
+            
             return true;
         }catch(e){
             console.log(e);
