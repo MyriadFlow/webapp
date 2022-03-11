@@ -16,6 +16,7 @@ import { selectUser } from "../slices/userSlice";
 import { useDispatch, useSelector } from "react-redux";
 import HomeComp from "../Components/homeComp";
 import HomeComp2 from "../Components/homecomp2";
+import BoughtItems from "../Components/nftboughtDashboard";
 
 import client from "../apollo-client";
 import { request, gql } from 'graphql-request'
@@ -107,28 +108,13 @@ export default function CreatorDashboard() {
 
 						</div>)
 					})}
+					{
+                     data.length==0 && <div className="text-xl pb-10">You haven't sold any asset.</div>
+                    }
 				</div>
 			 </div>
 			 <div className="p-4 px-10">
-				{/* {
-					Boolean(sold.length) && ( */}
-						<div>
-							<h2 className="text-xl pt-20 pb-4 border-b-2">Items Bought</h2>
-							<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 md:grid-cols-3 gap-4 lg:gap-24 p-4 mt-20  h-auto">
-								{
-									sold.map((nft, i) => (
-										<div key={i} className="border shadow rounded-xl overflow-hidden">
-											<img src={nft.image} className="rounded" />
-											<div className="p-4 bg-black">
-												<p className="text-2xl font-bold text-white">Price - {nft.price} Eth</p>
-											</div>
-										</div>
-									))
-								}
-							</div>
-						</div>
-					{/* )
-				} */}
+			 <BoughtItems/>
 			</div>
 		</Layout>
 	)

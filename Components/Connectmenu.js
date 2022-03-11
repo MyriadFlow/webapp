@@ -18,13 +18,14 @@ import { useTheme } from "next-themes";
 import axios from "axios";
 import { convertUtf8ToHex } from "@walletconnect/utils";
 const Web3 = require("web3");
-// var Personal = require('web3-eth-personal');
-// var personal = new Personal(Personal.givenProvider || 'ws://some.local-or-remote.node:8546');
-
 
 
 function Connectmenu({ toogle }) {
 
+    const walletAddr = useSelector(selectUser);
+    // console.log(walletAddr);
+    console.log(walletAddr?walletAddr[0]:"");
+    var wallet = walletAddr?walletAddr[0]:'';
 
 
     const { systemTheme, theme, setTheme } = useTheme()
@@ -133,7 +134,7 @@ function Connectmenu({ toogle }) {
 
     const creatorRole = async () => {
         const { data } = await axios.get(
-            "https://marketplace-engine.lazarus.network/api/v1.0/flowid?walletAddress=0x313bfad1c87946bf893e2ecad141620eaa54943a"
+            `https://marketplace-engine.lazarus.network/api/v1.0/flowid?walletAddress=${wallet}`
         );
         console.log(data);
 
@@ -142,7 +143,7 @@ function Connectmenu({ toogle }) {
         console.log(completemsg);
         const hexMsg = convertUtf8ToHex(completemsg);
         console.log(hexMsg);
-        const result = await web3.eth.personal.sign(hexMsg, "0x313bfad1c87946bf893e2ecad141620eaa54943a");
+        const result = await web3.eth.personal.sign(hexMsg,wallet);
         console.log(result);
 
         var signdata = JSON.stringify({

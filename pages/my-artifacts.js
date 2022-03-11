@@ -114,6 +114,9 @@ const MyAssets = () => {
 
               </div>)
             })}
+            {
+                     data.length==0 && <div className="text-xl pb-10">You haven't created any asset.</div>
+                 }
           </div>
         </div>
       </div>
