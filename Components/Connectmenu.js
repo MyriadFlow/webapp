@@ -16,6 +16,10 @@ import { FiLogOut } from "react-icons/fi"
 import { useTheme } from "next-themes";
 // import { creatorRole } from "../pages/api/creatorRole";
 import axios from "axios";
+import { convertUtf8ToHex } from "@walletconnect/utils";
+const Web3 = require("web3");
+// var Personal = require('web3-eth-personal');
+// var personal = new Personal(Personal.givenProvider || 'ws://some.local-or-remote.node:8546');
 
 
 
@@ -81,11 +85,64 @@ function Connectmenu({ toogle }) {
         }
     }
 
+    // export const signPersonalMessage = async (
+    //     web3,
+    //     address,
+    //     message,
+    //     toggleModal,
+    //     setPersonalSignPendingRequest,
+    //     setPersonalSignResult
+    //   ) => {
+    //     if (!web3) {
+    //       return;
+    //     }
+    //     const hexMsg = convertUtf8ToHex(message);
+      
+    //     try {
+    //       toggleModal();
+      
+    //       setPersonalSignPendingRequest(true);
+      
+    //       const result = await web3.eth.personal.sign(hexMsg, address);
+      
+    //       console.log(result);
+    //       localStorage.setItem("signed_msg", result);
+    //       // verify signature
+    //       const signer = recoverPersonalSignature(result, message);
+    //       const verified = signer.toLowerCase() === address.toLowerCase();
+      
+    //       // format displayed result
+    //       const formattedResult = {
+    //         action: "PERSONAL_SIGN",
+    //         address,
+    //         signer,
+    //         verified,
+    //         result,
+    //       };
+      
+    //       setPersonalSignPendingRequest(false);
+    //       setPersonalSignResult(formattedResult || null);
+      
+    //       localStorage.setItem("authType", "web3");
+    //     } catch (error) {
+    //       console.error(error);
+    //       setPersonalSignPendingRequest(false);
+    //       setPersonalSignResult(null);
+    //     }
+    //   };
+
     const creatorRole = async () => {
         const { data } = await axios.get(
             "https://marketplace-engine.lazarus.network/api/v1.0/flowid?walletAddress=0x313bfad1c87946bf893e2ecad141620eaa54943a"
         );
         console.log(data);
+
+        let web3 = new Web3(Web3.givenProvider);
+        let completemsg = data.payload.eula+data.payload.flowId;
+        console.log(completemsg);
+        const hexMsg = convertUtf8ToHex(completemsg);
+        console.log(hexMsg);
+        const result = await web3.eth.personal.sign(hexMsg, "0x313bfad1c87946bf893e2ecad141620eaa54943a");
 
         var signdata = JSON.stringify({
             flowId : flow_id,
@@ -93,12 +150,12 @@ function Connectmenu({ toogle }) {
         })
 
         const config = {
-             url:"",
+             url:"https://marketplace-engine.lazarus.network/api/v1.0/authenticate",
              method:"POST",
              headers:{
                  "Content-Type":"application/json",
              },
-             data:data,
+             data:signdata,
         };
         try{
             const response = await axios(config);
@@ -110,7 +167,7 @@ function Connectmenu({ toogle }) {
             console.log(e);
             return false;
         }
-        // const result = await web3.eth.personal.sign(hexMsg, address);
+        
     };
 
 
