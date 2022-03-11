@@ -80,6 +80,10 @@ const MyAssets = () => {
     <Layout>
       <div className="flex justify-center min-h-screen">
         <div className="p-4">
+          <div className='px-8'>
+          <h2 className="text-xl pt-20 pb-4 border-b-2">Items Created</h2>
+          </div>
+        
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 md:grid-cols-3 gap-4 lg:gap-24 p-4 mt-20  h-auto">
             {data.map((item) => {
 

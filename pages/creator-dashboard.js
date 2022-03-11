@@ -108,13 +108,13 @@ export default function CreatorDashboard() {
 						</div>)
 					})}
 				</div>
-			</div>
-			<div className="px-4">
-				{
-					Boolean(sold.length) && (
+			 </div>
+			 <div className="p-4 px-10">
+				{/* {
+					Boolean(sold.length) && ( */}
 						<div>
-							<h2 className="text-2xl py-2">Items created</h2>
-							<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-4">
+							<h2 className="text-xl pt-20 pb-4 border-b-2">Items Bought</h2>
+							<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 md:grid-cols-3 gap-4 lg:gap-24 p-4 mt-20  h-auto">
 								{
 									sold.map((nft, i) => (
 										<div key={i} className="border shadow rounded-xl overflow-hidden">
@@ -127,8 +127,8 @@ export default function CreatorDashboard() {
 								}
 							</div>
 						</div>
-					)
-				}
+					{/* )
+				} */}
 			</div>
 		</Layout>
 	)
