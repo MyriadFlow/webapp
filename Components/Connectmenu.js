@@ -24,7 +24,7 @@ function Connectmenu({ toogle }) {
 
     const walletAddr = useSelector(selectUser);
     // console.log(walletAddr);
-    console.log(walletAddr?walletAddr[0]:"");
+    // console.log(walletAddr?walletAddr[0]:"");
     var wallet = walletAddr?walletAddr[0]:'';
 
 
@@ -136,15 +136,15 @@ function Connectmenu({ toogle }) {
         const { data } = await axios.get(
             `https://marketplace-engine.lazarus.network/api/v1.0/flowid?walletAddress=${wallet}`
         );
-        console.log(data);
+        // console.log(data);
 
         let web3 = new Web3(Web3.givenProvider);
         let completemsg = data.payload.eula+data.payload.flowId;
-        console.log(completemsg);
+        // console.log(completemsg);
         const hexMsg = convertUtf8ToHex(completemsg);
-        console.log(hexMsg);
+        // console.log(hexMsg);
         const result = await web3.eth.personal.sign(hexMsg,wallet);
-        console.log(result);
+        // console.log(result);
 
         var signdata = JSON.stringify({
             flowId : data.payload.flowId,
@@ -161,8 +161,8 @@ function Connectmenu({ toogle }) {
         };
         try{
             const response = await axios(config);
-            console.log(response);
-            const token = await response?.payload?.token;
+            // console.log(response);
+            const token = await response?.data?.payload?.token;
             localStorage.setItem("platform_token",token);
             
             return true;

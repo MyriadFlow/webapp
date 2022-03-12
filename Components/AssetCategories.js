@@ -26,7 +26,7 @@ const assetProperties = ({ uri }) => {
                     <div style={{ minHeight: 80 }} className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-3 md:grid-cols-2 gap-4 h-auto w-full ">
                         {response ? response.map((item) => {
 
-                            console.log(item);
+                            // console.log(item);
 
                             return (<div
                                 // key={item.id}

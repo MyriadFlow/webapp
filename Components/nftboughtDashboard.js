@@ -12,7 +12,7 @@ const graphqlAPI = "https://query.graph.lazarus.network/subgraphs/name/MyriadFlo
 
 	const walletAddr = useSelector(selectUser);
 	// console.log(walletAddr);
-	console.log(walletAddr ? walletAddr[0] : "");
+	// console.log(walletAddr ? walletAddr[0] : "");
 	var wallet = walletAddr ? walletAddr[0] : '';
 
 	const [data, setData] = useState([]);

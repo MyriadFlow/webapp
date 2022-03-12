@@ -25,7 +25,7 @@ function Asset({ asset }) {
     }
     const [model, setmodel] = useState(false);
     const [modelmsg, setmodelmsg] = useState("buying in progress!");
-    console.log(asset);
+    // console.log(asset);
     const nfturl = `https://ipfs.io/ipfs/${asset.marketItems[0].metaDataUri.substr(7, 50)}`;
 
     const [response, setResponse] = useState([]);

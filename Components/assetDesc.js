@@ -10,7 +10,7 @@ const assetDesc = ({uri}) => {
             `https://ipfs.io/ipfs/${uri}`
         );
         setResponse(data);
-        console.log(data);
+        // console.log(data);
     }
 
     useEffect(() => {
