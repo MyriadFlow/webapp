@@ -377,53 +377,12 @@ export default function CreateItem() {
                     }}
 
                   />
-
-                  {/* <div
-                  onClick={() => Setopendrop(!opendrop)}
-                  className="flex items-center cursor-pointer justify-between border-b-2 shadow-sm p-2 px-4 group mt-8">
-                  <p className="font-semibold text-lg">Category</p>
-                  <RiArrowDropDownLine className="h-8 w-8 text-gray-400 group-hover:text-black" />
-                </div>
-                {opendrop && <div className=" shadow-md rounded-b-md">
-
-                  <div className="flex items-center p-2  px-8 space-x-2 group hover:bg-gray-200 cursor-pointer">
-                    <MdOutlineColorLens className="h-8 w-8 text-gray-400" />
-                    <p className="text-md  text-gray-500 font-bold group-hover:text-black">Art</p>
-                  </div>
-
-                  <div className="flex items-center p-2  px-8 space-x-2 group hover:bg-gray-200 cursor-pointer">
-                    <MdMusicNote className="h-8 w-8 text-gray-400" />
-                    <p className="text-md  text-gray-500 font-bold group-hover:text-black">Music</p>
-                  </div>
-
-                  <div className="flex items-center p-2  px-8 space-x-2 group hover:bg-gray-200 cursor-pointer">
-                    <MdSportsVolleyball className="h-8 w-8 text-gray-400" />
-                    <p className="text-md  text-gray-500 font-bold group-hover:text-black">Sports</p>
-                  </div>
-
-                  <div className="flex items-center p-2  px-8 space-x-2 group hover:bg-gray-200 cursor-pointer">
-                    <FaVideo className="h-8 w-8 text-gray-400" />
-                    <p className="text-md  text-gray-500 font-bold group-hover:text-black">Video</p>
-                  </div>
-                  <div className="flex items-center p-2  px-8 space-x-2 group hover:bg-gray-200 cursor-pointer">
-                    <CgGhostCharacter className="h-8 w-8 text-gray-400" />
-                    <p className="text-md  text-gray-500 font-bold group-hover:text-black">Cartoon</p>
-                  </div>
-                  <div className="flex items-center p-2  px-8 space-x-2 group hover:bg-gray-200 cursor-pointer">
-                    <FaHeart className="h-6 w-6 text-gray-400 mx-1" />
-                    <p className="text-md  text-gray-500 font-bold group-hover:text-black">Others</p>
-                  </div>
-                </div>} */}
-
                 </div>)}
 
               <div className='flex items-center justify-center'>
                 <img className="w-96 align-middle pt-3" src="/asset.svg"></img>
               </div>
             </div>
-
-
-
           </div>
           <div className='flex items-center justify-center mt-4 lg:mb-12 md:mb-12'>
             <button onClick={createMarket} className="bg-blue-500 dark:bg-black text-white py-4 px-8 w-full md:w-1/3 mt-2 md:mt-3 lg:rounded-md md:rounded-md">

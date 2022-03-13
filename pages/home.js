@@ -111,43 +111,16 @@ function Home({ marketItems }) {
 	async function buyNft(nft) {
 		// console.log(nft.price)
 		setmodelmsg("Buying in Progress")
-		/* needs the user to sign the transaction, so will use Web3Provider and sign it */
-		// const web3Modal = new Web3Modal()
-		// const connection = await web3Modal.connect()
-		// const provider = new ethers.providers.Web3Provider(connection)
-		// const signer = provider.getSigner()
-		// const contract = new ethers.Contract(marketplaceAddress, Marketplace.abi, signer)
-
-		// /* user will be prompted to pay the asking proces to complete the transaction */
-		// setmodel(true)
-		// const price = ethers.utils.parseUnits(nft.price.toString(), 'ether')
-		// const transaction = await contract.createMarketSale(creatifyAddress, nft.tokenId, {
-		// 	value: price
-		// })
-		// await transaction.wait()
-		// setmodel(false);
 		await buyNFT(nft, setmodel, setmodelmsg);
 		loadNFTs();
 	}
 	return (
 		<Layout>
-			{/* {model &&
-				<div className="flex items-center  shadow-md justify-center w-full h-screen model-overlay fixed z-50">
-					<div className="h-56 w-80 bg-white shadow-lg rounded-md fixed z-50 flex items-center justify-center  ring-offset-2 ring-2 ring-blue-400">
-						<div className="flex flex-col justify-center items-center">
-							<div className="h-10 w-10 bg-blue-400 ring-offset-2 ring-2 ring-blue-500 ml-2 animate-bounce rounded-full"></div>
-							<p className="text-lg font-semibold"> Buying in Process </p>
-						</div>
-					</div>
-				</div>} */}
-
 			{model && <BuyAsset open={model} setOpen={setmodel} message={modelmsg} />}
-
 
 			{/* logout model  */}
 
 			{logoutmodel && (
-
 				<div className="flex items-center  shadow-md justify-center w-full h-screen model-overlay fixed  top-0 z-50">
 					<div className="h-56 w-80 bg-white  dark:bg-gray-800 shadow-lg rounded-md fixed z-50 flex items-center justify-center  ring-offset-2 ring-2 ring-blue-400">
 						<div className="flex flex-col justify-center items-center">
@@ -203,9 +176,6 @@ function Home({ marketItems }) {
 													<p className="font-extralight dark:text-gray-400">{getEthPrice(item.price)}</p>
 												</div>
 											</div>
-
-
-
 										</div>
 									</Link>
 									<div className="px-4 py-4 bg-gray-100 dark:bg-gray-700 flex justify-between">
@@ -214,7 +184,6 @@ function Home({ marketItems }) {
 								</div>
 							)
 						})}
-
 					</div>
 				</div>
 			</main>

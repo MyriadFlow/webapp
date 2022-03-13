@@ -11,34 +11,18 @@ const homecomp = ({uri}) => {
             `https://ipfs.io/ipfs/${uri}`
         );
         setResponse(data);
-        // setResponse(JSON.parse(data));
         setImage(data.image);
-        // console.log(typeof data.image);
-        let preuri = image.substr(7,50);
-        // console.log(data);
-
-        
+        let preuri = image.substr(7,50);  
     }
 
     useEffect(() => {
-        // setTimeout(() =>{
-        //     metadata();
-        // },1000)
         metadata();
-        // console.log(props.uri);
-        
       },[uri]);
 
-    //   console.log(response.image);
-
-    // console.log(image);
     let preuri = image.substr(7,50);
-    // console.log(preuri);
 
     return (
         <div>
-            {/* <pre>{JSON.stringify(response)}</pre> */}
-
              <img
                  src={`https://ipfs.io/ipfs/${preuri}`}
                  alt="" className=" h-60  p-2 w-full object-fit" />

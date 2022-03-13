@@ -19,15 +19,7 @@ import { IoPersonSharp } from "react-icons/io";
 import {NavLink} from "reactstrap";
 
 
-
-
-
 function Header() {
-
-
-
-
-
   const router = useRouter();
 
   // function to open the drop menu 
@@ -98,7 +90,6 @@ function Header() {
       </div>
 
 
-
       {/* center */}
 
       {/* <div className=" hidden  flex-shrink items-center p-2 bg-gray-100 ml-2 rounded-md ">
@@ -108,10 +99,6 @@ function Header() {
         <input  className="flex-grow bg-gray-100 ml-2  outline-none " type="text" placeholder="Search the marketplace" />
 
       </div> */}
-
-
-
-
 
 
       {/* right */}
@@ -187,9 +174,6 @@ function Header() {
                 </Link>
             }
 
-
-
-
           </div>
 
           <MdOutlineAccountBalanceWallet style={{ color: 'white' }} className="h-10 w-10 text-gray-500 cursor-pointer" onClick={() => Setconnectmenu(!connectmenu)} />
@@ -202,17 +186,8 @@ function Header() {
         }
       </div>
 
-
-
-
-
     </header>
-
-
-
   );
-
-
 }
 
 export default Header;

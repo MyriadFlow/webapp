@@ -1,15 +1,11 @@
 import { IoPersonSharp } from "react-icons/io"
 
-function Menu (){
+function Menu() {
     return (
-<div>
-
-    <IoPersonSharp className="h-6 w-6" />
-
-
-</div>
-    
-        )
+        <div>
+            <IoPersonSharp className="h-6 w-6" />
+        </div>
+    )
 }
 
-export default Menu ;
+export default Menu;

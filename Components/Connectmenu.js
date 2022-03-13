@@ -86,52 +86,6 @@ function Connectmenu({ toogle }) {
         }
     }
 
-    // export const signPersonalMessage = async (
-    //     web3,
-    //     address,
-    //     message,
-    //     toggleModal,
-    //     setPersonalSignPendingRequest,
-    //     setPersonalSignResult
-    //   ) => {
-    //     if (!web3) {
-    //       return;
-    //     }
-    //     const hexMsg = convertUtf8ToHex(message);
-      
-    //     try {
-    //       toggleModal();
-      
-    //       setPersonalSignPendingRequest(true);
-      
-    //       const result = await web3.eth.personal.sign(hexMsg, address);
-      
-    //       console.log(result);
-    //       localStorage.setItem("signed_msg", result);
-    //       // verify signature
-    //       const signer = recoverPersonalSignature(result, message);
-    //       const verified = signer.toLowerCase() === address.toLowerCase();
-      
-    //       // format displayed result
-    //       const formattedResult = {
-    //         action: "PERSONAL_SIGN",
-    //         address,
-    //         signer,
-    //         verified,
-    //         result,
-    //       };
-      
-    //       setPersonalSignPendingRequest(false);
-    //       setPersonalSignResult(formattedResult || null);
-      
-    //       localStorage.setItem("authType", "web3");
-    //     } catch (error) {
-    //       console.error(error);
-    //       setPersonalSignPendingRequest(false);
-    //       setPersonalSignResult(null);
-    //     }
-    //   };
-
     const creatorRole = async () => {
         const { data } = await axios.get(
             `https://marketplace-engine.lazarus.network/api/v1.0/flowid?walletAddress=${wallet}`

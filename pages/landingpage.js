@@ -1,7 +1,5 @@
 import Head from "next/head"
 import Link from "next/link";
-import Header from "../Components/Header";
-import Footer from "../Components/Footer";
 import Layout from "../Components/Layout";
 
 function landingpage() {
@@ -31,7 +29,6 @@ function landingpage() {
           </div>
         </div>
       </div>
-      {/* <Footer /> */}
       </Layout>
     </div>
   )
