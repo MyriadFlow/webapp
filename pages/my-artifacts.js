@@ -47,7 +47,7 @@ const MyAssets = () => {
           `
   const result = await request(graphqlAPI, query);
   setData(result.marketItems);
-  // console.log(result);
+  console.log(result);
   }
   
   
@@ -58,24 +58,24 @@ const MyAssets = () => {
   })
 
  
-  const [nfts, setNfts] = useState([])
-  const [loadingState, setLoadingState] = useState('not-loaded')
-  useEffect(() => {
-    loadNFTs()
-  }, [])
-  async function loadNFTs() {
-    const web3Modal = new Web3Modal({
-      network: "mainnet",
-      cacheProvider: true,
-    })
-    const connection = await web3Modal.connect()
-    const provider = new ethers.providers.Web3Provider(connection)
-    const signer = provider.getSigner()
+  // const [nfts, setNfts] = useState([])
+  // const [loadingState, setLoadingState] = useState('not-loaded')
+  // useEffect(() => {
+  //   loadNFTs()
+  // }, [])
+  // async function loadNFTs() {
+  //   const web3Modal = new Web3Modal({
+  //     network: "mainnet",
+  //     cacheProvider: true,
+  //   })
+  //   const connection = await web3Modal.connect()
+  //   const provider = new ethers.providers.Web3Provider(connection)
+  //   const signer = provider.getSigner()
 
-    const marketContract = new ethers.Contract(marketplaceAddress, Marketplace.abi, signer)
-    const tokenContract = new ethers.Contract(creatifyAddress, Creatify.abi, provider)
-    setLoadingState('loaded')
-  }
+  //   const marketContract = new ethers.Contract(marketplaceAddress, Marketplace.abi, signer)
+  //   const tokenContract = new ethers.Contract(creatifyAddress, Creatify.abi, provider)
+  //   setLoadingState('loaded')
+  // }
   return (
     <Layout>
       <div className="flex justify-center min-h-screen">
@@ -87,8 +87,8 @@ const MyAssets = () => {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 md:grid-cols-3 gap-4 lg:gap-24 p-4 mt-20  h-auto">
             {data.map((item) => {
 
-              // console.log(item);
-              // console.log(item.metaDataUri.substr(7, 50));
+              console.log(item);
+              console.log(item.metaDataUri.substr(7, 50));
 
               return (<div
                 key={item.itemId}
