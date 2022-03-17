@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react'
 import { selectUser } from "../slices/userSlice";
 import { useDispatch, useSelector } from "react-redux";
+import Link from "next/link";
 import HomeComp from "../Components/homeComp";
 import HomeComp2 from "../Components/homecomp2";
 import { FaEthereum } from "react-icons/fa"
-import { request, gql } from 'graphql-request'
+import { request, gql } from 'graphql-request';
 
 const graphqlAPI = "https://query.graph.lazarus.network/subgraphs/name/MyriadFlow"
 
@@ -50,9 +51,10 @@ const graphqlAPI = "https://query.graph.lazarus.network/subgraphs/name/MyriadFlo
                     return (<div
                         key={item.itemId}
                         className="bg-white dark:bg-gray-900  rounded-lg shadow-lg w-full lg:w-72 hover:scale-105 duration-200 transform transition cursor-pointer border-2 dark:border-gray-800">
+                       
+                       <Link key={item.itemId} href={`/assets/${item.itemId}`}>
+                  <div>
                         <HomeComp uri={item ? item.metaDataUri.substr(7, 50) : ""} />
-
-
                         <div className="flex px-4 py-6">
                             <HomeComp2 uri={item ? item.metaDataUri.substr(7, 50) : ""} />
 
@@ -64,6 +66,8 @@ const graphqlAPI = "https://query.graph.lazarus.network/subgraphs/name/MyriadFlo
                                 <p className="font-extralight dark:text-gray-400">{item.price}</p>
                             </div>
                         </div>
+                        </div>
+                        </Link>
 
                         <div className="px-4 py-4 bg-gray-100 dark:bg-gray-700 flex justify-between">
                             <button onClick={() => buyNft(nft)} className="text-blue-500 hover:text-blue-400 font-bold">Buy now</button>

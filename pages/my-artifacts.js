@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import Web3Modal from "web3modal";
 import { FaEthereum } from "react-icons/fa";
-
+import Link from "next/link";
 import { marketplaceAddress, creatifyAddress } from "../config";
 
 import Creatify from "../artifacts/contracts/Creatify.sol/Creatify.json";
@@ -91,6 +91,8 @@ const MyAssets = () => {
                   key={item.itemId}
                   className="bg-white dark:bg-gray-900  rounded-lg shadow-lg w-full lg:w-72 hover:scale-105 duration-200 transform transition cursor-pointer border-2 dark:border-gray-800"
                 >
+                <Link key={item.itemId} href={`/assets/${item.itemId}`}>
+                  <div>
                   <HomeComp uri={item ? item.metaDataUri.substr(7, 50) : ""} />
 
                   <div className="flex px-4 py-6">
@@ -107,7 +109,8 @@ const MyAssets = () => {
                       </p>
                     </div>
                   </div>
-
+                  </div>
+                  </Link>  
                   <div className="px-4 py-4 bg-gray-100 dark:bg-gray-700 flex justify-between">
                     <button
                       onClick={() => buyNft(nft)}

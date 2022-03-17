@@ -6,7 +6,7 @@ import Web3Modal from "web3modal";
 import { FaEthereum } from "react-icons/fa";
 
 import { marketplaceAddress, creatifyAddress } from "../config";
-
+import Link from "next/link";
 import Creatify from "../artifacts/contracts/Creatify.sol/Creatify.json";
 import Marketplace from "../artifacts/contracts/Marketplace.sol/Marketplace.json";
 import Layout from "../Components/Layout";
@@ -92,6 +92,8 @@ export default function CreatorDashboard() {
                 key={item.itemId}
                 className="bg-white dark:bg-gray-900  rounded-lg shadow-lg w-full lg:w-72 hover:scale-105 duration-200 transform transition cursor-pointer border-2 dark:border-gray-800"
               >
+                <Link key={item.itemId} href={`/assets/${item.itemId}`}>
+                  <div>
                 <HomeComp uri={item ? item.metaDataUri.substr(7, 50) : ""} />
 
                 <div className="flex px-4 py-6">
@@ -106,7 +108,8 @@ export default function CreatorDashboard() {
                     </p>
                   </div>
                 </div>
-
+                </div>
+                </Link>
                 <div className="px-4 py-4 bg-gray-100 dark:bg-gray-700 flex justify-between">
                   <button
                     onClick={() => buyNft(nft)}
