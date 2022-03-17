@@ -151,8 +151,8 @@ function Home({ marketItems }) {
 
 						{marketItems.map((item) => {
 
-							// console.log(item);
-							// console.log(item.metaDataUri.substr(7, 50));
+							console.log(item);
+							console.log(item.metaDataUri.substr(7, 50));
 
 							return (
 
