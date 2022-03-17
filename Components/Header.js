@@ -3,9 +3,9 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import Web3Modal from "web3modal"
 import { ethers } from 'ethers'
-import {
-  marketplaceAddress, creatifyAddress
-} from '../config'
+// import {
+//   marketplaceAddress, creatifyAddress
+// } from '../config'
 import Creatify from '../artifacts/contracts/Creatify.sol/Creatify.json'
 import Marketplace from '../artifacts/contracts/Marketplace.sol/Marketplace.json'
 
@@ -18,8 +18,11 @@ import { FaUserCircle } from "react-icons/fa"
 import { IoPersonSharp } from "react-icons/io";
 import {NavLink} from "reactstrap";
 
+const marketplaceAddress = process.env.NEXT_PUBLIC_MARKETPLACE_ADDRESS;
+const creatifyAddress = process.env.NEXT_PUBLIC_CREATIFY_ADDRESS;
 
 function Header() {
+  
   const router = useRouter();
 
   // function to open the drop menu 

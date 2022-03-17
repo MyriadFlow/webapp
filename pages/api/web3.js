@@ -1,10 +1,14 @@
 import Web3Modal from "web3modal";
 import { ethers } from "ethers";
-import { marketplaceAddress, creatifyAddress } from "../../config";
+// import { marketplaceAddress, creatifyAddress } from "../../config";
 import Creatify from "../../artifacts/contracts/Creatify.sol/Creatify.json";
 import Marketplace from "../../artifacts/contracts/Marketplace.sol/Marketplace.json";
 
+const marketplaceAddress = process.env.NEXT_PUBLIC_MARKETPLACE_ADDRESS;
+const creatifyAddress = process.env.NEXT_PUBLIC_CREATIFY_ADDRESS;
+
 export const handleConnect = async () => {
+
   const web3Modal = new Web3Modal({
     network: "mainnet",
     cacheProvider: true,

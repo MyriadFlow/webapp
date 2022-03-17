@@ -5,7 +5,7 @@ import axios from "axios";
 import Web3Modal from "web3modal";
 import { FaEthereum } from "react-icons/fa";
 import Link from "next/link";
-import { marketplaceAddress, creatifyAddress } from "../config";
+// import { marketplaceAddress, creatifyAddress } from "../config";
 
 import Creatify from "../artifacts/contracts/Creatify.sol/Creatify.json";
 import Marketplace from "../artifacts/contracts/Marketplace.sol/Marketplace.json";

@@ -11,15 +11,18 @@ import Multiselect from "multiselect-react-dropdown";
 
 const client = ipfsHttpClient('https://ipfs.infura.io:5001/api/v0')
 
-import {
-  creatifyAddress, marketplaceAddress
-} from '../config'
+// import {
+//   creatifyAddress, marketplaceAddress
+// } from '../config'
 
 import Creatify from '../artifacts/contracts/Creatify.sol/Creatify.json'
 import Marketplace from '../artifacts/contracts/Marketplace.sol/Marketplace.json'
 import BuyAsset from "../Components/buyAssetModal";
 import { Alert, Snackbar } from "@mui/material";
 import Layout from "../Components/Layout";
+
+const marketplaceAddress = process.env.NEXT_PUBLIC_MARKETPLACE_ADDRESS;
+const creatifyAddress = process.env.NEXT_PUBLIC_CREATIFY_ADDRESS;
 
 export default function CreateItem() {
 

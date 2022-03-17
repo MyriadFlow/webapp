@@ -1,10 +1,14 @@
 import Web3Modal from "web3modal";
 import { ethers } from "ethers";
-import { creatifyAddress, marketplaceAddress } from "../../config";
+// import { creatifyAddress, marketplaceAddress } from "../../config";
 import Creatify from "../../artifacts/contracts/Creatify.sol/Creatify.json";
 import Marketplace from "../../artifacts/contracts/Marketplace.sol/Marketplace.json";
 
+const marketplaceAddress = process.env.NEXT_PUBLIC_MARKETPLACE_ADDRESS;
+const creatifyAddress = process.env.NEXT_PUBLIC_CREATIFY_ADDRESS;
+
 export const buyNFT = async (nft, setmodel, setmodelmsg) => {
+
   /* needs the user to sign the transaction, so will use Web3Provider and sign it */
   const web3Modal = new Web3Modal();
   const connection = await web3Modal.connect();

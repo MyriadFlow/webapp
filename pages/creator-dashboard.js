@@ -5,7 +5,7 @@ import axios from "axios";
 import Web3Modal from "web3modal";
 import { FaEthereum } from "react-icons/fa";
 
-import { marketplaceAddress, creatifyAddress } from "../config";
+// import { marketplaceAddress, creatifyAddress } from "../config";
 import Link from "next/link";
 import Creatify from "../artifacts/contracts/Creatify.sol/Creatify.json";
 import Marketplace from "../artifacts/contracts/Marketplace.sol/Marketplace.json";
@@ -18,6 +18,9 @@ import BoughtItems from "../Components/nftboughtDashboard";
 
 import client from "../apollo-client";
 import { request, gql } from "graphql-request";
+
+const marketplaceAddress = process.env.NEXT_PUBLIC_MARKETPLACE_ADDRESS;
+const creatifyAddress = process.env.NEXT_PUBLIC_CREATIFY_ADDRESS;
 
 const graphqlAPI =
   "https://query.graph.lazarus.network/subgraphs/name/MyriadFlow";

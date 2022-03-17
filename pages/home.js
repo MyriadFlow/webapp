@@ -5,9 +5,9 @@ import axios from 'axios'
 import Web3Modal from "web3modal"
 import { FaEthereum } from "react-icons/fa"
 
-import {
-	creatifyAddress, marketplaceAddress
-} from '../config'
+// import {
+// 	creatifyAddress, marketplaceAddress
+// } from '../config'
 
 import Creatify from '../artifacts/contracts/Creatify.sol/Creatify.json'
 import Marketplace from '../artifacts/contracts/Marketplace.sol/Marketplace.json'
@@ -31,6 +31,9 @@ import client from "../apollo-client";
 import BuyAsset from "../Components/buyAssetModal";
 import { buyNFT } from "./api/buyNFT";
 import Layout from "../Components/Layout";
+
+const marketplaceAddress = process.env.NEXT_PUBLIC_MARKETPLACE_ADDRESS;
+const creatifyAddress = process.env.NEXT_PUBLIC_CREATIFY_ADDRESS;
 
 export async function getStaticProps() {
 	const { data } = await client.query({
