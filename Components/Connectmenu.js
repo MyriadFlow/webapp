@@ -27,7 +27,6 @@ function Connectmenu({ toogle }) {
     // console.log(walletAddr?walletAddr[0]:"");
     var wallet = walletAddr?walletAddr[0]:'';
 
-
     const { systemTheme, theme, setTheme } = useTheme()
 
 
@@ -86,7 +85,68 @@ function Connectmenu({ toogle }) {
         }
     }
 
-    const creatorRole = async () => {
+    const getRole = async () => {
+
+        const token = localStorage.getItem('platform_token');
+        const CREATIFY_CREATOR_ROLE = await creatify.CREATIFY_CREATOR_ROLE();
+        console.log(CREATIFY_CREATOR_ROLE);
+        // const { roledata } = await axios.get(
+        //     `https://marketplace-engine.lazarus.network/api/v1.0/roleId/0x01b9906c77d0f3e5e952265ffbd74a08f1013f607e72528c5c1fbaf8f36e3634`
+        // );
+        // console.log(data);
+
+        const config1 = {
+            url:"https://marketplace-engine.lazarus.network/api/v1.0/roleId/0x01b9906c77d0f3e5e952265ffbd74a08f1013f607e72528c5c1fbaf8f36e3634",
+            method:"GET",
+            headers:{
+                "Authorization":`Bearer ${token}`
+            },
+       };
+       let roledata;
+        try{
+            roledata = await axios(config1);
+            console.log(roledata);
+        }catch(e){
+            console.log(e);
+        }
+
+        let web3 = new Web3(Web3.givenProvider);
+        let completemsg = roledata.data.payload.eula+roledata.data.payload.flowId;
+        // console.log(completemsg);
+        const hexMsg = convertUtf8ToHex(completemsg);
+        // console.log(hexMsg);
+        const result = await web3.eth.personal.sign(hexMsg,wallet);
+        // console.log(result);
+
+        var signroledata = JSON.stringify({
+            flowId : roledata.data.payload.flowId,
+            signature:result,
+        })
+
+        const config = {
+             url:"https://marketplace-engine.lazarus.network/api/v1.0/claimrole",
+             method:"POST",
+             headers:{
+                 "Content-Type":"application/json",
+                 "Authorization":`Bearer ${token}`
+             },
+             data:signroledata,
+        };
+
+        try{
+            const response = await axios(config);
+            // console.log(response);
+            const msg = await response?.data?.message;
+            console.log(msg);
+            
+            return true;
+        }catch(e){
+            console.log(e);
+            return false;
+        }
+    }
+
+    const authorize = async () => {
         const { data } = await axios.get(
             `https://marketplace-engine.lazarus.network/api/v1.0/flowid?walletAddress=${wallet}`
         );
@@ -110,6 +170,7 @@ function Connectmenu({ toogle }) {
              method:"POST",
              headers:{
                  "Content-Type":"application/json",
+                //  "Token":`Bearer ${token}`
              },
              data:signdata,
         };
@@ -118,13 +179,12 @@ function Connectmenu({ toogle }) {
             // console.log(response);
             const token = await response?.data?.payload?.token;
             localStorage.setItem("platform_token",token);
-            
+            getRole();
             return true;
         }catch(e){
             console.log(e);
             return false;
         }
-        
     };
 
 
@@ -218,7 +278,7 @@ function Connectmenu({ toogle }) {
                     user &&
                     <div className="flex justify-center">
                         <button
-                            onClick={creatorRole}
+                            onClick={authorize}
                             className="bg-blue-800 hover:bg-gray-400 shadow-lg px-10 py-2 mt-2 rounded-lg text-white">Get creator role</button>
                     </div>
                 }
