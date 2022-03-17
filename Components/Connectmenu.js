@@ -88,8 +88,8 @@ function Connectmenu({ toogle }) {
     const getRole = async () => {
 
         const token = localStorage.getItem('platform_token');
-        const CREATIFY_CREATOR_ROLE = await creatify.CREATIFY_CREATOR_ROLE();
-        console.log(CREATIFY_CREATOR_ROLE);
+        // const CREATIFY_CREATOR_ROLE = await creatify.CREATIFY_CREATOR_ROLE();
+        // console.log(CREATIFY_CREATOR_ROLE);
         // const { roledata } = await axios.get(
         //     `https://marketplace-engine.lazarus.network/api/v1.0/roleId/0x01b9906c77d0f3e5e952265ffbd74a08f1013f607e72528c5c1fbaf8f36e3634`
         // );
