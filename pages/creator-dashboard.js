@@ -73,16 +73,16 @@ export default function CreatorDashboard() {
     const provider = new ethers.providers.Web3Provider(connection);
     const signer = provider.getSigner();
 
-    const marketContract = new ethers.Contract(
-      marketplaceAddress,
-      Marketplace.abi,
-      signer
-    );
-    const tokenContract = new ethers.Contract(
-      creatifyAddress,
-      Creatify.abi,
-      provider
-    );
+    // const marketContract = new ethers.Contract(
+    //   marketplaceAddress,
+    //   Marketplace.abi,
+    //   signer
+    // );
+    // const tokenContract = new ethers.Contract(
+    //   creatifyAddress,
+    //   Creatify.abi,
+    //   provider
+    // );
   }
   return (
     <Layout>

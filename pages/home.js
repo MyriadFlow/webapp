@@ -34,6 +34,7 @@ import Layout from "../Components/Layout";
 
 const marketplaceAddress = process.env.NEXT_PUBLIC_MARKETPLACE_ADDRESS;
 const creatifyAddress = process.env.NEXT_PUBLIC_CREATIFY_ADDRESS;
+const rpc_provider = process.env.NEXT_PUBLIC_RPC_PROVIDER;
 
 export async function getStaticProps() {
 	const { data } = await client.query({
@@ -106,9 +107,9 @@ function Home({ marketItems }) {
 
 	async function loadNFTs() {
 		/* create a generic provider and query for unsold market items */
-		const provider = new ethers.providers.JsonRpcProvider({ url: "https://rpc-mumbai.maticvigil.com/v1/6b26aad1d887708c0004394c103f8b27c1141540" })
-		const tokenContract = new ethers.Contract(creatifyAddress, Creatify.abi, provider)
-		const marketContract = new ethers.Contract(marketplaceAddress, Marketplace.abi, provider)
+		// const provider = new ethers.providers.JsonRpcProvider({ url: rpc_provider })
+		// const tokenContract = new ethers.Contract(creatifyAddress, Creatify.abi, provider)
+		// const marketContract = new ethers.Contract(marketplaceAddress, Marketplace.abi, provider)
 		setLoadingState('loaded')
 	}
 	async function buyNft(nft) {
