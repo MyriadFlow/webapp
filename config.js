@@ -1,2 +1,2 @@
-export const marketplaceAddress = "0x8E3a69e094C72Aaca55191A91BAEbE9F800bD908"
-export const creatifyAddress = "0xA34D5022e7fa813F460eB9eF8E59c3386faCE489"
+export const marketplaceAddress = "0x899dEf33857C491Ce61346f6e95b3a5Ee4acd24a";
+export const creatifyAddress = "0xA5024E93fbc9015fa60F0b72F531aD5f0e6d7e16";
