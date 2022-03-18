@@ -26,8 +26,10 @@ import { close } from "../slices/modelSlice";
 import HomeComp from "../Components/homeComp";
 import HomeComp2 from "../Components/homecomp2";
 
-import { gql } from "@apollo/client";
+// import { gql } from "@apollo/client";
 import client from "../apollo-client";
+import { request, gql } from "graphql-request";
+
 import BuyAsset from "../Components/buyAssetModal";
 import { buyNFT } from "./api/buyNFT";
 import Layout from "../Components/Layout";
@@ -36,31 +38,33 @@ const marketplaceAddress = process.env.NEXT_PUBLIC_MARKETPLACE_ADDRESS;
 const creatifyAddress = process.env.NEXT_PUBLIC_CREATIFY_ADDRESS;
 const rpc_provider = process.env.NEXT_PUBLIC_RPC_PROVIDER;
 
-export async function getStaticProps() {
-	const { data } = await client.query({
-		query: gql`
-    query Query {
-      marketItems(first: 25,where:{sold:false}) {
-        price
-        itemId
-        seller
-        forSale
-        tokenId
-        metaDataUri
-      }
-    }
-    `,
-	});
+const graphqlAPI =
+  "https://query.graph.lazarus.network/subgraphs/name/MyriadFlow";
 
-	return {
-		props: {
-			marketItems: data.marketItems,
-		},
-	};
-}
+// export async function getStaticProps() {
+// 	const { data } = await client.query({
+// 		query: gql`
+//     query Query {
+//       marketItems(first: 25,where:{sold:false}) {
+//         price
+//         itemId
+//         seller
+//         forSale
+//         tokenId
+//         metaDataUri
+//       }
+//     }
+//     `,
+// 	});
 
+// 	return {
+// 		props: {
+// 			marketItems: data.marketItems,
+// 		},
+// 	};
+// }
 
-function Home({ marketItems }) {
+const Home = () =>{
 
 	const logoutmodel = useSelector(selectModel)
 	const dispatch = useDispatch();
@@ -118,6 +122,32 @@ function Home({ marketItems }) {
 		await buyNFT(nft, setmodel, setmodelmsg);
 		loadNFTs();
 	}
+
+	const [data, setData] = useState([]);
+
+	const market = async () => {
+		const query = gql`
+		query Query {
+			      marketItems(first: 25,where:{sold:false}) {
+			        price
+			        itemId
+			        seller
+			        forSale
+			        tokenId
+			        metaDataUri
+			      }
+			    }
+			  `;
+		const result = await request(graphqlAPI, query);
+		setData(result.marketItems);
+		console.log(result);
+	  };
+
+	  useEffect(() => {
+		market();
+		// console.log(user);
+	  });
+
 	return (
 		<Layout>
 			{model && <BuyAsset open={model} setOpen={setmodel} message={modelmsg} />}
@@ -153,7 +183,7 @@ function Home({ marketItems }) {
 
 					<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 md:grid-cols-3 gap-4 lg:gap-24 p-4 mt-28  h-auto">
 
-						{marketItems.map((item) => {
+						{data.map((item) => {
 
 							console.log(item);
 							console.log(item.metaDataUri.substr(7, 50));
