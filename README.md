@@ -8,7 +8,6 @@ Firstly add .env.local file in root with following content:
 NEXT_PUBLIC_RPC_PROVIDER="https://rpc-mumbai.maticvigil.com/v1/6b26aad1d887708c0004394c103f8b27c1141540"
 NEXT_PUBLIC_MARKETPLACE_ADDRESS="0x899dEf33857C491Ce61346f6e95b3a5Ee4acd24a"
 NEXT_PUBLIC_CREATIFY_ADDRESS="0xA5024E93fbc9015fa60F0b72F531aD5f0e6d7e16"
-
 ```
 
 Secondly, run the development server:
