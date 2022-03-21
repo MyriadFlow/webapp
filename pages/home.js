@@ -146,7 +146,7 @@ const Home = () =>{
 	  useEffect(() => {
 		market();
 		// console.log(user);
-	  });
+	  },[]);
 
 	return (
 		<Layout>

@@ -53,15 +53,14 @@ export default function CreatorDashboard() {
 
   useEffect(() => {
     fetchUserAssests(`${wallet}`);
+    loadNFTs();
     // console.log(user);
-  });
+  },[]);
 
   const [nfts, setNfts] = useState([]);
   const [sold, setSold] = useState([]);
   const [loadingState, setLoadingState] = useState("not-loaded");
-  useEffect(() => {
-    loadNFTs();
-  }, []);
+
 
   async function loadNFTs() {
     const web3Modal = new Web3Modal({

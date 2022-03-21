@@ -53,7 +53,7 @@ const MyAssets = () => {
   useEffect(() => {
     fetchUserAssests(`${wallet}`);
     // console.log(user);
-  });
+  },[]);
 
   // const [nfts, setNfts] = useState([])
   // const [loadingState, setLoadingState] = useState('not-loaded')
