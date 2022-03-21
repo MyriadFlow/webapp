@@ -19,8 +19,7 @@ import HomeComp2 from "../Components/homecomp2";
 import client from "../apollo-client";
 import { request, gql } from "graphql-request";
 
-const graphqlAPI =
-  "https://query.graph.lazarus.network/subgraphs/name/MyriadFlow";
+const graphqlAPI = process.env.NEXT_PUBLIC_GRAPHQL_API;
 
 const MyAssets = () => {
   const walletAddr = useSelector(selectUser);

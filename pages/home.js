@@ -38,8 +38,7 @@ const marketplaceAddress = process.env.NEXT_PUBLIC_MARKETPLACE_ADDRESS;
 const creatifyAddress = process.env.NEXT_PUBLIC_CREATIFY_ADDRESS;
 const rpc_provider = process.env.NEXT_PUBLIC_RPC_PROVIDER;
 
-const graphqlAPI =
-  "https://query.graph.lazarus.network/subgraphs/name/MyriadFlow";
+const graphqlAPI = process.env.NEXT_PUBLIC_GRAPHQL_API;
 
 // export async function getStaticProps() {
 // 	const { data } = await client.query({
@@ -138,6 +137,7 @@ const Home = () =>{
 			      }
 			    }
 			  `;
+			  console.log(process.env);
 		const result = await request(graphqlAPI, query);
 		setData(result.marketItems);
 		console.log(result);

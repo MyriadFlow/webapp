@@ -22,8 +22,7 @@ import { request, gql } from "graphql-request";
 const marketplaceAddress = process.env.NEXT_PUBLIC_MARKETPLACE_ADDRESS;
 const creatifyAddress = process.env.NEXT_PUBLIC_CREATIFY_ADDRESS;
 
-const graphqlAPI =
-  "https://query.graph.lazarus.network/subgraphs/name/MyriadFlow";
+const graphqlAPI = process.env.NEXT_PUBLIC_GRAPHQL_API;
 
 export default function CreatorDashboard() {
   const walletAddr = useSelector(selectUser);

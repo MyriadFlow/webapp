@@ -19,6 +19,7 @@ import axios from "axios";
 import { convertUtf8ToHex } from "@walletconnect/utils";
 const Web3 = require("web3");
 
+const BASE_URL=process.env.NEXT_PUBLIC_BASE_URL;
 
 function Connectmenu({ toogle }) {
 
@@ -96,7 +97,7 @@ function Connectmenu({ toogle }) {
         // console.log(data);
 
         const config1 = {
-            url:"https://marketplace-engine.lazarus.network/api/v1.0/roleId/0x01b9906c77d0f3e5e952265ffbd74a08f1013f607e72528c5c1fbaf8f36e3634",
+            url:`${BASE_URL}/api/v1.0/roleId/0x01b9906c77d0f3e5e952265ffbd74a08f1013f607e72528c5c1fbaf8f36e3634`,
             method:"GET",
             headers:{
                 "Authorization":`Bearer ${token}`
@@ -124,7 +125,7 @@ function Connectmenu({ toogle }) {
         })
 
         const config = {
-             url:"https://marketplace-engine.lazarus.network/api/v1.0/claimrole",
+             url:`${BASE_URL}/api/v1.0/claimrole`,
              method:"POST",
              headers:{
                  "Content-Type":"application/json",
@@ -148,7 +149,7 @@ function Connectmenu({ toogle }) {
 
     const authorize = async () => {
         const { data } = await axios.get(
-            `https://marketplace-engine.lazarus.network/api/v1.0/flowid?walletAddress=${wallet}`
+            `${BASE_URL}/api/v1.0/flowid?walletAddress=${wallet}`
         );
         // console.log(data);
 
@@ -166,7 +167,7 @@ function Connectmenu({ toogle }) {
         })
 
         const config = {
-             url:"https://marketplace-engine.lazarus.network/api/v1.0/authenticate",
+             url:`${BASE_URL}/api/v1.0/authenticate`,
              method:"POST",
              headers:{
                  "Content-Type":"application/json",
