@@ -25,6 +25,9 @@ const creatifyAddress = process.env.NEXT_PUBLIC_CREATIFY_ADDRESS;
 const graphqlAPI = process.env.NEXT_PUBLIC_GRAPHQL_API;
 
 export default function CreatorDashboard() {
+  function getEthPrice(price) {
+    return ethers.utils.formatEther(price);
+  }
   const walletAddr = useSelector(selectUser);
   // console.log(walletAddr);
   // console.log(walletAddr ? walletAddr[0] : "");
@@ -54,12 +57,11 @@ export default function CreatorDashboard() {
     fetchUserAssests(`${wallet}`);
     loadNFTs();
     // console.log(user);
-  },[]);
+  }, []);
 
   const [nfts, setNfts] = useState([]);
   const [sold, setSold] = useState([]);
   const [loadingState, setLoadingState] = useState("not-loaded");
-
 
   async function loadNFTs() {
     const web3Modal = new Web3Modal({
@@ -95,21 +97,25 @@ export default function CreatorDashboard() {
               >
                 <Link key={item.itemId} href={`/assets/${item.itemId}`}>
                   <div>
-                <HomeComp uri={item ? item.metaDataUri.substr(7, 50) : ""} />
+                    <HomeComp
+                      uri={item ? item.metaDataUri.substr(7, 50) : ""}
+                    />
 
-                <div className="flex px-4 py-6">
-                  <HomeComp2 uri={item ? item.metaDataUri.substr(7, 50) : ""} />
-                </div>
-                <div className=" flex items-center justify-between px-4 mb-2">
-                  <p className="font-1 text-sm font-bold">Price </p>
-                  <div className="flex items-center">
-                    <FaEthereum className="h-4 w-4 text-blue-400" />
-                    <p className="font-extralight dark:text-gray-400">
-                      {item.price}
-                    </p>
+                    <div className="flex px-4 py-6">
+                      <HomeComp2
+                        uri={item ? item.metaDataUri.substr(7, 50) : ""}
+                      />
+                    </div>
+                    <div className=" flex items-center justify-between px-4 mb-2">
+                      <p className="font-1 text-sm font-bold">Price </p>
+                      <div className="flex items-center">
+                        <FaEthereum className="h-4 w-4 text-blue-400" />
+                        <p className="font-extralight dark:text-gray-400">
+                          {getEthPrice(item.price)}
+                        </p>
+                      </div>
+                    </div>
                   </div>
-                </div>
-                </div>
                 </Link>
                 <div className="px-4 py-4 bg-gray-100 dark:bg-gray-700 flex justify-between">
                   <button
