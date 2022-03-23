@@ -21,7 +21,7 @@ const graphqlAPI = process.env.NEXT_PUBLIC_GRAPHQL_API;
 	const fetchUserAssests = async (walletAddr) => {
 		const query = gql`
     query Query($where: MarketItem_filter) {
-            marketItems(first: 20, where: {owner: "${walletAddr}"}) {
+            marketItems(first: 20, where: {owner: "${walletAddr}",deleted:false,sold:true}) {
               price
               itemId
               seller
