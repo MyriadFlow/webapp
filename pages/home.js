@@ -173,9 +173,9 @@ const Home = () =>{
 				</div>)}
 
 			<main className=" bg:gray-100 dark:bg-gray-800 h-auto">
-				<div className="bg-gray-100 dark:bg-gray-700   w-full h-12 z-30  fixed top-16 px-10  ">
+				{/* <div className="bg-gray-100 dark:bg-gray-700   w-full h-12 z-30  fixed top-16 px-10  ">
 					<div > <IoIosArrowDropright onClick={toogle} className="h-8 w-8 text-gray-400 mt-2 cursor-pointer hover:text-gray-800 " /></div>
-				</div>
+				</div> */}
 				{filter &&
 					<Filter toogle={toogle} filter={!filter} />
 				}

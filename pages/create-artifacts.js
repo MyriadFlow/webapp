@@ -1,5 +1,5 @@
 /* pages/create-artifacts.js */
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { ethers } from 'ethers'
 import { create as ipfsHttpClient } from 'ipfs-http-client'
 import { useRouter } from 'next/router'
@@ -20,6 +20,8 @@ import Marketplace from '../artifacts/contracts/Marketplace.sol/Marketplace.json
 import BuyAsset from "../Components/buyAssetModal";
 import { Alert, Snackbar } from "@mui/material";
 import Layout from "../Components/Layout";
+import { useSelector } from 'react-redux'
+import { selectUser } from '../slices/userSlice'
 
 const marketplaceAddress = process.env.NEXT_PUBLIC_MARKETPLACE_ADDRESS;
 const creatifyAddress = process.env.NEXT_PUBLIC_CREATIFY_ADDRESS;
@@ -185,10 +187,41 @@ export default function CreateItem() {
     setOpen(false);
   }
 
+  const walletAddr = useSelector(selectUser);
+  // console.log(walletAddr);
+  // console.log(walletAddr?walletAddr[0]:"");
+  var wallet = walletAddr ? walletAddr[0] : "";
+
+  const [hasRole, setHasRole] = useState(false);
+
+  useEffect(async() => {
+    const web3Modal = new Web3Modal();
+    const connection = await web3Modal.connect();
+    const provider = new ethers.providers.Web3Provider(connection);
+    const signer = provider.getSigner();
+
+    /* next, create the item */
+    let contract = new ethers.Contract(creatifyAddress, Creatify.abi, signer);
+     setHasRole(  await contract.hasRole( await contract.CREATIFY_CREATOR_ROLE() , wallet))
+
+    
+  }, []);
+
   const [options, setOptions] = useState(["Art", "Music", "Sports", "Video", "Cartoon", "Others"]);
   const [categories, setCategory] = useState([]);
 
 
+  if(!hasRole)
+  return (
+    <Layout>
+       <div className="dark:bg-gray-800" style={{ minHeight: '80vh' }}>
+       <div>
+                    <h3 className="text-2xl font-semibold pb-1 mt-20  pl-5 pr-5">You do not have the creator Role </h3>
+                    <hr />
+                  </div>
+        </div>
+    </Layout>
+  )
   return (
     <Layout>
       <div className="dark:bg-gray-800" style={{ minHeight: '100vh' }}>

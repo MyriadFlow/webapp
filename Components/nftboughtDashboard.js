@@ -42,7 +42,7 @@ function nftboughtDashboard() {
   useEffect(() => {
     fetchUserAssests(`${wallet}`);
     // console.log(user);
-  });
+  },[]);
 
   return (
     <div>
