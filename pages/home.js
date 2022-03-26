@@ -172,16 +172,18 @@ const Home = () =>{
 					</div>
 				</div>)}
 
-			<main className=" bg:gray-100 dark:bg-gray-800 h-auto">
-				{/* <div className="bg-gray-100 dark:bg-gray-700   w-full h-12 z-30  fixed top-16 px-10  ">
-					<div > <IoIosArrowDropright onClick={toogle} className="h-8 w-8 text-gray-400 mt-2 cursor-pointer hover:text-gray-800 " /></div>
-				</div> */}
-				{filter &&
-					<Filter toogle={toogle} filter={!filter} />
-				}
-				<div className=" mt-20 min-h-screen" >
-
-					<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 md:grid-cols-3 gap-4 lg:gap-24 p-4 mt-28  h-auto">
+				<main className="dark:bg-gray-800">
+        <div className="bg-gray-100 dark:bg-gray-700 w-full h-12 fixed top-12 z-30 px-10">
+          <span className="flex h-full items-center">
+            <IoIosArrowDropright
+              onClick={toogle}
+              className="text-3xl text-gray-400 cursor-pointer hover:text-gray-800 "
+            />
+          </span>
+        </div>
+        {filter && <Filter toogle={toogle} filter={!filter} />}
+        <div className="min-h-screen">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 md:grid-cols-3 gap-4 lg:gap-24 p-4 mt-24">
 
 						{data.map((item) => {
 

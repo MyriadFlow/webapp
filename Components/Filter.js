@@ -14,7 +14,7 @@ function Filter({ toogle, filter }) {
     const [status, Setstatus] = useState(false);
 
     return (
-        <div className={!filter ? "fixed top-10 w-full  z-40 md:w-2/6 h-full  dark:bg-gray-900 bg-white filter right-0 overflow-y-auto" : "hidden"}>
+        <div className={!filter ? "fixed top-[49px] w-full  z-40 md:w-2/6 h-full  dark:bg-gray-900 bg-white filter right-0 overflow-y-auto" : "hidden"}>
             <div className=" flex p-2 px-4 justify-between items-center border-b-2">
                 <div className="flex space-x-2 items-center">
                     <p className="font-semibold text-lg">Filter</p>

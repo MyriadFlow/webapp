@@ -16,6 +16,7 @@ import { selectUser } from "../slices/userSlice"
 import { useSelector } from "react-redux"
 import { FaUserCircle } from "react-icons/fa"
 import { IoPersonSharp } from "react-icons/io";
+import { FaBars } from "react-icons/fa";
 import {NavLink} from "reactstrap";
 
 const marketplaceAddress = process.env.NEXT_PUBLIC_MARKETPLACE_ADDRESS;
@@ -78,18 +79,18 @@ function Header() {
 
   return (
 
-    <header className="fixed top-0  left-0 z-50 shadow-md items-center px-2 flex-grow flex w-full bg-blue-500 dark:bg-purple-600" style={{ backgroundColor: '' }}>
+    <header className="fixed top-0 z-50 shadow-md items-center h-[49px] px-2 flex-grow flex justify-between w-full bg-blue-500 dark:bg-purple-600" style={{ backgroundColor: '' }}>
       {/* left */}
-      <div className="flex items-center space-x-1 flex-grow ">
-        <svg xmlns="http://www.w3.org/2000/svg"
+      <div className="flex items-center">
+        <FaBars
           onClick={nav}
-          className="h-8 w-8 lg:hidden cursor-pointer" viewBox="0 0 20 20" fill="currentColor">
-          <path fillRule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clipRule="evenodd" />
-        </svg>
+          className="lg:invisible cursor-pointer text-2xl"
+        />
         <Link href="/">
-          <p className="text-xl font-semibold cursor-pointer uppercase md:pl-20 pl-4">Marketplace</p>
+          <p className="text-xl font-semibold cursor-pointer uppercase md:pl-20 pl-4 transition-all tracking-wide">
+            Marketplace
+          </p>
         </Link>
-
       </div>
 
 
@@ -105,92 +106,103 @@ function Header() {
 
 
       {/* right */}
-      <div className="flex items-center ml-2 flex-grow ">
-
-        <div className=" lg:flex items-center hidden space-x-8 mr-6 text-lg font-semibold   ">
-
+      <div>
+        <div className=" lg:flex items-stretch hidden gap-x-6  text-lg font-semibold">
           <Link href="/home">
             <NavLink
-              className={router.pathname == "/home" ? "active " : ""} style={{cursor:'pointer'}}>
+              className={router.pathname == "/home" ? "active " : ""}
+              style={{ cursor: "pointer" }}
+            >
               Explore
             </NavLink>
           </Link>
           <Link href="/create-artifacts">
-            <NavLink className={router.pathname == "/create-artifacts" ? "active " : ""} style={{cursor:'pointer'}}>
+            <NavLink
+              className={
+                router.pathname == "/create-artifacts" ? "active " : ""
+              }
+              style={{ cursor: "pointer" }}
+            >
               Create
             </NavLink>
           </Link>
           <Link href="/my-artifacts">
-            <NavLink className={router.pathname == "/my-artifacts" ? "active " : ""} style={{cursor:'pointer'}}>
+            <NavLink
+              className={router.pathname == "/my-artifacts" ? "active " : ""}
+              style={{ cursor: "pointer" }}
+            >
               My Assets
             </NavLink>
           </Link>
           <Link href="/creator-dashboard">
-            <NavLink className={router.pathname == "/creater-dashboard" ? "active" : ""} style={{cursor:'pointer'}}>
+            <NavLink
+              className={
+                router.pathname == "/creater-dashboard" ? "active" : ""
+              }
+              style={{ cursor: "pointer" }}
+            >
               Dashboard
-            </NavLink> 
+            </NavLink>
           </Link>
-
-
         </div>
 
         {/* SIDENAV  */}
-        {navopen &&
-          <div style={{ backgroundColor: '#7900FF' }} className=" absolute inset-y top-0 right-0 w-48 h-screen pt-20 p-10 space-y-6 lg:hidden font-bold shadow-lg  ">
+        {navopen && (
+          <div
+            style={{ backgroundColor: "#7900FF" }}
+            className="absolute top-0 right-0 w-48 h-screen lg:hidden font-bold shadow-lg pt-12 text-center"
+          >
             <Link href="/home">
-              <a className=" p-2 flex items-center rounded-sm justify-center hover:bg-gray-300 transition duration-200 ease-in-out">
+              <a className="block py-4 rounded-sm hover:bg-gray-300 transition duration-200 ease-in-out">
                 Home
               </a>
             </Link>
             <Link href="/create-artifacts">
-              <a className=" p-2 flex items-center rounded-sm justify-center hover:bg-gray-300 transition duration-200 ease-in-out">
+              <a className="block py-4 rounded-sm hover:bg-gray-300 transition duration-200 ease-in-out">
                 Sell Asset
               </a>
             </Link>
             <Link href="/my-artifacts">
-              <a className=" p-2 flex items-center rounded-sm justify-center hover:bg-gray-300 transition duration-200 ease-in-out">
+              <a className="block py-4 rounded-sm hover:bg-gray-300 transition duration-200 ease-in-out">
                 My Assets
               </a>
             </Link>
             <Link href="/creator-dashboard">
-              <a className=" p-2 flex items-center rounded-sm justify-center hover:bg-gray-300 transition duration-200 ease-in-out">
+              <a className="block py-4 rounded-sm hover:bg-gray-300 transition duration-200 ease-in-out">
                 Dashboard
               </a>
             </Link>
           </div>
-        }
+        )}
       </div>
-      <div >
-
-        <div className="flex items-center  space-x-3 md:pr-20 pr-4">
-
-          <div className="cursor-pointer"
-            onMouseEnter={opendropmenu}
-
-
-          >
-
-            {
-              !user ? <FaUserCircle style={{ color: 'white' }} className="h-8 w-8 text-gray-500" /> :
-                <Link href="/profile">
-                  <div className="h-8 w-8 rounded-full connect-profile ring-offset-2 ring-2 ring-blue-400  cursor-pointer"></div>
-                </Link>
-            }
-
+      <div>
+        <div className="flex items-center gap-x-3 md:pr-20 transition-all">
+          <div className="cursor-pointer" onMouseEnter={opendropmenu}>
+            {!user ? (
+              <FaUserCircle
+                style={{ color: "white" }}
+                className="text-3xl text-gray-500"
+              />
+            ) : (
+              <Link href="/profile">
+                <div className="h-8 w-8 rounded-full connect-profile ring-offset-2 ring-2 ring-blue-400  cursor-pointer"></div>
+              </Link>
+            )}
           </div>
 
-          <MdOutlineAccountBalanceWallet style={{ color: 'white' }} className="h-10 w-10 text-gray-500 cursor-pointer" onClick={() => Setconnectmenu(!connectmenu)} />
+          <MdOutlineAccountBalanceWallet
+            style={{ color: "white" }}
+            className="text-3xl text-gray-500 cursor-pointer"
+            onClick={() => Setconnectmenu(!connectmenu)}
+          />
         </div>
 
-        {connectmenu &&
-
-
-          <Connectmenu toogle={toogle} />
-        }
+        {connectmenu && <Connectmenu toogle={toogle} />}
       </div>
-
     </header>
   );
+
+
 }
 
 export default Header;

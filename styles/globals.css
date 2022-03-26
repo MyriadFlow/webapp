@@ -25,19 +25,16 @@
 font-1{
     font-family: 'Poppins', sans-serif;
 }
-.background{
+.local-background{
     /* background-image: linear-gradient(90deg,rgb(167, 112, 239),rgb(207, 139, 243,48.66%),rgb(253, 185, 155,64%)); */
     /* background-color: #18142c; */
-    height:100vh;
-  
-    width:100%;
-    background-image: url("https://miro.medium.com/max/920/0*faThmRKeusDRw_Hf.png");
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    filter: blur(4px);
-    -webkit-filter: blur(4px);
+    
+    /* filter: blur(4px); */
+    /* -webkit-filter: blur(4px); */
     /* opacity: 0.5; */
+    /* width:100%; */
+    background:linear-gradient(rgba(0,0,0,0.6),rgba(0,0,0,0.6)), url("https://miro.medium.com/max/920/0*faThmRKeusDRw_Hf.png") center/cover no-repeat fixed;
+    
 }
 .card{
     height:80%;
@@ -55,7 +52,6 @@ font-1{
 } */
 a{
     font-family:"Didact Gothic",sans-serif;
-    
 }
 
 .home_background{
@@ -76,7 +72,6 @@ a{
 
 a{
     color: white;
-    padding: 16px 5px;
 }
 
 a:hover{
@@ -109,9 +104,9 @@ a:hover{
     background-color: #f4f4f4;
 }
 
-.filter{
+/* .filter{
     top:72px
-}
+} */
 
 .buttonconnect{
     padding:15px 40px;
@@ -138,5 +133,3 @@ a:hover{
     background-color: rgba(0, 0, 0, 0.389);
     backdrop-filter: blur(5px);
 }
-
-
