@@ -15,10 +15,10 @@ function landingpage() {
           <div className="w-[85vw] max-w-[770px] mx-auto">
             <img className="w-full pt-8 mb-4" src="/nft.svg" alt="" />
             <div className="text-center">
-              <h2 className="text-fontblue dark:text-white font-raleway font-bold text-3xl sm:text-4xl mb-4">
+              <h2 className="text-fontblue dark:text-white font-raleway font-bold text-3xl sm:text-4xl mb-8">
                 Discover, collect, and sell extraordinary NFTs
               </h2>
-              <h6 className="text-lg font-opensans max-w-[650px] mx-auto text-fontblue dark:text-white mb-6">
+              <h6 className="text-lg font-opensans max-w-[650px] mx-auto text-fontblue dark:text-white mb-10">
                 A new NFT marketplace, to buy and sell your art Lorem ipsum
                 dolor sit amet consectetur adipisicing elit. Similique inventore
                 magni repellendus
