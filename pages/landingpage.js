@@ -24,7 +24,7 @@ function landingpage() {
                 magni repellendus
               </h6>
               <div className="">
-                <button className=" bg-blue-500 text-xl sm:text-2xl capitalize shadow-md py-2 px-[68px] rounded-full transition duration-300  ease-in text-white font-bold hover:bg-purple-900 z-10">
+                <button className=" bg-blue-500 text-xl sm:text-2xl uppercase shadow-md py-4 outline-2 outline-offset-4 outline-blue-500 dark:outline-white outline px-12 transition duration-300  ease-in text-white font-bold hover:bg-white hover:text-blue-500">
                   <Link href="/home">
                     <span className="font-raleway">Explore</span>
                   </Link>
