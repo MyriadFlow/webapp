@@ -1,11 +1,11 @@
 import { FaUserCircle } from "react-icons/fa"
 import { AiOutlineCloseCircle } from "react-icons/ai"
 import Link from "next/link";
-import { useState } from "react";
+import { useState , useEffect} from "react";
 import { ethers } from "ethers";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "../slices/userSlice"
-
+import Web3Modal from 'web3modal'
 import { open } from "../slices/modelSlice"
 
 import { setbalance } from "../slices/balanceSlice"
@@ -15,11 +15,13 @@ import { FaEthereum } from "react-icons/fa"
 import { FiLogOut } from "react-icons/fi"
 import { useTheme } from "next-themes";
 // import { creatorRole } from "../pages/api/creatorRole";
+import Creatify from '../artifacts/contracts/Creatify.sol/Creatify.json'
 import axios from "axios";
 import { convertUtf8ToHex } from "@walletconnect/utils";
-const Web3 = require("web3");
 
+const Web3 = require("web3");
 const BASE_URL=process.env.NEXT_PUBLIC_BASE_URL;
+const creatifyAddress = process.env.NEXT_PUBLIC_CREATIFY_ADDRESS;
 
 function Connectmenu({ toogle }) {
 
@@ -66,6 +68,21 @@ function Connectmenu({ toogle }) {
     const [defaultAccount, SetdefaultAccount] = useState();
 
     const [UserBalance, SetUserBalance] = useState();
+
+    const [hasRole, setHasRole] = useState(false);
+
+  useEffect(async() => {
+    const web3Modal = new Web3Modal();
+    const connection = await web3Modal.connect();
+    const provider = new ethers.providers.Web3Provider(connection);
+    const signer = provider.getSigner();
+
+    /* next, create the item */
+    let contract = new ethers.Contract(creatifyAddress, Creatify.abi, signer);
+     setHasRole(  await contract.hasRole( await contract.CREATIFY_CREATOR_ROLE() , wallet))
+
+    
+  }, []);
 
 
 
@@ -276,7 +293,7 @@ function Connectmenu({ toogle }) {
                 </div>
 
                 {
-                    user &&
+                    !hasRole && user && 
                     <div className="flex justify-center">
                         <button
                             onClick={authorize}
