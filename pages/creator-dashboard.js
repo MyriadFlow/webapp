@@ -15,6 +15,7 @@ import { useDispatch, useSelector } from "react-redux";
 import HomeComp from "../Components/homeComp";
 import HomeComp2 from "../Components/homecomp2";
 import BoughtItems from "../Components/nftboughtDashboard";
+import Loader from "../Components/Loader";
 
 import client from "../apollo-client";
 import { request, gql } from "graphql-request";
@@ -34,6 +35,7 @@ export default function CreatorDashboard() {
   var wallet = walletAddr ? walletAddr[0] : "";
 
   const [data, setData] = useState([]);
+  const [loading,setLoading]=useState(true);
 
   const fetchUserAssests = async (walletAddr) => {
     const query = gql`
@@ -49,7 +51,9 @@ export default function CreatorDashboard() {
           }
           `;
     const result = await request(graphqlAPI, query);
+    setLoading(true);
     setData(result.marketItems);
+    setLoading(false);
     // console.log(result);
   };
 
@@ -89,7 +93,7 @@ export default function CreatorDashboard() {
       <div className="p-4 px-10 min-h-screen">
         <h2 className="text-xl pt-20 pb-4 border-b-2">Items Sold</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 md:grid-cols-3 gap-4 lg:gap-24 p-4 mt-20  h-auto">
-          {data.map((item) => {
+          { data.length>0 ? data.map((item) => {
             return (
               <div
                 key={item.itemId}
@@ -127,12 +131,10 @@ export default function CreatorDashboard() {
                 </div>
               </div>
             );
-          })}
-          {data.length == 0 && (
-            <div className="text-xl pb-10">
-              You haven&apos;t sold any asset.
-            </div>
-          )}
+          }): (loading?<Loader/>:<div className="text-xl pb-10">
+          You haven&apos;t sold any asset.
+        </div>)  
+        }
         </div>
       </div>
       <div className="p-4 px-10">

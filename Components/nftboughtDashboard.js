@@ -7,6 +7,7 @@ import HomeComp2 from "../Components/homecomp2";
 import { FaEthereum } from "react-icons/fa";
 import { request, gql } from "graphql-request";
 import { ethers } from "ethers";
+import Loader from "../Components/Loader";
 
 const graphqlAPI = process.env.NEXT_PUBLIC_GRAPHQL_API;
 
@@ -20,6 +21,7 @@ function nftboughtDashboard() {
   var wallet = walletAddr ? walletAddr[0] : "";
 
   const [data, setData] = useState([]);
+  const [loading,setLoading]=useState(true);
 
   const fetchUserAssests = async (walletAddr) => {
     const query = gql`
@@ -35,7 +37,9 @@ function nftboughtDashboard() {
           }
           `;
     const result = await request(graphqlAPI, query);
+    setLoading(true);
     setData(result.marketItems);
+    setLoading(false);
     // console.log(result);
   };
 
@@ -48,7 +52,7 @@ function nftboughtDashboard() {
     <div>
       <h2 className="text-xl pt-20 pb-4 border-b-2">Items Bought</h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 md:grid-cols-3 gap-4 lg:gap-24 p-4 mt-20  h-auto">
-        {data.map((item) => {
+        { data.length>0 ? data.map((item) => {
           return (
             <div
               key={item.itemId}
@@ -84,10 +88,9 @@ function nftboughtDashboard() {
               </div>
             </div>
           );
-        })}
-        {data.length == 0 && (
-          <div className="text-xl pb-10">You haven't buy any asset.</div>
-        )}
+        }): (loading?<Loader/>:<div className="text-xl pb-10">
+        You haven&apos;t buy any asset.
+      </div>)  }
       </div>
     </div>
   );
