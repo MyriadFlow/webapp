@@ -14,6 +14,7 @@ import { selectUser } from "../slices/userSlice";
 import { useDispatch, useSelector } from "react-redux";
 import HomeComp from "../Components/homeComp";
 import HomeComp2 from "../Components/homecomp2";
+import Loader from "../Components/Loader";
 
 // import { gql } from "@apollo/client";
 import client from "../apollo-client";
@@ -28,6 +29,7 @@ const MyAssets = () => {
   var wallet = walletAddr ? walletAddr[0] : "";
 
   const [data, setData] = useState([]);
+  const [loading,setLoading]=useState(true);
 
   const fetchUserAssests = async (walletAddr) => {
     const query = gql`
@@ -43,7 +45,9 @@ const MyAssets = () => {
           }
           `;
     const result = await request(graphqlAPI, query);
+    setLoading(true);
     setData(result.marketItems);
+    setLoading(false);
     console.log(result);
   };
 	function getEthPrice(price){
@@ -54,24 +58,6 @@ const MyAssets = () => {
     // console.log(user);
   },[]);
 
-  // const [nfts, setNfts] = useState([])
-  // const [loadingState, setLoadingState] = useState('not-loaded')
-  // useEffect(() => {
-  //   loadNFTs()
-  // }, [])
-  // async function loadNFTs() {
-  //   const web3Modal = new Web3Modal({
-  //     network: "mainnet",
-  //     cacheProvider: true,
-  //   })
-  //   const connection = await web3Modal.connect()
-  //   const provider = new ethers.providers.Web3Provider(connection)
-  //   const signer = provider.getSigner()
-
-  //   const marketContract = new ethers.Contract(marketplaceAddress, Marketplace.abi, signer)
-  //   const tokenContract = new ethers.Contract(creatifyAddress, Creatify.abi, provider)
-  //   setLoadingState('loaded')
-  // }
   return (
     <Layout>
       <div className="flex justify-center min-h-screen">
@@ -81,7 +67,7 @@ const MyAssets = () => {
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 md:grid-cols-3 gap-4 lg:gap-24 p-4 mt-20  h-auto">
-            {data.map((item) => {
+            { data.length>0 ? data.map((item) => {
               console.log(item);
               console.log(item.metaDataUri.substr(7, 50));
 
@@ -120,12 +106,14 @@ const MyAssets = () => {
                   </div>
                 </div>
               );
-            })}
-            {data.length == 0 && (
+            }) : (loading?<Loader/>:<div className="text-xl pb-10">
+            You haven&apos;t created any asset.
+          </div>)  }
+            {/* {data.length == 0 && (
               <div className="text-xl pb-10">
                 You haven&apos;t created any asset.
               </div>
-            )}
+            )} */}
           </div>
         </div>
       </div>
