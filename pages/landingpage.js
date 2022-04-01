@@ -19,13 +19,11 @@ function landingpage() {
               alt=""
             />
             <div className="text-center">
-              <h2 className="text-fontblue dark:text-white font-raleway font-bold text-3xl sm:text-4xl mb-2 sm:mb-8">
-                Discover, collect, and sell extraordinary NFTs
+            <h2 className="text-fontblue dark:text-white font-raleway font-bold text-3xl sm:text-4xl mb-2 sm:mb-8">
+            Collect and trade the New Fresh Thing
               </h2>
               <h6 className="text-lg font-opensans max-w-[650px] mx-auto text-fontblue dark:text-white mb-8">
-                A new NFT marketplace, to buy and sell your art Lorem ipsum
-                dolor sit amet consectetur adipisicing elit. Similique inventore
-                magni repellendus
+              A NFT marketplace to explore the digital gold mine, that supports the creators. A place where you can Make Collect and Sell digital arts.
               </h6>
               <div className="">
                 <button className=" bg-blue-500 dark:bg-purple-700 text-xl sm:text-2xl uppercase shadow-md py-3 outline-2 

@@ -8,7 +8,7 @@ import { ethers } from 'ethers'
 // } from '../config'
 import Creatify from '../artifacts/contracts/Creatify.sol/Creatify.json'
 import Marketplace from '../artifacts/contracts/Marketplace.sol/Marketplace.json'
-
+import Image from 'next/image';
 import { MdOutlineAccountBalanceWallet } from "react-icons/md"
 import Connectmenu from "../Components/Connectmenu"
 import Dropdownmenu from "../Components/Dropdownmenu"
@@ -87,9 +87,21 @@ function Header() {
           className="lg:invisible cursor-pointer text-2xl"
         />
         <Link href="/">
-          <p className="text-xl font-semibold cursor-pointer uppercase md:pl-20 pl-4 transition-all tracking-wide">
+        <div className="pt-2 md:pl-28 pl-4 transition-all cursor-pointer">
+          <span className="dark:block hidden">
+          <Image src="/dark.svg"
+      width="45"
+      height="45"/>
+      </span>
+      <span className="dark:hidden">
+      <Image src="/light.svg"
+      width="45"
+      height="45"/>
+      </span>
+      </div>
+          {/* <p className="text-xl font-semibold cursor-pointer uppercase md:pl-20 pl-4 transition-all tracking-wide">
             Marketplace
-          </p>
+          </p> */}
         </Link>
       </div>
 
