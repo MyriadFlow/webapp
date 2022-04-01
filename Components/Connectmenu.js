@@ -289,7 +289,8 @@ function Connectmenu({ toogle }) {
                 <div className="flex justify-center">
                     <button
                         onClick={connectwallethandler}
-                        className="bg-blue-500 hover:bg-gray-400 shadow-lg  px-10 py-4 rounded-lg text-white">{!user ? "Connect" : "Connected"}</button>
+                        className="bg-blue-500 dark:bg-purple-700 uppercase shadow-md outline-2 outline-offset-4 outline-blue-500 dark:outline-white outline transition duration-300  
+                        ease-in text-white font-bold hover:bg-white hover:text-blue-500  dark:hover:bg-white dark:hover:text-purple-700 px-8 py-3 mb-2">{!user ? "Connect" : "Connected"}</button>
                 </div>
 
                 {
@@ -297,7 +298,8 @@ function Connectmenu({ toogle }) {
                     <div className="flex justify-center">
                         <button
                             onClick={authorize}
-                            className="bg-blue-800 hover:bg-gray-400 shadow-lg px-10 py-2 mt-2 rounded-lg text-white">Get creator role</button>
+                            className="bg-blue-800 uppercase shadow-md transition duration-300  
+                            ease-in text-white font-bold hover:bg-white hover:text-blue-800 px-6 rounded py-2 mt-2">Get creator role</button>
                     </div>
                 }
 
