@@ -200,16 +200,16 @@ function Profile() {
     <div class="row d-flex align-items-center justify-content-center h-100">
       <div class="col-md-8 col-lg-7 col-xl-6 text-center" style={{display:"flex",flexDirection:"column",justifyContent:"center",alignItems:"center"}}>
         <img src={photo} class="img-fluid" alt="Phone image" style={{width:"50%"}}/>
-        <input type="file" className="btn btn-primary btn-md" style={{marginBottom:20, marginTop:20,width:"50%"}} onChange={(e)=>{uploadImage(e)}}/>
+        <input type="file" className="btn btn-primary btn-md ml-20" style={{marginBottom:20, marginTop:20,width:"50%"}} onChange={(e)=>{uploadImage(e)}}/>
       </div>
-      <div class="col-md-7 col-lg-5 col-xl-5 offset-xl-1" style={{zIndex:"1000"}}>
+      <div class="col-md-7 col-lg-5 col-xl-5 offset-xl-1 text-center" style={{zIndex:"1000"}}>
         <form onSubmit={updateData}>
         <div class="md-form mb-3">
-            <input type="text" id="form1Example13" class="form-control form-control-lg" value={username} onChange={(e)=>setUsername(e.target.value)} placeholder="Name"/>
+            <input type="text" id="form1Example13" class="form-control form-control-lg pl-2" value={username} onChange={(e)=>setUsername(e.target.value)} placeholder="Name"/>
           </div>
 
           <div class="md-form mb-3">
-            <input  type="text" id="form1Example13" class="form-control form-control-lg" value={bio} onChange={(e)=>setBio(e.target.value)} placeholder="Country"/>
+            <input  type="text" id="form1Example13" class="form-control form-control-lg pl-2" value={bio} onChange={(e)=>setBio(e.target.value)} placeholder="Country"/>
           </div>
 
           <button type="submit" className="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150">Update Profile</button>
