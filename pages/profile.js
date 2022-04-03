@@ -154,7 +154,16 @@ function Profile() {
     }
 
     useEffect(() => {
-		authorize();
+      const token = localStorage.getItem('platform_token');
+      console.log(token);
+      if(!token)
+      {
+        authorize();
+      } 
+      else
+      {
+        getProfile();
+      }
         
 	}, []);
 
