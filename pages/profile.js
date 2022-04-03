@@ -11,8 +11,11 @@ import React, { useState,useEffect } from 'react';
 import axios from 'axios';
 const Web3 = require("web3");
 import { convertUtf8ToHex } from "@walletconnect/utils";
+import { create as ipfsHttpClient } from 'ipfs-http-client';
 import Link from 'next/link';
 const BASE_URL=process.env.NEXT_PUBLIC_BASE_URL;
+
+const client = ipfsHttpClient('https://ipfs.infura.io:5001/api/v0')
 
 function Profile() {
 
@@ -23,13 +26,23 @@ function Profile() {
  const [showModal, setShowModal] = useState(false);
   const [username,setUsername]=useState("");
   const [bio,setBio]=useState("");
-  const [photo,setPhoto]=useState("");
+  const [fileUrl, setFileUrl] = useState(null)
 
-
-  const uploadImage=async(e)=>{
-    const file=e.target.files[0];
-    const base64=await convertBase64(file);
-    setPhoto(base64.toString());
+  async function uploadImage(e) {
+    e.preventDefault();
+    const file = e.target.files[0]
+    try {
+      const added = await client.add(
+        file,
+        {
+          progress: (prog) => console.log(`received: ${prog}`)
+        }
+      );
+      const url = `https://ipfs.infura.io/ipfs/${added.path}`
+      setFileUrl(url);
+    } catch (error) {
+      console.log('Error uploading file: ', error);
+    }
   }
   
   const convertBase64=(file)=>{
@@ -65,11 +78,9 @@ function Profile() {
           },
           data:signroledata,
         }
-        await axios.patch('https://marketplace-engine.lazarus.network/api/v1.0/profile',{name:username,country:bio,profilePictureUrl:photo},config);
+        await axios.patch('https://marketplace-engine.lazarus.network/api/v1.0/profile',{name:username,country:bio,profilePictureUrl:fileUrl},config);
         alert("Updation successful!");
-        // setUsername("");
-        // setBio("");
-        // setPhoto("");
+        console.log(fileUrl);
         setShowModal(false);
       }
     } catch (error) {
@@ -136,7 +147,7 @@ function Profile() {
             console.log(res.data);
             setUsername(res.data.payload.name);
             setBio(res.data.payload.country?res.data.payload.country:"");
-            setPhoto(res.data.payload.profilePictureUrl);
+            setFileUrl(res.data.payload.profilePictureUrl);
           }).catch((error)=>{
             console.log(error);
           })
@@ -155,7 +166,8 @@ function Profile() {
             <div className="flex items-center justify-center -mt-16">
                 {!user ? <div
                     className="rounded-full h-32 w-32 ring-offset-2 ring-1 ring-white bg-gray-200">
-                </div> : <div className="rounded-full h-32 w-32  ring-offset-2 ring-1 ring-blue-400 connect-profile"></div>}
+                </div> : <div className="rounded-full h-32 w-32  ring-offset-2 ring-1 ring-blue-400 connect-profile" style={{backgroundImage:`url(${fileUrl})`, backgroundRepeat:'no-repeat', backgroundSize:'cover',backgroundPosition:'center',backgroundColor:'white'}}>
+                    </div>}
             </div>
             <div className=" m-2 flex flex-col items-center justify-center">
                 <p className="text-2xl font-bold pb-4 pt-4"> {username}'s Account </p>
@@ -199,7 +211,7 @@ function Profile() {
   <div class="container py-5 h-100">
     <div class="row d-flex align-items-center justify-content-center h-100">
       <div class="col-md-8 col-lg-7 col-xl-6 text-center" style={{display:"flex",flexDirection:"column",justifyContent:"center",alignItems:"center"}}>
-        <img src={photo} class="img-fluid" alt="Phone image" style={{width:"50%"}}/>
+        <img src={fileUrl} class="img-fluid" alt="Phone image" style={{width:"50%"}}/>
         <input type="file" className="btn btn-primary btn-md ml-20" style={{marginBottom:20, marginTop:20,width:"50%"}} onChange={(e)=>{uploadImage(e)}}/>
       </div>
       <div class="col-md-7 col-lg-5 col-xl-5 offset-xl-1 text-center" style={{zIndex:"1000"}}>
