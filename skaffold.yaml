@@ -9,6 +9,7 @@ build:
       dockerfile: Dockerfile
 deploy:
   kubectl:
+    defaultNamespace: myriad-flow
     manifests:
     - k8s/webapp-deploy.yaml
     - k8s/webapp-ingress.yaml
