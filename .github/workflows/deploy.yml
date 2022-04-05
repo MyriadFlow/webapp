@@ -7,6 +7,11 @@ jobs:
   build:
     name: Build Image
     runs-on: ubuntu-latest
+    env:
+     NEXT_PUBLIC_MARKETPLACE_ADDRESS: ${{ secrets.NEXT_PUBLIC_MARKETPLACE_ADDRESS }}
+     NEXT_PUBLIC_CREATIFY_ADDRESS: ${{ secrets.NEXT_PUBLIC_CREATIFY_ADDRESS }}
+     NEXT_PUBLIC_GRAPHQL_API: ${{ secrets.NEXT_PUBLIC_GRAPHQL_API }}
+     NEXT_PUBLIC_BASE_URL: ${{ secrets.NEXT_PUBLIC_BASE_URL }}
 
     steps:
       - name: Check out code
