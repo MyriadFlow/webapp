@@ -30,6 +30,7 @@ const MyAssets = () => {
 
   const [data, setData] = useState([]);
   const [loading,setLoading]=useState(true);
+  const [wlt, setwlt] = useState();
 
   const fetchUserAssests = async (walletAddr) => {
     const query = gql`
@@ -54,7 +55,23 @@ const MyAssets = () => {
 		return ethers.utils.formatEther(price)
 	}
   useEffect(() => {
-    fetchUserAssests(`${wallet}`);
+    // console.log(wallet);
+
+    if(!localStorage.getItem('platform_wallet')&& wallet!==undefined)
+    {
+      localStorage.setItem("platform_wallet",wallet);
+    }
+    else
+    {
+       setwlt(localStorage.getItem('platform_wallet'));
+    }
+    // localStorage.getItem('platform_wallet')
+    fetchUserAssests(`${localStorage.getItem('platform_wallet')}`);
+    // setTimeout(()=>{
+    //   console.log(wallet);
+
+    //   fetchUserAssests(`${wallet}`);
+    // },1000)
     // console.log(user);
   },[]);
 
