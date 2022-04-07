@@ -56,7 +56,15 @@ export default function CreatorDashboard() {
   };
 
   useEffect(() => {
-    fetchUserAssests(`${wallet}`);
+
+    if(!localStorage.getItem('platform_wallet')&& wallet!==undefined)
+    {
+      localStorage.setItem("platform_wallet",wallet);
+    }
+    else
+    {
+    }
+    fetchUserAssests(`${localStorage.getItem('platform_wallet')}`);
     loadNFTs();
     // console.log(user);
   }, []);
