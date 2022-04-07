@@ -7,6 +7,7 @@ import Web3Modal from 'web3modal'
 import { FaVideo, FaPlusSquare, FaMinusSquare, FaHeart } from "react-icons/fa"
 import { v4 as uuidv4 } from 'uuid';
 import Multiselect from "multiselect-react-dropdown";
+import axios from "axios";
 
 
 const client = ipfsHttpClient('https://ipfs.infura.io:5001/api/v0')
@@ -22,9 +23,12 @@ import { Alert, Snackbar } from "@mui/material";
 import Layout from "../Components/Layout";
 import { useSelector } from 'react-redux'
 import { selectUser } from '../slices/userSlice'
+import { convertUtf8ToHex } from "@walletconnect/utils";
+const Web3 = require("web3");
 
 const marketplaceAddress = process.env.NEXT_PUBLIC_MARKETPLACE_ADDRESS;
 const creatifyAddress = process.env.NEXT_PUBLIC_CREATIFY_ADDRESS;
+const BASE_URL=process.env.NEXT_PUBLIC_BASE_URL;
 
 export default function CreateItem() {
 
@@ -192,7 +196,7 @@ export default function CreateItem() {
   // console.log(walletAddr?walletAddr[0]:"");
   var wallet = walletAddr ? walletAddr[0] : "";
 
-  const [hasRole, setHasRole] = useState(false);
+  const [hasRole, setHasRole] = useState(true);
 
   useEffect(async() => {
     const web3Modal = new Web3Modal();
@@ -203,9 +207,101 @@ export default function CreateItem() {
     /* next, create the item */
     let contract = new ethers.Contract(creatifyAddress, Creatify.abi, signer);
      setHasRole(  await contract.hasRole( await contract.CREATIFY_CREATOR_ROLE() , wallet))
-
-    
+     
   }, []);
+
+
+  const authorize = async () => {
+    const { data } = await axios.get(
+        `${BASE_URL}/api/v1.0/flowid?walletAddress=${wallet}`
+    );
+    // console.log(data);
+
+    let web3 = new Web3(Web3.givenProvider);
+    let completemsg = data.payload.eula+data.payload.flowId;
+    // console.log(completemsg);
+    const hexMsg = convertUtf8ToHex(completemsg);
+    // console.log(hexMsg);
+    const result = await web3.eth.personal.sign(hexMsg,wallet);
+    // console.log(result);
+
+    var signdata = JSON.stringify({
+        flowId : data.payload.flowId,
+        signature:result,
+    })
+
+    const config = {
+         url:`${BASE_URL}/api/v1.0/authenticate`,
+         method:"POST",
+         headers:{
+             "Content-Type":"application/json",
+            //  "Token":`Bearer ${token}`
+         },
+         data:signdata,
+    };
+    try{
+        const response = await axios(config);
+        // console.log(response);
+        const token = await response?.data?.payload?.token;
+        localStorage.setItem("platform_token",token);
+        getRole();
+        return true;
+    }catch(e){
+        console.log(e);
+        return false;
+    }
+};
+
+const getRole = async () => {
+
+  const token = localStorage.getItem('platform_token');
+
+  const config1 = {
+      url:`${BASE_URL}/api/v1.0/roleId/0x01b9906c77d0f3e5e952265ffbd74a08f1013f607e72528c5c1fbaf8f36e3634`,
+      method:"GET",
+      headers:{
+          "Authorization":`Bearer ${token}`
+      },
+ };
+ let roledata;
+  try{
+      roledata = await axios(config1);
+      console.log(roledata);
+  }catch(e){
+      console.log(e);
+  }
+
+  let web3 = new Web3(Web3.givenProvider);
+  let completemsg = roledata.data.payload.eula+roledata.data.payload.flowId;
+  const hexMsg = convertUtf8ToHex(completemsg);
+  const result = await web3.eth.personal.sign(hexMsg,wallet);
+
+  var signroledata = JSON.stringify({
+      flowId : roledata.data.payload.flowId,
+      signature:result,
+  })
+
+  const config = {
+       url:`${BASE_URL}/api/v1.0/claimrole`,
+       method:"POST",
+       headers:{
+           "Content-Type":"application/json",
+           "Authorization":`Bearer ${token}`
+       },
+       data:signroledata,
+  };
+
+  try{
+      const response = await axios(config);
+      const msg = await response?.data?.message;
+      console.log(msg);
+      setHasRole(true);
+      return true;
+  }catch(e){
+      console.log(e);
+      return false;
+  }
+}
 
   const [options, setOptions] = useState(["Art", "Music", "Sports", "Video", "Cartoon", "Others"]);
   const [categories, setCategory] = useState([]);
@@ -214,10 +310,15 @@ export default function CreateItem() {
   if(!hasRole)
   return (
     <Layout>
-       <div className="dark:bg-gray-800" style={{ minHeight: '80vh' }}>
+       <div className="dark:bg-gray-800" style={{ minHeight: '100vh' }}>
        <div>
-                    <h3 className="text-2xl font-semibold pb-1 mt-20  pl-5 pr-5">You do not have the creator Role </h3>
-                    <hr />
+                    <h3 className="text-2xl text-center font-semibold pb-1 pt-20  pl-5 pr-5">You do not have the required Role. Please click on Get creator role button to proceed.</h3>
+                    <div className="flex justify-center">
+                        <button
+                            onClick={authorize}
+                            className="bg-blue-800 uppercase shadow-md transition duration-300  
+                            ease-in text-white font-bold hover:bg-white hover:text-blue-800 px-6 rounded py-2 mt-2">Get creator role</button>
+                    </div>
                   </div>
         </div>
     </Layout>
@@ -238,7 +339,7 @@ export default function CreateItem() {
         </Snackbar>
         {model && <BuyAsset open={model} setOpen={setmodel} message={modelmsg} />}
 
-        <div className="w-full relative lg:mt-16 shadow-2xl rounded  overflow-hidden mt-0">
+        <div className="w-full relative lg:mt-12 shadow-2xl rounded  overflow-hidden mt-0">
           <div className="h-64 w-full bg-blue-600 overflow-hidden relative" >
             <img src="https://images.unsplash.com/photo-1503264116251-35a269479413?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80" alt="" className="bg w-full h-full object-cover object-center absolute z-0" />
             <div className="flex flex-col justify-center items-center relative h-full bg-black bg-opacity-50 text-white">
