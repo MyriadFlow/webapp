@@ -1,9 +1,3 @@
-import Header from "../Components/Header";
-import Footer from "../Components/Footer"
-import { BsCollection } from "react-icons/bs"
-import { AiOutlineHeart } from "react-icons/ai"
-import { RiPaintBrushLine } from "react-icons/ri"
-import { BiReset } from "react-icons/bi"
 import { useSelector } from "react-redux";
 import { selectUser } from "../slices/userSlice"
 import Layout from "../Components/Layout";
@@ -13,9 +7,7 @@ import axios from 'axios';
 const Web3 = require("web3");
 import { convertUtf8ToHex } from "@walletconnect/utils";
 import { create as ipfsHttpClient } from 'ipfs-http-client';
-import Link from 'next/link';
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
-
 const client = ipfsHttpClient('https://ipfs.infura.io:5001/api/v0')
 
 function Profile() {
@@ -262,13 +254,6 @@ function Profile() {
                     >
                       Close
                     </button>
-                    {/* <button
-                    className="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                    type="button"
-                    onClick={() => setShowModal(false)}
-                  >
-                    Save Changes
-                  </button> */}
                   </div>
                 </div>
               </div>
@@ -279,46 +264,6 @@ function Profile() {
 
 
       </div>
-
-
-      {/* user options  */}
-      {/* <div className="mt-10 flex items-center space-x-12 px-4 justify-center">
-              <div className="flex text-gray-600 hover:text-gray-900  space-x-1 cursor-pointer">
-                    <BsCollection className="h-6 w-6 mr-2" />
-                    <p onClick={() => setPage("collected")} className="text-xl font-semibold">Collected</p>
-                </div>
-
-                <div className="flex  text-gray-600 hover:text-gray-900 space-x-1 cursor-pointer">
-                    <RiPaintBrushLine className="h-6 w-6 mr-2" />
-                    <p onClick={() => setPage("created")} className="text-xl font-semibold">Created</p>
-                </div>
-
-                <div className="flex  text-gray-600 hover:text-gray-900 space-x-1 cursor-pointer">
-                    <AiOutlineHeart className="h-6 w-6 mr-2" />
-                    <p onClick={() => setPage("favorites")} className="text-xl font-semibold">Favorites</p>
-                </div>
-
-                <div className="flex  text-gray-600 hover:text-gray-900 space-x-1 cursor-pointer">
-                    <BiReset className="h-6 w-6 mr-2" />
-                    <p onClick={() => setPage("activity")} className="text-xl font-semibold">Activity</p>
-                </div>
-            </div>
-            {page === "collected" && (
-                // <Collected />
-                <div className="min-h-screen text-center">collected</div>
-            )}
-            {page === "created" && (
-                // <Created />
-                <div className="min-h-screen text-center">created</div>
-            )}
-            {page === "favorites" && (
-                // <Favorites />
-                <div className="min-h-screen text-center">favorites</div>
-            )}
-            {page === "activity" && (
-                // <Activity />
-                <div className="min-h-screen text-center">activity</div>
-            )} */}
 
     </Layout>
   )

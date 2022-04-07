@@ -5,17 +5,12 @@ import axios from "axios";
 import Web3Modal from "web3modal";
 import { FaEthereum } from "react-icons/fa";
 import Link from "next/link";
-// import { marketplaceAddress, creatifyAddress } from "../config";
-
-import Creatify from "../artifacts/contracts/Creatify.sol/Creatify.json";
-import Marketplace from "../artifacts/contracts/Marketplace.sol/Marketplace.json";
 import Layout from "../Components/Layout";
 import { selectUser } from "../slices/userSlice";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import HomeComp from "../Components/homeComp";
 import HomeComp2 from "../Components/homecomp2";
 import Loader from "../Components/Loader";
-
 // import { gql } from "@apollo/client";
 import client from "../apollo-client";
 import { request, gql } from "graphql-request";
@@ -24,8 +19,6 @@ const graphqlAPI = process.env.NEXT_PUBLIC_GRAPHQL_API;
 
 const MyAssets = () => {
   const walletAddr = useSelector(selectUser);
-  // console.log(walletAddr);
-  // console.log(walletAddr?walletAddr[0]:"");
   var wallet = walletAddr ? walletAddr[0] : "";
 
   const [data, setData] = useState([]);
@@ -55,7 +48,6 @@ const MyAssets = () => {
 		return ethers.utils.formatEther(price)
 	}
   useEffect(() => {
-    // console.log(wallet);
 
     if(!localStorage.getItem('platform_wallet')&& wallet!==undefined)
     {
@@ -65,23 +57,13 @@ const MyAssets = () => {
     {
        setwlt(localStorage.getItem('platform_wallet'));
     }
-    // localStorage.getItem('platform_wallet')
     fetchUserAssests(`${localStorage.getItem('platform_wallet')}`);
-    // setTimeout(()=>{
-    //   console.log(wallet);
-
-    //   fetchUserAssests(`${wallet}`);
-    // },1000)
-    // console.log(user);
   },[]);
 
   return (
     <Layout>
       <div className="p-4 px-10 min-h-screen">
-        {/* <div className="p-4"> */}
-          {/* <div className="px-8"> */}
             <h2 className="text-xl pt-20 pb-4 border-b-2">Items Created</h2>
-          {/* </div> */}
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 md:grid-cols-3 gap-4 lg:gap-24 p-4 mt-20  h-auto">
             { data.length>0 ? data.map((item) => {
@@ -126,13 +108,7 @@ const MyAssets = () => {
             }) : (loading?<Loader/>:<div className="text-xl pb-10">
             You haven&apos;t created any asset.
           </div>)  }
-            {/* {data.length == 0 && (
-              <div className="text-xl pb-10">
-                You haven&apos;t created any asset.
-              </div>
-            )} */}
           </div>
-        {/* </div> */}
       </div>
     </Layout>
   );

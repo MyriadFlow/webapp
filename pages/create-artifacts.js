@@ -8,14 +8,7 @@ import { FaVideo, FaPlusSquare, FaMinusSquare, FaHeart } from "react-icons/fa"
 import { v4 as uuidv4 } from 'uuid';
 import Multiselect from "multiselect-react-dropdown";
 import axios from "axios";
-
-
 const client = ipfsHttpClient('https://ipfs.infura.io:5001/api/v0')
-
-// import {
-//   creatifyAddress, marketplaceAddress
-// } from '../config'
-
 import Creatify from '../artifacts/contracts/Creatify.sol/Creatify.json'
 import Marketplace from '../artifacts/contracts/Marketplace.sol/Marketplace.json'
 import BuyAsset from "../Components/buyAssetModal";
@@ -25,7 +18,6 @@ import { useSelector } from 'react-redux'
 import { selectUser } from '../slices/userSlice'
 import { convertUtf8ToHex } from "@walletconnect/utils";
 const Web3 = require("web3");
-
 const marketplaceAddress = process.env.NEXT_PUBLIC_MARKETPLACE_ADDRESS;
 const creatifyAddress = process.env.NEXT_PUBLIC_CREATIFY_ADDRESS;
 const BASE_URL=process.env.NEXT_PUBLIC_BASE_URL;

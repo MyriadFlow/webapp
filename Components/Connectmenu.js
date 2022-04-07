@@ -7,14 +7,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { login } from "../slices/userSlice"
 import Web3Modal from 'web3modal'
 import { open } from "../slices/modelSlice"
-
 import { setbalance } from "../slices/balanceSlice"
 import { selectUser } from "../slices/userSlice"
 import { selectBalance } from "../slices/balanceSlice"
 import { FaEthereum } from "react-icons/fa"
 import { FiLogOut } from "react-icons/fi"
 import { useTheme } from "next-themes";
-// import { creatorRole } from "../pages/api/creatorRole";
 import Creatify from '../artifacts/contracts/Creatify.sol/Creatify.json'
 import axios from "axios";
 import { convertUtf8ToHex } from "@walletconnect/utils";
@@ -26,8 +24,6 @@ const creatifyAddress = process.env.NEXT_PUBLIC_CREATIFY_ADDRESS;
 function Connectmenu({ toogle }) {
 
     const walletAddr = useSelector(selectUser);
-    // console.log(walletAddr);
-    // console.log(walletAddr?walletAddr[0]:"");
     var wallet = walletAddr?walletAddr[0]:'';
 
     const { systemTheme, theme, setTheme } = useTheme()
@@ -106,12 +102,6 @@ function Connectmenu({ toogle }) {
     const getRole = async () => {
 
         const token = localStorage.getItem('platform_token');
-        // const CREATIFY_CREATOR_ROLE = await creatify.CREATIFY_CREATOR_ROLE();
-        // console.log(CREATIFY_CREATOR_ROLE);
-        // const { roledata } = await axios.get(
-        //     `https://marketplace-engine.lazarus.network/api/v1.0/roleId/0x01b9906c77d0f3e5e952265ffbd74a08f1013f607e72528c5c1fbaf8f36e3634`
-        // );
-        // console.log(data);
 
         const config1 = {
             url:`${BASE_URL}/api/v1.0/roleId/0x01b9906c77d0f3e5e952265ffbd74a08f1013f607e72528c5c1fbaf8f36e3634`,
@@ -194,7 +184,6 @@ function Connectmenu({ toogle }) {
         };
         try{
             const response = await axios(config);
-            // console.log(response);
             const token = await response?.data?.payload?.token;
             localStorage.setItem("platform_token",token);
             getRole();

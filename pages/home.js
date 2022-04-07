@@ -1,19 +1,7 @@
 /* pages/index.js */
 import { ethers } from 'ethers'
 import { useEffect, useState } from 'react'
-import axios from 'axios'
-import Web3Modal from "web3modal"
 import { FaEthereum } from "react-icons/fa"
-
-// import {
-// 	creatifyAddress, marketplaceAddress
-// } from '../config'
-
-import Creatify from '../artifacts/contracts/Creatify.sol/Creatify.json'
-import Marketplace from '../artifacts/contracts/Marketplace.sol/Marketplace.json'
-import Header from '../Components/Header'
-import Footer from "../Components/Footer"
-
 import Filter from '../Components/Filter'
 import Link from "next/link";
 import { IoIosArrowDropright } from "react-icons/io"
@@ -22,14 +10,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../slices/userSlice"
 import { logoutbalance } from "../slices/balanceSlice"
 import { close } from "../slices/modelSlice";
-
 import HomeComp from "../Components/homeComp";
 import HomeComp2 from "../Components/homecomp2";
-
-// import { gql } from "@apollo/client";
-import client from "../apollo-client";
 import { request, gql } from "graphql-request";
-
 import BuyAsset from "../Components/buyAssetModal";
 import { buyNFT } from "./api/buyNFT";
 import Layout from "../Components/Layout";
@@ -40,35 +23,10 @@ const rpc_provider = process.env.NEXT_PUBLIC_RPC_PROVIDER;
 
 const graphqlAPI = process.env.NEXT_PUBLIC_GRAPHQL_API;
 
-// export async function getStaticProps() {
-// 	const { data } = await client.query({
-// 		query: gql`
-//     query Query {
-//       marketItems(first: 25,where:{sold:false}) {
-//         price
-//         itemId
-//         seller
-//         forSale
-//         tokenId
-//         metaDataUri
-//       }
-//     }
-//     `,
-// 	});
-
-// 	return {
-// 		props: {
-// 			marketItems: data.marketItems,
-// 		},
-// 	};
-// }
-
 const Home = () =>{
 
 	const logoutmodel = useSelector(selectModel)
 	const dispatch = useDispatch();
-
-
 
 	// function for logout 
 	const logoutmetamask = () => {
@@ -109,10 +67,6 @@ const Home = () =>{
 	}
 
 	async function loadNFTs() {
-		/* create a generic provider and query for unsold market items */
-		// const provider = new ethers.providers.JsonRpcProvider({ url: rpc_provider })
-		// const tokenContract = new ethers.Contract(creatifyAddress, Creatify.abi, provider)
-		// const marketContract = new ethers.Contract(marketplaceAddress, Marketplace.abi, provider)
 		setLoadingState('loaded')
 	}
 	async function buyNft(nft) {

@@ -30,8 +30,6 @@ export default function CreatorDashboard() {
     return ethers.utils.formatEther(price);
   }
   const walletAddr = useSelector(selectUser);
-  // console.log(walletAddr);
-  // console.log(walletAddr ? walletAddr[0] : "");
   var wallet = walletAddr ? walletAddr[0] : "";
 
   const [data, setData] = useState([]);
@@ -76,17 +74,6 @@ export default function CreatorDashboard() {
     const connection = await web3Modal.connect();
     const provider = new ethers.providers.Web3Provider(connection);
     const signer = provider.getSigner();
-
-    // const marketContract = new ethers.Contract(
-    //   marketplaceAddress,
-    //   Marketplace.abi,
-    //   signer
-    // );
-    // const tokenContract = new ethers.Contract(
-    //   creatifyAddress,
-    //   Creatify.abi,
-    //   provider
-    // );
   }
   return (
     <Layout>
