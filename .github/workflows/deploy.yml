@@ -12,6 +12,7 @@ jobs:
      NEXT_PUBLIC_CREATIFY_ADDRESS: ${{ secrets.NEXT_PUBLIC_CREATIFY_ADDRESS }}
      NEXT_PUBLIC_GRAPHQL_API: ${{ secrets.NEXT_PUBLIC_GRAPHQL_API }}
      NEXT_PUBLIC_BASE_URL: ${{ secrets.NEXT_PUBLIC_BASE_URL }}
+     ENV_FILE: ${{ secrets.ENV_FILE }}
 
     steps:
       - name: Check out code
