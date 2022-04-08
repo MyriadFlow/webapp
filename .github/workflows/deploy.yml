@@ -1,7 +1,7 @@
 name: "Deploy to EKS"
 on:
   push:
-    branches: [main,thisisommore/automated-deployment-21]
+    branches: [main]
 
 jobs:
   build:
