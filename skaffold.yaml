@@ -1,0 +1,18 @@
+apiVersion: skaffold/v2beta26
+kind: Config
+metadata:
+  name: marketplace
+build:
+  artifacts:
+  - image: 560914023379.dkr.ecr.us-east-2.amazonaws.com/myriad-web-app
+    docker:
+      dockerfile: Dockerfile
+  tagPolicy:
+    sha256: {}
+
+deploy:
+  kubectl:
+    defaultNamespace: myriad-flow
+    manifests:
+    - k8s/webapp-deploy.yaml
+    - k8s/webapp-ingress.yaml
