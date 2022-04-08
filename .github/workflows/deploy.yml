@@ -34,6 +34,7 @@ jobs:
           ECR_REPOSITORY: myriad-web-app
           IMAGE_TAG: latest
         run: |
+          echo "$ENV_FILE" | base64 -d > .env
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
 
