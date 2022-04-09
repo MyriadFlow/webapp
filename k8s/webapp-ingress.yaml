@@ -12,10 +12,10 @@ metadata:
 spec:
   tls:
     - hosts:
-        - myriadflow.com
-      secretName: myriadflow.com
+        - demo.myriadflow.com
+      secretName: demo.myriadflow.com
   rules:
-    - host: myriadflow.com
+    - host: demo.myriadflow.com
       http:
         paths:
           - pathType: Prefix
