@@ -19,7 +19,10 @@ function Profile() {
   const [showModal, setShowModal] = useState(false);
   const [username, setUsername] = useState("");
   const [bio, setBio] = useState("");
+  const [changeusername, changesetUsername] = useState("");
+  const [changebio, changesetBio] = useState("");
   const [fileUrl, setFileUrl] = useState(null)
+  const [changefileUrl, changesetFileUrl] = useState(null)
 
   async function uploadImage(e) {
     e.preventDefault();
@@ -32,7 +35,7 @@ function Profile() {
         }
       );
       const url = `https://ipfs.infura.io/ipfs/${added.path}`
-      setFileUrl(url);
+      changesetFileUrl(url);
     } catch (error) {
       console.log('Error uploading file: ', error);
     }
@@ -56,7 +59,7 @@ function Profile() {
     e.preventDefault();
     const token = localStorage.getItem('platform_token');
     try {
-      if (!username.trim() || !bio.trim()) alert("Do not leave any field empty!");
+      if (!changeusername.trim() || !changebio.trim()) alert("Do not leave any field empty!");
       else {
         var signroledata = JSON.stringify({
           name: "Devsi singh",
@@ -71,10 +74,11 @@ function Profile() {
           },
           data: signroledata,
         }
-        await axios.patch('https://marketplace-engine.lazarus.network/api/v1.0/profile', { name: username, country: bio, profilePictureUrl: fileUrl }, config);
+        await axios.patch('https://marketplace-engine.lazarus.network/api/v1.0/profile', { name: changeusername, country: changebio, profilePictureUrl: changefileUrl }, config);
         alert("Updation successful!");
-        console.log(fileUrl);
+        console.log(changefileUrl);
         setShowModal(false);
+        getProfile();
       }
     } catch (error) {
       console.log(error);
@@ -222,17 +226,17 @@ function Profile() {
                           <div className="container py-5 h-100">
                             <div className="row d-flex align-items-center justify-content-center h-100">
                               <div className="col-md-8 col-lg-7 col-xl-6 text-center" style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center" }}>
-                                <img src={fileUrl} className="img-fluid" alt="Phone image" style={{ width: "50%" }} />
+                                <img src={changefileUrl} className="img-fluid" alt="" style={{ width: "50%" }} />
                                 <input type="file" className="btn btn-primary btn-md ml-20" style={{ marginBottom: 20, marginTop: 20, width: "50%" }} onChange={(e) => { uploadImage(e) }} />
                               </div>
                               <div className="col-md-7 col-lg-5 col-xl-5 offset-xl-1 text-center" style={{ zIndex: "1000" }}>
                                 <form onSubmit={updateData}>
                                   <div className="md-form mb-3">
-                                    <input type="text" id="form1Example13" className="form-control form-control-lg pl-2" value={username} onChange={(e) => setUsername(e.target.value)} placeholder="Name" />
+                                    <input type="text" id="form1Example13" className="form-control form-control-lg pl-2" value={changeusername} onChange={(e) => changesetUsername(e.target.value)} placeholder="Name" />
                                   </div>
 
                                   <div className="md-form mb-3">
-                                    <input type="text" id="form1Example13" className="form-control form-control-lg pl-2" value={bio} onChange={(e) => setBio(e.target.value)} placeholder="Country" />
+                                    <input type="text" id="form1Example13" className="form-control form-control-lg pl-2" value={changebio} onChange={(e) => changesetBio(e.target.value)} placeholder="Country" />
                                   </div>
 
                                   <button type="submit" className="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150">Update Profile</button>

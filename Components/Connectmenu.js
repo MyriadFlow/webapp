@@ -282,7 +282,7 @@ function Connectmenu({ toogle }) {
                         ease-in text-white font-bold hover:bg-white hover:text-blue-500  dark:hover:bg-white dark:hover:text-purple-700 px-8 py-3 mb-2">{!user ? "Connect" : "Connected"}</button>
                 </div>
 
-                {
+                {/* {
                     !hasRole && user && 
                     <div className="flex justify-center">
                         <button
@@ -290,7 +290,7 @@ function Connectmenu({ toogle }) {
                             className="bg-blue-800 uppercase shadow-md transition duration-300  
                             ease-in text-white font-bold hover:bg-white hover:text-blue-800 px-6 rounded py-2 mt-2">Get creator role</button>
                     </div>
-                }
+                } */}
 
                 <div className="flex justify-center items-center lg:mt-10 mt-4 space-x-2">
                     <p className="text-gray-800 font-bold dark:text-blue-500">{theme === 'dark' ? 'LightMode' : 'DarkMode'}</p>
