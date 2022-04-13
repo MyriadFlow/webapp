@@ -4,17 +4,23 @@ import Layout from "../Components/Layout";
 import { FaCopy } from "react-icons/fa";
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import Web3Modal from 'web3modal'
+import { ethers } from 'ethers'
 const Web3 = require("web3");
 import { convertUtf8ToHex } from "@walletconnect/utils";
+import Creatify from '../artifacts/contracts/Creatify.sol/Creatify.json'
 import { create as ipfsHttpClient } from 'ipfs-http-client';
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 const client = ipfsHttpClient('https://ipfs.infura.io:5001/api/v0')
+const creatifyAddress = process.env.NEXT_PUBLIC_CREATIFY_ADDRESS;
 
 function Profile() {
 
   const walletAddr = useSelector(selectUser);
   var wallet = walletAddr ? walletAddr[0] : '';
   console.log(wallet);
+
+  const [hasRole, setHasRole] = useState(true);
 
   const [showModal, setShowModal] = useState(false);
   const [username, setUsername] = useState("");
@@ -150,7 +156,7 @@ function Profile() {
     })
   }
 
-  useEffect(() => {
+  useEffect(async() => {
     const token = localStorage.getItem('platform_token');
     console.log(token);
     if (!token) {
@@ -160,6 +166,14 @@ function Profile() {
       getProfile();
     }
 
+    const web3Modal = new Web3Modal();
+    const connection = await web3Modal.connect();
+    const provider = new ethers.providers.Web3Provider(connection);
+    const signer = provider.getSigner();
+
+    /* next, create the item */
+    let contract = new ethers.Contract(creatifyAddress, Creatify.abi, signer);
+     setHasRole(  await contract.hasRole( await contract.CREATIFY_CREATOR_ROLE() , wallet))
   }, []);
 
   return (
@@ -196,6 +210,18 @@ function Profile() {
         >
           Edit Profile Details
         </button>
+
+        { !hasRole && (
+                <div className="w-2/3">
+                             <h3 className="text-2xl text-center font-semibold pb-1 pt-8 pl-5 pr-5">You do not have the required Role to access create page for creating an asset. Please click on Get creator role button to proceed.</h3>
+                             <div className="flex justify-center">
+                                 <button
+                                     onClick={authorize}
+                                     className="bg-blue-800 uppercase shadow-md transition duration-300  
+                                     ease-in text-white font-bold hover:bg-white hover:text-blue-800 px-6 rounded py-2 mt-2">Get creator role</button>
+                             </div>
+                           </div>
+        )}
         {showModal ? (
           <>
             <div
