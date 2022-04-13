@@ -300,21 +300,28 @@ const getRole = async () => {
 
 
   if(!hasRole)
-  return (
-    <Layout>
-       <div className="dark:bg-gray-800" style={{ minHeight: '100vh' }}>
-       <div>
-                    <h3 className="text-2xl text-center font-semibold pb-1 pt-20  pl-5 pr-5">You do not have the required Role. Please click on Get creator role button to proceed.</h3>
-                    <div className="flex justify-center">
-                        <button
-                            onClick={authorize}
-                            className="bg-blue-800 uppercase shadow-md transition duration-300  
-                            ease-in text-white font-bold hover:bg-white hover:text-blue-800 px-6 rounded py-2 mt-2">Get creator role</button>
-                    </div>
-                  </div>
-        </div>
-    </Layout>
-  )
+  {
+    const loader = setTimeout(() => { 
+      router.push('/profile')
+    }, 1000);
+    loader;
+  }
+  
+  // return (
+  //   <Layout>
+  //      <div className="dark:bg-gray-800" style={{ minHeight: '100vh' }}>
+  //      <div>
+  //                   <h3 className="text-2xl text-center font-semibold pb-1 pt-20  pl-5 pr-5">You do not have the required Role. Please click on Get creator role button to proceed.</h3>
+  //                   <div className="flex justify-center">
+  //                       <button
+  //                           onClick={authorize}
+  //                           className="bg-blue-800 uppercase shadow-md transition duration-300  
+  //                           ease-in text-white font-bold hover:bg-white hover:text-blue-800 px-6 rounded py-2 mt-2">Get creator role</button>
+  //                   </div>
+  //                 </div>
+  //       </div>
+  //   </Layout>
+  // )
   return (
     <Layout>
       <div className="dark:bg-gray-800" style={{ minHeight: '100vh' }}>
