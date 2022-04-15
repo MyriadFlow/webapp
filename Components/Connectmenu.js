@@ -67,23 +67,23 @@ function Connectmenu({ toogle }) {
 
     const [hasRole, setHasRole] = useState(false);
 
-  useEffect(async() => {
-    const web3Modal = new Web3Modal();
-    const connection = await web3Modal.connect();
-    const provider = new ethers.providers.Web3Provider(connection);
-    const signer = provider.getSigner();
-
-    /* next, create the item */
-    let contract = new ethers.Contract(creatifyAddress, Creatify.abi, signer);
-     setHasRole(  await contract.hasRole( await contract.CREATIFY_CREATOR_ROLE() , wallet))
-
+    const connectweb = async()=>{
+        const web3Modal = new Web3Modal();
+        const connection = await web3Modal.connect();
+        const provider = new ethers.providers.Web3Provider(connection);
+        const signer = provider.getSigner();
     
+        /* next, create the item */
+        let contract = new ethers.Contract(creatifyAddress, Creatify.abi, signer);
+         setHasRole(  await contract.hasRole( await contract.CREATIFY_CREATOR_ROLE() , wallet))
+         const roleid = await contract.CREATIFY_CREATOR_ROLE();
+         localStorage.setItem("platform_roleid",roleid);
+         console.log(localStorage.getItem('platform_roleid'));
+    }
+
+  useEffect(() => {   
+connectweb();
   }, []);
-
-
-
-
-
 
 
     const connectwallethandler = () => {
@@ -102,9 +102,10 @@ function Connectmenu({ toogle }) {
     const getRole = async () => {
 
         const token = localStorage.getItem('platform_token');
+        const role_id = localStorage.getItem('platform_roleid');
 
         const config1 = {
-            url:`${BASE_URL}/api/v1.0/roleId/0x01b9906c77d0f3e5e952265ffbd74a08f1013f607e72528c5c1fbaf8f36e3634`,
+            url:`${BASE_URL}/api/v1.0/roleId/${role_id}`,
             method:"GET",
             headers:{
                 "Authorization":`Bearer ${token}`
