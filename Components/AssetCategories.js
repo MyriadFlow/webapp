@@ -10,7 +10,7 @@ const assetProperties = ({ uri }) => {
             `https://ipfs.io/ipfs/${uri}`
         );
         setResponse(data.categories ? data.categories : '');
-        // console.log(data);
+        console.log(data);
     }
 
     useEffect(() => {
@@ -19,7 +19,7 @@ const assetProperties = ({ uri }) => {
 
     return (
         
-            response && (
+            response.length>0 && (
             <div className="border rounded-md max-w-md w-full px-4 py-3">
                 <h3 className="text-gray-700 font-medium dark:text-white">Categories</h3>
                 <div className="flex flex-row justify-between mt-6">

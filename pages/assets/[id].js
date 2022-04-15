@@ -85,15 +85,15 @@ function Asset({ asset }) {
                                         <h3 className="text-gray-700 font-medium dark:text-gray-300">Blockchain</h3>
                                         <span className="text-gray-600 text-sm dark:text-gray-400">Polygon Testnet</span>
                                     </div>
-                                    <div className="flex items-center justify-between -my-4">
+                                    <div className="flex items-center justify-between my-4">
                                         <h3 className="text-gray-700 font-medium dark:text-gray-300">IPFS</h3>
                                         <span className="text-gray-600 text-sm"><a href={imgurl} target="_blank" rel="noreferrer" className="text-gray-600 dark:text-gray-400"><BsArrowUpRight /></a></span>
                                     </div>
-                                    <div className="flex items-center justify-between -my-4">
+                                    <div className="flex items-center justify-between my-4">
                                         <h3 className="text-gray-700 font-medium dark:text-gray-300">IPFS Metadata</h3>
                                         <span className="text-gray-600 text-sm"><a href={nfturl} target="_blank" rel="noreferrer" className="text-gray-600 dark:text-gray-400"><BsArrowUpRight /></a></span>
                                     </div>
-                                    <div className="flex items-center justify-between -my-4 pb-4">
+                                    <div className="flex items-center justify-between my-4">
                                         <h3 className="text-gray-700 font-medium dark:text-gray-300">Etherscan Transaction</h3>
                                         <span className="text-gray-600 text-sm"><a href={transaction} target="_blank" rel="noreferrer" className="text-gray-600 dark:text-gray-400"><BsArrowUpRight /></a></span>
                                     </div>

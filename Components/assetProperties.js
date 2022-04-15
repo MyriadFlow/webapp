@@ -19,7 +19,7 @@ const assetProperties = ({ uri }) => {
     }, [uri]);
 
     return (
-        response && (
+        response.length>1 && (
         <div className="border rounded-md w-full px-4 py-3">
         <h3 className="text-gray-700 font-medium dark:text-white">Properties</h3>
         <div style={{ minHeight: 80 }}>

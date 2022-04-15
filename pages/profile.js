@@ -97,7 +97,7 @@ function Profile() {
 
   const authorize = async () => {
     const { data } = await axios.get(
-      `${BASE_URL}/api/v1.0/flowid?walletAddress=0x313bfad1c87946bf893e2ecad141620eaa54943a`
+      `${BASE_URL}/api/v1.0/flowid?walletAddress=${wallet}`
     );
     console.log(data);
 

@@ -2,6 +2,7 @@ import React from 'react';
 import TelegramIcon from '@mui/icons-material/Telegram';
 import TwitterIcon from '@mui/icons-material/Twitter';
 import { SiDiscord } from 'react-icons/si';
+import Link from 'next/link';
 
 const Footer = () => {
    let date = new Date();
@@ -62,27 +63,27 @@ const Footer = () => {
              Reserved.
            </div>
            <div className="flex gap-x-4 items-center">
-             <a
+             <Link
+               href="https://t.me/MyriadFlow"
+               target="_blank"
+               className="hover:text-sky-700 text-blue-500 dark:text-white"
+             >
+               <a className='hover:text-sky-500'><TelegramIcon /></a>
+             </Link>
+             <Link
                href=""
                target="_blank"
                className="hover:text-sky-700 text-blue-500 dark:text-white"
              >
-               <TelegramIcon />
-             </a>
-             <a
+               <a className='hover:text-sky-500'><TwitterIcon /></a>
+             </Link>
+             <Link
                href=""
                target="_blank"
                className="hover:text-sky-700 text-blue-500 dark:text-white"
              >
-               <TwitterIcon />
-             </a>
-             <a
-               href=""
-               target="_blank"
-               className="hover:text-sky-700 text-blue-500 dark:text-white"
-             >
-               <SiDiscord size={22}/>
-             </a>
+               <a className='hover:text-sky-500'><SiDiscord size={22}/></a>
+             </Link>
            </div>
          </div>
        </div>
