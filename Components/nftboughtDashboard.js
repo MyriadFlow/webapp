@@ -56,9 +56,9 @@ function nftboughtDashboard() {
   },[]);
 
   return (
-    <div>
-      <h2 className="text-xl pt-20 pb-4 border-b-2">Items Bought</h2>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 md:grid-cols-3 gap-4 lg:gap-24 p-4 mt-20  h-auto">
+    <div className="min-h-screen">
+      {/* <h2 className="text-xl pt-20 pb-4 border-b-2">Items Bought</h2> */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 md:grid-cols-3 gap-4 lg:gap-24 p-4 mt-10 h-auto">
         { data.length>0 ? data.map((item) => {
           return (
             <div
