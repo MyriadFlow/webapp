@@ -1,6 +1,7 @@
 import { FaUserCircle } from "react-icons/fa"
 import { AiOutlineCloseCircle } from "react-icons/ai"
 import Link from "next/link";
+import Image from "next/image";
 import { useState , useEffect} from "react";
 import { ethers } from "ethers";
 import { useDispatch, useSelector } from "react-redux";
@@ -257,9 +258,14 @@ connectweb();
 
 
             </div>
+            { userbalance ?
             <div className="flex justify-center pt-1 ">
-                <p className="text-md font-semibold text-gray-600  dark:text-gray-400 flex items-center"> Balance:
-                    <FaEthereum className="h-4 w-4 text-gray-400 flex " /> <span className="text-gray-600 dark:text-gray-400">{userbalance}</span></p></div>
+ <p className="text-md font-semibold text-gray-600  dark:text-gray-400 flex items-center"> Balance:
+ <FaEthereum className="h-4 w-4 text-gray-400 flex " /> <span className="text-gray-600 dark:text-gray-400">{userbalance}</span></p>
+ 
+ </div> : ""
+                }
+               
 
             {user ?
                 <div className="flex justify-center">
@@ -272,7 +278,7 @@ connectweb();
                 </div> : ""}
 
             <div className="flex items-center justify-center mt-5">
-                <img className="w-60 align-middle" src="/account.svg"></img>
+                <Image width={250} height={250} className="align-middle" src="/account.svg"/>
             </div>
             <div className="mt-6  flex justify-center  flex-col">
 
