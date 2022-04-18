@@ -87,7 +87,7 @@ export default function CreatorDashboard() {
   return (
     <Layout>
       <div
-        className="w-full h-64 object-cover" style={{ backgroundColor: '#005bbd', backgroundImage: 'url("https://bafybeib6hevprcplaxmjzwkwfvpnzx7rn6rbjfzw5hxl7ri6a4kqkevtpu.ipfs.infura-ipfs.io/")' }}>
+        className="w-full h-64 object-cover" style={{ backgroundColor: '#005bbd', backgroundImage: 'url("/gradient_img.png")' }}>
           {/* <div className="flex items-center justify-center pt-28"> */}
           
           <div className="flex flex-col justify-center items-center relative h-full text-white pt-10 pl-10 lg:pl-0 md:pl-0">
