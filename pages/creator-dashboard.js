@@ -86,6 +86,16 @@ export default function CreatorDashboard() {
   }
   return (
     <Layout>
+      <div
+        className="w-full h-64 object-cover" style={{ backgroundColor: '#005bbd', backgroundImage: 'url("https://bafybeib6hevprcplaxmjzwkwfvpnzx7rn6rbjfzw5hxl7ri6a4kqkevtpu.ipfs.infura-ipfs.io/")' }}>
+          {/* <div className="flex items-center justify-center pt-28"> */}
+          
+          <div className="flex flex-col justify-center items-center relative h-full text-white pt-10 pl-10 lg:pl-0 md:pl-0">
+              <h1 className="text-2xl font-semibold">EXPLORE YOUR ARTWORKS</h1>
+            </div>
+      {/* </div> */}
+      </div>
+
       {/* <div className="p-4 px-10 min-h-screen">
         <h2 className="text-xl pt-20 pb-4 border-b-2">Items Sold</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 md:grid-cols-3 gap-4 lg:gap-24 p-4 mt-20  h-auto">
