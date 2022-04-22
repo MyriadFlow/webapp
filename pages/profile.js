@@ -95,6 +95,62 @@ function Profile() {
   const user = useSelector(selectUser);
   const [page, setPage] = useState("collected");
 
+  const getRole = async () => {
+
+    const token = localStorage.getItem('platform_token');
+    const role_id = localStorage.getItem('platform_roleid');
+
+    const config1 = {
+        url:`${BASE_URL}/api/v1.0/roleId/${role_id}`,
+        method:"GET",
+        headers:{
+            "Authorization":`Bearer ${token}`
+        },
+   };
+   let roledata;
+    try{
+        roledata = await axios(config1);
+        console.log(roledata);
+    }catch(e){
+        console.log(e);
+    }
+
+    let web3 = new Web3(Web3.givenProvider);
+    let completemsg = roledata.data.payload.eula+roledata.data.payload.flowId;
+    // console.log(completemsg);
+    const hexMsg = convertUtf8ToHex(completemsg);
+    // console.log(hexMsg);
+    const result = await web3.eth.personal.sign(hexMsg,wallet);
+    // console.log(result);
+
+    var signroledata = JSON.stringify({
+        flowId : roledata.data.payload.flowId,
+        signature:result,
+    })
+
+    const config = {
+         url:`${BASE_URL}/api/v1.0/claimrole`,
+         method:"POST",
+         headers:{
+             "Content-Type":"application/json",
+             "Authorization":`Bearer ${token}`
+         },
+         data:signroledata,
+    };
+
+    try{
+        const response = await axios(config);
+        // console.log(response);
+        const msg = await response?.data?.message;
+        console.log(msg);
+        
+        return true;
+    }catch(e){
+        console.log(e);
+        return false;
+    }
+}
+
   const authorize = async () => {
     const { data } = await axios.get(
       `${BASE_URL}/api/v1.0/flowid?walletAddress=${wallet}`
@@ -130,6 +186,7 @@ function Profile() {
       localStorage.setItem("platform_token", token);
 
       getProfile();
+      getRole();
 
       return true;
     } catch (e) {
@@ -156,9 +213,24 @@ function Profile() {
     })
   }
 
+  const connectweb = async()=>{
+    const web3Modal = new Web3Modal();
+    const connection = await web3Modal.connect();
+    const provider = new ethers.providers.Web3Provider(connection);
+    const signer = provider.getSigner();
+
+    /* next, create the item */
+    let contract = new ethers.Contract(creatifyAddress, Creatify.abi, signer);
+     setHasRole(  await contract.hasRole( await contract.CREATIFY_CREATOR_ROLE() , wallet))
+     const roleid = await contract.CREATIFY_CREATOR_ROLE();
+     localStorage.setItem("platform_roleid",roleid);
+     console.log(localStorage.getItem('platform_roleid'));
+}
+
   useEffect(async() => {
     const token = localStorage.getItem('platform_token');
     console.log(token);
+    connectweb();
     if (!token) {
       authorize();
     }
