@@ -25,7 +25,7 @@ const homecomp = ({uri}) => {
         <div>
              <img
                  src={`https://ipfs.io/ipfs/${preuri}`}
-                 alt="" className=" h-60  p-2 w-full object-fit" />
+                 alt="" className="h-60 w-full object-fit rounded-lg mb-3" />
             </div>
     )
 }
