@@ -261,19 +261,23 @@ function Profile() {
       </div>
       <div className=" m-2 flex flex-col items-center justify-center pb-36">
         <div className="text-center pt-4 pb-4">
-        <p className="text-2xl font-bold pb-4"> Name : {username}</p>
+       
         <div className="flex flex-row">
-        <p className="text-2xl font-bold pb-4 pr-2">
+        <p className="text-2xl font-bold pb-4 pr-2 text-gray-400">
           Wallet Address : 
           </p>
-        <p className="text-gray-500 text-2xl font-bold pb-4 cursor-pointer" onClick={() => { navigator.clipboard.writeText(user) }}>
-          Copy to clipboard </p>
-          <p><FaCopy />
+        <p className="text-white text-2xl font-bold pb-4 cursor-pointer" 
+        // onClick={() => { navigator.clipboard.writeText(user) }}
+        >
+          {user}</p>
+          <p>
+            {/* <FaCopy /> */}
           </p>
           
          
           </div>
-        <p className="text-2xl font-bold pb-4"> Country : <span className="text-gray-500">{bio}</span></p>
+          <p className="text-2xl font-bold pb-4 text-gray-400"> Name : <span className="text-white">{username}</span></p>
+        <p className="text-2xl font-bold pb-4 text-gray-400"> Country : <span className="text-white">{bio}</span></p>
 </div>
         <button
           className="bg-pink-500 text-white active:bg-pink-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
