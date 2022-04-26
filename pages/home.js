@@ -164,7 +164,7 @@ const Home = () =>{
 										<div className="flex items-center">
 										  <FaEthereum className="w-4 text-white" />
 										  <p className=" dark:text-white font-semibold">
-											{getEthPrice(item.price)} ETH
+											{getEthPrice(item.price)} MATIC
 										  </p>
 										</div>
 									  </div>

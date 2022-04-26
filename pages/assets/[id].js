@@ -17,6 +17,7 @@ import { buyNFT } from "../api/buyNFT";
 import BuyAsset from "../../Components/buyAssetModal";
 import Layout from "../../Components/Layout";
 import {ethers} from "ethers"
+import Link from "next/link"
 
 
 function Asset({ asset }) {
@@ -75,7 +76,11 @@ function Asset({ asset }) {
                                     <div className="flex items-center justify-between my-4">
                                         <h3 className="text-gray-700 font-medium dark:text-gray-300">Contract Address</h3>
                                         {/* <span className="text-gray-600 text-sm dark:text-gray-400">{asset.marketItems[0].nftContract}</span> */}
-                                        <span className="text-gray-600 text-sm dark:text-gray-400 cursor-pointer" onClick={() => { navigator.clipboard.writeText(copy) }}><FaCopy /></span>
+                                        <Link href={`https://mumbai.polygonscan.com/address/${copy}`}>
+                                        <span className="text-gray-600 text-sm dark:text-gray-400 cursor-pointer" 
+                                        // onClick={() => { navigator.clipboard.writeText(copy) }}
+                                        >
+                                            {copy}</span></Link>
                                     </div>
                                     <div className="flex items-center justify-between my-4">
                                         <h3 className="text-gray-700 font-medium dark:text-gray-300">Token ID</h3>
@@ -86,7 +91,7 @@ function Asset({ asset }) {
                                         <span className="text-gray-600 text-sm dark:text-gray-400">Polygon Testnet</span>
                                     </div>
                                     <div className="flex items-center justify-between my-4">
-                                        <h3 className="text-gray-700 font-medium dark:text-gray-300">IPFS</h3>
+                                        <h3 className="text-gray-700 font-medium dark:text-gray-300">IPFS Asset</h3>
                                         <span className="text-gray-600 text-sm"><a href={imgurl} target="_blank" rel="noreferrer" className="text-gray-600 dark:text-gray-400"><BsArrowUpRight /></a></span>
                                     </div>
                                     <div className="flex items-center justify-between my-4">
@@ -94,7 +99,7 @@ function Asset({ asset }) {
                                         <span className="text-gray-600 text-sm"><a href={nfturl} target="_blank" rel="noreferrer" className="text-gray-600 dark:text-gray-400"><BsArrowUpRight /></a></span>
                                     </div>
                                     <div className="flex items-center justify-between my-4">
-                                        <h3 className="text-gray-700 font-medium dark:text-gray-300">Etherscan Transaction</h3>
+                                        <h3 className="text-gray-700 font-medium dark:text-gray-300">Token Lifecycle</h3>
                                         <span className="text-gray-600 text-sm"><a href={transaction} target="_blank" rel="noreferrer" className="text-gray-600 dark:text-gray-400"><BsArrowUpRight /></a></span>
                                     </div>
                                 </div>
@@ -108,7 +113,7 @@ function Asset({ asset }) {
                                         </div>
                                         <div className="flex justify-between mt-6 flex-row">
                                         <div className="text-gray-600 text-sm dark:text-white">Price</div>
-                                            <div className="text-gray-600 dark:text-gray-400">{getEthPrice(asset.marketItems[0].price)}</div>
+                                            <div className="text-gray-600 dark:text-gray-400">{getEthPrice(asset.marketItems[0].price)} MATIC</div>
                                             
                                             
                                         </div>
