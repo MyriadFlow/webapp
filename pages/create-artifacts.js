@@ -373,7 +373,7 @@ const getRole = async () => {
                     </div>
 
                     <div className="form-item w-full">
-                      <input type="text" placeholder="Asset Price in Eth" className="w-full input_background bg-white dark:bg-gray-900 rounded-md shadow-sm p-3 outline-none "
+                      <input type="text" placeholder="Asset Price in Matic" className="w-full input_background bg-white dark:bg-gray-900 rounded-md shadow-sm p-3 outline-none "
                         onChange={(e) => updateFormInput({ ...formInput, price: e.target.value })}
                       />
                     </div>

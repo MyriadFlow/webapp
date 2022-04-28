@@ -143,7 +143,7 @@ function Profile() {
         // console.log(response);
         const msg = await response?.data?.message;
         console.log(msg);
-        
+        setHasRole(true);
         return true;
     }catch(e){
         console.log(e);
@@ -246,7 +246,7 @@ function Profile() {
     /* next, create the item */
     let contract = new ethers.Contract(creatifyAddress, Creatify.abi, signer);
      setHasRole(  await contract.hasRole( await contract.CREATIFY_CREATOR_ROLE() , wallet))
-  }, []);
+  }, [hasRole]);
 
   return (
     <Layout>

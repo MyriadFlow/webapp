@@ -82,9 +82,9 @@ function Connectmenu({ toogle }) {
          console.log(localStorage.getItem('platform_roleid'));
     }
 
-  useEffect(() => {   
-connectweb();
-  }, []);
+//   useEffect(() => {   
+// connectweb();
+//   }, []);
 
 
     const connectwallethandler = () => {

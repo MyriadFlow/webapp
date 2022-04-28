@@ -76,11 +76,11 @@ function Asset({ asset }) {
                                     <div className="flex items-center justify-between my-4">
                                         <h3 className="text-gray-700 font-medium dark:text-gray-300">Contract Address</h3>
                                         {/* <span className="text-gray-600 text-sm dark:text-gray-400">{asset.marketItems[0].nftContract}</span> */}
-                                        <Link href={`https://mumbai.polygonscan.com/address/${copy}`}>
+                                        <a href={`https://mumbai.polygonscan.com/address/${copy}`} target="_blank">
                                         <span className="text-gray-600 text-sm dark:text-gray-400 cursor-pointer" 
                                         // onClick={() => { navigator.clipboard.writeText(copy) }}
                                         >
-                                            {copy}</span></Link>
+                                            {copy}</span></a>
                                     </div>
                                     <div className="flex items-center justify-between my-4">
                                         <h3 className="text-gray-700 font-medium dark:text-gray-300">Token ID</h3>
