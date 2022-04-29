@@ -79,7 +79,7 @@ function Header() {
 
   return (
 
-    <header className="fixed top-0 z-50 shadow-md items-center h-[49px] px-2 flex-grow flex justify-between w-full bg-blue-500 dark:bg-purple-600" style={{ backgroundColor: '' }}>
+    <header className="fixed top-0 z-50 shadow-md items-center h-[49px] px-2 flex-grow flex justify-between w-full bg-[#fff] dark:bg-transparent" style={{ backgroundColor: '' }}>
       {/* left */}
       <div className="flex items-center">
         <FaBars

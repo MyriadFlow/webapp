@@ -5,7 +5,7 @@ Google Fonts
 */
 @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
 
 
 @tailwind base;
@@ -17,7 +17,8 @@ Google Fonts
 @import url('https://fonts.googleapis.com/css2?family=Nova+Script&display=swap');
 
 body {
-    background: linear-gradient(113.49deg, #984D38 -30.3%, #181E41 58.12%);
+    /* background: linear-gradient(113.49deg, #984D38 -30.3%, #181E41 58.12%); */
+    /* background: white; */
 }
 .myglass {
     background: rgba(255, 255, 255, 0.06);
@@ -40,18 +41,12 @@ border: 1px solid rgba(255, 255, 255, 0.3);
 @import url('https://fonts.googleapis.com/css2?family=Didact+Gothic&display=swap'); 
     @layer base{
         body {
-        @apply dark:bg-[#0C003D] dark:text-white;
+        @apply dark:bg-[#13131a] dark:text-white;
     }
     }
 .logo{
     /* font-family:Dancing Script; */
     font-family: 'Nova Script', cursive
-}
-.font-1{
-    font-family: 'Poppins', sans-serif;
-}
-.mycolor {
-    color: hsl(243, 87%, 12%)
 }
 .card{
     height:80%;
