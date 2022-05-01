@@ -387,7 +387,7 @@ const getRole = async () => {
                   <div className="w-full flex flex-col md:flex-row md:space-x-4 space-y-4 md:space-y-0">
                     <div className="w-full rounded-md  mt-6 upload flex justify-center bg-white dark:bg-gray-900 ">
                       <div className="flex flex-col items-center justify-center">
-                        <p className="text-md mb-3 upload_p pl-2">PNG, GIF, WEBP, MP4 or MP3. Max 100mb.</p>
+                        <p className="text-md mb-3 upload_p pl-2">Choose a PNG image, Max 100mb.</p>
                         <input
                           type="file"
                           name="Asset"

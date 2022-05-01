@@ -78,7 +78,7 @@ function nftboughtDashboard() {
                     <div className="flex items-center">
                       <FaEthereum className="h-4 w-4 text-blue-400" />
                       <p className="font-extralight dark:text-gray-400">
-                        {getEthPrice(item.price)}
+                        {getEthPrice(item.price)} MATIC
                       </p>
                     </div>
                   </div>
@@ -90,7 +90,7 @@ function nftboughtDashboard() {
                   onClick={() => buyNft(nft)}
                   className="text-blue-500 hover:text-blue-400 font-bold"
                 >
-                  Buy now
+                  Sell now
                 </button>
               </div>
             </div>

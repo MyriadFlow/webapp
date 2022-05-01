@@ -182,24 +182,24 @@ export default function CreatorDashboard() {
                       />
                     </div>
                     <div className=" flex items-center justify-between px-4 mb-2">
-                      <p className="font-1 text-sm font-bold">Price </p>
+                      <p className="font-1 text-sm font-bold">Sold at price </p>
                       <div className="flex items-center">
                         <FaEthereum className="h-4 w-4 text-blue-400" />
                         <p className="font-extralight dark:text-gray-400">
-                          {getEthPrice(item.price)}
+                          {getEthPrice(item.price)} MATIC
                         </p>
                       </div>
                     </div>
                   </div>
                 </Link>
-                <div className="px-4 py-4 bg-gray-100 dark:bg-gray-700 flex justify-between">
+                {/* <div className="px-4 py-4 bg-gray-100 dark:bg-gray-700 flex justify-between">
                   <button
                     onClick={() => buyNft(nft)}
                     className="text-blue-500 hover:text-blue-400 font-bold"
                   >
                     Buy now
                   </button>
-                </div>
+                </div> */}
               </div>
             );
           }): (loading?<Loader/>:<div className="text-xl pb-10">
