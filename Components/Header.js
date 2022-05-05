@@ -75,6 +75,23 @@ function Header() {
     }))
   }
 
+  const walletAddr = useSelector(selectUser);
+  var wallet = walletAddr ? walletAddr[0] : "";
+  
+  const [hasRole, setHasRole] = useState(true);
+
+  useEffect(async() => {
+    const web3Modal = new Web3Modal();
+    const connection = await web3Modal.connect();
+    const provider = new ethers.providers.Web3Provider(connection);
+    const signer = provider.getSigner();
+
+    /* next, create the item */
+    let contract = new ethers.Contract(creatifyAddress, Creatify.abi, signer);
+     setHasRole(  await contract.hasRole( await contract.CREATIFY_CREATOR_ROLE() , wallet))
+     
+  }, [hasRole]);
+
 
 
   return (
@@ -128,16 +145,25 @@ function Header() {
               Explore
             </NavLink>
           </Link>
-          <Link href="/create-artifacts">
-            <NavLink
-              className={
-                router.pathname == "/create-artifacts" ? "active " : ""
-              }
-              style={{ cursor: "pointer" }}
-            >
-              Create
-            </NavLink>
-          </Link>
+
+          {user && hasRole ? (
+              <Link href="/create-artifacts">
+              <NavLink
+                className={
+                  router.pathname == "/create-artifacts" ? "active" : ""
+                }
+                style={{ cursor: "pointer" }}
+              >
+                Create
+              </NavLink>
+            </Link>
+            ) : (
+              ''
+            )}
+          
+          {!user ? (
+              ''
+            ) : (
           <Link href="/my-artifacts">
             <NavLink
               className={router.pathname == "/my-artifacts" ? "active " : ""}
@@ -146,6 +172,11 @@ function Header() {
               My Assets
             </NavLink>
           </Link>
+            )}
+
+{!user ? (
+              ''
+            ) : (
           <Link href="/creator-dashboard">
             <NavLink
               className={
@@ -156,6 +187,7 @@ function Header() {
               Dashboard
             </NavLink>
           </Link>
+            )}
         </div>
 
         {/* SIDENAV  */}
