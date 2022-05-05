@@ -78,7 +78,7 @@ function Header() {
   const walletAddr = useSelector(selectUser);
   var wallet = walletAddr ? walletAddr[0] : "";
   
-  const [hasRole, setHasRole] = useState(true);
+  const [hasRole, setHasRole] = useState(false);
 
   useEffect(async() => {
     const web3Modal = new Web3Modal();
@@ -89,7 +89,7 @@ function Header() {
     /* next, create the item */
     let contract = new ethers.Contract(creatifyAddress, Creatify.abi, signer);
      setHasRole(  await contract.hasRole( await contract.CREATIFY_CREATOR_ROLE() , wallet))
-     
+     console.log(hasRole);
   }, [hasRole]);
 
 
