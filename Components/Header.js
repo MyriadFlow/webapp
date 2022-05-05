@@ -96,12 +96,13 @@ function Header() {
 
   return (
 
-    <header className="fixed top-0 z-50 shadow-md items-center h-[49px] px-2 flex-grow flex justify-between w-full bg-[#fff] dark:bg-transparent" style={{ backgroundColor: '' }}>
+    <header className="border-b-[1px] bg-white dark:bg-[#13131a] dark:border-[#282a32] border-[#eff1f6]">
+      <div className="w-[90%] max-w-[1320px] h-[81px] mx-auto flex items-center justify-between font-poppins">
       {/* left */}
       <div className="flex items-center">
         <FaBars
           onClick={nav}
-          className="lg:invisible cursor-pointer text-2xl"
+          className="lg:hidden cursor-pointer text-2xl"
         />
         <Link href="/">
         <div className="pt-2 md:pl-28 pl-4 transition-all cursor-pointer">
@@ -110,7 +111,7 @@ function Header() {
       width="45"
       height="45"/>
       </span>
-      <span className="dark:hidden">
+      <span className="dark:hidden ">
       <Image src="/light.svg"
       width="45"
       height="45"/>
@@ -136,7 +137,7 @@ function Header() {
 
       {/* right */}
       <div>
-        <div className=" lg:flex items-stretch hidden gap-x-6  text-lg font-semibold">
+        <div className="lg:flex items-stretch hidden gap-x-6 text-lg tracking-wide font-medium text-black dark:text-[#0162ff]">
           <Link href="/home">
             <NavLink
               className={router.pathname == "/home" ? "active " : ""}
@@ -190,58 +191,51 @@ function Header() {
             )}
         </div>
 
-        {/* SIDENAV  */}
-        {navopen && (
-          <div
-            style={{ backgroundColor: "#7900FF" }}
-            className="absolute top-0 right-0 w-48 h-screen lg:hidden font-bold shadow-lg pt-12 text-center"
-          >
-            <Link href="/home">
-              <a className="block py-4 rounded-sm hover:bg-gray-300 transition duration-200 ease-in-out">
-                Home
-              </a>
-            </Link>
-            <Link href="/create-artifacts">
-              <a className="block py-4 rounded-sm hover:bg-gray-300 transition duration-200 ease-in-out">
-                Sell Asset
-              </a>
-            </Link>
-            <Link href="/my-artifacts">
-              <a className="block py-4 rounded-sm hover:bg-gray-300 transition duration-200 ease-in-out">
-                My Assets
-              </a>
-            </Link>
-            <Link href="/creator-dashboard">
-              <a className="block py-4 rounded-sm hover:bg-gray-300 transition duration-200 ease-in-out">
-                Dashboard
-              </a>
-            </Link>
-          </div>
-        )}
-      </div>
-      <div>
-        <div className="flex items-center gap-x-3 md:pr-20 transition-all">
-          <div className="cursor-pointer" onMouseEnter={opendropmenu}>
-            {!user ? (
-              <FaUserCircle
-                style={{ color: "white" }}
-                className="text-3xl text-gray-500"
-              />
-            ) : (
-              <Link href="/profile">
-                <div className="h-8 w-8 rounded-full connect-profile ring-offset-2 ring-2 ring-blue-400  cursor-pointer"></div>
+         {/* SIDENAV  */}
+         {navopen && (
+            <div className="absolute top-0 right-0 w-48 h-screen lg:hidden font-bold shadow-lg pt-12 text-center">
+              <Link href="/home">
+                <a className="block py-4 rounded-sm hover:bg-gray-300 transition duration-200 ease-in-out">
+                  Home
+                </a>
               </Link>
-            )}
-          </div>
-
-          <MdOutlineAccountBalanceWallet
-            style={{ color: "white" }}
-            className="text-3xl text-gray-500 cursor-pointer"
-            onClick={() => Setconnectmenu(!connectmenu)}
-          />
+              <Link href="/create-artifacts">
+                <a className="block py-4 rounded-sm hover:bg-gray-300 transition duration-200 ease-in-out">
+                  Sell Asset
+                </a>
+              </Link>
+              <Link href="/my-artifacts">
+                <a className="block py-4 rounded-sm hover:bg-gray-300 transition duration-200 ease-in-out">
+                  My Assets
+                </a>
+              </Link>
+              <Link href="/creator-dashboard">
+                <a className="block py-4 rounded-sm hover:bg-gray-300 transition duration-200 ease-in-out">
+                  Dashboard
+                </a>
+              </Link>
+            </div>
+          )}
         </div>
+        <div className="relative">
+          <div className="flex items-center gap-x-3">
+            <div onMouseEnter={opendropmenu}>
+              {!user ? (
+                <FaUserCircle className="text-3xl text-gray-500" />
+              ) : (
+                <Link href="/profile">
+                  <div className="h-8 w-8 rounded-full connect-profile ring-offset-2 ring-2 ring-blue-400 cursor-pointer"></div>
+                </Link>
+              )}
+            </div>
+            <MdOutlineAccountBalanceWallet
+              className="text-3xl cursor-pointer"
+              onClick={() => Setconnectmenu(!connectmenu)}
+            />
+          </div>
 
         {connectmenu && <Connectmenu toogle={toogle} />}
+      </div>
       </div>
     </header>
   );

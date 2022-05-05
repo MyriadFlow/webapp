@@ -59,7 +59,8 @@ function Connectmenu({ toogle }) {
 
 
     const user = useSelector(selectUser);
-    const userbalance = useSelector(selectBalance);
+    let userbalance = useSelector(selectBalance);
+userbalance = userbalance.toString().substr(0, 13);
 
     const [errorMessage, SeterrorMessage] = useState(null);
     const [defaultAccount, SetdefaultAccount] = useState();
@@ -67,6 +68,7 @@ function Connectmenu({ toogle }) {
     const [UserBalance, SetUserBalance] = useState();
 
     const [hasRole, setHasRole] = useState(false);
+    const [dark, setDark] = useState(false);
 
     const connectweb = async()=>{
         const web3Modal = new Web3Modal();
@@ -228,68 +230,59 @@ function Connectmenu({ toogle }) {
 
 
     return (
-        <div className={!user ? "fixed w-full p-2 md:w-72 lg:w-80 z-30 shadow-lg top-0 h-screen bg-white right-0 dark:bg-gray-900" : "fixed w-full p-2 md:w-auto lg:w-auto z-30  top-0 h-screen bg-white right-0 dark:bg-gray-900"}>
-            <div>
+        <div
+      className={
+        !user
+          ? "absolute top-0 bg-white right-80 dark:bg-[#131c31]"
+          : "absolute z-30 top-14 bg-white right-[50%] translate-x-[50%] dark:bg-[#131c31] p-4 rounded-[10px]"
+      }
+    >
+      {/* <div>
                 <AiOutlineCloseCircle onClick={toogle} className="h-10 w-10 cursor-pointer  text-gray-500 p-1" />
-            </div>
-
-
-
-
-            <div className="flex justify-center lg:mt-10 mt-4">
-                {
-                    !user ? <FaUserCircle className="h-12 w-12 text-gray-500" /> :
-                        <div className="h-12 w-12 rounded-full connect-profile ring-offset-2 ring-2 ring-blue-400 animate-bounce cursor-pointer"></div>
-                }
-
-
-            </div>
-
-            <div className="flex justify-center mt-2 ">
-                <Link href="/profile">
-                    <p className="font-bold text-lg hover:underline">
-                        <a className="text-gray-800  dark:text-gray-400 dark:hover:text-gray-300 " href="/profile">My Account </a ></p>
-                </Link>
-
-            </div>
-
-            <div className="flex justify-center mt-2" >
+            </div> */}
+      <div className="border-b-[1px] border-[#e5e7eb] dark:border-[#282a32] py-2">
+        <div className="flex gap-x-2 justify-between items-center hover:bg-[#1c2339] px-2 py-1 hover:rounded-xl">
+          {!user ? (
+            <FaUserCircle className="h-12 w-12 text-gray-500" />
+          ) : (
+            <div className="h-10 w-10 rounded-full connect-profile cursor-pointer"></div>
+          )}
+          <Link href="/profile">
+            <a className="" href="/profile">
+              MyAccount{" "}
+            </a>
+          </Link>
+        </div>
+      </div>
+      {/* <div className="flex justify-center mt-2" >
                 <p className={user ? "text-sm text-gray-700 border-2 border-dashed p-2 rounded-lg border-black font-semibold dark:text-gray-300 dark:border-gray-400" : ""}>{user}</p>
+            </div> */}
+      <div className="border-b-[1px] border-[#e5e7eb] dark:border-[#282a32] py-2">
+        {userbalance ? (
+          <div className="flex hover:bg-[#1c2339] px-4 py-3 hover:rounded-xl">
+            <p className="text-md font-semibold text-gray-600  dark:text-gray-400 flex items-center">
+              Balance:
+              <FaEthereum className="h-4 w-4 text-gray-400 flex " />
+              <span className="text-gray-600 dark:text-gray-400">
+                {userbalance}
+              </span>
+            </p>
+          </div>
+        ) : (
+          ""
+        )}
+      </div>
 
+      <div>
+        <div className="border-b-[1px] border-[#e5e7eb] dark:border-[#282a32] py-2">
+          <div className="hover:bg-[#1c2339] px-4 py-3 hover:rounded-xl">
+            <a onClick={connectwallethandler} className="">
+              {!user ? "Connect" : "Connected"}
+            </a>
+          </div>
+        </div>
 
-            </div>
-            { userbalance ?
-            <div className="flex justify-center pt-1 ">
- <p className="text-md font-semibold text-gray-600  dark:text-gray-400 flex items-center"> Balance:
- <FaEthereum className="h-4 w-4 text-gray-400 flex " /> <span className="text-gray-600 dark:text-gray-400">{userbalance}</span></p>
- 
- </div> : ""
-                }
-               
-
-            {user ?
-                <div className="flex justify-center">
-                    <FiLogOut
-                        // onClick={logoutmetamask}
-                        onClick={openmodel}
-
-                        className="h-10 w-10 rounded-full hover:text-white  cursor-pointer p-2 hover:bg-gray-700 " />
-
-                </div> : ""}
-
-            <div className="flex items-center justify-center mt-5">
-                <Image width={250} height={250} className="align-middle" src="/account.svg"/>
-            </div>
-            <div className="mt-6  flex justify-center  flex-col">
-
-                <div className="flex justify-center">
-                    <button
-                        onClick={connectwallethandler}
-                        className="bg-blue-500 dark:bg-purple-700 uppercase shadow-md outline-2 outline-offset-4 outline-blue-500 dark:outline-white outline transition duration-300  
-                        ease-in text-white font-bold hover:bg-white hover:text-blue-500  dark:hover:bg-white dark:hover:text-purple-700 px-8 py-3 mb-2">{!user ? "Connect" : "Connected"}</button>
-                </div>
-
-                {/* {
+        {/* {
                     !hasRole && user && 
                     <div className="flex justify-center">
                         <button
@@ -298,16 +291,81 @@ function Connectmenu({ toogle }) {
                             ease-in text-white font-bold hover:bg-white hover:text-blue-800 px-6 rounded py-2 mt-2">Get creator role</button>
                     </div>
                 } */}
-
-                <div className="flex justify-center items-center lg:mt-10 mt-4 space-x-2">
-                    <p className="text-gray-800 font-bold dark:text-blue-500">{theme === 'dark' ? 'LightMode' : 'DarkMode'}</p>
-                    <div className="border p-1 rounded-full shadow-sm cursor-pointer">
-                        {renderThemeChanger()}
-                    </div>
-
-                </div>
+        <div className="border-b-[1px] border-[#e5e7eb] dark:border-[#282a32] py-2">
+          <div
+            className="flex gap-x-2 justify-center items-center p-1 bg-[#00071d] rounded relative "
+            onClick={() => {
+              setDark(!dark);
+              dark ? setTheme("light") : setTheme("dark");
+            }}
+          >
+            {/* <p className="text-gray-800 font-bold dark:text-blue-500">
+              {theme === "dark" ? "LightMode" : "DarkMode"}
+            </p> */}
+            {/* <div className="border p-1 rounded-full shadow-sm cursor-pointer">
+              {renderThemeChanger()}
+            </div> */}
+            <div
+              id="button box"
+              className={`absolute w-[calc(50%-4px)] h-[calc(100%-8px)] rounded left-[4px] top-[50%] translate-y-[-50%] bg-[#131c31] transition ease-in-out delay-150 duration-300 ${
+                dark ? "translate-x-[100%]" : ""
+              }`}
+            >
+              {/* <div className="">
+                {renderThemeChanger()}
+              </div> */}
             </div>
+            <div className="w-1/2 flex items-center justify-center py-[10px] px-[8px] text-center z-10 light">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                className="sidebar-listIcon"
+              >
+                <circle cx="12" cy="12" r="5" />
+                <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" />
+              </svg>
+              <span className="sidebar-themeInputText">Light</span>
+            </div>
+            <div className="w-1/2 flex items-center justify-center py-[10px] px-[8px] text-center z-10 dark">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                className="sidebar-listIcon"
+              >
+                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+              </svg>
+              <span className="sidebar-themeInputText">Dark</span>
+            </div>
+          </div>
         </div>
+        {user ? (
+          <div className="flex gap-x-2 items-center hover:bg-[#1c2339] px-2 py-1 hover:rounded-xl">
+            <FiLogOut
+              // onClick={logoutmetamask}
+              onClick={openmodel}
+              className="h-10 w-10 rounded-full hover:text-white  cursor-pointer p-2 hover:bg-gray-700"
+            />
+            <p>Log out</p>
+          </div>
+        ) : (
+          ""
+        )}
+      </div>
+    </div>
     )
 }
 

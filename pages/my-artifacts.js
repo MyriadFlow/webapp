@@ -83,7 +83,7 @@ const MyAssets = () => {
               return (
                 <div
                   key={item.itemId}
-                  className="bg-white dark:bg-gray-900  rounded-lg shadow-lg w-full lg:w-72 hover:scale-105 duration-200 transform transition cursor-pointer border-2 dark:border-gray-800"
+                  className="bg-[white] dark:bg-[#1c1c24]  rounded-lg shadow-lg w-full lg:w-72 hover:scale-105 duration-200 transform transition cursor-pointer border-2 dark:border-gray-800"
                 >
                 <Link key={item.itemId} href={`/assets/${item.itemId}`}>
                   <div>

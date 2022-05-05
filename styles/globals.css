@@ -16,28 +16,36 @@ Google Fonts
 @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Nova+Script&display=swap');
 
-body {
-    /* background: linear-gradient(113.49deg, #984D38 -30.3%, #181E41 58.12%); */
-    /* background: white; */
-}
-.myglass {
-    background: rgba(255, 255, 255, 0.06);
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-    backdrop-filter: blur(0px);
-    -webkit-backdrop-filter: blur(0px);
-    border: 1px solid rgba(255, 255, 255, 0.15);
-}
-
 .mycard {
-    background: rgba(255, 255, 255, 0.02);
-    /* background: rgb(146 151 179 / 13%); */
+background: rgba(255, 255, 255, 0.02);
 border-radius: 16px;
 box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
 backdrop-filter: blur(16px);
 -webkit-backdrop-filter: blur(16px);
 border: 1px solid rgba(255, 255, 255, 0.3);
 }
-
+:root {
+ --body-bg-color: #e5ecef;
+ --theme-bg-color: #fafafb;
+ --body-font: "Poppins", sans-serif;
+ --body-color: #2f2f33;
+ --active-color: #0162ff;
+ --active-light-color: #e1ebfb;
+ --header-bg-color: #fff;
+ --search-border-color: #efefef;
+ --border-color: #d8d8d8;
+ --alert-bg-color: #e8f2ff;
+ --subtitle-color: #83838e;
+ --inactive-color: #f0f0f0;
+ --placeholder-color: #9b9ba5;
+ --time-button: #fc5757;
+ --level-button: #5052d5;
+ --button-color: #fff;
+}
+body {
+    background-color: #fafafb;
+    transition: .3s ease-in-out;
+}
 @import url('https://fonts.googleapis.com/css2?family=Didact+Gothic&display=swap'); 
     @layer base{
         body {
@@ -45,7 +53,6 @@ border: 1px solid rgba(255, 255, 255, 0.3);
     }
     }
 .logo{
-    /* font-family:Dancing Script; */
     font-family: 'Nova Script', cursive
 }
 .card{
@@ -58,23 +65,6 @@ border: 1px solid rgba(255, 255, 255, 0.3);
   
 }
 
-
-/* .button_explore{
-    background-color: bg-blue-500;
-} */
-a{
-    font-family:"Didact Gothic",sans-serif;
-}
-
-.home_background{
-    background-image: linear-gradient(90deg,rgb(151, 150, 240),rgba(251, 199, 212, 0.877),rgb(253, 185, 155,64%));
-}
-/* p{
-    font-family:"Didact Gothic",sans-serif;
-} */
-.buy{
-    background-color: rgb(32 129 226);
-}
 .carousel .control-dots {
     display: none;
 }
@@ -82,17 +72,8 @@ a{
     height:70vh;
 }
 
-a{
-    color: white;
-}
-
-a:hover{
-    color: black;
-   
-}
-
 .active{
-    color : black;
+    color : #0162ff;
     border-bottom: 5px solid rgb(111, 109, 252);
    
 }
@@ -115,10 +96,6 @@ a:hover{
 .input_background{
     background-color: #f4f4f4;
 }
-
-/* .filter{
-    top:72px
-} */
 
 .buttonconnect{
     padding:15px 40px;

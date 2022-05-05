@@ -18,9 +18,9 @@ const homecomp2 = ({uri}) => {
       },[uri]);
 
     return (
-        <div style={{minHeight:80}}>
-            <p className="text-sm font-bold text-gray-500 font-1">{response && response.name}</p>
-            <p className="text-gray-800 text-sm font-extrabold dark:text-gray-100 font-1 ">{response && response.description}</p>
+        <div style={{minHeight:80}} className="font-poppins">
+            <p className="text-[14px] font-semibold capitalize text-white">{response && response.name}</p>
+            <p className="text-[#83838e] text-[13px] dark:text-[#83838e] ">{response && response.description}</p>
         </div>
     )
 }
