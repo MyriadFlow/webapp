@@ -162,7 +162,7 @@ function Header() {
               ''
             )}
           
-          {!user ? (
+          {/* {!user ? (
               ''
             ) : (
           <Link href="/my-artifacts">
@@ -173,7 +173,7 @@ function Header() {
               My Assets
             </NavLink>
           </Link>
-            )}
+            )} */}
 
 {!user ? (
               ''
@@ -204,11 +204,11 @@ function Header() {
                   Sell Asset
                 </a>
               </Link>
-              <Link href="/my-artifacts">
+              {/* <Link href="/my-artifacts">
                 <a className="block py-4 rounded-sm hover:bg-gray-300 transition duration-200 ease-in-out">
                   My Assets
                 </a>
-              </Link>
+              </Link> */}
               <Link href="/creator-dashboard">
                 <a className="block py-4 rounded-sm hover:bg-gray-300 transition duration-200 ease-in-out">
                   Dashboard

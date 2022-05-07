@@ -60,7 +60,6 @@ function Connectmenu({ toogle }) {
 
     const user = useSelector(selectUser);
     let userbalance = useSelector(selectBalance);
-userbalance = userbalance.toString().substr(0, 13);
 
     const [errorMessage, SeterrorMessage] = useState(null);
     const [defaultAccount, SetdefaultAccount] = useState();
@@ -264,7 +263,7 @@ userbalance = userbalance.toString().substr(0, 13);
               Balance:
               <FaEthereum className="h-4 w-4 text-gray-400 flex " />
               <span className="text-gray-600 dark:text-gray-400">
-                {userbalance}
+                {userbalance.toString().substr(0, 12)}
               </span>
             </p>
           </div>

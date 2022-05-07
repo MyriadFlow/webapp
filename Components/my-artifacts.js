@@ -5,12 +5,12 @@ import axios from "axios";
 import Web3Modal from "web3modal";
 import { FaEthereum } from "react-icons/fa";
 import Link from "next/link";
-import Layout from "../Components/Layout";
+import Layout from "./Layout";
 import { selectUser } from "../slices/userSlice";
 import { useSelector } from "react-redux";
-import HomeComp from "../Components/homeComp";
-import HomeComp2 from "../Components/homecomp2";
-import Loader from "../Components/Loader";
+import HomeComp from "./homeComp";
+import HomeComp2 from "./homecomp2";
+import Loader from "./Loader";
 // import { gql } from "@apollo/client";
 import client from "../apollo-client";
 import { request, gql } from "graphql-request";
@@ -61,20 +61,7 @@ const MyAssets = () => {
   },[]);
 
   return (
-    <Layout>
-      <div
-        className="w-full h-64 object-cover" style={{ backgroundColor: '#005bbd', backgroundImage: 'url("https://www.transparenttextures.com/patterns/inspiration-geometry.png")' }}>
-          {/* <div className="flex items-center justify-center pt-28"> */}
-          
-          <div className="flex flex-col justify-center items-center relative h-full text-white pt-10 pl-10 lg:pl-0 md:pl-0">
-              <h1 className="text-2xl font-semibold">Items Created</h1>
-            </div>
-      {/* </div> */}
-      </div>
-      <div className="p-4 px-10 min-h-screen">
-      
-            {/* <h2 className="text-xl pt-20 pb-4 border-b-2">Items Created</h2> */}
-
+    <div className="p-4 px-10 min-h-screen">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 md:grid-cols-3 gap-4 lg:gap-24 p-4 mt-20  h-auto">
             { data.length>0 ? data.map((item) => {
               console.log(item);
@@ -120,7 +107,6 @@ const MyAssets = () => {
           </div>)  }
           </div>
       </div>
-    </Layout>
   );
 };
 export default MyAssets;

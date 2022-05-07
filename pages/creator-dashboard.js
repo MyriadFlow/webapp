@@ -15,6 +15,7 @@ import { useDispatch, useSelector } from "react-redux";
 import HomeComp from "../Components/homeComp";
 import HomeComp2 from "../Components/homecomp2";
 import BoughtItems from "../Components/nftboughtDashboard";
+import Myartifacts from "../Components/my-artifacts";
 import Loader from "../Components/Loader";
 
 import client from "../apollo-client";
@@ -34,7 +35,7 @@ export default function CreatorDashboard() {
 
   const [data, setData] = useState([]);
   const [loading,setLoading]=useState(true);
-  const [page, setPage] = useState("bought");
+  const [page, setPage] = useState("created");
 
   const fetchUserAssests = async (walletAddr) => {
     const query = gql`
@@ -151,11 +152,15 @@ export default function CreatorDashboard() {
 {/* user options  */}
 <div className="mt-20 flex items-center space-x-12 px-16">
                 <div className="flex dark:text-white hover:text-gray-400 text-gray-900 space-x-1 cursor-pointer">
-                    <p onClick={() => setPage("sold")} className="text-xl font-semibold">Items Sold</p>
+                    <p onClick={() => setPage("created")} className="text-xl font-semibold">Assets Created</p>
                 </div>
 
                 <div className="flex dark:text-white hover:text-gray-400 text-gray-900 space-x-1 cursor-pointer">
-                    <p onClick={() => setPage("bought")} className="text-xl font-semibold">Items Bought</p>
+                    <p onClick={() => setPage("sold")} className="text-xl font-semibold">Assets Sold</p>
+                </div>
+
+                <div className="flex dark:text-white hover:text-gray-400 text-gray-900 space-x-1 cursor-pointer">
+                    <p onClick={() => setPage("bought")} className="text-xl font-semibold">Assets Buy</p>
                 </div>
             </div>
 
@@ -213,6 +218,12 @@ export default function CreatorDashboard() {
          <div className="p-4 px-10">
          <BoughtItems />
        </div>
+    )}
+
+    { page == "created" && (
+       <div className="p-4 px-10">
+       <Myartifacts />
+     </div>
     )}
 
     </Layout>
