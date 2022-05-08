@@ -105,22 +105,25 @@ function Header() {
           className="lg:hidden cursor-pointer text-2xl"
         />
         <Link href="/">
-        <div className="pt-2 md:pl-28 pl-4 transition-all cursor-pointer">
+        <div className="pt-2 transition-all cursor-pointer">
           <span className="dark:block hidden">
           <Image src="/dark.svg"
-      width="45"
-      height="45"/>
+      width="60"
+      height="60"/>
       </span>
       <span className="dark:hidden ">
       <Image src="/light.svg"
-      width="45"
-      height="45"/>
+      width="60"
+      height="60"/>
       </span>
       </div>
-          {/* <p className="text-xl font-semibold cursor-pointer uppercase md:pl-20 pl-4 transition-all tracking-wide">
-            Marketplace
-          </p> */}
+          
         </Link>
+        <Link href="/">
+        <p className="text-3xl lg:block md:block hidden font-semibold cursor-pointer pl-4 transition-all tracking-wide">
+            MarketPlace
+          </p>
+          </Link>
       </div>
 
 
