@@ -41,6 +41,7 @@ function Header() {
   const [darkmode, Setdarkmode] = useState(false);
   const [connectmenu, Setconnectmenu] = useState(false);
   const [dropmenu, setdropmenu] = useState(false);
+  const [dark, setDark] = useState(false);
   const toogle = () => {
     Setconnectmenu(!connectmenu)
   }
@@ -237,7 +238,7 @@ function Header() {
             />
           </div>
 
-        {connectmenu && <Connectmenu toogle={toogle} />}
+        {connectmenu && <Connectmenu toogle={toogle} dark={dark} setDark={setDark} />}
       </div>
       </div>
     </header>
