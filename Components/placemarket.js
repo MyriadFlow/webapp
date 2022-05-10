@@ -28,7 +28,7 @@ const MyAssets = () => {
   const fetchUserAssests = async (walletAddr) => {
     const query = gql`
     query Query($where: MarketItem_filter) {
-            marketItems(first: 20, where: {seller: "${walletAddr}"}) {
+            marketItems(first: 20, where: {seller: "${walletAddr}",sold:false}) {
               price
               itemId
               seller
@@ -81,7 +81,7 @@ const MyAssets = () => {
                       uri={item ? item.metaDataUri.substr(7, 50) : ""}
                     />
                   </div>
-                  {/* <div className=" flex items-center justify-between px-4 mb-2">
+                  <div className=" flex items-center justify-between px-4 mb-2">
                     <p className="font-1 text-sm font-bold">Price </p>
                     <div className="flex items-center">
                       <FaEthereum className="h-4 w-4 text-blue-400" />
@@ -89,17 +89,17 @@ const MyAssets = () => {
                         {getEthPrice(item.price)} MATIC
                       </p>
                     </div>
-                  </div> */}
+                  </div>
                 </div>
                   </Link>  
-                  {/* <div className="px-4 py-4 bg-gray-100 dark:bg-gray-700 flex justify-between">
+                  <div className="px-4 py-4 bg-gray-100 dark:bg-gray-700 flex justify-between">
                     <button
                       onClick={() => buyNft(nft)}
                       className="text-blue-500 hover:text-blue-400 font-bold"
                     >
                       Place asset to market
                     </button>
-                  </div> */}
+                  </div>
                 </div>
               );
             }) : (loading?<Loader/>:<div className="text-xl pb-10">
