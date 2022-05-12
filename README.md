@@ -54,8 +54,13 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 - If you would like to work on an issue, drop in a comment at the issue. If it is already assigned to someone, but there is no sign of any work being done, please feel free to drop in a comment so that the issue can be assigned to you if the previous assignee has dropped it entirely.
 
 ## Contributors
+
 - [Shachindra](https://github.com/Shachindra)
 - [Devsi Singh](https://github.com/emily876)
 - [Manish Kushwaha](https://github.com/manishgtx)
 - [Om More](https://github.com/thisisommore)
 - [Shruti Bansal](https://github.com/shrutibansal1802)
+
+## License
+
+The project is currently under MIT licensed.
