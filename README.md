@@ -1,8 +1,27 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Myriad Flow Marketplace
+
+<img alt="img" src="http://ipfs.infura.io/ipfs/QmScxeDu6CXSaXpbqmtLhff5Ru1QV6YWo6kFwpERW4vJYB" width="800" height="400" />
 
 ## Getting Started
 
-Firstly add .env.local file in root with following content:
+1. Fork the repository.
+ 
+2. Clone the forked repository.
+```bash
+git clone https://github.com/<your_user_name>/marketplace.git
+```
+
+3. Navigate to the cloned repository.
+```bash
+cd marketplace
+```
+
+4. Install the package dependencies.
+```bash
+npm install
+```
+
+5. Then add .env.local file in root with following content:
 
 ```
 NEXT_PUBLIC_RPC_PROVIDER="https://rpc-mumbai.maticvigil.com/v1/6b26aad1d887708c0004394c103f8b27c1141540"
@@ -12,7 +31,7 @@ NEXT_PUBLIC_GRAPHQL_API="https://query.graph.lazarus.network/subgraphs/name/Myri
 NEXT_PUBLIC_BASE_URL=https://marketplace-engine.lazarus.network
 ```
 
-Secondly, run the development server:
+6. Lastly, run the development server:
 
 ```bash
 npm run dev
@@ -22,23 +41,21 @@ yarn dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+## Contributions Best Practices
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+### Commits
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+- Write clear meaningful git commit messages.
+- Make sure your PR's description contains GitHub's special keyword references that automatically close the related issue when the PR is merged.
 
-## Learn More
+### Feature Requests and Bug Reports
 
-To learn more about Next.js, take a look at the following resources:
+- When you file a feature request or when you are submitting a bug report to the issue tracker, make sure you add steps to reproduce it. 
+- If you would like to work on an issue, drop in a comment at the issue. If it is already assigned to someone, but there is no sign of any work being done, please feel free to drop in a comment so that the issue can be assigned to you if the previous assignee has dropped it entirely.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## Contributors
+- [Shachindra](https://github.com/Shachindra)
+- [Devsi Singh](https://github.com/emily876)
+- [Manish Kushwaha](https://github.com/manishgtx)
+- [Om More](https://github.com/thisisommore)
+- [Shruti Bansal](https://github.com/shrutibansal1802)
