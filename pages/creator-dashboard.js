@@ -46,7 +46,7 @@ export default function CreatorDashboard() {
               itemId
               seller
               forSale
-              tokenId
+              id
               metaDataUri
             }
           }

@@ -86,7 +86,7 @@ const Home = () =>{
 			        itemId
 			        seller
 			        forSale
-			        tokenId
+			        id
 			        metaDataUri
 			      }
 			    }

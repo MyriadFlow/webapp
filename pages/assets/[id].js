@@ -47,8 +47,8 @@ function Asset({ asset }) {
     let preuri = image.substr(7, 50);
 
     const imgurl = `https://ipfs.io/ipfs/${preuri}`;
-    const transaction = `https://mumbai.polygonscan.com/token/${asset.marketItems[0].nftContract}?a=${asset.marketItems[0].tokenId}`;
-    // const transaction = `https://etherscan.io/token/${asset.marketItems[0].nftContract}?a=${asset.marketItems[0].tokenId}`;
+    const transaction = `https://mumbai.polygonscan.com/token/${asset.marketItems[0].nftContract}?a=${asset.marketItems[0].id}`;
+    // const transaction = `https://etherscan.io/token/${asset.marketItems[0].nftContract}?a=${asset.marketItems[0].id}`;
 
     const copy = asset.marketItems[0].nftContract;
     return (
@@ -84,7 +84,7 @@ function Asset({ asset }) {
                                     </div>
                                     <div className="flex items-center justify-between my-4">
                                         <h3 className="text-gray-700 font-medium dark:text-gray-300">Token ID</h3>
-                                        <span className="text-gray-600 text-sm dark:text-gray-400">{asset.marketItems[0].tokenId}</span>
+                                        <span className="text-gray-600 text-sm dark:text-gray-400">{asset.marketItems[0].id}</span>
                                     </div>
                                     <div className="flex items-center justify-between my-4">
                                         <h3 className="text-gray-700 font-medium dark:text-gray-300">Blockchain</h3>
@@ -177,7 +177,7 @@ export async function getServerSideProps(context) {
               itemId
               seller
               forSale
-              tokenId
+              id
               metaDataUri
               owner
               nftContract

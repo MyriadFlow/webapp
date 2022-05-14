@@ -33,7 +33,7 @@ const MyAssets = () => {
               itemId
               seller
               forSale
-              tokenId
+              id
               metaDataUri
             }
           }
