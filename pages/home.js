@@ -86,7 +86,7 @@ const Home = () =>{
 			        itemId
 			        seller
 			        forSale
-			        tokenId
+			        id
 			        metaDataUri
 			      }
 			    }
@@ -127,15 +127,15 @@ const Home = () =>{
 				</div>)}
 
 				<main>
-        <div className="bg-gray-100 dark:bg-gray-700 w-full h-12 fixed top-12 z-30 px-10">
+        {/* <div className="bg-gray-100 dark:bg-gray-700 w-full h-12 fixed top-12 z-30 px-10">
           <span className="flex h-full items-center">
             <IoIosArrowDropright
               onClick={toogle}
               className="text-3xl text-gray-400 cursor-pointer hover:text-gray-800 "
             />
           </span>
-        </div>
-        {filter && <Filter toogle={toogle} filter={!filter} />}
+        </div> */}
+        {/* {filter && <Filter toogle={toogle} filter={!filter} />} */}
         <div className="min-h-screen">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 md:grid-cols-3 gap-4 lg:gap-24 p-4 mt-24">
 

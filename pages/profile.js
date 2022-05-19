@@ -261,7 +261,9 @@ function Profile() {
       </div>
       <div className=" m-2 flex flex-col items-center justify-center pb-36">
         <div className="text-center pt-4 pb-4">
-       
+       <div>
+         <p className="text-2xl font-bold pb-4 text-gray-400">Roles : <span className="text-white">User {hasRole && (", Creator")} </span> </p>
+       </div>
         <div className="flex flex-row">
         <p className="text-2xl font-bold pb-4 pr-2 text-gray-400">
           Wallet Address : 

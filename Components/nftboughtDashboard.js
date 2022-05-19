@@ -31,7 +31,7 @@ function nftboughtDashboard() {
               itemId
               seller
               forSale
-              tokenId
+              id
               metaDataUri
             }
           }
