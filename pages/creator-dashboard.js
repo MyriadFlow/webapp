@@ -18,6 +18,10 @@ import BoughtItems from "../Components/nftboughtDashboard";
 import Myartifacts from "../Components/my-artifacts";
 import Placemarket from "../Components/placemarket";
 import Loader from "../Components/Loader";
+// Icons
+import { BsShop } from "react-icons/bs";
+import { IoCreate, IoEaselSharp } from "react-icons/io5";
+import { RiMoneyDollarCircleLine } from "react-icons/ri";
 
 import client from "../apollo-client";
 import { request, gql } from "graphql-request";
@@ -88,31 +92,64 @@ export default function CreatorDashboard() {
   }
   return (
     <Layout>
-      <div
+      <div className="p-4">
+        {/* <div>
         className="w-full h-64 object-cover" style={{ backgroundColor: '#005bbd', backgroundImage: 'url("/gradient_img.png")' }}>   
           <div className="flex flex-col justify-center items-center relative h-full text-white pt-10 pl-10 lg:pl-0 md:pl-0">
               <h1 className="text-2xl font-semibold">EXPLORE YOUR ARTWORKS</h1>
             </div>
-      </div>
+      </div> */}
 
 {/* user options  */}
-<div className="mt-20 flex items-center space-x-12 lg:px-24">
-                <div className="flex dark:text-white hover:text-gray-400 text-gray-900 space-x-1 cursor-pointer">
-                    <p onClick={() => setPage("created")} className="text-xl font-semibold">Assets Created</p>
-                </div>
-
-                <div className="flex dark:text-white hover:text-gray-400 text-gray-900 space-x-1 cursor-pointer">
-                    <p onClick={() => setPage("sold")} className="text-xl font-semibold">Assets Sold</p>
-                </div>
-
-                <div className="flex dark:text-white hover:text-gray-400 text-gray-900 space-x-1 cursor-pointer">
-                    <p onClick={() => setPage("bought")} className="text-xl font-semibold">Assets Buy</p>
-                </div>
-
-                <div className="flex dark:text-white hover:text-gray-400 text-gray-900 space-x-1 cursor-pointer">
-                    <p onClick={() => setPage("market")} className="text-xl font-semibold">Place Assets to Market</p>
-                </div>
+<div className="bg-[#1e1f26] flex items-center rounded-sm max-w-[1320px]">
+          <div
+            className={`dark:text-white hover:text-gray-400 dark:hover:bg-[#131417] text-gray-900 cursor-pointer p-5 border-b-2 border-transparent hover:border-[#47cf73] transition-all ${
+              page === "created" ? "bg-[#131417] border-[#47cf73]" : ""
+            }`}
+            onClick={() => setPage("created")}
+          >
+            <div className="flex items-center gap-x-2">
+              <IoCreate className="text-xl dark:text-white" />
+              <p className="text-xl font-semibold">Created</p>
             </div>
+          </div>
+
+          <div
+            className={`dark:text-white hover:text-gray-400 dark:hover:bg-[#131417] text-gray-900 cursor-pointer p-5 border-b-2 border-transparent hover:border-[#47cf73] transition-all ${
+              page === "sold" ? "bg-[#131417] border-[#47cf73]" : ""
+            }`}
+            onClick={() => setPage("sold")}
+          >
+            <div className="flex items-center gap-x-2">
+              <RiMoneyDollarCircleLine className="text-xl dark:text-white" />
+              <p className="text-xl font-semibold">Sold</p>
+            </div>
+          </div>
+
+          <div
+            className={`dark:text-white hover:text-gray-400 dark:hover:bg-[#131417] text-gray-900 cursor-pointer p-5 border-b-2 border-transparent hover:border-[#47cf73] transition-all ${
+              page === "bought" ? "bg-[#131417] border-[#47cf73]" : ""
+            }`}
+            onClick={() => setPage("bought")}
+          >
+            <div className="flex items-center gap-x-2">
+              <IoEaselSharp className="text-xl" />
+              <p className="text-xl font-semibold">Buy</p>
+            </div>
+          </div>
+
+          <div
+            className={`dark:text-white hover:text-gray-400 dark:hover:bg-[#131417] text-gray-900 cursor-pointer p-5 border-b-2 border-transparent hover:border-[#47cf73] transition-all ${
+              page === "market" ? "bg-[#131417] border-[#47cf73]" : ""
+            }`}
+            onClick={() => setPage("market")}
+          >
+            <div className="flex items-center gap-x-2">
+              <BsShop className="text-xl" />
+              <p className="text-xl font-semibold">Market</p>
+            </div>
+          </div>
+        </div>
 
 
       {page === "sold" && (
@@ -180,7 +217,7 @@ export default function CreatorDashboard() {
        <Placemarket />
      </div>
     )}
-
+    </div>
     </Layout>
   );
 }

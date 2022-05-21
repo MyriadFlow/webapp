@@ -231,8 +231,8 @@ function Connectmenu({ toogle,dark,setDark }) {
       <div
         className={
           !user
-            ? "absolute top-0 bg-white right-80 dark:bg-[#131c31]"
-            : "absolute z-30 top-14 bg-white right-[50%] translate-x-[50%] dark:bg-[#131c31] p-4 rounded-[10px]"
+          ? "absolute z-30 top-14 bg-white right-[50%] translate-x-[50%] dark:bg-[#131c31] p-4 rounded-[10px] mydrop"
+          : "absolute z-30 top-14 bg-white right-[50%] translate-x-[50%] dark:bg-[#131c31] p-4 rounded-[10px] mydrop"
         }
       >
         {/* <div>
@@ -241,7 +241,7 @@ function Connectmenu({ toogle,dark,setDark }) {
         <div className="border-b-[1px] border-[#e5e7eb] dark:border-[#282a32] py-2">
           <div className="flex gap-x-2 justify-between items-center hover:bg-[#f5f4fd] dark:hover:bg-[#1c2339] px-2 py-1 hover:rounded-xl">
             {!user ? (
-              <FaUserCircle className="h-12 w-12 text-gray-500" />
+              <FaUserCircle className="h-10 w-10 text-gray-500" />
             ) : (
               <div className="h-10 w-10 rounded-full connect-profile cursor-pointer"></div>
             )}

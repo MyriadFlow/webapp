@@ -46,10 +46,13 @@ body {
     background-color: #fafafb;
     transition: .3s ease-in-out;
 }
+.mydrop {
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
 @import url('https://fonts.googleapis.com/css2?family=Didact+Gothic&display=swap'); 
     @layer base{
         body {
-        @apply dark:bg-[#13131a] dark:text-white;
+        @apply dark:bg-[#0a0b0c] dark:text-white;
     }
     }
 .logo{
