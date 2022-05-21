@@ -45,7 +45,7 @@ export default function CreatorDashboard() {
   const fetchUserAssests = async (walletAddr) => {
     const query = gql`
     query Query($where: MarketItem_filter) {
-            marketItems(first: 20, where: {seller: "${walletAddr}",sold:true}) {
+            marketItems(first: 100, where: {seller: "${walletAddr}",sold:true}) {
               price
               itemId
               seller
@@ -134,7 +134,7 @@ export default function CreatorDashboard() {
           >
             <div className="flex items-center gap-x-2">
               <IoEaselSharp className="text-xl" />
-              <p className="text-xl font-semibold">Buy</p>
+              <p className="text-xl font-semibold">Bought</p>
             </div>
           </div>
 

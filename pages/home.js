@@ -81,7 +81,7 @@ const Home = () =>{
 	const market = async () => {
 		const query = gql`
 		query Query {
-			      marketItems(first: 25,where:{sold:false}) {
+			      marketItems(first: 100,where:{sold:false}) {
 			        price
 			        itemId
 			        seller

@@ -176,7 +176,7 @@ function Asset({ asset }) {
                         Current price
                       </h4>
                     </div>
-                    <div className="text-[#253262] text-4xl font-bold dark:text-gray-400 mb-2 overflow-scroll">
+                    <div className="text-[#253262] text-4xl font-bold dark:text-gray-400 mb-2 overflow-x-auto">
                       {getEthPrice(asset.marketItems[0].price)}{" "}
                       <span className="text-lg font-medium">MATIC</span>
                     </div>

@@ -28,7 +28,7 @@ const MyAssets = () => {
   const fetchUserAssests = async (walletAddr) => {
     const query = gql`
     query Query($where: MarketItem_filter) {
-            marketItems(first: 20, where: {seller: "${walletAddr}",sold:false}) {
+            marketItems(first: 100, where: {seller: "${walletAddr}",sold:false}) {
               price
               itemId
               seller

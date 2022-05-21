@@ -26,7 +26,7 @@ function nftboughtDashboard() {
   const fetchUserAssests = async (walletAddr) => {
     const query = gql`
     query Query($where: MarketItem_filter) {
-            marketItems(first: 20, where: {owner: "${walletAddr}",deleted:false,sold:true}) {
+            marketItems(first: 100, where: {owner: "${walletAddr}",deleted:false,sold:true}) {
               price
               itemId
               seller
