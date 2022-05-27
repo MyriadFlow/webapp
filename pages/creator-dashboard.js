@@ -101,7 +101,7 @@ export default function CreatorDashboard() {
       </div> */}
 
 {/* user options  */}
-<div className="bg-[#1e1f26] flex items-center rounded-sm max-w-[1320px]">
+<div className="bg-[#1e1f26] flex items-center rounded-sm">
           <div
             className={`dark:text-white hover:text-gray-400 dark:hover:bg-[#131417] text-gray-900 cursor-pointer p-5 border-b-2 border-transparent hover:border-[#47cf73] transition-all ${
               page === "created" ? "bg-[#131417] border-[#47cf73]" : ""

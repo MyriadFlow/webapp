@@ -6,7 +6,8 @@ Google Fonts
 @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
-
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@100;200;300;400;500;600;700;800;900&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -16,6 +17,12 @@ Google Fonts
 @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Nova+Script&display=swap');
 
+.quick {
+    font-family: 'Quicksand', sans-serif;
+}
+.kumbh{
+    font-family: 'Kumbh Sans', sans-serif;
+}
 .mycard {
 background: rgba(255, 255, 255, 0.02);
 border-radius: 16px;
@@ -49,6 +56,12 @@ body {
 .mydrop {
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
+.myshadow {
+    box-shadow: rgb(37, 50, 98,0.1) -4px 9px 25px -6px;
+}
+.mygradient {
+    background:linear-gradient(-20deg, #ff2846 0%, #6944ff 100%);
+}
 @import url('https://fonts.googleapis.com/css2?family=Didact+Gothic&display=swap'); 
     @layer base{
         body {
@@ -80,14 +93,7 @@ body {
     border-bottom: 5px solid rgb(111, 109, 252);
    
 }
-.upload{
-    background-color: #f4f4f4;
-    border: 2px dashed #c2cdda;
-}
-.upload_p{
-    color:#737373;
-    font-weight:900;
-}
+
 .upload_color{
     /* background-color:rgba(0,0,0,54%); */
     transition:all ease-in 0.3s;
@@ -95,9 +101,6 @@ body {
 .upload_color:hover{
     /* background-color:rgb(102, 4, 102); */
     color:black;
-}
-.input_background{
-    background-color: #f4f4f4;
 }
 
 .buttonconnect{
@@ -124,4 +127,7 @@ body {
 .model-overlay{
     background-color: rgba(0, 0, 0, 0.389);
     backdrop-filter: blur(5px);
+}
+.myshadow {
+    box-shadow: 0 5px 15px rgba(#000, .2); 
 }

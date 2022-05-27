@@ -79,7 +79,7 @@ function Header() {
   const walletAddr = useSelector(selectUser);
   var wallet = walletAddr ? walletAddr[0] : "";
   
-  const [hasRole, setHasRole] = useState(false);
+  const [hasRole, setHasRole] = useState(true);
 
   useEffect(async() => {
     const web3Modal = new Web3Modal();
