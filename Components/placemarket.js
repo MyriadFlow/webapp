@@ -125,7 +125,7 @@ const MyAssets = () => {
       setmodelmsg("Transaction failed");
       return;
     }
-    // router.push('/home')
+    router.push('/home')
   }
 
   return (
