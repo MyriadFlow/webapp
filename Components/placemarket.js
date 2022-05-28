@@ -38,7 +38,7 @@ const MyAssets = () => {
   const fetchUserAssests = async (walletAddr) => {
     const query = gql`
     query Query($where: MarketItem_filter) {
-      tokens(first: 100, where: {creator: "${walletAddr}"}) {
+      tokens(first: 100, where: {creator: "${walletAddr}",}) {
         id
         metaDataUri
       }
@@ -48,7 +48,7 @@ const MyAssets = () => {
     setLoading(true);
     setData(result.tokens);
     setLoading(false);
-    console.log(result);
+    // console.log(result);
   };
 	function getEthPrice(price){
 		return ethers.utils.formatEther(price)
@@ -69,6 +69,8 @@ const MyAssets = () => {
   const listItem = async ( tokenId, price, signer) => {
     let contract;
     let transaction;
+    console.table(price);
+    console.log(tokenId);
     try {
       setmodelmsg("Transaction 2 in progress");
       contract = new ethers.Contract(
@@ -92,6 +94,7 @@ const MyAssets = () => {
 
   async function placeNft(tokenId) {
     const { price } = formInput;
+    console.log(price);
     if (!price) {
       setAlertMsg("Please Fill the Required Fields");
       setOpen(true);
@@ -115,13 +118,14 @@ const MyAssets = () => {
       // let value = event.args[2]
       // let tokenId = value.toNumber()
       const price = ethers.utils.parseUnits(formInput.price, 'ether')
+      console.log(price);
       await listItem(tokenId, price, signer);
     } catch (e) {
       console.log(e);
       setmodelmsg("Transaction failed");
       return;
     }
-    router.push('/home')
+    // router.push('/home')
   }
 
   return (
@@ -130,8 +134,8 @@ const MyAssets = () => {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 md:grid-cols-3 gap-4 lg:gap-24 p-4 mt-20  h-auto">
             { 
             data?.map((item) => {
-              console.log(item);
-              console.log(item.metaDataUri.substr(7, 50));
+              // console.log(item);
+              // console.log(item.metaDataUri.substr(7, 50));
 
               return (
                 <div
@@ -166,7 +170,7 @@ const MyAssets = () => {
                     </div>  
                   <div className="px-4 py-4 bg-gray-100 dark:bg-gray-700 flex justify-between">
                     <button
-                      onClick={() => placeNft(item.tokenId)}
+                      onClick={() => placeNft(item.id)}
                       className="text-blue-500 hover:text-blue-400 font-bold"
                     >
                       Place asset to market
