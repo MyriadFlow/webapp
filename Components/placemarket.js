@@ -138,7 +138,7 @@ const MyAssets = () => {
                   key={item.id}
                   className="bg-[white] dark:bg-[#1c1c24]  rounded-lg shadow-lg w-full lg:w-72 hover:scale-105 duration-200 transform transition cursor-pointer border-2 dark:border-gray-800"
                 >
-                <Link key={item.id} href={`/assets/${item.id}`}>
+                <Link key={item.id} href={`/tokens/${item.id}`}>
                   <div>
                   <HomeComp uri={item ? item.metaDataUri.substr(7, 50) : ""} />
 
