@@ -58,8 +58,8 @@ export default function CreateItem() {
   }
   async function createMarket() {
     const { name, description, price, alternettext } = formInput;
-    if (!name || !description || !price || !fileUrl) {
-      setAlertMsg("Please Fill All Fields");
+    if (!name || !description || !fileUrl) {
+      setAlertMsg("Please Fill All Required Fields");
       setOpen(true);
       return;
     }
@@ -100,8 +100,17 @@ export default function CreateItem() {
       let event = tx.events[0]
       let value = event.args[2]
       let tokenId = value.toNumber()
-      const price = ethers.utils.parseUnits(formInput.price, 'ether')
-      await listItem(transaction, contract, tokenId, price, signer);
+      let pr = formInput.price;
+      if(pr)
+      {
+        const price = ethers.utils.parseUnits(formInput.price, 'ether')
+        await listItem(transaction, contract, tokenId, price, signer);
+      }
+      else
+      {
+        router.push('/creator-dashboard')
+        return;
+      }
     } catch (e) {
       console.log(e);
       setmodelmsg("Transaction 1 failed");
