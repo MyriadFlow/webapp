@@ -43,6 +43,8 @@ export default function CreateItem() {
 
 
   const [fileUrl, setFileUrl] = useState(null)
+  const [animation, setAnimation] = useState("image");
+
   const [thumbnailUrl, setthumbnailUrl] = useState(null)
   const [formInput, updateFormInput] = useState({ price: '', name: '', description: '', alternettext: '' });
   const router = useRouter();
@@ -97,11 +99,11 @@ export default function CreateItem() {
     {
       thumbnailimage = `ipfs://${thumbnailUrl.substr(28, 71)}`;
     }
-    let img = '';
+    let image = '';
     if(fileUrl)
-    img=`ipfs://${fileUrl.substr(28, 71)}`;
+    image=`ipfs://${fileUrl.substr(28, 71)}`;
     const data = JSON.stringify({
-      name, description, image: {img}, thumbnailimage, alternettext, attributes, categories,
+      name, description, image , thumbnailimage, alternettext, attributes, categories,
     })
     try {
       const added = await client.add(data)
@@ -333,7 +335,6 @@ export default function CreateItem() {
   const [options, setOptions] = useState(["Art", "Music", "Sports", "Video", "Cartoon", "Others"]);
   const [categories, setCategory] = useState([]);
 
-
   if (!hasRole) {
     const loader = setTimeout(() => {
       router.push('/profile')
@@ -425,6 +426,57 @@ export default function CreateItem() {
                         }
                       />
                     </div>
+
+                    <div className="bg-[#1e1f26] flex items-center rounded-sm">
+          <div
+            className={`dark:text-white hover:text-gray-400 dark:hover:bg-[#131417] text-gray-900 cursor-pointer p-5 border-b-2 border-transparent hover:border-[#47cf73] transition-all ${
+              animation=== "image" ? "bg-[#131417] border-[#47cf73]" : ""
+            }`}
+            onClick={() => setAnimation("image")}
+          >
+            <div className="flex items-center gap-x-2">
+              {/* <IoCreate className="text-xl dark:text-white" /> */}
+              <p className="text-xl font-semibold">Image</p>
+            </div>
+          </div>
+
+          <div
+            className={`dark:text-white hover:text-gray-400 dark:hover:bg-[#131417] text-gray-900 cursor-pointer p-5 border-b-2 border-transparent hover:border-[#47cf73] transition-all ${
+              animation=== "video" ? "bg-[#131417] border-[#47cf73]" : ""
+            }`}
+            onClick={() => setAnimation("video")}
+          >
+            <div className="flex items-center gap-x-2">
+              {/* <RiMoneyDollarCircleLine className="text-xl dark:text-white" /> */}
+              <p className="text-xl font-semibold">Video</p>
+            </div>
+          </div>
+
+          <div
+            className={`dark:text-white hover:text-gray-400 dark:hover:bg-[#131417] text-gray-900 cursor-pointer p-5 border-b-2 border-transparent hover:border-[#47cf73] transition-all ${
+              animation=== "audio" ? "bg-[#131417] border-[#47cf73]" : ""
+            }`}
+            onClick={() => setAnimation("audio")}
+          >
+            <div className="flex items-center gap-x-2">
+              {/* <IoEaselSharp className="text-xl" /> */}
+              <p className="text-xl font-semibold">Audio</p>
+            </div>
+          </div>
+
+          <div
+            className={`dark:text-white hover:text-gray-400 dark:hover:bg-[#131417] text-gray-900 cursor-pointer p-5 border-b-2 border-transparent hover:border-[#47cf73] transition-all ${
+              animation=== "document" ? "bg-[#131417] border-[#47cf73]" : ""
+            }`}
+            onClick={() => setAnimation("document")}
+          >
+            <div className="flex items-center gap-x-2">
+              {/* <BsShop className="text-xl" /> */}
+              <p className="text-xl font-semibold">Document</p>
+            </div>
+          </div>
+        </div>
+
                     <div className="p-8 border-[1px] rounded-md border-[#d5d5d6]">
                       <div className="w-full rounded-md bg-white dark:bg-gray-900">
                         <div className="w-full">
