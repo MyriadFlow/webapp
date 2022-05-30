@@ -11,13 +11,17 @@ const homecomp = ({uri}) => {
             `https://ipfs.io/ipfs/${uri}`
         );
         setResponse(data);
+        if(data.image.length > 1)
         setImage(data.image);
-        let preuri = image.substr(7,50);  
+        else
+        setImage(data.thumbnailimage);
+        // let preuri = image.substr(7,50);  
     }
 
     useEffect(() => {
         metadata();
       },[uri]);
+
 
     let preuri = image.substr(7,50);
 

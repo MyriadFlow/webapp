@@ -41,13 +41,17 @@ function Asset({ asset }) {
       `https://ipfs.io/ipfs/${asset.marketItems[0].metaDataUri.substr(7, 50)}`
     );
     setResponse(data);
+    if(data.image.length > 1)
     setImage(data.image);
+    else
+    setImage(data.thumbnailimage)
     let preuri = image.substr(7, 50);
   };
 
   useEffect(() => {
     metadata();
   }, [asset.marketItems[0].metaDataUri.substr(7, 50)]);
+
   let preuri = image.substr(7, 50);
 
   const imgurl = `https://ipfs.io/ipfs/${preuri}`;

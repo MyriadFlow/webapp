@@ -35,8 +35,15 @@ export default function CreateItem() {
     default_btn.click()
   };
 
+  const thumbnailpicker = (e) => {
+    e.preventDefault();
+    const thumbnail_btn = document.querySelector("#thumbnail_btn");
+    thumbnail_btn.click()
+  };
+
 
   const [fileUrl, setFileUrl] = useState(null)
+  const [thumbnailUrl, setthumbnailUrl] = useState(null)
   const [formInput, updateFormInput] = useState({ price: '', name: '', description: '', alternettext: '' });
   const router = useRouter();
 
@@ -56,19 +63,45 @@ export default function CreateItem() {
       console.log('Error uploading file: ', error);
     }
   }
+
+  async function thumbnailUpload(e) {
+    e.preventDefault();
+    const file = e.target.files[0]
+    try {
+      const added = await client.add(
+        file,
+        {
+          progress: (thumb) => console.log(`received thumbnail: ${thumb}`)
+        }
+      );
+      const url = `https://ipfs.infura.io/ipfs/${added.path}`
+      setthumbnailUrl(url);
+    } catch (error) {
+      console.log('Error uploading file: ', error);
+    }
+  }
+
   async function createMarket() {
     const { name, description, price, alternettext } = formInput;
-    if (!name || !description || !fileUrl) {
-      setAlertMsg("Please Fill All Required Fields");
+    if (!name || !description || !price ) {
+      setAlertMsg("Please Fill All Fields");
       setOpen(true);
       return;
     }
     setmodelmsg("Transaction 1 in  progress");
     setmodel(true);
 
+    let thumbnailimage="";
     /* first, upload to IPFS */
+    if(thumbnailUrl)
+    {
+      thumbnailimage = `ipfs://${thumbnailUrl.substr(28, 71)}`;
+    }
+    let img = '';
+    if(fileUrl)
+    img=`ipfs://${fileUrl.substr(28, 71)}`;
     const data = JSON.stringify({
-      name, description, image: `ipfs://${fileUrl.substr(28, 71)}`, alternettext, attributes, categories
+      name, description, image: {img}, thumbnailimage, alternettext, attributes, categories,
     })
     try {
       const added = await client.add(data)
@@ -100,17 +133,8 @@ export default function CreateItem() {
       let event = tx.events[0]
       let value = event.args[2]
       let tokenId = value.toNumber()
-      let pr = formInput.price;
-      if(pr)
-      {
-        const price = ethers.utils.parseUnits(formInput.price, 'ether')
-        await listItem(transaction, contract, tokenId, price, signer);
-      }
-      else
-      {
-        router.push('/creator-dashboard')
-        return;
-      }
+      const price = ethers.utils.parseUnits(formInput.price, 'ether')
+      await listItem(transaction, contract, tokenId, price, signer);
     } catch (e) {
       console.log(e);
       setmodelmsg("Transaction 1 failed");
@@ -201,7 +225,7 @@ export default function CreateItem() {
 
   const [hasRole, setHasRole] = useState(true);
 
-  useEffect(async() => {
+  useEffect(async () => {
     const web3Modal = new Web3Modal();
     const connection = await web3Modal.connect();
     const provider = new ethers.providers.Web3Provider(connection);
@@ -209,110 +233,109 @@ export default function CreateItem() {
 
     /* next, create the item */
     let contract = new ethers.Contract(creatifyAddress, Creatify.abi, signer);
-     setHasRole(  await contract.hasRole( await contract.CREATIFY_CREATOR_ROLE() , wallet))
-     
+    setHasRole(await contract.hasRole(await contract.CREATIFY_CREATOR_ROLE(), wallet))
+
   }, []);
 
 
   const authorize = async () => {
     const { data } = await axios.get(
-        `${BASE_URL}/api/v1.0/flowid?walletAddress=${wallet}`
+      `${BASE_URL}/api/v1.0/flowid?walletAddress=${wallet}`
     );
     // console.log(data);
 
     let web3 = new Web3(Web3.givenProvider);
-    let completemsg = data.payload.eula+data.payload.flowId;
+    let completemsg = data.payload.eula + data.payload.flowId;
     // console.log(completemsg);
     const hexMsg = convertUtf8ToHex(completemsg);
     // console.log(hexMsg);
-    const result = await web3.eth.personal.sign(hexMsg,wallet);
+    const result = await web3.eth.personal.sign(hexMsg, wallet);
     // console.log(result);
 
     var signdata = JSON.stringify({
-        flowId : data.payload.flowId,
-        signature:result,
+      flowId: data.payload.flowId,
+      signature: result,
     })
 
     const config = {
-         url:`${BASE_URL}/api/v1.0/authenticate`,
-         method:"POST",
-         headers:{
-             "Content-Type":"application/json",
-            //  "Token":`Bearer ${token}`
-         },
-         data:signdata,
-    };
-    try{
-        const response = await axios(config);
-        // console.log(response);
-        const token = await response?.data?.payload?.token;
-        localStorage.setItem("platform_token",token);
-        getRole();
-        return true;
-    }catch(e){
-        console.log(e);
-        return false;
-    }
-};
-
-const getRole = async () => {
-
-  const token = localStorage.getItem('platform_token');
-
-  const config1 = {
-      url:`${BASE_URL}/api/v1.0/roleId/0x01b9906c77d0f3e5e952265ffbd74a08f1013f607e72528c5c1fbaf8f36e3634`,
-      method:"GET",
-      headers:{
-          "Authorization":`Bearer ${token}`
+      url: `${BASE_URL}/api/v1.0/authenticate`,
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        //  "Token":`Bearer ${token}`
       },
- };
- let roledata;
-  try{
-      roledata = await axios(config1);
-      console.log(roledata);
-  }catch(e){
+      data: signdata,
+    };
+    try {
+      const response = await axios(config);
+      // console.log(response);
+      const token = await response?.data?.payload?.token;
+      localStorage.setItem("platform_token", token);
+      getRole();
+      return true;
+    } catch (e) {
       console.log(e);
-  }
-
-  let web3 = new Web3(Web3.givenProvider);
-  let completemsg = roledata.data.payload.eula+roledata.data.payload.flowId;
-  const hexMsg = convertUtf8ToHex(completemsg);
-  const result = await web3.eth.personal.sign(hexMsg,wallet);
-
-  var signroledata = JSON.stringify({
-      flowId : roledata.data.payload.flowId,
-      signature:result,
-  })
-
-  const config = {
-       url:`${BASE_URL}/api/v1.0/claimrole`,
-       method:"POST",
-       headers:{
-           "Content-Type":"application/json",
-           "Authorization":`Bearer ${token}`
-       },
-       data:signroledata,
+      return false;
+    }
   };
 
-  try{
+  const getRole = async () => {
+
+    const token = localStorage.getItem('platform_token');
+
+    const config1 = {
+      url: `${BASE_URL}/api/v1.0/roleId/0x01b9906c77d0f3e5e952265ffbd74a08f1013f607e72528c5c1fbaf8f36e3634`,
+      method: "GET",
+      headers: {
+        "Authorization": `Bearer ${token}`
+      },
+    };
+    let roledata;
+    try {
+      roledata = await axios(config1);
+      console.log(roledata);
+    } catch (e) {
+      console.log(e);
+    }
+
+    let web3 = new Web3(Web3.givenProvider);
+    let completemsg = roledata.data.payload.eula + roledata.data.payload.flowId;
+    const hexMsg = convertUtf8ToHex(completemsg);
+    const result = await web3.eth.personal.sign(hexMsg, wallet);
+
+    var signroledata = JSON.stringify({
+      flowId: roledata.data.payload.flowId,
+      signature: result,
+    })
+
+    const config = {
+      url: `${BASE_URL}/api/v1.0/claimrole`,
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`
+      },
+      data: signroledata,
+    };
+
+    try {
       const response = await axios(config);
       const msg = await response?.data?.message;
       console.log(msg);
       setHasRole(true);
       return true;
-  }catch(e){
+    } catch (e) {
       console.log(e);
       return false;
+    }
   }
-}
 
   const [options, setOptions] = useState(["Art", "Music", "Sports", "Video", "Cartoon", "Others"]);
   const [categories, setCategory] = useState([]);
 
 
-  if(!hasRole)
-  {
-    const loader = setTimeout(() => { 
+  if (!hasRole) {
+    const loader = setTimeout(() => {
       router.push('/profile')
     }, 1000);
     loader;
@@ -571,6 +594,39 @@ const getRole = async () => {
                   </div>
                 )}
               </div>
+
+              {!fileUrl && (
+                <div>
+                              <div className='flex mt-10 font-semibold text-md'>
+                                {/* <img className="w-96 align-middle pt-3" src="/asset.svg"></img> */}
+                                <p className="text-md mt-2">Choose a PNG image for thumbnail .&nbsp;</p>
+                                <input
+                                  type="file"
+                                  name="Asset"
+                                  onChange={thumbnailUpload}
+                                  id="thumbnail_btn"
+                                  hidden
+                                />
+                                <button
+                                  onClick={(e) => thumbnailpicker(e)}
+                                  className="upload_color bg-purple-500 dark:bg-gray-500 hover:bg-purple-300 px-2 py-1 rounded-md text-white"> Choose File</button>
+                              </div>
+                              <div className={thumbnailUrl ? "h-auto w-1/2 mt-4 rounded-md" : "h-60 w-1/2 mt-4 rounded-md bg-white dark:bg-gray-900 justify-center items-center"}>
+
+                                {thumbnailUrl ? (
+                                  <img
+                                    src={thumbnailUrl}
+                                    alt=""
+                                    className=""
+                                  />
+                                ) : (
+                                  <p className="">
+                                    Upload file to preview the thumbnail.
+                                  </p>
+                                )}
+
+                              </div>
+                              </div>)}
               <button
                 onClick={createMarket}
                 className="bg-[#2e44ff] rounded-xl dark:bg-black text-white py-4 px-8 mb-8"

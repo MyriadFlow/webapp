@@ -12,7 +12,10 @@ const assetcomp = ({uri}) => {
         );
         setResponse(data);
         // setResponse(JSON.parse(data));
+        if(data.image.length > 1)
         setImage(data.image);
+        else
+        setImage(data.thumbnailimage);
         // console.log(typeof data.image);
         let preuri = image.substr(7,50);
         // console.log(data);
