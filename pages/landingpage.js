@@ -135,7 +135,7 @@ function landingpage() {
                 alt=""
               />
               <div className="bg-white p-6 text-black rounded-b-3xl">
-                <h1 className="text-2xl font-bold mb-2">Monkey #668</h1>
+                <h1 className="text-2xl font-bold mb-2">Monkey #AK007</h1>
                 <h2 className="text-2xl font-bold mb-12">
                   <span className="text-xl">$</span>100,000
                 </h2>
@@ -166,7 +166,7 @@ function landingpage() {
                 alt=""
               />
               <div className="bg-white p-6 text-black rounded-b-3xl">
-                <h1 className="text-2xl font-bold mb-2">Loaded Lion #668</h1>
+                <h1 className="text-2xl font-bold mb-2">Warrior #786</h1>
                 <h2 className="text-2xl font-bold mb-12">
                   <span className="text-xl">$</span>100,000
                 </h2>
