@@ -93,14 +93,14 @@ function landingpage() {
           </div>
         </div>
         {/* Trending Section */}
-        <section>
+        <section className="mb-20">
           <h1 className="text-center text-6xl font-semibold mb-20">Trending</h1>
           <div className="flex max-w-[1280px] mx-auto gap-8 overflow-x-scroll mysnap mybar">
             {/* single article */}
             <article className="w-[285px] sm:w-auto flex-shrink-0 mysnap-item">
               <img
                 src="vr.png"
-                className="rounded-t-3xl w-full  max-w-[400px] h-[400px] object-cover"
+                className="rounded-t-3xl w-full  max-w-[400px] h-[280px] sm:h-[400px] object-cover"
                 alt=""
               />
               <div className="bg-white p-6 text-black rounded-b-3xl">
@@ -110,11 +110,7 @@ function landingpage() {
                 </h2>
                 <div className="flex justify-between items-center">
                   <div className="flex items-center gap-2">
-                    <img
-                      src="vr.png"
-                      className="w-10 rounded-full"
-                      alt=""
-                    />
+                    <img src="vr.png" className="w-10 rounded-full" alt="" />
                     <p className="font-medium">John Sanders</p>
                   </div>
                   <div className="flex items-center gap-2">
@@ -131,7 +127,7 @@ function landingpage() {
             <article className="w-[285px] sm:w-auto flex-shrink-0 mysnap-item">
               <img
                 src="monkey.png"
-                className="rounded-t-3xl w-full max-w-[400px] h-[400px] object-cover"
+                className="rounded-t-3xl w-full max-w-[400px] h-[280px] sm:h-[400px] object-cover"
                 alt=""
               />
               <div className="bg-white p-6 text-black rounded-b-3xl">
@@ -141,11 +137,7 @@ function landingpage() {
                 </h2>
                 <div className="flex justify-between items-center">
                   <div className="flex items-center gap-2">
-                    <img
-                      src="vr.png"
-                      className="w-10 rounded-full"
-                      alt=""
-                    />
+                    <img src="vr.png" className="w-10 rounded-full" alt="" />
                     <p className="font-medium">Bernie Sanders</p>
                   </div>
                   <div className="flex items-center gap-2">
@@ -162,7 +154,7 @@ function landingpage() {
             <article className="w-[285px] sm:w-auto flex-shrink-0 mysnap-item">
               <img
                 src="nft-gb70e4bed1_1920.jpg"
-                className="rounded-t-3xl w-full max-w-[400px] h-[400px] object-cover"
+                className="rounded-t-3xl w-full max-w-[400px] h-[280px] sm:h-[400px] object-cover"
                 alt=""
               />
               <div className="bg-white p-6 text-black rounded-b-3xl">
@@ -172,11 +164,7 @@ function landingpage() {
                 </h2>
                 <div className="flex justify-between items-center">
                   <div className="flex items-center gap-2">
-                    <img
-                      src="vr.png"
-                      className="w-10 rounded-full"
-                      alt=""
-                    />
+                    <img src="vr.png" className="w-10 rounded-full" alt="" />
                     <p className="font-medium">Warrior</p>
                   </div>
                   <div className="flex items-center gap-2">
@@ -192,6 +180,153 @@ function landingpage() {
           </div>
         </section>
         {/* End Of Trending Section */}
+        {/* Highlight Section */}
+        <div className="mb-20">
+          <h1 className="text-center text-6xl font-semibold mb-20">
+            Highlights
+          </h1>
+          <div className="max-w-[1280px] mx-auto flex items-center bg-[#161a1d] rounded-3xl myhigh">
+            <div className="px-10 py-10 bg-[#0e1012] rounded-tl-3xl rounded-bl-3xl myhigh">
+              <h1 className="text-center text-2xl font-semibold mb-10">Highlight of the Day</h1>
+              <article className="w-[285px] sm:w-[400px] flex-shrink-0">
+                <img
+                  src="nft-gb70e4bed1_1920.jpg"
+                  className="rounded-t-3xl w-full max-w-[400px] h-[400px] object-cover"
+                  alt=""
+                />
+                <div className="bg-white p-6 text-black rounded-b-3xl">
+                  <h1 className="text-2xl font-bold mb-2">Warrior #786</h1>
+                  <h2 className="text-2xl font-bold mb-12">
+                    <span className="text-xl">$</span>100,000
+                  </h2>
+                  <div className="flex justify-between items-center">
+                    <div className="flex items-center gap-2">
+                      <img src="vr.png" className="w-10 rounded-full" alt="" />
+                      <p className="font-medium">Warrior</p>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <a href="">
+                        <BsHeart className="text-2xl" />
+                      </a>
+                      <p>76</p>
+                    </div>
+                  </div>
+                </div>
+              </article>
+            </div>
+            <div className="flex overflow-x-scroll items-center gap-x-10 flex-nowrap highlights">
+              {/* single article */}
+              <article className="w-[240px] flex-shrink-0">
+                <img
+                  src="monkey.png"
+                  className="rounded-t-3xl w-full max-w-[240px] h-[240px] object-cover"
+                  alt=""
+                />
+                <div className="bg-white p-3 text-black rounded-b-3xl">
+                  <h1 className="text-xl font-bold mb-1">Warrior #786</h1>
+                  <h2 className="text-2xl font-bold mb-6">
+                    <span className="text-lg">$</span>100,000
+                  </h2>
+                  <div className="flex justify-between items-center">
+                    <div className="flex items-center gap-2">
+                      <img src="vr.png" className="w-8 rounded-full" alt="" />
+                      <p className="font-medium">Warrior</p>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <a href="">
+                        <BsHeart className="text-xl" />
+                      </a>
+                      <p>76</p>
+                    </div>
+                  </div>
+                </div>
+              </article>
+              {/* end of single article */}
+              {/* single article */}
+              <article className="w-[240px] flex-shrink-0">
+                <img
+                  src="vr.png"
+                  className="rounded-t-3xl w-full max-w-[240px] h-[240px] object-cover"
+                  alt=""
+                />
+                <div className="bg-white p-3 text-black rounded-b-3xl">
+                  <h1 className="text-xl font-bold mb-1">Warrior #786</h1>
+                  <h2 className="text-2xl font-bold mb-6">
+                    <span className="text-lg">$</span>100,000
+                  </h2>
+                  <div className="flex justify-between items-center">
+                    <div className="flex items-center gap-2">
+                      <img src="vr.png" className="w-8 rounded-full" alt="" />
+                      <p className="font-medium">Warrior</p>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <a href="">
+                        <BsHeart className="text-xl" />
+                      </a>
+                      <p>76</p>
+                    </div>
+                  </div>
+                </div>
+              </article>
+              {/* end of single article */}
+              {/* single article */}
+              <article className="w-[240px] flex-shrink-0">
+                <img
+                  src="nft-gb70e4bed1_1920.jpg"
+                  className="rounded-t-3xl w-full max-w-[240px] h-[240px] object-cover"
+                  alt=""
+                />
+                <div className="bg-white p-3 text-black rounded-b-3xl">
+                  <h1 className="text-xl font-bold mb-1">Warrior #786</h1>
+                  <h2 className="text-2xl font-bold mb-6">
+                    <span className="text-lg">$</span>100,000
+                  </h2>
+                  <div className="flex justify-between items-center">
+                    <div className="flex items-center gap-2">
+                      <img src="vr.png" className="w-8 rounded-full" alt="" />
+                      <p className="font-medium">Warrior</p>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <a href="">
+                        <BsHeart className="text-xl" />
+                      </a>
+                      <p>76</p>
+                    </div>
+                  </div>
+                </div>
+              </article>
+              {/* end of single article */}
+              {/* single article */}
+              <article className="w-[240px] flex-shrink-0">
+                <img
+                  src="nft-gb70e4bed1_1920.jpg"
+                  className="rounded-t-3xl w-full max-w-[240px] h-[240px] object-cover"
+                  alt=""
+                />
+                <div className="bg-white p-3 text-black rounded-b-3xl">
+                  <h1 className="text-xl font-bold mb-1">Warrior #786</h1>
+                  <h2 className="text-2xl font-bold mb-6">
+                    <span className="text-lg">$</span>100,000
+                  </h2>
+                  <div className="flex justify-between items-center">
+                    <div className="flex items-center gap-2">
+                      <img src="vr.png" className="w-8 rounded-full" alt="" />
+                      <p className="font-medium">Warrior</p>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <a href="">
+                        <BsHeart className="text-xl" />
+                      </a>
+                      <p>76</p>
+                    </div>
+                  </div>
+                </div>
+              </article>
+              {/* end of single article */}
+            </div>
+          </div>
+        </div>
+        {/* End Of Highlight Section */}
         {/* <Footer /> */}
       </Layout>
     </div>
