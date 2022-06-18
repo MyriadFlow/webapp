@@ -6,18 +6,16 @@ import Layout from "../Components/Layout";
 import { BsHeart } from "react-icons/bs";
 import BigCard from "../Components/Cards/BigCard";
 import SmallCard from "../Components/Cards/SmallCard"
-import Notify from "../Components/Notify";
-import { useState } from "react";
+import NotifyContainer from "../Components/NotifyContainer";
 
 function landingpage() {
-  const [visible,setVisible] = useState(true);
   return (
     <div>
       <Head>
         <title>Marketplace</title>
       </Head>
       <Layout>
-        {visible && <Notify setVisible={setVisible} />}
+        <NotifyContainer/>
         <div className="min-h-screen lg:flex justify-center items-center">
           <div className="lg:flex xl:gap-8 lg:w-[1025px] x2:w-[1200px] xxl:w-[1400px] mx-auto lg:mt-12">
             <div className="text-center lg:text-left lg:w-1/2 mt-16 lg:mt-0  p-2 sm:p-4 lg:px-8 lg:pt-0">
