@@ -1,13 +1,13 @@
 import { BsHeart } from "react-icons/bs";
 const BigCard = ({ name, price, title, img,like }) => {
   return (
-    <article className="w-[285px] sm:w-auto flex-shrink-0 mysnap-item">
+    <article className="w-[285px] sm:w-auto flex-shrink-0">
       <img
         src={img}
         className="rounded-t-3xl w-full  max-w-[400px] h-[280px] sm:h-[400px] object-cover"
         alt=""
       />
-      <div className="bg-white p-6 text-black rounded-b-3xl">
+      <div className="bg-white p-6 text-black rounded-b-3xl max-w-[400px]">
         <h1 className="text-2xl font-bold mb-2">{title}</h1>
         <h2 className="text-2xl font-bold mb-12">
           <span className="text-xl">$</span>{price}

@@ -8,7 +8,6 @@ import Router from "next/router";
 import Loader from "../Components/Loader";
 
 
-
 function Marketplace({ Component, pageProps }) {
   const [isLoading,isSetLoading] = useState(false);
   Router.events.on('routeChangeStart',(url)=>{

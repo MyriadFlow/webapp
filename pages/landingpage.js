@@ -6,16 +6,69 @@ import Layout from "../Components/Layout";
 import { BsHeart } from "react-icons/bs";
 import BigCard from "../Components/Cards/BigCard";
 import SmallCard from "../Components/Cards/SmallCard"
-import NotifyContainer from "../Components/NotifyContainer";
+// import NotifyContainer from "../Components/NotifyContainer";
+import Slider from "react-slick";
 
 function landingpage() {
+  const settings = {
+    dots: false,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 3,
+    slidesToScroll: 1,
+  };
+  const settings2 = {
+    dots: false,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 5,
+    slidesToScroll: 1,
+    initialSlide: 0,
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 3,
+          slidesToScroll: 3,
+          infinite: true,
+          dots: true,
+        },
+      },
+      {
+        breakpoint: 600,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 2,
+          initialSlide: 2,
+        },
+      },
+      {
+        breakpoint: 480,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+        },
+      },
+    ],
+  };
   return (
     <div>
       <Head>
+        <link
+          rel="stylesheet"
+          type="text/css"
+          charset="UTF-8"
+          href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.min.css"
+        />
+        <link
+          rel="stylesheet"
+          type="text/css"
+          href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css"
+        />
         <title>Marketplace</title>
       </Head>
       <Layout>
-        <NotifyContainer/>
+        {/* <NotifyContainer /> */}
         <div className="min-h-screen lg:flex justify-center items-center">
           <div className="lg:flex xl:gap-8 lg:w-[1025px] x2:w-[1200px] xxl:w-[1400px] mx-auto lg:mt-12">
             <div className="text-center lg:text-left lg:w-1/2 mt-16 lg:mt-0  p-2 sm:p-4 lg:px-8 lg:pt-0">
@@ -110,28 +163,37 @@ function landingpage() {
         <section className="mb-20">
           <h1 className="text-center text-6xl font-semibold mb-20">Trending</h1>
           <div className="bg-[#161a1d] py-16">
-            <div className="flex max-w-[1280px] mx-auto gap-8 overflow-x-scroll mysnap mybar">
-              <BigCard
-                title="VR BOY #007"
-                img="vr.png"
-                price="100,000"
-                name="John Sanders"
-                like={76}
-              />
-              <BigCard
-                title="Monkey #AK007"
-                img="monkey.png"
-                price="100,000"
-                name="Bernie Sanders"
-                like={99}
-              />
-              <BigCard
-                title="Warrior #786"
-                img="nft-gb70e4bed1_1920.jpg"
-                price="100,000"
-                name="Warrior"
-                like={101}
-              />
+            <div>
+              <Slider {...settings} className="max-w-[1280px] mx-auto">
+                <BigCard
+                  title="VR BOY #007"
+                  img="vr.png"
+                  price="100,000"
+                  name="John Sanders"
+                  like={76}
+                />
+                <BigCard
+                  title="VR BOY #007"
+                  img="vr.png"
+                  price="100,000"
+                  name="John Sanders"
+                  like={76}
+                />
+                <BigCard
+                  title="Monkey #AK007"
+                  img="monkey.png"
+                  price="100,000"
+                  name="Bernie Sanders"
+                  like={99}
+                />
+                <BigCard
+                  title="Warrior #786"
+                  img="nft-gb70e4bed1_1920.jpg"
+                  price="100,000"
+                  name="Warrior"
+                  like={101}
+                />
+              </Slider>
             </div>
           </div>
         </section>
@@ -141,12 +203,12 @@ function landingpage() {
           <h1 className="text-center text-6xl font-semibold mb-20">
             Highlights
           </h1>
-          <div className="max-w-[1280px] mx-auto flex items-center bg-[#161a1d] rounded-3xl myhigh">
-            <div className="px-10 py-10 bg-[#0e1012] rounded-tl-3xl rounded-bl-3xl myhigh">
-              <h1 className="text-center text-2xl font-semibold mb-10">
-                Highlight of the Day
-              </h1>
+          <div className="max-w-[1280px] mx-auto bg-[#161a1d] rounded-3xl">
+            <div className="px-10 py-10 bg-[#0e1012] rounded-tl-3xl rounded-bl-3xl myhigh inline-block">
               <article className="w-[285px] sm:w-[400px] flex-shrink-0">
+                <h1 className="text-center text-2xl font-semibold mb-10">
+                  Highlight of the Day
+                </h1>
                 <img
                   src="nft-gb70e4bed1_1920.jpg"
                   className="rounded-t-3xl w-full max-w-[400px] h-[400px] object-cover"
@@ -172,7 +234,7 @@ function landingpage() {
                 </div>
               </article>
             </div>
-            <div className="flex overflow-x-scroll items-center gap-x-10 flex-nowrap highlights">
+            <Slider {...settings2}>
               <SmallCard
                 title="Monkey #AK007"
                 img="monkey.png"
@@ -202,7 +264,35 @@ function landingpage() {
                 name="Bernie Sanders"
                 like={99}
               />
-            </div>
+              <SmallCard
+                title="Monkey #AK007"
+                img="monkey.png"
+                price="100,000"
+                name="Bernie Sanders"
+                like={99}
+              />
+              <SmallCard
+                title="Monkey #AK007"
+                img="monkey.png"
+                price="100,000"
+                name="Bernie Sanders"
+                like={99}
+              />
+              <SmallCard
+                title="Monkey #AK007"
+                img="monkey.png"
+                price="100,000"
+                name="Bernie Sanders"
+                like={99}
+              />
+              <SmallCard
+                title="Monkey #AK007"
+                img="monkey.png"
+                price="100,000"
+                name="Bernie Sanders"
+                like={99}
+              />
+            </Slider>
           </div>
         </div>
         {/* End Of Highlight Section */}

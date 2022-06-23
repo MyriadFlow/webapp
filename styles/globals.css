@@ -148,9 +148,6 @@ body {
     margin-bottom: 10px;
 }
 
-.highlights::-webkit-scrollbar {
-        height: 0;
-}
 .mysnap {
     scroll-snap-type: x proximity;
 }

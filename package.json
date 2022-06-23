@@ -46,7 +46,9 @@
     "react-icons": "^4.3.1",
     "react-redux": "^7.2.6",
     "react-responsive-carousel": "^3.2.22",
+    "react-slick": "^0.29.0",
     "reactstrap": "^9.0.1",
+    "slick-carousel": "^1.8.1",
     "uuid": "^8.3.2",
     "web3": "^1.7.1",
     "web3modal": "^1.9.4"
