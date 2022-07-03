@@ -4,7 +4,7 @@ metadata:
   name: marketplace
 build:
   artifacts:
-  - image: 560914023379.dkr.ecr.us-east-2.amazonaws.com/myriad-web-app
+  - image: public.ecr.aws/s8n8b4h8/myriad-flow-web-app
     docker:
       dockerfile: Dockerfile
   tagPolicy:
