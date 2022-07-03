@@ -1,7 +1,7 @@
 name: "Deploy to EKS"
 on:
   push:
-    branches: [main]
+    branches: [main,thisisommore/use-public-image-50]
 
 jobs:
   build:
@@ -25,9 +25,11 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-2
 
-      - name: Login to Amazon ECR
-        id: login-ecr
+      - name: Login to Amazon ECR Public
+        id: login-ecr-public
         uses: aws-actions/amazon-ecr-login@v1
+        with:
+          registry-type: "public"
 
       - name: Skaffold build and deploy
         env:
