@@ -6,4 +6,8 @@ tasks:
   - init: npm install
     command: npm run dev
 
-
+ports:
+  - port: 3000
+    visibility: private
+    name: React app
+    onOpen: open-browser
