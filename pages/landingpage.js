@@ -6,10 +6,22 @@ import Layout from "../Components/Layout";
 import { BsHeart } from "react-icons/bs";
 import BigCard from "../Components/Cards/BigCard";
 import SmallCard from "../Components/Cards/SmallCard"
+import { useEffect, useState } from 'react'
 // import NotifyContainer from "../Components/NotifyContainer";
 import Slider from "react-slick";
-
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { fetchDetails } from "../slices/getDetailsSlice";
 function landingpage() {
+  const {details,loading}=useSelector((state)=>state.details)
+  const dispatch=useDispatch()
+  const [detailsres, setdetailsres] = useState([]);
+  useEffect(() => {
+		// console.log("PROCESS",process.env.NEXT_PUBLIC_BASE_URL)
+    dispatch(fetchDetails())
+    console.log("details",details)
+   setdetailsres([...detailsres,details])
+	}, []);
   const settings = {
     dots: false,
     infinite: true,
@@ -73,12 +85,10 @@ function landingpage() {
           <div className="lg:flex xl:gap-8 lg:w-[1025px] x2:w-[1200px] xxl:w-[1400px] mx-auto lg:mt-12">
             <div className="text-center lg:text-left lg:w-1/2 mt-16 lg:mt-0  p-2 sm:p-4 lg:px-8 lg:pt-0">
               <h2 className=" dark:text-white font-poppins font-bold m48:w-[470px] l32:w-[450px] xxl:w-auto  text-3xl sm:text-4xl lg:text-6xl x2:text-7xl xxl:text-8xl capitalize mb-8 x2:mb-10 mx-auto lg:mx-0">
-                Collect and trade the New Fresh Thing
+               {details.homeTitle}
               </h2>
               <h6 className="text-lg x2:text-2xl text-slate-500 m48:max-w-[487px] mx-auto lg:mx-0 lg:w-[80%] font-opensans mb-8">
-                A NFT marketplace to explore the digital gold mine, that
-                supports the creators. A place where you can Make Collect and
-                Sell digital arts.
+               {details.homeDescription}
               </h6>
               <div className="lg:flex items-center lg:gap-x-4 x2:gap-x-6 xl:gap-x-10 mb-8 lg:mb-0">
                 <button className="py-3 px-6 rounded-lg bg-[#0162ff] text-white font-semibold mb-8 lg:mb-0">
