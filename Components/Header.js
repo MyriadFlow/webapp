@@ -23,23 +23,24 @@ const marketplaceAddress = process.env.NEXT_PUBLIC_MARKETPLACE_ADDRESS;
 const creatifyAddress = process.env.NEXT_PUBLIC_CREATIFY_ADDRESS;
 
 function Header() {
+  const [dropmenu, setDropMenu] = useState(false);
+
   const router = useRouter();
 
   // function to open the drop menu
   const opendropmenu = () => {
-    setdropmenu(true);
+    setDropMenu(true);
   };
 
   // function to close the dropmenu
   const closedropmenu = () => {
-    setdropmenu(false);
+    setDropMenu(false);
   };
 
   const user = useSelector(selectUser);
   const [navOpen, setNavOpen] = useState(false);
   const [darkMode, SetDarkMode] = useState(false);
   const [connectMenu, setConnectMenu] = useState(false);
-  const [dropmenu, setDropMenu] = useState(false);
   const [dark, setDark] = useState(false);
   const toogle = () => {
     setConnectMenu((prev) => !prev);
@@ -106,7 +107,7 @@ function Header() {
 
   return (
     <header className="border-b-[1px] bg-white dark:bg-[#13131a] dark:border-[#282a32] border-[#eff1f6]">
-      <div className="w-[90%] max-w-[1320px] h-[81px] mx-auto flex items-center justify-between font-poppins">
+      <div className="w-[90%] h-[81px] mx-auto flex items-center justify-between font-poppins">
         {/* left */}
         <div className="flex items-center">
           <FaBars
@@ -143,9 +144,9 @@ function Header() {
         {/* right */}
         <div>
           <div className="lg:flex items-stretch hidden gap-x-6 text-lg tracking-wide font-medium text-black dark:text-[#0162ff]">
-            <Link href="/home">
+            <Link href="/explore">
               <NavLink
-                className={router.pathname == "/home" ? "active " : ""}
+                className={router.pathname == "/explore" ? "active " : ""}
                 style={{ cursor: "pointer" }}
               >
                 Explore
@@ -153,11 +154,9 @@ function Header() {
             </Link>
 
             {user && hasRole ? (
-              <Link href="/create-artifacts">
+              <Link href="/artifacts">
                 <NavLink
-                  className={
-                    router.pathname == "/create-artifacts" ? "active" : ""
-                  }
+                  className={router.pathname == "/artifacts" ? "active" : ""}
                   style={{ cursor: "pointer" }}
                 >
                   Create
@@ -183,11 +182,9 @@ function Header() {
             {!user ? (
               ""
             ) : (
-              <Link href="/creator-dashboard">
+              <Link href="/dashboard">
                 <NavLink
-                  className={
-                    router.pathname == "/creater-dashboard" ? "active" : ""
-                  }
+                  className={router.pathname == "/dashboard" ? "active" : ""}
                   style={{ cursor: "pointer" }}
                 >
                   Dashboard
@@ -199,12 +196,12 @@ function Header() {
           {/* SIDENAV  */}
           {navOpen && (
             <div className="fixed top-0 right-0 w-48 h-screen lg:hidden font-bold shadow-lg pt-12 text-center bg-[#13131a] z-[1000]">
-              <Link href="/home">
+              <Link href="/explore">
                 <a className="block py-4 rounded-sm hover:bg-gray-300 transition duration-200 ease-in-out">
                   Home
                 </a>
               </Link>
-              <Link href="/create-artifacts">
+              <Link href="/artifacts">
                 <a className="block py-4 rounded-sm hover:bg-gray-300 transition duration-200 ease-in-out">
                   Sell Asset
                 </a>
@@ -214,7 +211,7 @@ function Header() {
                   My Assets
                 </a>
               </Link> */}
-              <Link href="/creator-dashboard">
+              <Link href="/dashboard">
                 <a className="block py-4 rounded-sm hover:bg-gray-300 transition duration-200 ease-in-out">
                   Dashboard
                 </a>

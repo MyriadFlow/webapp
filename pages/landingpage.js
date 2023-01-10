@@ -82,7 +82,7 @@ function landingpage() {
               </h6>
               <div className="lg:flex items-center lg:gap-x-4 x2:gap-x-6 xl:gap-x-10 mb-8 lg:mb-0">
                 <button className="py-3 px-6 rounded-lg bg-[#0162ff] text-white font-semibold mb-8 lg:mb-0">
-                  <Link href="/home">
+                  <Link href="/explore">
                     <span className="font-raleway">Explore Now</span>
                   </Link>
                 </button>

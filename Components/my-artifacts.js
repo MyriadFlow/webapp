@@ -11,8 +11,6 @@ import { useSelector } from "react-redux";
 import HomeComp from "./homeComp";
 import HomeComp2 from "./homecomp2";
 import Loader from "./Loader";
-// import { gql } from "@apollo/client";
-import client from "../apollo-client";
 import { request, gql } from "graphql-request";
 
 const graphqlAPI = process.env.NEXT_PUBLIC_GRAPHQL_API;
@@ -62,7 +60,7 @@ const MyAssets = () => {
 
   return (
     <div className="p-4 px-10 min-h-screen">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 md:grid-cols-3 gap-4 lg:gap-24 p-4 mt-20  h-auto">
+          <div className="p-4 mt-20  h-auto flex justify-center">
             { data.length>0 ? data.map((item) => {
               console.log(item);
               console.log(item.metaDataUri.substr(7, 50));
@@ -102,7 +100,7 @@ const MyAssets = () => {
                   </div> */}
                 </div>
               );
-            }) : (loading?<Loader/>:<div className="text-xl pb-10">
+            }) : (loading?<Loader/>:<div className="text-xl pb-10 ">
             You haven&apos;t created any asset.
           </div>)  }
           </div>

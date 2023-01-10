@@ -3,6 +3,7 @@
 import Landingpage from "../pages/landingpage";
 import { useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
+
 import {
   accountChangedHandler,
   connectwallethandler,

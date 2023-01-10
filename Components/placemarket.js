@@ -125,13 +125,13 @@ const MyAssets = () => {
       setmodelmsg("Transaction failed");
       return;
     }
-    router.push('/home')
+    router.push('/explore')
   }
 
   return (
     <div className="p-4 px-10 min-h-screen">
       {model && <BuyAsset open={model} setOpen={setmodel} message={modelmsg} />}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 md:grid-cols-3 gap-4 lg:gap-24 p-4 mt-20  h-auto">
+          <div className=" p-4 mt-20  h-auto flex justify-center">
             { 
             data?.map((item) => {
               // console.log(item);
