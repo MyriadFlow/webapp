@@ -4,7 +4,6 @@ import axios from "axios";
 const homecomp = ({ uri }) => {
   const [response, setResponse] = useState([]);
   const [image, setImage] = useState("");
-
   const removePrefix = (uri) => {
     return uri.substring(7, uri.length);
   };
