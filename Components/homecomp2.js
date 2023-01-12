@@ -4,10 +4,12 @@ import axios from 'axios';
 const homecomp2 = ({uri}) => {
 
     const [response,setResponse] = useState([]);
-
+    const removePrefix = (uri) => {
+        return uri.substring(7, uri.length);
+      };
     const metadata = async()=>{
         const { data } = await axios.get(
-            `https://ipfs.io/ipfs/${uri}`
+            `https://gateway.ipfs.io/ipfs/${removePrefix(uri)}`
         );
         setResponse(data);
         console.log(data);

@@ -42,6 +42,11 @@ export default function CreateItem() {
   const [video, setVideo] = useState();
   const [audio, setAudio] = useState();
   const [doc, setDoc] = useState();
+  const [previewImage,setPreviewImage]=useState('');
+  const [previewVideo,setPreviewVideo]=useState('');
+  const [previewAudio,setPreviewAudio]=useState('');
+  const [previewDoc,setPreviewDoc]=useState('');
+
   const [thumbnailUrl, setthumbnailUrl] = useState(null);
   const [previewThumbnail, setpreviewThumbnail] = useState('')
   const [formInput, updateFormInput] = useState({
@@ -51,124 +56,137 @@ export default function CreateItem() {
     alternettext: "",
   });
   const router = useRouter();
-  const thumbnailpicker = (e) => {
-    e.preventDefault();
-    const thumbnail_btn = document.querySelector("#thumbnail_btn");
-    thumbnail_btn.click();
-  };
-  
   async function onChange(e) {
     const file = new File([ ( e.target.files[0]) ], 'nft.png', { type: 'image/png' })
     try {
-      const blobData = new Blob([file])
-      const metaHash = await client.storeBlob(blobData)
+      const blobDataImage = new Blob([file])
+      const metaHash = await client.storeBlob(blobDataImage)
       console.log("Image metahash",metaHash);
       setimaget(metaHash);
-      
+      setPreviewImage(URL.createObjectURL(e.target.files[0]))
     } catch (error) {
       console.log("Error uploading file: ", error);
     }
   }
 
   async function onChangeVideo(e) {
-    e.preventDefault();
-    const video = setVideo(URL.createObjectURL(e.target.files[0]));
+    const video = new File([ ( e.target.files[0]) ], 'nft.mp4', { type: 'video/mp4' })
     try {
-      const metadata = await client.store({
-        name: "My sweet NFT",
-        description: "Just try to funge it. You can't do it.",
-        image: video,
-      });
-      console.log(e.target.files);
-      console.log("Meta data after uploading", metadata);
+      const blobDataVedio = new Blob([video])
+      const metaHash = await client.storeBlob(blobDataVedio)
+      console.log("vedio metahash",metaHash);
+      setVideot(metaHash);
+      setPreviewVideo(URL.createObjectURL(e.target.files[0]))
+
     } catch (error) {
-      console.log("Error uploading file: ", error);
+
+      console.log("Error uploading vedio: ", error);
     }
   }
   async function onChangeAudio(e) {
     e.preventDefault();
-    const audio = setAudio(URL.createObjectURL(e.target.files[0]));
+    const audio = new File([ ( e.target.files[0]) ], 'nft.mp3', { type: 'audio/mpeg' })
     try {
-      const metadata = await client.store({
-        name: "My sweet NFT",
-        description: "Just try to funge it. You can't do it.",
-        image: audio,
-      });
-      console.log(e.target.files);
-      console.log("Meta data after uploading", metadata);
+      const blobDataAudio = new Blob([audio])
+      const metaHash = await client.storeBlob(blobDataAudio)
+      console.log("audio metahash",metaHash);
+      setAudiot(metaHash);
+      setPreviewAudio(URL.createObjectURL(e.target.files[0]))
+
     } catch (error) {
-      console.log("Error uploading file: ", error);
+      console.log("Error uploading audio: ", error);
     }
   }
   async function onChangeDoc(e) {
     e.preventDefault();
-    const doc = setDoc(URL.createObjectURL(e.target.files[0]));
+    const doc = new File([ ( e.target.files[0]) ], 'text.pdf', { type: 'pdf/doc/xml/ppt' })
     try {
-      const metadata = await client.store({
-        name: "My sweet NFT",
-        description: "Just try to funge it. You can't do it.",
-        image: doc,
-      });
-      console.log(e.target.files);
-      console.log("Meta data after uploading", metadata);
+      const blobDataDoc = new Blob([doc])
+      const metaHash = await client.storeBlob(blobDataDoc)
+      console.log("doc metahash",metaHash);
+      setDoct(metaHash);
+      setPreviewDoc(URL.createObjectURL(e.target.files[0]))
+
     } catch (error) {
-      console.log("Error uploading file: ", error);
-    }
-  }
-  async function thumbnailUpload(e) {
-    e.preventDefault();
-    if(e.target.files.length==0) return
-    const imageFile = new File([ e.target.files[0] ], 'nft.png', { type: 'image/png' })
-   setpreviewThumbnail(URL.createObjectURL(e.target.files[0]))
-    try {
-      const metadata = await client.store({
-        name: "My sweet NFT",
-        description: "Just try to funge it. You can't do it.",
-        image: imageFile,
-      });
-      setthumbnailUrl(metadata.ipnft);
-    } catch (error) {
-      console.log("Error uploading file: ", error);
+      console.log("Error uploading file doc: ", error);
     }
   }
 
    function createMarket(e) {
-    e.preventDefault();
-    e.stopPropagation()
-    const { name, description, price, alternettext } = formInput;
-    if (!name || !description || !price) {
-      setAlertMsg("Please Fill All Fields");
-      setOpen(true);
-      return;
-    }
-    setmodelmsg("Transaction 1 in  progress");
-    setmodel(true);
+     e.preventDefault();
+     e.stopPropagation();
+     const { name, description, price, alternettext } = formInput;
+     let assetData = {};
+     if (!name || !description || !price) {
+       setAlertMsg("Please Fill All Fields");
+       setOpen(true);
+       return;
+     }
+     assetData = {
+       name,
+       description,
+       price,
+       alternettext,
+       attributes,
+       categories,
+     };
+     if (!imaget) {
+       setAlertMsg("Image is required to create asset");
+       setOpen(true);
+       return;
+     }
 
-    let image = "";
-    if (imaget) image = `ipfs://${imaget}`;
-    const data = JSON.stringify({
-      name,
-      description,
-      image,
-      alternettext,
-      attributes,
-      categories,
-    });
-    const blobData = new Blob([data])
-    try {
-       client.storeBlob(blobData).then(async metaHash=>{
-        const ipfsHash = metaHash;
-        const url = `ipfs://${metaHash}`;
-        console.log(ipfsHash,url);
-       await createItem(ipfsHash, url);
+     setmodelmsg("Transaction 1 in  progress");
+     setmodel(true);
+
+     let image = "",
+       videoURI = "",
+       audioURI = "",
+       docURI = ""
+     if (imaget) {
+       image = `ipfs://${imaget}`;
+       assetData["image"] = image;
+     }
+
+     if (videot) {
+       videoURI = `ipfs://${videot}`;
+       assetData["video"] = videoURI;
+       assetData["animation_url"] = videoURI;
+     }
+
+     if (audiot) {
+       audioURI = `ipfs://${audiot}`;
+       assetData["audio"] = audioURI;
+       assetData["animation_url"] = audioURI;
+       delete assetData['video']
+     }
+
+     if (doct) {
+       docURI = `ipfs://${doct}`;
+       assetData["document"] = docURI;
+       if(assetData?.audio || assetData?.video){
+        delete assetData['video']
+        delete assetData['audio']
+        delete assetData['animation_url']
+       }
+     }
+
+     const data = JSON.stringify({...assetData});
+     console.log("Asset Data before create",data)
+
+     const blobData = new Blob([data]);
+     try {
+       client.storeBlob(blobData).then(async (metaHash) => {
+         const ipfsHash = metaHash;
+         const url = `ipfs://${metaHash}`;
+         console.log("doc ipfs", ipfsHash, url);
+         await createItem(ipfsHash, url);
        });
-     
-     
-    } catch (error) {
-      setmodelmsg("Transaction failed");
-      console.log("Error uploading file: ", error);
-    }
-  }  
+     } catch (error) {
+       setmodelmsg("Transaction failed");
+       console.log("Error uploading file: ", error);
+     }
+   }  
 
 
   async function createItem(ipfsHash, url) {
@@ -208,12 +226,19 @@ export default function CreateItem() {
       let tokenId = value.toNumber();
       const price = ethers.utils.parseUnits(formInput.price, "ether");
       await listItem(transaction, contract, tokenId, price, signer);
+      
     } catch (e) {
       console.log(e);
       setmodelmsg("Transaction 1 failed");
       return;
-    }
 
+    // }finally{
+    //   setPreviewImage("");
+    //   setPreviewVideo("");
+    //   setPreviewAudio("");
+    //   setPreviewDoc("");
+    // }
+    }
     /* then list the item for sale on the marketplace */
     // contract = new ethers.Contract(marketplaceAddress, Marketplace.abi, signer)
     // transaction = await contract.createMarketItem(storeFrontAddress, tokenId, price)
@@ -315,16 +340,11 @@ export default function CreateItem() {
     const { data } = await axios.get(
       `${BASE_URL}/api/v1.0/flowid?walletAddress=${wallet}`
     );
-    // console.log(data);
 
     let web3 = new Web3(Web3.givenProvider);
     let completemsg = data.payload.eula + data.payload.flowId;
-    // console.log(completemsg);
     const hexMsg = convertUtf8ToHex(completemsg);
-    // console.log(hexMsg);
     const result = await web3.eth.personal.sign(hexMsg, wallet);
-    // console.log(result);
-
     var signdata = JSON.stringify({
       flowId: data.payload.flowId,
       signature: result,
@@ -335,13 +355,11 @@ export default function CreateItem() {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        //  "Token":`Bearer ${token}`
       },
       data: signdata,
     };
     try {
       const response = await axios(config);
-      // console.log(response);
       const token = await response?.data?.payload?.token;
       localStorage.setItem("platform_token", token);
       getRole();
@@ -566,9 +584,9 @@ export default function CreateItem() {
                               }
                             >
                               <div className="relative h-full">
-                                {file ? (
+                                {previewImage ? (
                                   <img
-                                    src={file}
+                                    src={previewImage}
                                     alt=""
                                     className="w-full object-cover h-72 flex justify-center"
                                   />
@@ -619,13 +637,13 @@ export default function CreateItem() {
                               }
                             >
                               <div className="relative h-full">
-                                {video ? (
+                                {previewVideo ? (
                                   <video
                                     alt=""
                                     className="w-full object-cover h-72 flex justify-center"
                                   >
                                     <source
-                                      src={video}
+                                      src={previewVideo}
                                       type="video/mp4"
                                     ></source>
                                   </video>
@@ -676,21 +694,21 @@ export default function CreateItem() {
                               }
                             >
                               <div className="relative h-full">
-                                {audio ? (
+                                {previewAudio ? (
                                   <audio
                                     controls
                                     alt=""
                                     className="w-full object-cover h-72 flex justify-center"
                                   >
                                     <source
-                                      src={audio}
+                                      src={previewAudio}
                                       type="audio/mpeg"
                                     ></source>
                                   </audio>
                                 ) : (
                                   <div>
                                     <div className="">
-                                      <audio
+                                      <input
                                         type="file"
                                         name="Asset"
                                         className="bg-slate-500 absolute top-0 left-0 w-full h-full opacity-0 z-50"
@@ -735,9 +753,9 @@ export default function CreateItem() {
                               }
                             >
                               <div className="relative h-full">
-                                {doc ? (
+                                {previewDoc ? (
                                   <input
-                                    file={doc}
+                                    file={previewDoc}
                                     alt=""
                                     multiple
                                     className="w-full object-cover h-72 flex justify-center"
@@ -890,7 +908,7 @@ export default function CreateItem() {
                 )}
               </div>
 
-              {!fileUrl && (
+              {/* {!fileUrl && (
                 <div className="flex justify-evenly">
                   <div className="flex mt-10 font-semibold text-md">
                     <p className="text-md ml-7">
@@ -932,11 +950,11 @@ export default function CreateItem() {
                     )}
                   </div>
                 </div>
-              )}
+              )} */}
               <div style={{ marginTop: "100px" }}>
                 <button
                   onClick={(e)=>createMarket(e)}
-                  className="bg-[#2e44ff] rounded-xl dark:bg-black text-white py-4 px-8 mb-8"
+                  className="bg-[#2e44ff] rounded-xl dark:bg-black text-white py-3 px-3 mb-8"
                 >
                   Create digital artifact
                 </button>

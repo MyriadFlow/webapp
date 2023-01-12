@@ -11,8 +11,9 @@ const homecomp = ({ uri }) => {
     try {
       console.log("URI to fetch json", uri);
       const parsedURI = removePrefix(uri);
-      const { data } = await axios.get(`https://ipfs.io/ipfs/${parsedURI}`);
+      const { data } = await axios.get(`https://gateway.ipfs.io/ipfs/${parsedURI}`);
       setResponse(data);
+      console.log("Data ipfs:  ",data);
       if (data.image.length > 1) setImage(data.image);
       else setImage(data.thumbnailimage);
     } catch (error) {

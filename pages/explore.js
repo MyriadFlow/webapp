@@ -161,12 +161,12 @@ const Home = () =>{
 								key={item.itemId}
 								className="mycard p-3 shadow-lg w-full lg:w-72 cursor-pointer"
 							  >
-								  <Link key={item.itemId} href={`/assets/${item.itemId}`}>
+								 <Link key={item.itemId} href={`/create/${item.itemId}`}>
 									<div>
 									  <HomeComp
 										uri={item ? item.metaDataURI : ""}
-									  />
-			  
+									  /> 
+																			
 									  <HomeComp2
 										uri={item ? item.metaDataURI.substr(7, 50) : ""}
 									  />

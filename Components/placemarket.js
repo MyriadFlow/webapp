@@ -36,17 +36,32 @@ const MyAssets = () => {
   const [alertMsg, setAlertMsg] = useState("Something went wrong");
 
   const fetchUserAssests = async (walletAddr) => {
+    // const query = gql`
+    // query Query($where: MarketItem_filter) {
+    //   tokens(first: 100, where: {creator: "${walletAddr}",}) {
+    //     id
+    //     metaDataUri
+    //   }
+    // }
+    // `;
+    const walletADD= '0x6963f2BA24E0033F699f6edD7659375700Bb98D6'
     const query = gql`
-    query Query($where: MarketItem_filter) {
-      tokens(first: 100, where: {creator: "${walletAddr}",}) {
+    query Query($where:MarketItemCreated_filter){
+      marketItemCreateds(first: 10, where: {forSale: true,seller: "${walletAddr}"}) {
+        price
+        itemId
+        seller
+        forSale
         id
-        metaDataUri
+        metaDataURI
+        
       }
     }
-    `;
+    `
+
     const result = await request(graphqlAPI, query);
     setLoading(true);
-    setData(result.tokens);
+    setData(result.marketItemCreateds);
     setLoading(false);
     // console.log(result);
   };
@@ -144,11 +159,11 @@ const MyAssets = () => {
                 >
                 <Link key={item.id} href={`/tokens/${item.id}`}>
                   <div>
-                  <HomeComp uri={item ? item.metaDataUri.substr(7, 50) : ""} />
+                  <HomeComp uri={item ? item.metaDataURI : ""} />
 
                   <div className="flex px-4 py-6">
                     <HomeComp2
-                      uri={item ? item.metaDataUri.substr(7, 50) : ""}
+                      uri={item ? item.metaDataURI : ""}
                     />
                   </div>
                   {/* <div className=" flex items-center justify-between px-4 mb-2">

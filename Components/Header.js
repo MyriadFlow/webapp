@@ -154,9 +154,9 @@ function Header() {
             </Link>
 
             {user && hasRole ? (
-              <Link href="/assets">
+              <Link href="/create">
                 <NavLink
-                  className={router.pathname == "/assets" ? "active" : ""}
+                  className={router.pathname == "/create" ? "active" : ""}
                   style={{ cursor: "pointer" }}
                 >
                   Create
@@ -201,7 +201,7 @@ function Header() {
                   Home
                 </a>
               </Link>
-              <Link href="/assets">
+              <Link href="/create">
                 <a className="block py-4 rounded-sm hover:bg-gray-300 transition duration-200 ease-in-out">
                   Sell Asset
                 </a>

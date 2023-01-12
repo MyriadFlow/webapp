@@ -37,15 +37,15 @@ export default function CreatorDashboard() {
   const fetchUserAssests = async (walletAddr) => {
     const query = gql`
     query Query($where: MarketItem_filter) {
-            marketItems(first: 100, where: {seller: "${walletAddr}",sold:true}) {
-              price
-              itemId
-              seller
-              forSale
-              id
-              metaDataUri
-            }
-          }
+      marketItems(first: 100, where: {seller: "${walletAddr}",sold:true}) {
+        price
+        itemId
+        seller
+        forSale
+        id
+        metaDataUri
+      }
+    }
           `;
     const result = await request(graphqlAPI, query);
     setLoading(true);
@@ -139,7 +139,7 @@ export default function CreatorDashboard() {
                       key={item.itemId}
                       className="bg-white dark:bg-gray-900  rounded-lg shadow-lg w-full lg:w-72 hover:scale-105 duration-200 transform transition cursor-pointer border-2 dark:border-gray-800"
                     >
-                      <Link key={item.itemId} href={`/assets/${item.itemId}`}>
+                      <Link key={item.itemId} href={`/create/${item.itemId}`}>
                         <div>
                           <HomeComp
                             uri={item ? item.metaDataUri.substr(7, 50) : ""}
