@@ -18,7 +18,6 @@ const graphqlAPI = process.env.NEXT_PUBLIC_GRAPHQL_API;
 const MyAssets = () => {
   const walletAddr = useSelector(selectUser);
   var wallet = walletAddr ? walletAddr[0] : "";
-
   const [data, setData] = useState([]);
   const [loading,setLoading]=useState(true);
   const [wlt, setwlt] = useState();

@@ -18,7 +18,7 @@ import { buyNFT } from "./api/buyNFT";
 import Layout from "../Components/Layout";
 
 const marketplaceAddress = process.env.NEXT_PUBLIC_MARKETPLACE_ADDRESS;
-const creatifyAddress = process.env.NEXT_PUBLIC_CREATIFY_ADDRESS;
+const storeFrontAddress = process.env.NEXT_PUBLIC_STOREFRONT_ADDRESS;
 const rpc_provider = process.env.NEXT_PUBLIC_RPC_PROVIDER;
 
 const graphqlAPI = process.env.NEXT_PUBLIC_GRAPHQL_API;
@@ -81,19 +81,30 @@ const Home = () =>{
 	const market = async () => {
 		const query = gql`
 		query Query {
-			      marketItems(first: 100,where:{sold:false}) {
-			        price
-			        itemId
-			        seller
-			        forSale
-			        id
-			        metaDataUri
-			      }
+			marketItemCreateds(first: 10,where:{forSale:true}) {
+				price
+				itemId
+				seller
+				forSale
+				id
+				metaDataURI
+			  }
 			    }
 			  `;
+
+			//   {
+			// 	marketItemCreateds(first: 10,where:{forSale:true}) {
+			// 					  price
+			// 					  itemId
+			// 					  seller
+			// 					  forSale
+			// 					  id
+			// 					  metaDataURI
+			// 					}
+			//   }
 			  console.log(process.env);
 		const result = await request(graphqlAPI, query);
-		setData(result.marketItems);
+		setData(result.marketItemCreateds);
 		console.log(result);
 	  };
 
@@ -142,7 +153,7 @@ const Home = () =>{
 						{data.map((item) => {
 
 							console.log(item);
-							console.log(item.metaDataUri.substr(7, 50));
+							console.log("Image url",item.metaDataURI);
 
 							return (
 
@@ -153,11 +164,11 @@ const Home = () =>{
 								  <Link key={item.itemId} href={`/assets/${item.itemId}`}>
 									<div>
 									  <HomeComp
-										uri={item ? item.metaDataUri.substr(7, 50) : ""}
+										uri={item ? item.metaDataURI : ""}
 									  />
 			  
 									  <HomeComp2
-										uri={item ? item.metaDataUri.substr(7, 50) : ""}
+										uri={item ? item.metaDataURI.substr(7, 50) : ""}
 									  />
 									  <div className="flex items-center justify-between mb-2">
 										<p className="text-sm font-bold">Price </p>

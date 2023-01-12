@@ -7,13 +7,13 @@ import { ethers } from "ethers";
 const Web3 = require("web3");
 import { NFTStorage } from "nft.storage";
 import { convertUtf8ToHex } from "@walletconnect/utils";
-import Creatify from "../artifacts/contracts/Creatify.sol/Creatify.json";
+import StoreFront from "../artifacts/contracts/StoreFront.sol/StoreFront.json";
 const YOUR_API_KEY =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkaWQ6ZXRocjoweDFFODE2RTA3RjBFYTg4MkI3Q0I0MDQ2QTg4NENDQ0Q0MjA4NEU3QTgiLCJpc3MiOiJuZnQtc3RvcmFnZSIsImlhdCI6MTY3MzI0NTEzNDc3MywibmFtZSI6Im5mdCJ9.vP9_nN3dQHIkN9cVQH5KvCLNHRk3M2ZO4x2G99smofw";
 import axios from "axios";
 const client = new NFTStorage({ token: YOUR_API_KEY });
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
-const creatifyAddress = process.env.NEXT_PUBLIC_CREATIFY_ADDRESS;
+const storeFrontAddress = process.env.NEXT_PUBLIC_STOREFRONT_ADDRESS;
 function Profile() {
   const walletAddr = useSelector(selectUser);
   var wallet = walletAddr ? walletAddr[0] : "";
@@ -242,11 +242,11 @@ function Profile() {
     const signer = provider.getSigner();
 
     /* next, create the item */
-    let contract = new ethers.Contract(creatifyAddress, Creatify.abi, signer);
+    let contract = new ethers.Contract(storeFrontAddress, StoreFront.abi, signer);
     setHasRole(
-      await contract.hasRole(await contract.CREATIFY_CREATOR_ROLE(), wallet)
+      await contract.hasRole(await contract.STOREFRONT_CREATOR_ROLE(), wallet)
     );
-    const roleid = await contract.CREATIFY_CREATOR_ROLE();
+    const roleid = await contract.STOREFRONT_CREATOR_ROLE();
     localStorage.setItem("platform_roleid", roleid);
     console.log(localStorage.getItem("platform_roleid"));
   };
@@ -267,9 +267,9 @@ function Profile() {
     const signer = provider.getSigner();
 
     /* next, create the item */
-    let contract = new ethers.Contract(creatifyAddress, Creatify.abi, signer);
+    let contract = new ethers.Contract(storeFrontAddress, StoreFront.abi, signer);
     setHasRole(
-      await contract.hasRole(await contract.CREATIFY_CREATOR_ROLE(), wallet)
+      await contract.hasRole(await contract.STOREFRONT_CREATOR_ROLE(), wallet)
     );
   }, [hasRole]);
 

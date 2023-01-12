@@ -1,16 +1,16 @@
 import Web3Modal from "web3modal";
 import { ethers } from "ethers";
-// import { marketplaceAddress, creatifyAddress } from "../../config";
-import Creatify from "../../artifacts/contracts/Creatify.sol/Creatify.json";
+// import { marketplaceAddress, storeFrontAddress } from "../../config";
+import StoreFront from "../../artifacts/contracts/StoreFront.sol/StoreFront.json";
 import Marketplace from "../../artifacts/contracts/Marketplace.sol/Marketplace.json";
 
 const marketplaceAddress = process.env.NEXT_PUBLIC_MARKETPLACE_ADDRESS;
-const creatifyAddress = process.env.NEXT_PUBLIC_CREATIFY_ADDRESS;
+const storeFrontAddress = process.env.NEXT_PUBLIC_STOREFRONT_ADDRESS;
 
 export const handleConnect = async () => {
 
   const web3Modal = new Web3Modal({
-    network: "mainnet",
+    network: "mumbai",
     cacheProvider: true,
   });
   const connection = await web3Modal.connect();
@@ -24,8 +24,8 @@ export const handleConnect = async () => {
     signer
   );
   const tokenContract = new ethers.Contract(
-    creatifyAddress,
-    Creatify.abi,
+    storeFrontAddress,
+    StoreFront.abi,
     provider
   );
 //   const data = await marketContract.fetchMyNFTs();

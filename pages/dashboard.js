@@ -19,7 +19,7 @@ import { RiMoneyDollarCircleLine } from "react-icons/ri";
 import { request, gql } from "graphql-request";
 
 const marketplaceAddress = process.env.NEXT_PUBLIC_MARKETPLACE_ADDRESS;
-const creatifyAddress = process.env.NEXT_PUBLIC_CREATIFY_ADDRESS;
+const storeFrontAddress = process.env.NEXT_PUBLIC_STOREFRONT_ADDRESS;
 
 const graphqlAPI = process.env.NEXT_PUBLIC_GRAPHQL_API;
 
@@ -68,7 +68,7 @@ export default function CreatorDashboard() {
 
   async function loadNFTs() {
     const web3Modal = new Web3Modal({
-      network: "mainnet",
+      network: "mumbai",
       cacheProvider: true,
     });
 

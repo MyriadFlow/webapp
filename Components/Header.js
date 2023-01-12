@@ -4,9 +4,9 @@ import { useRouter } from "next/router";
 import Web3Modal from "web3modal";
 import { ethers } from "ethers";
 // import {
-//   marketplaceAddress, creatifyAddress
+//   marketplaceAddress, storeFrontAddress
 // } from '../config'
-import Creatify from "../artifacts/contracts/Creatify.sol/Creatify.json";
+import StoreFront from "../artifacts/contracts/StoreFront.sol/StoreFront.json";
 import Marketplace from "../artifacts/contracts/Marketplace.sol/Marketplace.json";
 import Image from "next/image";
 import { MdOutlineAccountBalanceWallet } from "react-icons/md";
@@ -20,7 +20,7 @@ import { FaBars } from "react-icons/fa";
 import { NavLink } from "reactstrap";
 
 const marketplaceAddress = process.env.NEXT_PUBLIC_MARKETPLACE_ADDRESS;
-const creatifyAddress = process.env.NEXT_PUBLIC_CREATIFY_ADDRESS;
+const storeFrontAddress = process.env.NEXT_PUBLIC_STOREFRONT_ADDRESS;
 
 function Header() {
   const [dropmenu, setDropMenu] = useState(false);
@@ -63,8 +63,8 @@ function Header() {
       signer
     );
     const tokenContract = new ethers.Contract(
-      creatifyAddress,
-      Creatify.abi,
+      storeFrontAddress,
+      StoreFront.abi,
       provider
     );
     const data = await marketContract.fetchMyNFTs();
@@ -98,9 +98,9 @@ function Header() {
     const signer = provider.getSigner();
 
     /* next, create the item */
-    let contract = new ethers.Contract(creatifyAddress, Creatify.abi, signer);
+    let contract = new ethers.Contract(storeFrontAddress, StoreFront.abi, signer);
     setHasRole(
-      await contract.hasRole(await contract.CREATIFY_CREATOR_ROLE(), wallet)
+      await contract.hasRole(await contract.STOREFRONT_CREATOR_ROLE(), wallet)
     );
     console.log(hasRole);
   }, [hasRole]);
@@ -154,9 +154,9 @@ function Header() {
             </Link>
 
             {user && hasRole ? (
-              <Link href="/artifacts">
+              <Link href="/assets">
                 <NavLink
-                  className={router.pathname == "/artifacts" ? "active" : ""}
+                  className={router.pathname == "/assets" ? "active" : ""}
                   style={{ cursor: "pointer" }}
                 >
                   Create
@@ -201,7 +201,7 @@ function Header() {
                   Home
                 </a>
               </Link>
-              <Link href="/artifacts">
+              <Link href="/assets">
                 <a className="block py-4 rounded-sm hover:bg-gray-300 transition duration-200 ease-in-out">
                   Sell Asset
                 </a>

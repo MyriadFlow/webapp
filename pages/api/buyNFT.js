@@ -1,11 +1,11 @@
 import Web3Modal from "web3modal";
 import { ethers } from "ethers";
-// import { creatifyAddress, marketplaceAddress } from "../../config";
-import Creatify from "../../artifacts/contracts/Creatify.sol/Creatify.json";
+// import { storeFrontAddress, marketplaceAddress } from "../../config";
+import StoreFront from "../../artifacts/contracts/StoreFront.sol/StoreFront.json";
 import Marketplace from "../../artifacts/contracts/Marketplace.sol/Marketplace.json";
 
 const marketplaceAddress = process.env.NEXT_PUBLIC_MARKETPLACE_ADDRESS;
-const creatifyAddress = process.env.NEXT_PUBLIC_CREATIFY_ADDRESS;
+const storeFrontAddress = process.env.NEXT_PUBLIC_STOREFRONT_ADDRESS;
 
 export const buyNFT = async (nft, setmodel, setmodelmsg) => {
 
@@ -27,7 +27,7 @@ export const buyNFT = async (nft, setmodel, setmodelmsg) => {
       value: ethers.BigNumber.from(nft.price),
     };
     const transaction = await contract.createMarketSale(
-      creatifyAddress,
+      storeFrontAddress,
       nft.itemId,
       options
     );

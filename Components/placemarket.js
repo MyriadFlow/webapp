@@ -16,10 +16,10 @@ import BuyAsset from "../Components/buyAssetModal";
 // import { gql } from "@apollo/client";
 import client from "../apollo-client";
 import { request, gql } from "graphql-request";
-import Creatify from '../artifacts/contracts/Creatify.sol/Creatify.json'
+import StoreFront from '../artifacts/contracts/StoreFront.sol/StoreFront.json'
 import Marketplace from '../artifacts/contracts/Marketplace.sol/Marketplace.json'
 const marketplaceAddress = process.env.NEXT_PUBLIC_MARKETPLACE_ADDRESS;
-const creatifyAddress = process.env.NEXT_PUBLIC_CREATIFY_ADDRESS;
+const storeFrontAddress = process.env.NEXT_PUBLIC_STOREFRONT_ADDRESS;
 const graphqlAPI = process.env.NEXT_PUBLIC_GRAPHQL_API;
 
 const MyAssets = () => {
@@ -79,7 +79,7 @@ const MyAssets = () => {
         signer
       );
       transaction = await contract.createMarketItem(
-        creatifyAddress,
+        storeFrontAddress,
         tokenId,
         price
       );
@@ -108,7 +108,7 @@ const MyAssets = () => {
     const provider = new ethers.providers.Web3Provider(connection)
     const signer = provider.getSigner()
 
-    let contract = new ethers.Contract(creatifyAddress, Creatify.abi, signer)
+    let contract = new ethers.Contract(storeFrontAddress, StoreFront.abi, signer)
 
     try {
       // let transaction = await contract.createArtifact(url);

@@ -14,13 +14,13 @@ import { selectBalance } from "../slices/balanceSlice";
 import { FaEthereum } from "react-icons/fa";
 import { FiLogOut } from "react-icons/fi";
 import { useTheme } from "next-themes";
-import Creatify from "../artifacts/contracts/Creatify.sol/Creatify.json";
+import StoreFront from "../artifacts/contracts/StoreFront.sol/StoreFront.json";
 import axios from "axios";
 import { convertUtf8ToHex } from "@walletconnect/utils";
 
 const Web3 = require("web3");
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
-const creatifyAddress = process.env.NEXT_PUBLIC_CREATIFY_ADDRESS;
+const storeFrontAddress = process.env.NEXT_PUBLIC_STOREFRONT_ADDRESS;
 
 function Connectmenu({ toogle, dark, setDark }) {
   const walletAddr = useSelector(selectUser);
@@ -80,11 +80,11 @@ function Connectmenu({ toogle, dark, setDark }) {
     const signer = provider.getSigner();
 
     /* next, create the item */
-    let contract = new ethers.Contract(creatifyAddress, Creatify.abi, signer);
+    let contract = new ethers.Contract(storeFrontAddress, StoreFront.abi, signer);
     setHasRole(
-      await contract.hasRole(await contract.CREATIFY_CREATOR_ROLE(), wallet)
+      await contract.hasRole(await contract.STOREFRONT_CREATOR_ROLE(), wallet)
     );
-    const roleid = await contract.CREATIFY_CREATOR_ROLE();
+    const roleid = await contract.STOREFRONT_CREATOR_ROLE();
     localStorage.setItem("platform_roleid", roleid);
     console.log(localStorage.getItem("platform_roleid"));
   };
