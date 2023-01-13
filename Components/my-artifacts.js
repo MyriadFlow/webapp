@@ -55,7 +55,7 @@ const MyAssets = () => {
 console.log("My artifact Data",data);
   return (
     <div className="p-4 px-10 min-h-screen">
-      <div className="p-4 mt-20  h-auto flex justify-center">
+      <div className="p-4 mt-20  h-auto flex justify-evenly ">
         {data?.length > 0 ? (
           data.map((item) => {
             console.log(item);

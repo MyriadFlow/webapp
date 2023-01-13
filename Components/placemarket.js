@@ -46,22 +46,25 @@ const MyAssets = () => {
     // `;
     const walletADD= '0x6963f2BA24E0033F699f6edD7659375700Bb98D6'
     const query = gql`
-    query Query($where:MarketItemCreated_filter){
-      marketItemCreateds(first: 10, where: {forSale: true,seller: "${walletAddr}"}) {
-        price
+    query Query($where: MarketplaceItem_filter){
+      marketplaceItems(where: {forSale:true}){
         itemId
-        seller
-        forSale
-        id
+        tokenId
+        nftContract
         metaDataURI
-        
-      }
+        seller
+        owner
+        forSale
+        activity
+        blockTimestamp
+        price
+        }
     }
     `
 
     const result = await request(graphqlAPI, query);
     setLoading(true);
-    setData(result.marketItemCreateds);
+    setData(result.marketplaceItems);
     setLoading(false);
     // console.log(result);
   };
@@ -146,7 +149,7 @@ const MyAssets = () => {
   return (
     <div className="p-4 px-10 min-h-screen">
       {model && <BuyAsset open={model} setOpen={setmodel} message={modelmsg} />}
-          <div className=" p-4 mt-20  h-auto flex justify-center">
+          <div className=" p-4 mt-20  h-auto flex justify-evenly">
             { 
             data?.map((item) => {
               // console.log(item);

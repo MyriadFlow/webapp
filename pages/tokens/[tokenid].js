@@ -24,7 +24,7 @@ function Token({ asset }) {
     console.log(asset);
   const [model, setmodel] = useState(false);
   const [modelmsg, setmodelmsg] = useState("buying in progress!");
-  const nfturl = `https://ipfs.io/ipfs/${asset?.tokens[0].metaDataUri?.substr(7,50)}`;
+  const nfturl = `https://gateway.ipfs.io/ipfs/${asset?.tokens[0].metaDataUri?.substr(7,50)}`;
 
   const [response, setResponse] = useState([]);
   const [image, setImage] = useState("");
@@ -32,7 +32,7 @@ function Token({ asset }) {
 
   const metadata = async () => {
     const { data } = await axios.get(
-      `https://ipfs.io/ipfs/${asset?.tokens[0].metaDataUri?.substr(7, 50)}`
+      `https://gateway.ipfs.io/ipfs/${asset?.tokens[0].metaDataUri?.substr(7, 50)}`
     );
     setResponse(data);
     setImage(data.image);
@@ -44,7 +44,7 @@ function Token({ asset }) {
   }, [asset?.tokens[0].metaDataUri?.substr(7, 50)]);
   let preuri = image.substr(7, 50);
 
-  const imgurl = `https://ipfs.io/ipfs/${preuri}`;
+  const imgurl = `https://gateway.ipfs.io/ipfs/${preuri}`;
 //   const transaction = `https://mumbai.polygonscan.com/token/${asset.marketItems[0].nftContract}?a=${asset.marketItems[0].id}`;
   // const transaction = `https://etherscan.io/token/${asset.marketItems[0].nftContract}?a=${asset.marketItems[0].id}`;
 

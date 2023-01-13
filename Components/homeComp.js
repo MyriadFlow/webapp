@@ -11,7 +11,7 @@ const homecomp = ({ uri }) => {
     try {
       console.log("URI to fetch json", uri);
       const parsedURI = removePrefix(uri);
-      const { data } = await axios.get(`https://gateway.ipfs.io/ipfs/${parsedURI}`);
+      const { data } = await axios.get(`https://cloudflare-ipfs.com/ipfs/${parsedURI}`);
       setResponse(data);
       console.log("Data ipfs:  ",data);
       if (data.image.length > 1) setImage(data.image);
@@ -31,7 +31,7 @@ const homecomp = ({ uri }) => {
   return (
     <div>
       <img
-        src={`https://ipfs.io/ipfs/${removePrefix(preuri)}`}
+        src={`https://cloudflare-ipfs.com/ipfs/${removePrefix(preuri)}`}
         alt=""
         className="h-60 w-full object-fit rounded-lg mb-3"
       />

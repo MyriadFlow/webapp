@@ -8,7 +8,7 @@ const assetImage = ({uri}) => {
 
     const metadata = async()=>{
         const { data } = await axios.get(
-            `https://ipfs.io/ipfs/${uri}`
+            `https://gateway.ipfs.io/ipfs/${uri}`
         );
         setResponse(data);
         setImage(data.image);
@@ -23,7 +23,7 @@ const assetImage = ({uri}) => {
     return (
         <div>
              <img
-                 src={`https://ipfs.io/ipfs/${preuri}`}
+                 src={`https://gateway.ipfs.io/ipfs/${preuri}`}
                  alt="" className="h-40 p-2 w-40 object-fit" />
             </div>
     )

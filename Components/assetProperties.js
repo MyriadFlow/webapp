@@ -8,7 +8,7 @@ const assetProperties = ({ uri }) => {
 
     const metadata = async () => {
         const { data } = await axios.get(
-            `https://ipfs.io/ipfs/${uri}`
+            `https://gateway.ipfs.io/ipfs/${uri}`
         );
         setResponse(data.attributes?data.attributes:'');
         // console.log(data);

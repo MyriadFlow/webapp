@@ -8,7 +8,7 @@ const assetcomp = ({uri}) => {
 
     const metadata = async()=>{
         const { data } = await axios.get(
-            `https://ipfs.io/ipfs/${uri}`
+            `https://gateway.ipfs.io/ipfs/${uri}`
         );
         setResponse(data);
         // setResponse(JSON.parse(data));
@@ -43,7 +43,7 @@ const assetcomp = ({uri}) => {
             {/* <pre>{JSON.stringify(response)}</pre> */}
 
              <img
-                 src={`https://ipfs.io/ipfs/${preuri}`}
+                 src={`https://gateway.ipfs.io/ipfs/${preuri}`}
                  alt="" className=" h-100  p-2 w-full object-fit" />
             </div>
     )

@@ -27,7 +27,7 @@ function Asset({ asset }) {
   const [model, setmodel] = useState(false);
   const [modelmsg, setmodelmsg] = useState("buying in progress!");
   // console.log(asset);
-  const nfturl = `https://ipfs.io/ipfs/${asset.marketItems[0].metaDataUri.substr(
+  const nfturl = `https://gateway.ipfs.io/ipfs/${asset.marketItems[0].metaDataUri.substr(
     7,
     50
   )}`;
@@ -38,7 +38,7 @@ function Asset({ asset }) {
 
   const metadata = async () => {
     const { data } = await axios.get(
-      `https://ipfs.io/ipfs/${asset.marketItems[0].metaDataUri.substr(7, 50)}`
+      `https://gateway.ipfs.io/ipfs/${asset.marketItems[0].metaDataUri.substr(7, 50)}`
     );
     setResponse(data);
     if(data.image.length > 1)
@@ -54,7 +54,7 @@ function Asset({ asset }) {
 
   let preuri = image.substr(7, 50);
 
-  const imgurl = `https://ipfs.io/ipfs/${preuri}`;
+  const imgurl = `https://gateway.ipfs.io/ipfs/${preuri}`;
   const transaction = `https://mumbai.polygonscan.com/token/${asset.marketItems[0].nftContract}?a=${asset.marketItems[0].id}`;
   // const transaction = `https://etherscan.io/token/${asset.marketItems[0].nftContract}?a=${asset.marketItems[0].id}`;
 

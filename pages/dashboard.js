@@ -36,20 +36,22 @@ export default function CreatorDashboard() {
 
   const fetchUserAssests = async (walletAddr) => {
     const query = gql`
-    query Query($where: MarketItem_filter) {
-      marketItems(first: 100, where: {seller: "${walletAddr}",sold:true}) {
-        price
-        itemId
-        seller
-        forSale
-        id
-        metaDataUri
-      }
-    }
-          `;
+    query Query($where:  MarketplaceItem_filter) {
+          marketplaceItems(where: {activity: "itemSale"}){
+            itemId
+            tokenId
+            nftContract
+            metaDataURI
+            seller
+            owner
+            forSale
+            activity
+            blockTimestamp
+          }
+    }`
     const result = await request(graphqlAPI, query);
     setLoading(true);
-    setData(result.marketItems);
+    setData(result.marketplaceItems);
     setLoading(false);
     // console.log(result);
   };
@@ -132,8 +134,8 @@ export default function CreatorDashboard() {
         {page === "sold" && (
           <div className="p-4 px-10 min-h-screen">
             <div className=" p-4 mt-10  h-auto flex justify-center">
-              {data.length > 0 ? (
-                data.map((item) => {
+              {data?.length > 0 ? (
+                data?.map((item) => {
                   return (
                     <div
                       key={item.itemId}
@@ -142,12 +144,12 @@ export default function CreatorDashboard() {
                       <Link key={item.itemId} href={`/create/${item.itemId}`}>
                         <div>
                           <HomeComp
-                            uri={item ? item.metaDataUri.substr(7, 50) : ""}
+                            uri={item ? item.metaDataURI.substr(7, 50) : ""}
                           />
 
                           <div className="flex px-4 py-6">
                             <HomeComp2
-                              uri={item ? item.metaDataUri.substr(7, 50) : ""}
+                              uri={item ? item.metaDataURI.substr(7, 50) : ""}
                             />
                           </div>
                           <div className=" flex items-center justify-between px-4 mb-2">
@@ -157,7 +159,7 @@ export default function CreatorDashboard() {
                             <div className="flex items-center">
                               <FaEthereum className="h-4 w-4 text-blue-400" />
                               <p className="font-extralight dark:text-gray-400">
-                                {getEthPrice(item.price)} MATIC
+                                {/* {getEthPrice(item.price)} MATIC */}
                               </p>
                             </div>
                           </div>

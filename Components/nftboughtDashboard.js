@@ -25,20 +25,24 @@ function nftboughtDashboard() {
 
   const fetchUserAssests = async (walletAddr) => {
     const query = gql`
-    query Query($where: MarketItem_filter) {
-            marketItems(first: 100, where: {owner: "${walletAddr}",deleted:false,sold:true}) {
-              price
-              itemId
-              seller
-              forSale
-              id
-              metaDataUri
+    query Query($where: MarketplaceItem_filter) {
+      marketplaceItems(first: 100, where: {owner: "${walletAddr}"}) {
+        itemId
+        tokenId
+        nftContract
+        metaDataURI
+        seller
+        owner
+        forSale
+        activity
+        blockTimestamp
+        price
             }
           }
           `;
     const result = await request(graphqlAPI, query);
     setLoading(true);
-    setData(result.marketItems);
+    setData(result.marketplaceItems);
     setLoading(false);
     // console.log(result);
   };
@@ -67,10 +71,10 @@ function nftboughtDashboard() {
             >
               <Link key={item.itemId} href={`/create/${item.itemId}`}>
                 <div>
-                  <HomeComp uri={item ? item.metaDataUri.substr(7, 50) : ""} />
+                  <HomeComp uri={item ? item.metaDataURI.substr(7, 50) : ""} />
                   <div className="flex px-4 py-6">
                     <HomeComp2
-                      uri={item ? item.metaDataUri.substr(7, 50) : ""}
+                      uri={item ? item.metaDataURI.substr(7, 50) : ""}
                     />
                   </div>
                   <div className=" flex items-center justify-between px-4 mb-2">
