@@ -57,7 +57,7 @@ const Footer = () => {
       </div>
 
       <div className="bg-white dark:bg-gray-900">
-        <div className="m-auto text-gray-800 text-sm flex flex-col md:flex-row md:justify-between max-w-6xl dark:text-white py-2 px-1">
+        <div className="m-auto text-gray-800 text-sm flex flex-col md:flex-row md:justify-between max-w-6xl dark:text-white py-2 px-1" style={{color:"black"}}>
           <div className="">
             MyriadFlow | Copyright © {year} Lazarus Network Inc. All Rights Reserved.
           </div>

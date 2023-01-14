@@ -20,11 +20,17 @@ import Layout from "../../Components/Layout";
 import { ethers } from "ethers";
 import Link from "next/link";
 
-function Token({ asset }) {
-    console.log(asset);
+function Asset({ asset }) {
+  function getEthPrice(price) {
+    return ethers.utils.formatEther(price);
+  }
   const [model, setmodel] = useState(false);
   const [modelmsg, setmodelmsg] = useState("buying in progress!");
-  const nfturl = `https://cloudflare-ipfs.com/ipfs/${asset?.marketplaceItems[0].metaDataURI?.substr(7,50)}`;
+  // console.log(asset);
+  const nfturl = `https://cloudflare-ipfs.com/ipfs/${asset.marketplaceItems[0].metaDataURI.substr(
+    7,
+    50
+  )}`;
 
   const [response, setResponse] = useState([]);
   const [image, setImage] = useState("");
@@ -34,25 +40,26 @@ function Token({ asset }) {
   };
   const metadata = async () => {
     const { data } = await axios.get(
-      `https://cloudflare-ipfs.com/ipfs/${removePrefix(asset?.marketplaceItems[0].metaDataURI)}`
+      `https://cloudflare-ipfs.com/ipfs/${removePrefix(asset.marketplaceItems[0].metaDataURI)}`
     );
     setResponse(data);
     if(data.image.length > 1)
     setImage(data.image);
     else
     setImage(data.thumbnailimage)
+    let preuri = image.substr(7, 50);
   };
 
   useEffect(() => {
     metadata();
-  }, [asset?.marketplaceItems[0].metaDataURI]);
-  let preuri = removePrefix(image)
+  }, [asset.marketplaceItems[0].metaDataURI]);
+
+  let preuri = removePrefix(image);
 
   const imgurl = `https://cloudflare-ipfs.com/ipfs/${preuri}`;
-//   const transaction = `https://mumbai.polygonscan.com/token/${asset.marketItems[0].nftContract}?a=${asset.marketItems[0].id}`;
-  // const transaction = `https://etherscan.io/token/${asset.marketItems[0].nftContract}?a=${asset.marketItems[0].id}`;
+  const transaction = `https://mumbai.polygonscan.com/token/${asset.marketplaceItems[0].nftContract}?a=${asset.marketplaceItems[0].id}`;
+  const copy = asset.marketplaceItems[0].nftContract;
 
-//   const copy = asset.marketItems[0].nftContract;
   return (
     <Layout>
       <div className="max-w-[1400px] mx-auto bg-[#f8f7fc] p-8 dark:bg-[#131417] my-8 rounded-3xl">
@@ -60,7 +67,8 @@ function Token({ asset }) {
           <div className="w-full lg:w-[50%]" onClick={() => isSetFull(true)}>
             <AssetComp
               uri={
-                asset? asset.marketplaceItems[0].metaDataURI
+                asset.marketplaceItems[0]
+                  ? asset.marketplaceItems[0].metaDataURI
                   : ""
               }
             />
@@ -70,8 +78,8 @@ function Token({ asset }) {
               <h3 className="text-gray-700 text-2xl font-medium">
                 <AssetHead
                   uri={
-                    asset
-                      ? asset.marketplaceItems[0].metaDataURI
+                    asset.marketplaceItems[0]
+                      ? asset.marketplaceItems[0].metaDataURI 
                       : ""
                   }
                 />
@@ -82,7 +90,7 @@ function Token({ asset }) {
                     <h3 className="font-bold dark:text-white uppercase">
                       NFT Details
                     </h3>
-                    {/* <div className="flex items-center justify-between my-4 overflow-scroll m41:overflow-hidden">
+                    <div className="flex items-center justify-between my-4 overflow-scroll m41:overflow-hidden">
                       <h3 className="text-[#9298b0] font-medium dark:text-gray-300">
                         Contract Address
                       </h3>
@@ -97,7 +105,7 @@ function Token({ asset }) {
                           {copy}
                         </span>
                       </a>
-                    </div> */}
+                    </div>
                     <div className="flex items-center justify-between my-4">
                       <h3 className="font-medium text-[#9298b0] dark:text-gray-300">
                         Token ID
@@ -144,7 +152,7 @@ function Token({ asset }) {
                         </a>
                       </span>
                     </div>
-                    {/* <div className="flex items-center justify-between my-4">
+                    <div className="flex items-center justify-between my-4">
                       <h3 className="text-[#9298b0] font-medium dark:text-gray-300">
                         Token Lifecycle
                       </h3>
@@ -158,22 +166,22 @@ function Token({ asset }) {
                           <BsArrowUpRight />
                         </a>
                       </span>
-                    </div> */}
+                    </div>
                   </div>
                 </div>
               </div>
               <div className="">
                 <div className="">
                   <div className="rounded-3xl w-full px-4 py-3 bg-white dark:bg-[#1e1f26] myshadow text-[#253262]">
-                    {/* <div className="flex items-center justify-between">
+                    <div className="flex items-center justify-between">
                       <h4 className="text-[#9298b0] text-base font-medium dark:text-white mb-2">
                         Current price
                       </h4>
                     </div>
                     <div className="text-[#253262] text-4xl font-bold dark:text-gray-400 mb-2 overflow-x-auto">
-                      {getEthPrice(asset.marketItems[0].price)}{" "}
+                      {getEthPrice(asset.marketplaceItems[0].price)}{" "}
                       <span className="text-lg font-medium">MATIC</span>
-                    </div> */}
+                    </div>
                     <button
                       onClick={() =>
                         buyNFT(asset.marketplaceItems[0], setmodel, setmodelmsg)
@@ -191,8 +199,8 @@ function Token({ asset }) {
                 <div className="lg:w-1/2 bg-white rounded-lg">
                   <AssetProps
                     uri={
-                      asset
-                        ? asset.marketplaceItems[0].metaDataURI
+                      asset.marketplaceItems[0]
+                        ? asset.marketplaceItems[0].metaDataURI 
                         : ""
                     }
                   />
@@ -201,8 +209,8 @@ function Token({ asset }) {
                   <div className="flex justify-center lg:justify-end">
                     <AssetCategories
                       uri={
-                        asset
-                          ? asset.marketplaceItems[0].metaDataURI
+                        asset.marketplaceItems[0]
+                          ? asset.marketplaceItems[0].metaDataURI 
                           : ""
                       }
                     />
@@ -217,7 +225,6 @@ function Token({ asset }) {
         </div>
       </div>
     </Layout>
-    // </div>
   );
 }
 
@@ -226,10 +233,11 @@ export async function getServerSideProps(context) {
 
   const { data } = await client.query({
     query: gql`
-        query Query($where:  MarketplaceItem_filter) {
+        query Query($where: MarketplaceItem_filter) {
           marketplaceItems(where: {tokenId:${id}}){
             id
             itemId
+            tokenId
             nftContract
             metaDataURI
             seller
@@ -238,13 +246,10 @@ export async function getServerSideProps(context) {
             activity
             blockTimestamp
             price
-              
             }
           }
     `,
   });
-
-  console.log(data);
 
   return {
     props: {
@@ -253,4 +258,4 @@ export async function getServerSideProps(context) {
   };
 }
 
-export default Token;
+export default Asset;

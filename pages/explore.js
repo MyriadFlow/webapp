@@ -16,11 +16,6 @@ import { request, gql } from "graphql-request";
 import BuyAsset from "../Components/buyAssetModal";
 import { buyNFT } from "./api/buyNFT";
 import Layout from "../Components/Layout";
-
-const marketplaceAddress = process.env.NEXT_PUBLIC_MARKETPLACE_ADDRESS;
-const storeFrontAddress = process.env.NEXT_PUBLIC_STOREFRONT_ADDRESS;
-const rpc_provider = process.env.NEXT_PUBLIC_RPC_PROVIDER;
-
 const graphqlAPI = process.env.NEXT_PUBLIC_GRAPHQL_API;
 
 const Home = () => {
@@ -87,16 +82,6 @@ const Home = () => {
       }
     `;
 
-    //   {
-    // 	marketItemCreateds(first: 10,where:{forSale:true}) {
-    // 					  price
-    // 					  itemId
-    // 					  seller
-    // 					  forSale
-    // 					  id
-    // 					  metaDataURI
-    // 					}
-    //   }
     console.log(process.env);
     const result = await request(graphqlAPI, query);
     setData(result.marketplaceItems);
@@ -105,7 +90,6 @@ const Home = () => {
 
   useEffect(() => {
     market();
-    // console.log(user);
   }, []);
 
   return (
@@ -186,7 +170,7 @@ const Home = () => {
                     </div>
                   </Link>
                   <button
-                    onClick={() => buyNft(item.itemId)}
+                    onClick={() => buyNft(item)}
                     className="text-black bg-[#CAFC01] w-full rounded-md py-2 font-bold"
                   >
                     Buy Now

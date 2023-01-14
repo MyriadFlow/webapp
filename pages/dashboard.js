@@ -144,12 +144,12 @@ export default function CreatorDashboard() {
                       <Link key={item.itemId} href={`/create/${item.itemId}`}>
                         <div>
                           <HomeComp
-                            uri={item ? item.metaDataURI.substr(7, 50) : ""}
+                            uri={item ? item.metaDataURI: ""}
                           />
 
                           <div className="flex px-4 py-6">
                             <HomeComp2
-                              uri={item ? item.metaDataURI.substr(7, 50) : ""}
+                              uri={item ? item.metaDataURI: ""}
                             />
                           </div>
                           <div className=" flex items-center justify-between px-4 mb-2">

@@ -7,7 +7,7 @@ const assetProperties = ({ uri }) => {
 
     const metadata = async () => {
         const { data } = await axios.get(
-            `https://gateway.ipfs.io/ipfs/${uri}`
+            `https://cloudflare-ipfs.com/ipfs/${uri}`
         );
         setResponse(data.categories ? data.categories : '');
         console.log(data);
