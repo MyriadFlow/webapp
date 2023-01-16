@@ -14,28 +14,21 @@ const client = new NFTStorage({ token: YOUR_API_KEY });
 import Marketplace from "../artifacts/contracts/Marketplace.sol/Marketplace.json";
 import StoreFront from "../artifacts/contracts/StoreFront.sol/StoreFront.json";
 import BuyAsset from "../Components/buyAssetModal";
-import { Alert, Box, Snackbar } from "@mui/material";
+import { Alert, Snackbar } from "@mui/material";
 import Layout from "../Components/Layout";
 import { useSelector } from "react-redux";
 import { selectUser } from "../slices/userSlice";
 import { convertUtf8ToHex } from "@walletconnect/utils";
 import { NFTStorage } from "nft.storage";
-import { IoMdCreate } from "react-icons/io";
 import { Tab, Tabs } from "react-bootstrap";
 const Web3 = require("web3");
 const marketplaceAddress = process.env.NEXT_PUBLIC_MARKETPLACE_ADDRESS;
 const storeFrontAddress = process.env.NEXT_PUBLIC_STOREFRONT_ADDRESS;
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 export default function CreateItem() {
-  const [value, setValue] = useState("1");
-
-  const handleChange = (e, newValue) => {
-    setValue(newValue);
-  };
   const [model, setmodel] = useState(false);
   const [modelmsg, setmodelmsg] = useState("Transaction in progress!");
   const [file, setFile] = useState();
-  const [animation, setAnimation] = useState("image");
   const [imaget, setimaget] = useState(false);
   const [videot, setVideot] = useState(false);
   const [audiot, setAudiot] = useState(false);
@@ -238,18 +231,8 @@ export default function CreateItem() {
       console.log(e);
       setmodelmsg("Transaction 1 failed");
       return;
-
-      // }finally{
-      //   setPreviewImage("");
-      //   setPreviewVideo("");
-      //   setPreviewAudio("");
-      //   setPreviewDoc("");
-      // }
     }
     /* then list the item for sale on the marketplace */
-    // contract = new ethers.Contract(marketplaceAddress, Marketplace.abi, signer)
-    // transaction = await contract.createMarketItem(storeFrontAddress, tokenId, price)
-    // await transaction.wait()
     router.push("/explore");
   }
   const listItem = async (transaction, contract, tokenId, price, signer) => {

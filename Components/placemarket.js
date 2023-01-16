@@ -11,13 +11,13 @@ import { useSelector } from "react-redux";
 import HomeComp from "./homeComp";
 import HomeComp2 from "./homecomp2";
 import Loader from "./Loader";
-import { useRouter } from 'next/router'
+import { useRouter } from "next/router";
 import BuyAsset from "../Components/buyAssetModal";
 // import { gql } from "@apollo/client";
 import client from "../apollo-client";
 import { request, gql } from "graphql-request";
-import StoreFront from '../artifacts/contracts/StoreFront.sol/StoreFront.json'
-import Marketplace from '../artifacts/contracts/Marketplace.sol/Marketplace.json'
+import StoreFront from "../artifacts/contracts/StoreFront.sol/StoreFront.json";
+import Marketplace from "../artifacts/contracts/Marketplace.sol/Marketplace.json";
 const marketplaceAddress = process.env.NEXT_PUBLIC_MARKETPLACE_ADDRESS;
 const storeFrontAddress = process.env.NEXT_PUBLIC_STOREFRONT_ADDRESS;
 const graphqlAPI = process.env.NEXT_PUBLIC_GRAPHQL_API;
@@ -28,54 +28,51 @@ const MyAssets = () => {
 
   const router = useRouter();
   const [data, setData] = useState([]);
-  const [loading,setLoading]=useState(true);
+  const [open, setOpen] = useState(false);
+
+  const [loading, setLoading] = useState(true);
   const [wlt, setwlt] = useState();
-  const [formInput, updateFormInput] = useState({ price: ''});
+  const [formInput, updateFormInput] = useState({ price: "" });
   const [model, setmodel] = useState(false);
   const [modelmsg, setmodelmsg] = useState("Transaction in progress!");
   const [alertMsg, setAlertMsg] = useState("Something went wrong");
 
   const fetchUserAssests = async (walletAddr) => {
     const query = gql`
-    query Query($where: MarketplaceItem_filter){
-      marketplaceItems(where: {forSale:true}){
-        id
-        itemId
-        tokenId
-        nftContract
-        metaDataURI
-        seller
-        owner
-        forSale
-        activity
-        blockTimestamp
-        price
+      query Query($where: MarketplaceItem_filter) {
+        marketplaceItems(first: 100,where: {owner: "${walletAddr}"}) {
+          itemId
+          tokenId
+          nftContract
+          metaDataURI
+          seller
+          owner
+          forSale
+          activity
+          blockTimestamp
+          price
         }
-    }
-    `
+      }
+    `;
 
     const result = await request(graphqlAPI, query);
     setLoading(true);
     setData(result.marketplaceItems);
     setLoading(false);
   };
-	function getEthPrice(price){
-		return ethers.utils.formatEther(price)
-	}
+  function getEthPrice(price) {
+    return ethers.utils.formatEther(price);
+  }
   useEffect(() => {
-
-    if(!localStorage.getItem('platform_wallet')&& wallet!==undefined)
-    {
-      localStorage.setItem("platform_wallet",wallet);
+    if (!localStorage.getItem("platform_wallet") && wallet !== undefined) {
+      localStorage.setItem("platform_wallet", wallet);
+    } else {
+      setwlt(localStorage.getItem("platform_wallet"));
     }
-    else
-    {
-       setwlt(localStorage.getItem('platform_wallet'));
-    }
-    fetchUserAssests(`${localStorage.getItem('platform_wallet')}`);
-  },[]);
+    fetchUserAssests(`${localStorage.getItem("platform_wallet")}`);
+  }, []);
 
-  const listItem = async ( tokenId, price, signer) => {
+  const listItem = async (tokenId, price, signer) => {
     let contract;
     let transaction;
     console.table(price);
@@ -103,7 +100,7 @@ const MyAssets = () => {
 
   async function placeNft(tokenId) {
     const { price } = formInput;
-    console.log(price);
+    console.log("price",price);
     if (!price) {
       setAlertMsg("Please Fill the Required Fields");
       setOpen(true);
@@ -112,21 +109,25 @@ const MyAssets = () => {
     setmodelmsg("Transaction in progress");
     setmodel(true);
 
-    const web3Modal = new Web3Modal()
-    const connection = await web3Modal.connect()
-    const provider = new ethers.providers.Web3Provider(connection)
-    const signer = provider.getSigner()
+    const web3Modal = new Web3Modal();
+    const connection = await web3Modal.connect();
+    const provider = new ethers.providers.Web3Provider(connection);
+    const signer = provider.getSigner();
 
-    let contract = new ethers.Contract(storeFrontAddress, StoreFront.abi, signer)
+    let contract = new ethers.Contract(
+      storeFrontAddress,
+      StoreFront.abi,
+      signer
+    );
 
     try {
-      // let transaction = await contract.createArtifact(url);
-      // let tx = await transaction.wait();
-      // setmodelmsg("Transaction 1 Complete");
-      // let event = tx.events[0]
-      // let value = event.args[2]
-      // let tokenId = value.toNumber()
-      const price = ethers.utils.parseUnits(formInput.price, 'ether')
+      let transaction = await contract.createArtifact(url);
+      let tx = await transaction.wait();
+      setmodelmsg("Transaction 1 Complete");
+      let event = tx.events[0]
+      let value = event.args[2]
+      let tokenId = value.toNumber()
+      const price = ethers.utils.parseUnits(formInput.price, "ether");
       console.log(price);
       await listItem(tokenId, price, signer);
     } catch (e) {
@@ -134,50 +135,65 @@ const MyAssets = () => {
       setmodelmsg("Transaction failed");
       return;
     }
-    router.push('/explore')
+    router.push("/explore");
   }
 
   return (
     <div className="p-4 px-10 min-h-screen">
       {model && <BuyAsset open={model} setOpen={setmodel} message={modelmsg} />}
-          <div className=" p-4 mt-20  h-auto flex justify-evenly">
-            { 
-            data?.map((item) => {
-              return (
-                <div
-                  key={item.itemId}
-                  className="bg-[white] dark:bg-[#1c1c24]  rounded-lg shadow-lg w-full lg:w-72 hover:scale-105 duration-200 transform transition cursor-pointer border-2 dark:border-gray-800"
-                >
-                <Link key={item.itemId} href={`/create/${item.itemId}`}>
+      <div className=" p-4 mt-20  h-auto flex justify-evenly">
+        {
+          data?.map((item) => {
+            return (
+              <div
+                key={item.id}
+                className="bg-[white] dark:bg-[#1c1c24]  rounded-lg shadow-lg w-full lg:w-72 hover:scale-105 duration-200 transform transition cursor-pointer border-2 dark:border-gray-800"
+              >
+                <Link key={item.id} href={`/tokens/${item.id}`}>
                   <div>
-                  <HomeComp uri={item ? item.metaDataURI : ""} />
+                    <HomeComp uri={item ? item.metaDataURI : ""} />
 
-                  <div className="flex px-4 py-6">
-                    <HomeComp2
-                      uri={item ? item.metaDataURI : ""}
-                    />
-                  </div>                  
-                </div>
-                  </Link>
-                  <div className="form-item w-full">
-                      <input type="text" placeholder="Asset Price in Matic" className="w-full input_background bg-white dark:bg-gray-900 rounded-md shadow-sm p-3 outline-none "
-                        onChange={(e) => updateFormInput({ ...formInput, price: e.target.value })}
-                      />
-                    </div>  
-                  <div className="px-4 py-4 bg-gray-100 dark:bg-gray-700 flex justify-between">
-                    <button
-                      onClick={() => placeNft(item.tokenId)}
-                      className="text-blue-500 hover:text-blue-400 font-bold"
-                    >
-                      Place asset to market
-                    </button>
+                    <div className="flex px-4 py-6">
+                      <HomeComp2 uri={item ? item.metaDataURI : ""} />
+                    </div>
+                    {/* <div className=" flex items-center justify-between px-4 mb-2">
+                    <p className="font-1 text-sm font-bold">Price </p>
+                    <div className="flex items-center">
+                      <FaEthereum className="h-4 w-4 text-blue-400" />
+                      <p className="font-extralight dark:text-gray-400">
+                        {getEthPrice(item.price)} MATIC
+                      </p>
+                    </div>
+                  </div> */}
                   </div>
+                </Link>
+                <div className="form-item w-full">
+                  <input
+                    type="text"
+                    placeholder="Asset Price in Matic"
+                    className="w-full input_background bg-white dark:bg-gray-900 rounded-md shadow-sm p-3 outline-none "
+                    onChange={(e) =>
+                      updateFormInput({ ...formInput, price: e.target.value })
+                    }
+                  />
                 </div>
-              );
-            })
-           }
-          </div>
+                <div className="px-4 py-4 bg-gray-100 dark:bg-gray-700 flex justify-between">
+                  <button
+                    onClick={() => placeNft(item.itemId)}
+                    className="text-blue-500 hover:text-blue-400 font-bold"
+                  >
+                    Place asset to market
+                  </button>
+                </div>
+              </div>
+            );
+          })
+          //    : (loading?<Loader/>:<div className="text-xl pb-10">
+          //   You haven&apos;t created any asset.
+          // </div>)
+        }
       </div>
+    </div>
   );
 };
 export default MyAssets;

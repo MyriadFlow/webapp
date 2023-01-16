@@ -17,10 +17,6 @@ import { BsShop } from "react-icons/bs";
 import { IoCreate, IoEaselSharp } from "react-icons/io5";
 import { RiMoneyDollarCircleLine } from "react-icons/ri";
 import { request, gql } from "graphql-request";
-
-const marketplaceAddress = process.env.NEXT_PUBLIC_MARKETPLACE_ADDRESS;
-const storeFrontAddress = process.env.NEXT_PUBLIC_STOREFRONT_ADDRESS;
-
 const graphqlAPI = process.env.NEXT_PUBLIC_GRAPHQL_API;
 
 export default function CreatorDashboard() {
@@ -36,19 +32,20 @@ export default function CreatorDashboard() {
 
   const fetchUserAssests = async (walletAddr) => {
     const query = gql`
-    query Query($where:  MarketplaceItem_filter) {
-          marketplaceItems(where: {activity: "itemSale"}){
-            itemId
-            tokenId
-            nftContract
-            metaDataURI
-            seller
-            owner
-            forSale
-            activity
-            blockTimestamp
-          }
-    }`
+      query Query($where: MarketplaceItem_filter) {
+        marketplaceItems(where: { activity: "itemSale" }) {
+          itemId
+          tokenId
+          nftContract
+          metaDataURI
+          seller
+          owner
+          forSale
+          activity
+          blockTimestamp
+        }
+      }
+    `;
     const result = await request(graphqlAPI, query);
     setLoading(true);
     setData(result.marketplaceItems);
@@ -65,9 +62,6 @@ export default function CreatorDashboard() {
     loadNFTs();
     // console.log(user);
   }, []);
-
-  const [loadingState, setLoadingState] = useState("not-loaded");
-
   async function loadNFTs() {
     const web3Modal = new Web3Modal({
       network: "mumbai",
@@ -143,14 +137,10 @@ export default function CreatorDashboard() {
                     >
                       <Link key={item.itemId} href={`/create/${item.itemId}`}>
                         <div>
-                          <HomeComp
-                            uri={item ? item.metaDataURI: ""}
-                          />
+                          <HomeComp uri={item ? item.metaDataURI : ""} />
 
                           <div className="flex px-4 py-6">
-                            <HomeComp2
-                              uri={item ? item.metaDataURI: ""}
-                            />
+                            <HomeComp2 uri={item ? item.metaDataURI : ""} />
                           </div>
                           <div className=" flex items-center justify-between px-4 mb-2">
                             <p className="font-1 text-sm font-bold">

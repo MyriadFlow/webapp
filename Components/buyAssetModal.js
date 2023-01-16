@@ -15,7 +15,7 @@ const style = {
   boxShadow: 24,
   p: 4,
 };
-
+//use to show transaction status in modal format
 export default function BuyAsset({open , setOpen , message}) {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);

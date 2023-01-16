@@ -5,7 +5,6 @@ import { useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 
 import {
-  accountChangedHandler,
   connectwallethandler,
 } from "./api/setConnection";
 

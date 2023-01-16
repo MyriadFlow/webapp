@@ -21,7 +21,7 @@ import { convertUtf8ToHex } from "@walletconnect/utils";
 const Web3 = require("web3");
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 const storeFrontAddress = process.env.NEXT_PUBLIC_STOREFRONT_ADDRESS;
-
+//use to show metamask account connect onclick card
 function Connectmenu({ toogle, dark, setDark }) {
   const walletAddr = useSelector(selectUser);
   var wallet = walletAddr ? walletAddr[0] : "";

@@ -1,12 +1,9 @@
 import Head from "next/head";
 import Link from "next/link";
-import Header from "../Components/Header";
-import Footer from "../Components/Footer";
 import Layout from "../Components/Layout";
 import { BsHeart } from "react-icons/bs";
 import BigCard from "../Components/Cards/BigCard";
 import SmallCard from "../Components/Cards/SmallCard";
-// import NotifyContainer from "../Components/NotifyContainer";
 import Slider from "react-slick";
 
 function landingpage() {

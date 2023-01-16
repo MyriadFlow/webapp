@@ -2,9 +2,7 @@
 import { ethers } from "ethers";
 import { useEffect, useState } from "react";
 import { FaEthereum } from "react-icons/fa";
-import Filter from "../Components/Filter";
 import Link from "next/link";
-import { IoIosArrowDropright } from "react-icons/io";
 import { selectModel } from "../slices/modelSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../slices/userSlice";
@@ -33,11 +31,9 @@ const Home = () => {
   const closelogoutmodel = () => {
     dispatch(close());
   };
-  const [nfts, setNfts] = useState([]);
   const [filter, Setfilter] = useState(false);
   const [model, setmodel] = useState(false);
   const [modelmsg, setmodelmsg] = useState("buying in progress!");
-  // const [dropmenu, setdropmenu] = useState(false);
 
   const toogle = () => {
     Setfilter(!filter);
@@ -59,26 +55,26 @@ const Home = () => {
     // console.log(nft.price)
     setmodelmsg("Buying in Progress");
     await buyNFT(nft, setmodel, setmodelmsg);
-    loadNFTs();
+    // loadNFTs();
   }
 
   const [data, setData] = useState([]);
 
   const market = async () => {
     const query = gql`
-	query Query($where: MarketplaceItem_filter){ 
-        marketplaceItems(where: {forSale:true}){
-			itemId
-			tokenId
-			nftContract
-			metaDataURI
-			seller
-			owner
-			forSale
-			activity
-			blockTimestamp
-			price
-		  }
+      query Query($where: MarketplaceItem_filter) {
+        marketplaceItems(where: { forSale: true }) {
+          itemId
+          tokenId
+          nftContract
+          metaDataURI
+          seller
+          owner
+          forSale
+          activity
+          blockTimestamp
+          price
+        }
       }
     `;
 
@@ -153,11 +149,9 @@ const Home = () => {
                 >
                   <Link key={item.itemId} href={`/create/${item.itemId}`}>
                     <div>
-                      <HomeComp uri={item ? item.metaDataURI: ""} />
+                      <HomeComp uri={item ? item.metaDataURI : ""} />
 
-                      <HomeComp2
-                        uri={item ? item.metaDataURI: ""}
-                      />
+                      <HomeComp2 uri={item ? item.metaDataURI : ""} />
                       <div className="flex items-center justify-between mb-2">
                         <p className="text-sm font-bold">Price </p>
                         <div className="flex items-center">

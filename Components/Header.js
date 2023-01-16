@@ -3,19 +3,14 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import Web3Modal from "web3modal";
 import { ethers } from "ethers";
-// import {
-//   marketplaceAddress, storeFrontAddress
-// } from '../config'
 import StoreFront from "../artifacts/contracts/StoreFront.sol/StoreFront.json";
 import Marketplace from "../artifacts/contracts/Marketplace.sol/Marketplace.json";
 import Image from "next/image";
 import { MdOutlineAccountBalanceWallet } from "react-icons/md";
 import Connectmenu from "../Components/Connectmenu";
-import Dropdownmenu from "../Components/Dropdownmenu";
 import { selectUser } from "../slices/userSlice";
 import { useSelector } from "react-redux";
 import { FaUserCircle } from "react-icons/fa";
-import { IoPersonSharp } from "react-icons/io";
 import { FaBars } from "react-icons/fa";
 import { NavLink } from "reactstrap";
 
@@ -108,7 +103,6 @@ function Header() {
   return (
     <header className="border-b-[1px] bg-white dark:bg-[#13131a] dark:border-[#282a32] border-[#eff1f6]">
       <div className="w-[90%] h-[81px] mx-auto flex items-center justify-between font-poppins">
-        {/* left */}
         <div className="flex items-center">
           <FaBars
             onClick={handleNav}
