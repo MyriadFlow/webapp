@@ -26,18 +26,16 @@ function Asset({ asset }) {
   }
   const [model, setmodel] = useState(false);
   const [modelmsg, setmodelmsg] = useState("buying in progress!");
+  const removePrefix = (uri) => {
+    return uri.substring(7, uri.length);
+  };
   // console.log(asset);
-  const nfturl = `https://cloudflare-ipfs.com/ipfs/${asset.marketplaceItems[0].metaDataURI.substr(
-    7,
-    50
-  )}`;
+  const nfturl = `https://cloudflare-ipfs.com/ipfs/${removePrefix(asset.marketplaceItems[0].metaDataURI)}`;
 
   const [response, setResponse] = useState([]);
   const [image, setImage] = useState("");
   const [isFull,setIsFull] = useState(false);
-  const removePrefix = (uri) => {
-    return uri.substring(7, uri.length);
-  };
+ 
   const metadata = async () => {
     const { data } = await axios.get(
       `https://cloudflare-ipfs.com/ipfs/${removePrefix(asset.marketplaceItems[0].metaDataURI)}`
@@ -111,7 +109,7 @@ function Asset({ asset }) {
                         Token ID
                       </h3>
                       <span className="text-[#253262] font-bold text-sm dark:text-gray-400">
-                        {asset.marketplaceItems[0].id}
+                        {asset.marketplaceItems[0].tokenId}
                       </span>
                     </div>
                     <div className="flex items-center justify-between my-4">
@@ -186,7 +184,7 @@ function Asset({ asset }) {
                       onClick={() =>
                         buyNFT(asset.marketplaceItems[0], setmodel, setmodelmsg)
                       }
-                      className="flex gap-x-2 items-center justify-center px-10 py-3 bg-blue-600 text-white text-sm font-medium rounded-xl hover:bg-blue-500 focus:outline-none focus:bg-blue-500"
+                      className="flex gap-x-2 items-center justify-center px-5 py-2 bg-blue-600 text-white text-sm font-small rounded-xl hover:bg-blue-500 focus:outline-none focus:bg-blue-500"
                     >
                       <span className="text-lg font-bold">Buy NFT</span>
                       <BiWallet className="text-3xl"/>

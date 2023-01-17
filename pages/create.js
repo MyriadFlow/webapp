@@ -458,14 +458,14 @@ export default function CreateItem() {
               <div className="">
                 <div className="p-4 mt-5">
                   <form action="#">
-                    <h3 className="text-3xl py-4 font-semibold">
-                      Create Asset
+                    <h3 className="text-3xl py-4 font-bold " style={{color:"pink",marginBottom:"40px",fontSize:"40px",textAlign:"left"}}>
+                      Create New NFT
                     </h3>
 
-                    <div className="">
+                    <div style={{display:"flex",gap:"20px"}}>
                       <input
-                        placeholder="Asset Name"
-                        className="w-full rounded-md p-3 bg-white  dark:bg-gray-900 outline-none mb-4 border-[1px] border-[#d5d5d6]"
+                        placeholder="Asset Name" style={{color:"pink"}}
+                        className="w-full rounded-md bg-white  dark:bg-gray-900 p-2 outline-none mb-4 border-[1px] border-[#d5d5d6]"
                         onChange={(e) =>
                           updateFormInput({
                             ...formInput,
@@ -476,8 +476,8 @@ export default function CreateItem() {
 
                       <textarea
                         type="text"
-                        placeholder="Asset Description"
-                        className="w-full bg-white  dark:bg-gray-900 rounded-md shadow-sm p-3 outline-none border-[1px] border-[#d5d5d6] mb-4"
+                        placeholder="Asset Description" style={{color:"pink"}}
+                        className="w-full bg-white  dark:bg-gray-900 rounded-md shadow-sm p-2 outline-none border-[1px] border-[#d5d5d6] mb-4"
                         onChange={(e) =>
                           updateFormInput({
                             ...formInput,
@@ -487,9 +487,9 @@ export default function CreateItem() {
                       />
 
                       <input
-                        type="text"
+                        type="text" style={{color:"pink"}}
                         placeholder="Asset Price in Matic"
-                        className="w-full bg-white dark:bg-gray-900 rounded-md mb-4 shadow-sm p-3 outline-none border-[1px] border-[#d5d5d6]"
+                        className="w-full bg-white dark:bg-gray-900 rounded-md mb-4 shadow-sm p-2 outline-none border-[1px] border-[#d5d5d6]"
                         onChange={(e) =>
                           updateFormInput({
                             ...formInput,
@@ -742,7 +742,7 @@ export default function CreateItem() {
               </div>
               <div className="w-full px-8 py-6">
                 <div
-                  className="bg-gray-100 shadow-sm cursor-pointer p-4 border-2 border-gray-300 rounded-xl font-semibold text-md  dark:bg-gray-800"
+                  className="bg-gray-100 shadow-sm cursor-pointer p-3 border-2 border-gray-300 rounded-xl font-semibold text-md  dark:bg-gray-800" style={{background:"black",color:"white"}}
                   onClick={() => Setadvancemenu(!advancemenu)}
                 >
                   {advancemenu ? " Hide advanced menu" : "Show advanced menu"}
@@ -761,7 +761,7 @@ export default function CreateItem() {
                           <div className="flex flex-col space-y-4 md:space-y-0 md:flex-row md:space-x-4 pb-2">
                             <input
                               name="display_type"
-                              label="First Name"
+                              label="First Name" style={{color:"pink"}}
                               placeholder="Display type"
                               className="mt-2 p-3 w-full text-sm input_background outline-none rounded-md dark:bg-gray-900"
                               variant="filled"
@@ -772,7 +772,7 @@ export default function CreateItem() {
                             />
                             <input
                               name="trait_type"
-                              label="Last Name"
+                              label="Last Name"style={{color:"pink"}}
                               placeholder="Trait type"
                               className="mt-2 p-3 w-full text-sm input_background outline-none rounded-md dark:bg-gray-900"
                               variant="filled"
@@ -783,7 +783,7 @@ export default function CreateItem() {
                             />
                             <input
                               name="value"
-                              type="number"
+                              type="number"style={{color:"pink"}}
                               label="First Name"
                               placeholder="Value"
                               className="mt-2 p-3 w-full text-sm input_background outline-none rounded-md dark:bg-gray-900"
@@ -838,7 +838,7 @@ export default function CreateItem() {
                       showCheckbox
                       style={{
                         optionContainer: {
-                          background: "#42C2FF",
+                          background: "black",
                           color: "white",
                         },
                       }}
@@ -851,7 +851,7 @@ export default function CreateItem() {
               <div style={{ marginTop: "100px" }}>
                 <button
                   onClick={(e) => createMarket(e)}
-                  className="bg-[#2e44ff] rounded-xl dark:bg-black text-white py-3 px-3 mb-8"
+                  className="bg-[black] rounded-xl dark:bg-black text-white py-3 px-3 mb-8"
                 >
                   Create digital artifact
                 </button>
