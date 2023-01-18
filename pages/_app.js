@@ -6,9 +6,12 @@ import {Provider} from "react-redux";
 import store from "../store";
 import Router from "next/router";
 import Loader from "../Components/Loader";
+import { ThirdwebProvider } from '@thirdweb-dev/react';
 
 
 function Marketplace({ Component, pageProps }) {
+  const desiredChainId = 80001;
+
   const [isLoading,isSetLoading] = useState(false);
   Router.events.on('routeChangeStart',(url)=>{
     isSetLoading(true);
@@ -19,11 +22,20 @@ function Marketplace({ Component, pageProps }) {
   return (
     <>
     {isLoading && <Loader/>}
-      <ThemeProvider enableSystem={true} attribute="class">
+       {/* <ThemeProvider enableSystem={true} attribute="class">
         <Provider store={store}>
           <Component {...pageProps} />
+        </Provider> */}
+
+       <ThemeProvider enableSystem={true} attribute="class">
+       <ThirdwebProvider desiredChainId={desiredChainId}>
+       <Provider store={store}>
+        <Component {...pageProps} />
         </Provider>
-      </ThemeProvider>
+        </ThirdwebProvider>
+              </ThemeProvider> 
+
+     
     </>
   );
 }

@@ -169,35 +169,3 @@ body {
 .mainhighlight {
     box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
 }
-/* //create dashboard .card */
-/* @media (min-width: 280px) { 
-    .mobile-device-create-dashboard{
-        flex-direction: column;
-    }
- }
-@media (min-width: 640px) { 
-    .mobile-device-create-dashboard{
-        flex-direction: column;
-    }
- }
-
-/* Medium (md) */
-/* @media (min-width: 768px) { 
-    .mobile-device-create-dashboard{
-        flex-direction: column;
-    }
- } */
-
-/* Large (lg) */
-/* @media (min-width: 1024px) { 
-    .mobile-device-create-dashboard{
-        flex-direction: column;
-    }
- } */
-
-/* Extra Large (xl) */
-/* @media (min-width: 1280px) { 
-    .mobile-device-create-dashboard{
-        flex-direction: row;
-    }
- }  */

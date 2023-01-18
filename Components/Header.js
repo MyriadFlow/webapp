@@ -7,13 +7,12 @@ import StoreFront from "../artifacts/contracts/StoreFront.sol/StoreFront.json";
 import Marketplace from "../artifacts/contracts/Marketplace.sol/Marketplace.json";
 import Image from "next/image";
 import { MdOutlineAccountBalanceWallet } from "react-icons/md";
-import Connectmenu from "../Components/Connectmenu";
 import { selectUser } from "../slices/userSlice";
 import { useSelector } from "react-redux";
 import { FaUserCircle } from "react-icons/fa";
 import { FaBars } from "react-icons/fa";
 import { NavLink } from "reactstrap";
-
+import { ConnectWallet } from "./ConnectWallet";
 const marketplaceAddress = process.env.NEXT_PUBLIC_MARKETPLACE_ADDRESS;
 const storeFrontAddress = process.env.NEXT_PUBLIC_STOREFRONT_ADDRESS;
 
@@ -240,12 +239,16 @@ function Header() {
               className="text-3xl cursor-pointer"
               onClick={() => setConnectMenu((prev) => !prev)}
             /> */}
-            <img src="/metamask.jpeg" className="text-3xl cursor-pointer"onClick={() => setConnectMenu((prev) => !prev)} style={{width:"35px"}}></img>
+            {/* <ConnectWallet className="text-3xl cursor-pointer"onClick={() => setConnectMenu((prev) => !prev)} style={{width:"35px"}}/> */}
+            {/* <ConnectWallet  accentColor="#f213a4" colorMode="dark" /> */}
+
+           <ConnectWallet accentColor="#f213a4" colorMode="dark"/>
+
           </div>
 
-          {connectMenu && (
+          {/* {connectMenu && (
             <Connectmenu toogle={toogle} dark={dark} setDark={setDark} />
-          )}
+          )} */}
         </div>
       </div>
     </header>

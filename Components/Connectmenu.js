@@ -17,6 +17,7 @@ import { useTheme } from "next-themes";
 import StoreFront from "../artifacts/contracts/StoreFront.sol/StoreFront.json";
 import axios from "axios";
 import { convertUtf8ToHex } from "@walletconnect/utils";
+import { ConnectWallet } from "./ConnectWallet";
 
 const Web3 = require("web3");
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
@@ -345,13 +346,15 @@ function Connectmenu({ toogle, dark, setDark }) {
             </div>
           </div>
         </div>
+       
+          <ConnectWallet accentColor="#f213a4" colorMode="dark"/>
+        
         {user ? (
           <div
             className="flex gap-x-2 items-center hover:bg-[#f5f4fd] dark:hover:bg-[#1c2339] px-2 py-1 hover:rounded-xl cursor-pointer"
             onClick={openmodel}
           >
             <FiLogOut
-              // onClick={logoutmetamask}
 
               className="h-10 w-10 rounded-full hover:text-white  cursor-pointer p-2 cursor-pointer"
             />
