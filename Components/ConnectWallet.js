@@ -40,21 +40,35 @@ export const ConnectWallet = () => {
     
     <div>
       
-        <button className='ml-3' style={{background: "#f213a4",color:"white",padding:"10px 30px 10px 30px",borderRadius:"10px",fontSize:"14px",marginTop:"128px"}} onClick={() => setToggle(!toggle)}>Connect Wallet</button>
+        <button className='ml-3' style={{background: "#f213a4",color:"white",padding:"10px 30px 10px 30px",borderRadius:"10px",fontSize:"14px"}} onClick={() => setToggle(!toggle)}>Connect Wallet</button>
     
-      {toggle && (  <div style={{border:"1px solid #f213a4",background:"black",color:"white",padding:"10px",borderRadius:"10px",marginTop:"6px",marginTop:"65px",marginTop:"4px"}}>
-      <div className=''>
-      <button onClick={() => connectWithCoinbaseWallet()}>
-         Coinbase Wallet
-      </button>
-      </div>
+      {toggle && (  <div style={{position:'absolute',border:"1px solid #f213a4",background:"black",color:"white",padding:"10px",borderRadius:"10px",marginTop:"4px"}}>
+      
      <div className=''>
-     <button className='mt-3' onClick={() => connectWithMetamask()}> MetaMask</button>
+     <button className='mt-3' onClick={() => connectWithMetamask()}>
+      <div className='flex'>
+      <div> <img src="/metamaski.png" style={{width:"25px",height:"25px",background:"white",borderRadius:"5px"}}></img></div> 
+      <div className='ml-3' style={{color:"white"}}>MetaMask</div>
+      </div>
+      </button>
 
      </div>
      <div className=''>
+      <button className='mt-3' onClick={() => connectWithCoinbaseWallet()}>
+      <div className='flex'>
+      <div> <img src="/coinbase.jpeg" style={{width:"25px",height:"25px",background:"white",borderRadius:"5px"}}></img></div> 
+      <div className='ml-3' style={{color:"white"}}>Coinbase</div>
+      </div>
+       
+      </button>
+      </div>
+     <div className=''>
      <button className='mt-3' onClick={() => connectWithWalletConnect()}>
-        WalletConnect
+     <div className='flex'>
+      <div> <img src="/metamask.jpeg" style={{width:"25px",height:"25px",background:"white",borderRadius:"5px"}}></img></div> 
+      <div className='ml-3' style={{color:"white"}}>WalletConnect</div>
+      </div>
+        
       </button>
      </div>
      <div className='mt-3'>
@@ -67,6 +81,8 @@ export const ConnectWallet = () => {
     </div>
      </div>
       )}
+      
+      
     </div>
   );
 };
