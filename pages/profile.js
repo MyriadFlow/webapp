@@ -28,22 +28,12 @@ function Profile() {
   const [changebio, changesetBio] = useState("");
   const [fileUrl, setFileUrl] = useState(null);
   const [changefileUrl, changesetFileUrl] = useState(null);
-  // const [file, setFile] = useState(null)
-
   async function uploadImage(e) {
     e.preventDefault();
     const changefileUrl = changesetFileUrl(
       URL.createObjectURL(e.target.files[0])
     );
     try {
-      // const added = await client.add(
-      //   file,
-      //   {
-      //     progress: (prog) => console.log(`received: ${prog}`)
-      //   }
-      // );
-      // const url = `https://ipfs.infura.io/ipfs/${added.path}`
-      // changesetFileUrl(url);
       const metadata = await client.store({
         name: "My sweet NFT",
         description: "Just try to funge it. You can't do it.",
@@ -275,15 +265,15 @@ function Profile() {
 
   return (
     <Layout>
-      <div
+       {/* <div
         className="w-full h-64 object-cover"
         style={{
           backgroundColor: "#005bbd",
           backgroundImage:
             'url("https://www.transparenttextures.com/patterns/food.png")',
         }}
-      ></div>
-      <div className="flex items-center justify-center -mt-16">
+      ></div> */}
+      {/* <div className="flex items-center justify-center -mt-16">
         {!user ? (
           <div className="rounded-full h-32 w-32 ring-offset-2 ring-1 ring-white bg-gray-200"></div>
         ) : (
@@ -298,8 +288,8 @@ function Profile() {
             }}
           ></div>
         )}
-      </div>
-      <div className=" m-2 flex flex-col items-center justify-center pb-36">
+      </div>  */}
+       {/* <div className=" m-2 flex flex-col items-center justify-center pb-36">
         <div className="text-center pt-4 pb-4">
           <div>
             <p className="text-2xl font-bold pb-4 text-gray-400">
@@ -316,7 +306,6 @@ function Profile() {
             >
               {user}
             </p>
-            <p>{/* <FaCopy /> */}</p>
           </div>
           <p className="text-2xl font-bold pb-4 text-gray-400">
             {" "}
@@ -333,9 +322,9 @@ function Profile() {
           onClick={() => setShowModal(true)}
         >
           Edit Profile Details
-        </button>
+        </button> */}
 
-        {!hasRole && (
+        {/* {!hasRole && (
           <div className="w-2/3">
             <h3 className="text-2xl text-center font-semibold pb-1 pt-8 pl-5 pr-5">
               You do not have the required Role to access create page for
@@ -352,14 +341,14 @@ function Profile() {
               </button>
             </div>
           </div>
-        )}
+        )} */}
         {showModal ? (
           <>
             <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
               <div className="relative w-auto my-6 mx-auto max-w-3xl">
-                {/*content*/}
+            
                 <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
-                  {/*header*/}
+        
                   <div className="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
                     <h3 className="text-3xl font-semibold text-gray-400">
                       Edit Profile Details
@@ -457,6 +446,42 @@ function Profile() {
             <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
           </>
         ) : null}
+      {/* </div>  */}
+      <div className="flex px-5 py-5 gap-5 justify-center">
+        <div className="shadow-2xl ..." style={{width:"30%",height:"600px",padding:"40px"}}>
+          <div className="flex justify-center">
+            <img src="/sample.jpg" style={{width:"100%",height:"310px",padding:"30px"}}></img>
+          </div>
+          <div>
+            <p className="text-2xl font-bold pb-4 text-gray-400">
+              Roles :{" "}
+              <span className="text-white">User {hasRole && ", Creator"} </span>{" "}
+            </p>
+          </div>
+          <p className="text-2xl font-bold pb-4 text-gray-400">
+            {" "}
+            Name : <span className="text-white">{username}</span>
+          </p>
+          <p className="text-2xl font-bold pb-4 text-gray-400">
+            {" "}
+            Country : <span className="text-white">{bio}</span>
+          </p>
+          <div className="flex justify-center">
+          <button
+          className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 ... text-white active:bg-pink-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+          type="button"
+          onClick={() => setShowModal(true)}
+        >
+          Edit Profile Details
+        </button> 
+        </div>
+
+        </div>
+        <div className="shadow-2xl ..." style={{width:"30%",height:"600px",padding:"30px"}}>
+          <div>Wallet Details</div>:{ user}
+        </div>
+
+
       </div>
     </Layout>
   );

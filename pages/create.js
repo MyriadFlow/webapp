@@ -456,13 +456,167 @@ export default function CreateItem() {
           <div className="max-w-[1250px] mx-auto myshadow rounded">
             <div className="bg-white dark:bg-gray-800 mb-5">
               <div className="">
+             
                 <div className="p-4 mt-5">
                   <form action="#">
+                  <div>
+  <img src="/NftB1.jpg" style={{width:"300px",height:"130px"}}></img>
+</div>
                     <h3 className="text-3xl py-4 font-bold " style={{color:"pink",marginBottom:"40px",fontSize:"40px",textAlign:"left"}}>
                       Create New NFT
                     </h3>
+<div className="text-left">
+<div className="text-secondary text-lg">Single edition on Ethereum</div>
+<div className="flex">
+<div className="font-bold">Choose Wallet</div>
+<div>
+  Preview
+    </div>
+    </div>
+</div>
+<div className="flex">
+<div>
+<div className="mt-3 shadow-2xl ..." style={{width:"600px",height:"100px",borderRadius:"10px"}}>
 
-                    <div style={{display:"flex",gap:"20px"}}>
+</div>
+<div className="font-bold  mt-5" style={{textAlign:"left"}}>Upload file</div>
+<div className="absolute   translate-y-[-50%]" style={{marginTop:"85px",border:"2px dotted",borderRadius:"10px",width:"35%",textAlign:"center",padding:'12px'}}>
+                                              <div className="flex justify-center">
+                                                <FiFile className="text-4xl" />
+                                              </div>
+                                              <h1 className="text-lg font-semibold">
+                                                Drag file here to upload
+                                              </h1>
+                                              <p className="text-[#6a6b76]">
+                                                PNG,GIF,WEBP,MP4,or MP3.Max 100mb.
+                                                <br />
+                                                <span className="text-lg font-bold text-[#2e44ff] cursor-pointer">
+                                                  clicking here
+                                                </span>
+                                              </p>
+                                            </div>
+</div>
+<div className="ml-5 shadow-2xl ..." style={{width:"450px",height:"400px",borderRadius:"10px"}}>
+Upload file to preview your brand new NFT
+</div>
+
+</div>
+   <div className="w-full px-8 py-6">
+                <div
+                  className="bg-gray-100 shadow-sm cursor-pointer p-3 border-2 border-gray-300 rounded-xl font-semibold text-md  dark:bg-gray-800" style={{background:"black",color:"white"}}
+                  onClick={() => Setadvancemenu(!advancemenu)}
+                >
+                  {advancemenu ? " Hide advanced menu" : "Show advanced menu"}
+                </div>
+
+                {advancemenu && (
+                  <div>
+                    <p className="text-md font-semibold mt-6">
+                      {" "}
+                      Properties{" "}
+                      <span className="text-gray-400">(Optipnal) </span>
+                    </p>
+                    <form onSubmit={handleSubmit}>
+                      {attributes.map((inputField) => (
+                        <div key={inputField.id}>
+                          <div className="flex flex-col space-y-4 md:space-y-0 md:flex-row md:space-x-4 pb-2">
+                            <input
+                              name="display_type"
+                              label="First Name" style={{color:"pink"}}
+                              placeholder="Display type"
+                              className="mt-2 p-3 w-full text-sm input_background outline-none rounded-md dark:bg-gray-900"
+                              variant="filled"
+                              value={inputField.display_type}
+                              onChange={(event) =>
+                                handleChangeInput(inputField.id, event)
+                              }
+                            />
+                            <input
+                              name="trait_type"
+                              label="Last Name"style={{color:"pink"}}
+                              placeholder="Trait type"
+                              className="mt-2 p-3 w-full text-sm input_background outline-none rounded-md dark:bg-gray-900"
+                              variant="filled"
+                              value={inputField.trait_type}
+                              onChange={(event) =>
+                                handleChangeInput(inputField.id, event)
+                              }
+                            />
+                            <input
+                              name="value"
+                              type="number"style={{color:"pink"}}
+                              label="First Name"
+                              placeholder="Value"
+                              className="mt-2 p-3 w-full text-sm input_background outline-none rounded-md dark:bg-gray-900"
+                              variant="filled"
+                              value={inputField.value}
+                              onChange={(event) =>
+                                handleChangeInput(inputField.id, event)
+                              }
+                            />
+
+                            <button
+                              disabled={attributes.length === 1}
+                              onClick={() => handleRemoveFields(inputField.id)}
+                            >
+                              <FaMinusSquare style={{ color: "red" }} />
+                            </button>
+                            <button onClick={handleAddFields}>
+                              <FaPlusSquare style={{ color: "green" }} />
+                            </button>
+                          </div>
+                        </div>
+                      ))}
+                    </form>
+
+                    <p className="text-md font-semibold mt-6">
+                      {" "}
+                      Alternative text for NFT{" "}
+                      <span className="text-gray-400">(Optipnal) </span>
+                    </p>
+                    <input
+                      placeholder="Image description in details"
+                      className="mt-2 p-3 w-full text-sm input_background outline-none rounded-md dark:bg-gray-900  "
+                      onChange={(e) =>
+                        updateFormInput({
+                          ...formInput,
+                          alternettext: e.target.value,
+                        })
+                      }
+                    />
+
+                    <p className="font-semibold text-lg my-6">Category</p>
+                    <Multiselect
+                      isObject={false}
+                      onRemove={(event) => {
+                        setCategory(event);
+                      }}
+                      onSelect={(event) => {
+                        setCategory(event);
+                      }}
+                      options={options}
+                      selectedValues={[]}
+                      showCheckbox
+                      style={{
+                        optionContainer: {
+                          background: "black",
+                          color: "white",
+                        },
+                      }}
+                    />
+                  </div>
+                )}
+              </div> 
+              <div>
+                <div className="flex">
+                <div className="font-bold">Put on marketplace</div>
+<div>
+  <img src="/swich.png"></img>
+</div>
+                </div>
+                <div>Enter price to allow users instantly your NFT </div>
+              </div>
+                    {/* <div style={{display:"flex",gap:"20px"}}>
                       <input
                         placeholder="Asset Name" style={{color:"pink"}}
                         className="w-full rounded-md bg-white  dark:bg-gray-900 p-2 outline-none mb-4 border-[1px] border-[#d5d5d6]"
@@ -497,9 +651,9 @@ export default function CreateItem() {
                           })
                         }
                       />
-                    </div>
+                    </div> */}
 
-                    <div className="flex items-center rounded-sm flex justify-center" style={{ display: 'block', width: "100%", padding: 30 }}>
+                    {/* <div className="flex items-center rounded-sm flex justify-center" style={{ display: 'block', width: "100%", padding: 30 }}>
                       <Tabs
                         defaultActiveKey="image"
                         id="justify-tab-example"
@@ -736,11 +890,11 @@ export default function CreateItem() {
                       </Tabs>
 
                     
-                    </div>
+                    </div> */}
                   </form>
                 </div>
               </div>
-              <div className="w-full px-8 py-6">
+              {/* <div className="w-full px-8 py-6">
                 <div
                   className="bg-gray-100 shadow-sm cursor-pointer p-3 border-2 border-gray-300 rounded-xl font-semibold text-md  dark:bg-gray-800" style={{background:"black",color:"white"}}
                   onClick={() => Setadvancemenu(!advancemenu)}
@@ -845,7 +999,7 @@ export default function CreateItem() {
                     />
                   </div>
                 )}
-              </div>
+              </div> */}
 
             
               <div style={{ marginTop: "100px" }}>
