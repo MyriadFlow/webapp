@@ -11,8 +11,12 @@ import { selectUser } from "../slices/userSlice";
 import { useSelector } from "react-redux";
 import { FaUserCircle } from "react-icons/fa";
 import { FaBars } from "react-icons/fa";
+import { ConnectWallet } from "@thirdweb-dev/react";
+import DarkTheme from './DarkTheme'
+
 import { NavLink } from "reactstrap";
-import { ConnectWallet } from "./ConnectWallet";
+import styles from "../styles/Home.module.css";
+import Connectmenu from "./Connectmenu";
 const marketplaceAddress = process.env.NEXT_PUBLIC_MARKETPLACE_ADDRESS;
 const storeFrontAddress = process.env.NEXT_PUBLIC_STOREFRONT_ADDRESS;
 
@@ -85,20 +89,26 @@ function Header() {
 
   const [hasRole, setHasRole] = useState(true);
 
-  useEffect(async () => {
-    const web3Modal = new Web3Modal();
-    const connection = await web3Modal.connect();
-    const provider = new ethers.providers.Web3Provider(connection);
-    const signer = provider.getSigner();
+ 
 
-    /* next, create the item */
-    let contract = new ethers.Contract(storeFrontAddress, StoreFront.abi, signer);
-    setHasRole(
-      await contract.hasRole(await contract.STOREFRONT_CREATOR_ROLE(), wallet)
-    );
-    console.log(hasRole);
+
+
+  useEffect(() => {
+    const asyncFn = async () => { 
+      const web3Modal = new Web3Modal();
+      const connection = await web3Modal.connect();
+      const provider = new ethers.providers.Web3Provider(connection);
+      const signer = provider.getSigner();
+  
+      /* next, create the item */
+      let contract = new ethers.Contract(storeFrontAddress, StoreFront.abi, signer);
+      setHasRole(
+        await contract.hasRole(await contract.STOREFRONT_CREATOR_ROLE(), wallet)
+      );
+      console.log(hasRole);
+     };
+    asyncFn();
   }, [hasRole]);
-
   return (
     <header className="border-b-[1px] bg-white dark:bg-[#13131a] dark:border-[#282a32] border-[#eff1f6]">
       <div className="w-[90%] h-[81px] mx-auto flex items-center justify-between font-poppins">
@@ -202,14 +212,14 @@ function Header() {
           {navOpen && (
             <div className="fixed top-0 right-0 w-48 h-screen lg:hidden font-bold shadow-lg pt-12 text-center bg-[#13131a] z-[1000]">
               <Link href="/explore">
-                <a className="block py-4 rounded-sm hover:bg-gray-300 transition duration-200 ease-in-out">
+                <Link className="block py-4 rounded-sm hover:bg-gray-300 transition duration-200 ease-in-out">
                   Home
-                </a>
+                </Link>
               </Link>
               <Link href="/create">
-                <a className="block py-4 rounded-sm hover:bg-gray-300 transition duration-200 ease-in-out">
+                <Link className="block py-4 rounded-sm hover:bg-gray-300 transition duration-200 ease-in-out">
                   Sell Asset
-                </a>
+                </Link>
               </Link>
               {/* <Link href="/my-artifacts">
                 <a className="block py-4 rounded-sm hover:bg-gray-300 transition duration-200 ease-in-out">
@@ -217,15 +227,18 @@ function Header() {
                 </a>
               </Link> */}
               <Link href="/dashboard">
-                <a className="block py-4 rounded-sm hover:bg-gray-300 transition duration-200 ease-in-out">
+                <Link className="block py-4 rounded-sm hover:bg-gray-300 transition duration-200 ease-in-out">
                   Dashboard
-                </a>
+                </Link>
               </Link>
             </div>
           )}
         </div>
+
         <div className="relative">
           <div className="flex items-center gap-x-3">
+          <DarkTheme/>
+
             <div onMouseEnter={opendropmenu}>
               {!user ? (
                 <FaUserCircle className="text-3xl text-gray-500" />
@@ -235,14 +248,11 @@ function Header() {
                 </Link>
               )}
             </div>
-            {/* <MdOutlineAccountBalanceWallet
-              className="text-3xl cursor-pointer"
-              onClick={() => setConnectMenu((prev) => !prev)}
-            /> */}
-            {/* <ConnectWallet className="text-3xl cursor-pointer"onClick={() => setConnectMenu((prev) => !prev)} style={{width:"35px"}}/> */}
-            {/* <ConnectWallet  accentColor="#f213a4" colorMode="dark" /> */}
+           <div className={styles.connect}>
+            {/* <ConnectWallet/> */}
+            <ConnectWallet className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 ..."/>
+        </div>
 
-           <ConnectWallet accentColor="#f213a4" colorMode="dark"/>
 
           </div>
 

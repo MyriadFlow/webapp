@@ -21,7 +21,7 @@ import { selectUser } from "../slices/userSlice";
 import { convertUtf8ToHex } from "@walletconnect/utils";
 import { NFTStorage } from "nft.storage";
 import { Tab, Tabs } from "react-bootstrap";
-const Web3 = require("web3");
+// const Web3 = require("web3");
 const marketplaceAddress = process.env.NEXT_PUBLIC_MARKETPLACE_ADDRESS;
 const storeFrontAddress = process.env.NEXT_PUBLIC_STOREFRONT_ADDRESS;
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
@@ -313,23 +313,25 @@ export default function CreateItem() {
 
   const [hasRole, setHasRole] = useState(true);
 
-  useEffect(async () => {
-    const web3Modal = new Web3Modal();
-    const connection = await web3Modal.connect();
-    const provider = new ethers.providers.Web3Provider(connection);
-    const signer = provider.getSigner();
+  useEffect(() => {
+    const asyncFn = async () => {
+      const web3Modal = new Web3Modal();
+      const connection = await web3Modal.connect();
+      const provider = new ethers.providers.Web3Provider(connection);
+      const signer = provider.getSigner();
 
-    /* next, create the item */
-    let contract = new ethers.Contract(
-      storeFrontAddress,
-      StoreFront.abi,
-      signer
-    );
-    setHasRole(
-      await contract.hasRole(await contract.STOREFRONT_CREATOR_ROLE(), wallet)
-    );
+      /* next, create the item */
+      let contract = new ethers.Contract(
+        storeFrontAddress,
+        StoreFront.abi,
+        signer
+      );
+      setHasRole(
+        await contract.hasRole(await contract.STOREFRONT_CREATOR_ROLE(), wallet)
+      );
+    };
+    asyncFn();
   }, []);
-
   const authorize = async () => {
     const { data } = await axios.get(
       `${BASE_URL}/api/v1.0/flowid?walletAddress=${wallet}`
@@ -455,203 +457,321 @@ export default function CreateItem() {
 
           <div className="max-w-[1250px] mx-auto myshadow rounded">
             <div className="bg-white dark:bg-gray-800 mb-5">
-              <div className="">
-             
+              <div className="flex">
                 <div className="p-4 mt-5">
                   <form action="#">
-                  <div>
-  <img src="/NftB1.jpg" style={{width:"300px",height:"130px"}}></img>
-</div>
-                    <h3 className="text-3xl py-4 font-bold " style={{color:"pink",marginBottom:"40px",fontSize:"40px",textAlign:"left"}}>
+                    <div>
+                      <img
+                        src="/NftB1.jpg"
+                        style={{ width: "300px", height: "130px" }}
+                      ></img>
+                    </div>
+                    <h3
+                      className="text-3xl py-4 font-bold "
+                      style={{
+                        color: "pink",
+                        marginBottom: "40px",
+                        fontSize: "40px",
+                        textAlign: "left",
+                      }}
+                    >
                       Create New NFT
                     </h3>
-<div className="text-left">
-<div className="text-secondary text-lg">Single edition on Ethereum</div>
-<div className="flex">
-<div className="font-bold">Choose Wallet</div>
-<div>
-  Preview
-    </div>
-    </div>
-</div>
-<div className="flex">
-<div>
-<div className="mt-3 shadow-2xl ..." style={{width:"600px",height:"100px",borderRadius:"10px"}}>
-
-</div>
-<div className="font-bold  mt-5" style={{textAlign:"left"}}>Upload file</div>
-<div className="absolute   translate-y-[-50%]" style={{marginTop:"85px",border:"2px dotted",borderRadius:"10px",width:"35%",textAlign:"center",padding:'12px'}}>
-                                              <div className="flex justify-center">
-                                                <FiFile className="text-4xl" />
-                                              </div>
-                                              <h1 className="text-lg font-semibold">
-                                                Drag file here to upload
-                                              </h1>
-                                              <p className="text-[#6a6b76]">
-                                                PNG,GIF,WEBP,MP4,or MP3.Max 100mb.
-                                                <br />
-                                                <span className="text-lg font-bold text-[#2e44ff] cursor-pointer">
-                                                  clicking here
-                                                </span>
-                                              </p>
-                                            </div>
-</div>
-<div className="ml-5 shadow-2xl ..." style={{width:"450px",height:"400px",borderRadius:"10px"}}>
-Upload file to preview your brand new NFT
-</div>
-
-</div>
-   <div className="w-full px-8 py-6">
-                <div
-                  className="bg-gray-100 shadow-sm cursor-pointer p-3 border-2 border-gray-300 rounded-xl font-semibold text-md  dark:bg-gray-800" style={{background:"black",color:"white"}}
-                  onClick={() => Setadvancemenu(!advancemenu)}
-                >
-                  {advancemenu ? " Hide advanced menu" : "Show advanced menu"}
-                </div>
-
-                {advancemenu && (
-                  <div>
-                    <p className="text-md font-semibold mt-6">
-                      {" "}
-                      Properties{" "}
-                      <span className="text-gray-400">(Optipnal) </span>
-                    </p>
-                    <form onSubmit={handleSubmit}>
-                      {attributes.map((inputField) => (
-                        <div key={inputField.id}>
-                          <div className="flex flex-col space-y-4 md:space-y-0 md:flex-row md:space-x-4 pb-2">
-                            <input
-                              name="display_type"
-                              label="First Name" style={{color:"pink"}}
-                              placeholder="Display type"
-                              className="mt-2 p-3 w-full text-sm input_background outline-none rounded-md dark:bg-gray-900"
-                              variant="filled"
-                              value={inputField.display_type}
-                              onChange={(event) =>
-                                handleChangeInput(inputField.id, event)
-                              }
-                            />
-                            <input
-                              name="trait_type"
-                              label="Last Name"style={{color:"pink"}}
-                              placeholder="Trait type"
-                              className="mt-2 p-3 w-full text-sm input_background outline-none rounded-md dark:bg-gray-900"
-                              variant="filled"
-                              value={inputField.trait_type}
-                              onChange={(event) =>
-                                handleChangeInput(inputField.id, event)
-                              }
-                            />
-                            <input
-                              name="value"
-                              type="number"style={{color:"pink"}}
-                              label="First Name"
-                              placeholder="Value"
-                              className="mt-2 p-3 w-full text-sm input_background outline-none rounded-md dark:bg-gray-900"
-                              variant="filled"
-                              value={inputField.value}
-                              onChange={(event) =>
-                                handleChangeInput(inputField.id, event)
-                              }
-                            />
-
-                            <button
-                              disabled={attributes.length === 1}
-                              onClick={() => handleRemoveFields(inputField.id)}
-                            >
-                              <FaMinusSquare style={{ color: "red" }} />
-                            </button>
-                            <button onClick={handleAddFields}>
-                              <FaPlusSquare style={{ color: "green" }} />
-                            </button>
+                    <div className="text-left">
+                      <div className="text-secondary text-lg">
+                        Single edition on Ethereum
+                      </div>
+                      <div
+                        className="flex justify-between"
+                        style={{ width: "75%" }}
+                      >
+                        <div className="font-bold">Choose Wallet</div>
+                        <div>Preview</div>
+                      </div>
+                    </div>
+                    <div className="flex">
+                      <div>
+                        <div
+                          className="mt-5 shadow-2xl ..."
+                          style={{
+                            width: "600px",
+                            height: "75px",
+                            borderRadius: "10px",
+                            border: "1px solid",
+                          }}
+                        >
+                          <div className="flex">
+                            <div style={{ padding: "16px" }}>
+                              <img
+                                src="/eth.png"
+                                style={{ height: "40px", width: "40px" }}
+                              ></img>
+                            </div>
+                            <div className="mt-3">
+                              <div>Address</div>
+                              <div>Name</div>
+                            </div>
+                            <div style={{ margin: "0 auto" }}>Status</div>
                           </div>
                         </div>
-                      ))}
-                    </form>
+                        <div
+                          className="font-bold  mt-5"
+                          style={{ textAlign: "left" }}
+                        >
+                          Upload file
+                        </div>
+                        <div
+                          className="absolute   translate-y-[-50%]"
+                          style={{
+                            marginTop: "85px",
+                            border: "2px dotted",
+                            borderRadius: "10px",
+                            width: "35%",
+                            textAlign: "center",
+                            padding: "12px",
+                          }}
+                        >
+                          <div className="flex justify-center">
+                            <FiFile className="text-4xl" />
+                          </div>
+                          <h1 className="text-lg font-semibold">
+                            Drag file here to upload
+                          </h1>
+                          <p className="text-[#6a6b76]">
+                            PNG,GIF,WEBP,MP4,or MP3.Max 100mb.
+                            <br />
+                            <div
+                              className="text-lg text-black mt-3 cursor-pointer"
+                              style={{
+                                borderRadius: "10px",
+                                background: "#c5bfbf",
+                                padding: "10px",
+                                margin: "0 auto",
+                                width: "25%",
+                              }}
+                            >
+                              Choose File
+                            </div>
+                          </p>
+                        </div>
+                      </div>
+                      <div
+                        className="ml-5 shadow-2xl ..."
+                        style={{
+                          width: "450px",
+                          height: "400px",
+                          borderRadius: "10px",
+                          border: "1px solid ",
+                        }}
+                      >
+                        <div
+                          className="flex justify-center text-secondary"
+                          style={{ height: "100%" }}
+                        >
+                          {" "}
+                          <span>Upload file to preview your brand new NFT</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="w-full px-8 py-6">
+                      <div
+                        className="bg-gray-100 shadow-sm cursor-pointer p-3 border-2 border-gray-300 rounded-xl font-semibold text-md  dark:bg-gray-800"
+                        style={{ background: "black", color: "white" }}
+                        onClick={() => Setadvancemenu(!advancemenu)}
+                      >
+                        {advancemenu
+                          ? " Hide advanced menu"
+                          : "Show advanced menu"}
+                      </div>
 
-                    <p className="text-md font-semibold mt-6">
-                      {" "}
-                      Alternative text for NFT{" "}
-                      <span className="text-gray-400">(Optipnal) </span>
-                    </p>
-                    <input
-                      placeholder="Image description in details"
-                      className="mt-2 p-3 w-full text-sm input_background outline-none rounded-md dark:bg-gray-900  "
-                      onChange={(e) =>
-                        updateFormInput({
-                          ...formInput,
-                          alternettext: e.target.value,
-                        })
-                      }
-                    />
+                      {advancemenu && (
+                        <div>
+                          <p className="text-md font-semibold mt-6">
+                            {" "}
+                            Properties{" "}
+                            <span className="text-gray-400">(Optipnal) </span>
+                          </p>
+                          <form onSubmit={handleSubmit}>
+                            {attributes.map((inputField) => (
+                              <div key={inputField.id}>
+                                <div className="flex flex-col space-y-4 md:space-y-0 md:flex-row md:space-x-4 pb-2">
+                                  <input
+                                    name="display_type"
+                                    label="First Name"
+                                    style={{ color: "pink" }}
+                                    placeholder="Display type"
+                                    className="mt-2 p-3 w-full text-sm input_background outline-none rounded-md dark:bg-gray-900"
+                                    variant="filled"
+                                    value={inputField.display_type}
+                                    onChange={(event) =>
+                                      handleChangeInput(inputField.id, event)
+                                    }
+                                  />
+                                  <input
+                                    name="trait_type"
+                                    label="Last Name"
+                                    style={{ color: "pink" }}
+                                    placeholder="Trait type"
+                                    className="mt-2 p-3 w-full text-sm input_background outline-none rounded-md dark:bg-gray-900"
+                                    variant="filled"
+                                    value={inputField.trait_type}
+                                    onChange={(event) =>
+                                      handleChangeInput(inputField.id, event)
+                                    }
+                                  />
+                                  <input
+                                    name="value"
+                                    type="number"
+                                    style={{ color: "pink" }}
+                                    label="First Name"
+                                    placeholder="Value"
+                                    className="mt-2 p-3 w-full text-sm input_background outline-none rounded-md dark:bg-gray-900"
+                                    variant="filled"
+                                    value={inputField.value}
+                                    onChange={(event) =>
+                                      handleChangeInput(inputField.id, event)
+                                    }
+                                  />
 
-                    <p className="font-semibold text-lg my-6">Category</p>
-                    <Multiselect
-                      isObject={false}
-                      onRemove={(event) => {
-                        setCategory(event);
-                      }}
-                      onSelect={(event) => {
-                        setCategory(event);
-                      }}
-                      options={options}
-                      selectedValues={[]}
-                      showCheckbox
-                      style={{
-                        optionContainer: {
-                          background: "black",
-                          color: "white",
-                        },
-                      }}
-                    />
-                  </div>
-                )}
-              </div> 
-              <div>
-                <div className="flex">
-                <div className="font-bold">Put on marketplace</div>
-<div>
-  <img src="/swich.png"></img>
-</div>
-                </div>
-                <div>Enter price to allow users instantly your NFT </div>
-              </div>
-                    {/* <div style={{display:"flex",gap:"20px"}}>
-                      <input
-                        placeholder="Asset Name" style={{color:"pink"}}
-                        className="w-full rounded-md bg-white  dark:bg-gray-900 p-2 outline-none mb-4 border-[1px] border-[#d5d5d6]"
-                        onChange={(e) =>
-                          updateFormInput({
-                            ...formInput,
-                            name: e.target.value,
-                          })
-                        }
-                      />
+                                  <button
+                                    disabled={attributes.length === 1}
+                                    onClick={() =>
+                                      handleRemoveFields(inputField.id)
+                                    }
+                                  >
+                                    <FaMinusSquare style={{ color: "red" }} />
+                                  </button>
+                                  <button onClick={handleAddFields}>
+                                    <FaPlusSquare style={{ color: "green" }} />
+                                  </button>
+                                </div>
+                              </div>
+                            ))}
+                          </form>
 
-                      <textarea
-                        type="text"
-                        placeholder="Asset Description" style={{color:"pink"}}
-                        className="w-full bg-white  dark:bg-gray-900 rounded-md shadow-sm p-2 outline-none border-[1px] border-[#d5d5d6] mb-4"
-                        onChange={(e) =>
-                          updateFormInput({
-                            ...formInput,
-                            description: e.target.value,
-                          })
-                        }
-                      />
+                          <p className="text-md font-semibold mt-6">
+                            {" "}
+                            Alternative text for NFT{" "}
+                            <span className="text-gray-400">(Optipnal) </span>
+                          </p>
+                          <input
+                            placeholder="Image description in details"
+                            className="mt-2 p-3 w-full text-sm input_background outline-none rounded-md dark:bg-gray-900  "
+                            onChange={(e) =>
+                              updateFormInput({
+                                ...formInput,
+                                alternettext: e.target.value,
+                              })
+                            }
+                          />
 
-                      <input
-                        type="text" style={{color:"pink"}}
-                        placeholder="Asset Price in Matic"
-                        className="w-full bg-white dark:bg-gray-900 rounded-md mb-4 shadow-sm p-2 outline-none border-[1px] border-[#d5d5d6]"
-                        onChange={(e) =>
-                          updateFormInput({
-                            ...formInput,
-                            price: e.target.value,
-                          })
-                        }
-                      />
-                    </div> */}
+                          <p className="font-semibold text-lg my-6">Category</p>
+                          <Multiselect
+                            isObject={false}
+                            onRemove={(event) => {
+                              setCategory(event);
+                            }}
+                            onSelect={(event) => {
+                              setCategory(event);
+                            }}
+                            options={options}
+                            selectedValues={[]}
+                            showCheckbox
+                            style={{
+                              optionContainer: {
+                                background: "black",
+                                color: "white",
+                              },
+                            }}
+                          />
+                        </div>
+                      )}
+                    </div>
+
+                    <div
+                      className="flex justify-between"
+                      style={{ width: "55%" }}
+                    >
+                      <div className="text-left">
+                        <div className="font-bold text-3xl">
+                          Put on marketplace
+                        </div>
+                        <div>
+                          Enter price to allow users instantly your NFT{" "}
+                        </div>
+                      </div>
+                      <div>
+                        <img
+                          src="/swich.png"
+                          style={{ width: "30px", height: "30px" }}
+                        ></img>
+                      </div>
+                    </div>
+                    <div className="flex mt-3 gap-6">
+                      <div
+                        style={{
+                          border: "1px solid",
+                          height: "200px",
+                          width: "280px",
+                          borderRadius: "10px",
+                        }}
+                      >
+                        Fixed Price
+                      </div>
+                      <div
+                        style={{
+                          border: "1px solid",
+                          height: "200px",
+                          width: "280px",
+                          borderRadius: "10px",
+                        }}
+                      >
+                        Timed auction
+                      </div>
+                    </div>
+                    <div className="mt-5">
+                      <div style={{ width: "55%" }}>
+                        <input
+                          placeholder="Asset Name"
+                          style={{ color: "pink" }}
+                          className="w-full rounded-md bg-white  dark:bg-gray-900 p-3 outline-none mb-4 border-[1px] border-[#d5d5d6]"
+                          onChange={(e) =>
+                            updateFormInput({
+                              ...formInput,
+                              name: e.target.value,
+                            })
+                          }
+                        />
+                      </div>
+                      <div style={{ width: "55%" }}>
+                        <textarea
+                          type="text"
+                          placeholder="Asset Description"
+                          style={{ color: "pink" }}
+                          className="w-full bg-white  dark:bg-gray-900 rounded-md shadow-sm p-2 outline-none border-[1px] border-[#d5d5d6] mb-4"
+                          onChange={(e) =>
+                            updateFormInput({
+                              ...formInput,
+                              description: e.target.value,
+                            })
+                          }
+                        />
+                      </div>
+                      <div style={{ width: "55%" }}>
+                        <input
+                          type="text"
+                          style={{ color: "pink" }}
+                          placeholder="Asset Price in Matic"
+                          className="w-full bg-white dark:bg-gray-900 rounded-md mb-4 shadow-sm p-2 outline-none border-[1px] border-[#d5d5d6]"
+                          onChange={(e) =>
+                            updateFormInput({
+                              ...formInput,
+                              price: e.target.value,
+                            })
+                          }
+                        />
+                      </div>
+                    </div>
 
                     {/* <div className="flex items-center rounded-sm flex justify-center" style={{ display: 'block', width: "100%", padding: 30 }}>
                       <Tabs
@@ -1001,7 +1121,6 @@ Upload file to preview your brand new NFT
                 )}
               </div> */}
 
-            
               <div style={{ marginTop: "100px" }}>
                 <button
                   onClick={(e) => createMarket(e)}

@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { BsHeart } from "react-icons/bs";
 
 const SmallCard = ({ title, img, price, like, name }) => {
@@ -20,9 +21,9 @@ const SmallCard = ({ title, img, price, like, name }) => {
             <p className="font-medium">{name}</p>
           </div>
           <div className="flex items-center gap-2">
-            <a href="">
+            <Link href="">
               <BsHeart className="text-xl" />
-            </a>
+            </Link>
             <p>{like}</p>
           </div>
         </div>

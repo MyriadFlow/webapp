@@ -119,14 +119,14 @@ function Token({ asset }) {
                         IPFS Asset
                       </h3>
                       <span className="text-gray-600 text-sm">
-                        <a
+                        <Link
                           href={imgurl}
                           target="_blank"
                           rel="noreferrer"
                           className="text-[#253262] text-lg dark:text-gray-400"
                         >
                           <BsArrowUpRight />
-                        </a>
+                        </Link>
                       </span>
                     </div>
                     <div className="flex items-center justify-between my-4">
@@ -134,14 +134,14 @@ function Token({ asset }) {
                         IPFS Metadata
                       </h3>
                       <span className="text-gray-600 text-sm">
-                        <a
+                        <Link
                           href={nfturl}
                           target="_blank"
                           rel="noreferrer"
                           className="text-[#253262] text-lg dark:text-gray-400"
                         >
                           <BsArrowUpRight />
-                        </a>
+                        </Link>
                       </span>
                     </div>
                     {/* <div className="flex items-center justify-between my-4">

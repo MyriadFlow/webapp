@@ -17,9 +17,8 @@ import { useTheme } from "next-themes";
 import StoreFront from "../artifacts/contracts/StoreFront.sol/StoreFront.json";
 import axios from "axios";
 import { convertUtf8ToHex } from "@walletconnect/utils";
-import { ConnectWallet } from "./ConnectWallet";
 
-const Web3 = require("web3");
+// const Web3 = require("web3");
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 const storeFrontAddress = process.env.NEXT_PUBLIC_STOREFRONT_ADDRESS;
 //use to show metamask account connect onclick card
@@ -90,10 +89,6 @@ function Connectmenu({ toogle, dark, setDark }) {
     console.log(localStorage.getItem("platform_roleid"));
   };
 
-  //   useEffect(() => {
-  // connectweb();
-  //   }, []);
-
   const connectwallethandler = () => {
     if (window.ethereum) {
       window.ethereum
@@ -127,11 +122,8 @@ function Connectmenu({ toogle, dark, setDark }) {
 
     let web3 = new Web3(Web3.givenProvider);
     let completemsg = roledata.data.payload.eula + roledata.data.payload.flowId;
-    // console.log(completemsg);
     const hexMsg = convertUtf8ToHex(completemsg);
-    // console.log(hexMsg);
     const result = await web3.eth.personal.sign(hexMsg, wallet);
-    // console.log(result);
 
     var signroledata = JSON.stringify({
       flowId: roledata.data.payload.flowId,
@@ -150,7 +142,6 @@ function Connectmenu({ toogle, dark, setDark }) {
 
     try {
       const response = await axios(config);
-      // console.log(response);
       const msg = await response?.data?.message;
       console.log(msg);
 
@@ -165,15 +156,11 @@ function Connectmenu({ toogle, dark, setDark }) {
     const { data } = await axios.get(
       `${BASE_URL}/api/v1.0/flowid?walletAddress=${wallet}`
     );
-    // console.log(data);
 
     let web3 = new Web3(Web3.givenProvider);
     let completemsg = data.payload.eula + data.payload.flowId;
-    // console.log(completemsg);
     const hexMsg = convertUtf8ToHex(completemsg);
-    // console.log(hexMsg);
     const result = await web3.eth.personal.sign(hexMsg, wallet);
-    // console.log(result);
 
     var signdata = JSON.stringify({
       flowId: data.payload.flowId,
@@ -185,7 +172,6 @@ function Connectmenu({ toogle, dark, setDark }) {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        //  "Token":`Bearer ${token}`
       },
       data: signdata,
     };
@@ -231,9 +217,6 @@ function Connectmenu({ toogle, dark, setDark }) {
           : "absolute z-30 top-14 bg-white right-[50%] translate-x-[50%] dark:bg-[#131c31] p-4 rounded-[10px] mydrop"
       }
     >
-      {/* <div>
-                <AiOutlineCloseCircle onClick={toogle} className="h-10 w-10 cursor-pointer  text-gray-500 p-1" />
-            </div> */}
       <div className="border-b-[1px] border-[#e5e7eb] dark:border-[#282a32] py-2">
         <div className="flex gap-x-2 justify-between items-center hover:bg-[#f5f4fd] dark:hover:bg-[#1c2339] px-2 py-1 hover:rounded-xl">
           {!user ? (
@@ -242,15 +225,12 @@ function Connectmenu({ toogle, dark, setDark }) {
             <div className="h-10 w-10 rounded-full connect-profile cursor-pointer"></div>
           )}
           <Link href="/profile">
-            <a className="" href="/profile">
+            <Link className="" href="/profile">
               MyAccount{" "}
-            </a>
+            </Link>
           </Link>
         </div>
       </div>
-      {/* <div className="flex justify-center mt-2" >
-                <p className={user ? "text-sm text-gray-700 border-2 border-dashed p-2 rounded-lg border-black font-semibold dark:text-gray-300 dark:border-gray-400" : ""}>{user}</p>
-            </div> */}
       <div className="border-b-[1px] border-[#e5e7eb] dark:border-[#282a32] py-2">
         {userbalance ? (
           <div className="flex hover:bg-[#f5f4fd] dark:hover:bg-[#1c2339] px-4 py-3 hover:rounded-xl cursor-pointer">
@@ -270,21 +250,13 @@ function Connectmenu({ toogle, dark, setDark }) {
       <div>
         <div className="border-b-[1px] border-[#e5e7eb] dark:border-[#282a32] py-2 cursor-pointer">
           <div className="hover:bg-[#f5f4fd] dark:hover:bg-[#1c2339] px-4 py-3 hover:rounded-xl">
-            <a onClick={connectwallethandler} className="">
+            <Link onClick={connectwallethandler} className="">
               {!user ? "Connect" : "Connected"}
-            </a>
+            </Link>
           </div>
         </div>
 
-        {/* {
-                    !hasRole && user && 
-                    <div className="flex justify-center">
-                        <button
-                            onClick={authorize}
-                            className="bg-blue-800 uppercase shadow-md transition duration-300  
-                            ease-in text-white font-bold hover:bg-white hover:text-blue-800 px-6 rounded py-2 mt-2">Get creator role</button>
-                    </div>
-                } */}
+       
         <div className="border-b-[1px] border-[#e5e7eb] dark:border-[#282a32] py-2">
           <div
             className="flex gap-x-2 justify-center items-center p-1 bg-[#f5f4fd] dark:bg-[#00071d] rounded relative"
@@ -293,21 +265,14 @@ function Connectmenu({ toogle, dark, setDark }) {
               dark ? setTheme("light") : setTheme("dark");
             }}
           >
-            {/* <p className="text-gray-800 font-bold dark:text-blue-500">
-              {theme === "dark" ? "LightMode" : "DarkMode"}
-            </p> */}
-            {/* <div className="border p-1 rounded-full shadow-sm cursor-pointer">
-              {renderThemeChanger()}
-            </div> */}
+          
             <div
               id="button box"
               className={`absolute w-[calc(50%-4px)] h-[calc(100%-8px)] rounded left-[4px] top-[50%] translate-y-[-50%] bg-[#fff] dark:bg-[#131c31] transition ease-in-out delay-150 duration-300 ${
                 dark ? "translate-x-[100%]" : ""
               }`}
             >
-              {/* <div className="">
-                {renderThemeChanger()}
-              </div> */}
+            
             </div>
             <div className="w-1/2 flex items-center justify-center py-[10px] px-[8px] text-center z-10 light cursor-pointer">
               <svg
@@ -345,10 +310,7 @@ function Connectmenu({ toogle, dark, setDark }) {
               <span>Dark</span>
             </div>
           </div>
-        </div>
-       
-          <ConnectWallet accentColor="#f213a4" colorMode="dark"/>
-        
+        </div>        
         {user ? (
           <div
             className="flex gap-x-2 items-center hover:bg-[#f5f4fd] dark:hover:bg-[#1c2339] px-2 py-1 hover:rounded-xl cursor-pointer"

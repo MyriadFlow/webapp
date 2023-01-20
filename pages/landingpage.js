@@ -150,9 +150,9 @@ function landingpage() {
         <section className="max-w-[1280px] mx-auto px-8 my-20">
           <div className="bg-white sm:text-xl font-semibold text-black mx-auto p-6 sm:p-8 lg:p-10 gap-x-4 flex items-center justify-between rounded-2xl">
             <h1 className="">Polygon is in beta on MyriadFlow</h1>
-            <a href="" className="text-white bg-[#0162ff] py-2 px-3 rounded-md">
+            <Link href="" className="text-white bg-[#0162ff] py-2 px-3 rounded-md">
               Explore
-            </a>
+            </Link>
           </div>
         </section>
 
@@ -222,9 +222,9 @@ function landingpage() {
                       <p className="font-medium">Warrior</p>
                     </div>
                     <div className="flex items-center gap-2">
-                      <a href="">
+                      <Link href="">
                         <BsHeart className="text-2xl" />
-                      </a>
+                      </Link>
                       <p>76</p>
                     </div>
                   </div>

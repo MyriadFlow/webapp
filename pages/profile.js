@@ -241,27 +241,33 @@ function Profile() {
     console.log(localStorage.getItem("platform_roleid"));
   };
 
-  useEffect(async () => {
-    const token = localStorage.getItem("platform_token");
-    console.log(token);
-    connectweb();
-    if (!token) {
-      authorize();
-    } else {
-      getProfile();
-    }
+  useEffect(() => {
+    const asyncFn = async () => { 
 
-    const web3Modal = new Web3Modal();
-    const connection = await web3Modal.connect();
-    const provider = new ethers.providers.Web3Provider(connection);
-    const signer = provider.getSigner();
-
-    /* next, create the item */
-    let contract = new ethers.Contract(storeFrontAddress, StoreFront.abi, signer);
-    setHasRole(
-      await contract.hasRole(await contract.STOREFRONT_CREATOR_ROLE(), wallet)
-    );
+      const token = localStorage.getItem("platform_token");
+      console.log(token);
+      connectweb();
+      if (!token) {
+        authorize();
+      } else {
+        getProfile();
+      }
+  
+      const web3Modal = new Web3Modal();
+      const connection = await web3Modal.connect();
+      const provider = new ethers.providers.Web3Provider(connection);
+      const signer = provider.getSigner();
+  
+      /* next, create the item */
+      let contract = new ethers.Contract(storeFrontAddress, StoreFront.abi, signer);
+      setHasRole(
+        await contract.hasRole(await contract.STOREFRONT_CREATOR_ROLE(), wallet)
+      );
+     };
+    asyncFn();
   }, [hasRole]);
+
+
 
   return (
     <Layout>

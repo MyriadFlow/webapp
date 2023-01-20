@@ -92,7 +92,7 @@ function Asset({ asset }) {
                       <h3 className="text-[#9298b0] font-medium dark:text-gray-300">
                         Contract Address
                       </h3>
-                      <a
+                      <Link
                         href={`https://mumbai.polygonscan.com/address/${copy}`}
                         target="_blank"
                         rel="noreferrer"
@@ -102,7 +102,7 @@ function Asset({ asset }) {
                         >
                           {copy}
                         </span>
-                      </a>
+                      </Link>
                     </div>
                     <div className="flex items-center justify-between my-4">
                       <h3 className="font-medium text-[#9298b0] dark:text-gray-300">
@@ -125,14 +125,14 @@ function Asset({ asset }) {
                         IPFS Asset
                       </h3>
                       <span className="text-gray-600 text-sm">
-                        <a
+                        <Link
                           href={imgurl}
                           target="_blank"
                           rel="noreferrer"
                           className="text-[#253262] text-lg dark:text-gray-400"
                         >
                           <BsArrowUpRight />
-                        </a>
+                        </Link>
                       </span>
                     </div>
                     <div className="flex items-center justify-between my-4">
@@ -140,14 +140,14 @@ function Asset({ asset }) {
                         IPFS Metadata
                       </h3>
                       <span className="text-gray-600 text-sm">
-                        <a
+                        <Link
                           href={nfturl}
                           target="_blank"
                           rel="noreferrer"
                           className="text-[#253262] text-lg dark:text-gray-400"
                         >
                           <BsArrowUpRight />
-                        </a>
+                        </Link>
                       </span>
                     </div>
                     <div className="flex items-center justify-between my-4">
@@ -155,14 +155,14 @@ function Asset({ asset }) {
                         Token Lifecycle
                       </h3>
                       <span className="text-gray-600 text-sm">
-                        <a
+                        <Link
                           href={transaction}
                           target="_blank"
                           rel="noreferrer"
                           className="text-[#253262] text-lg dark:text-gray-400"
                         >
                           <BsArrowUpRight />
-                        </a>
+                        </Link>
                       </span>
                     </div>
                   </div>

@@ -1,4 +1,3 @@
-/* pages/_app.js */
 import { useState } from "react";
 import "../styles/globals.css";
 import {ThemeProvider} from "next-themes"
@@ -7,9 +6,10 @@ import store from "../store";
 import Router from "next/router";
 import Loader from "../Components/Loader";
 import { ThirdwebProvider } from '@thirdweb-dev/react';
+import "../styles/globals.css";
 
 
-function Marketplace({ Component, pageProps }) {
+function MyApp({ Component, pageProps }) {
   const desiredChainId = 80001;
 
   const [isLoading,isSetLoading] = useState(false);
@@ -22,10 +22,6 @@ function Marketplace({ Component, pageProps }) {
   return (
     <>
     {isLoading && <Loader/>}
-       {/* <ThemeProvider enableSystem={true} attribute="class">
-        <Provider store={store}>
-          <Component {...pageProps} />
-        </Provider> */}
 
        <ThemeProvider enableSystem={true} attribute="class">
        <ThirdwebProvider desiredChainId={desiredChainId}>
@@ -40,4 +36,4 @@ function Marketplace({ Component, pageProps }) {
   );
 }
 
-export default Marketplace;
+export default MyApp;
