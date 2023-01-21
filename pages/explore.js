@@ -141,13 +141,12 @@ const Home = () => {
             {data.map((item) => {
               console.log(item);
               console.log("Image url", item.metaDataURI);
-
               return (
                 <div
-                  key={item.itemId}
+                  key={item.tokenId}
                   className="mycard p-3 shadow-lg w-full lg:w-72 cursor-pointer"
                 >
-                  <Link key={item.itemId} href={`/create/${item.itemId}`}>
+                  <Link key={item.tokenId} href={`/explore/${item.tokenId}`}>
                     <div>
                       <HomeComp uri={item ? item.metaDataURI : ""} />
 

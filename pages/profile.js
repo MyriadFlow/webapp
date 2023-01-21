@@ -456,7 +456,7 @@ function Profile() {
       <div className="flex px-5 py-5 gap-5 justify-center">
         <div className="shadow-2xl ..." style={{width:"30%",height:"600px",padding:"40px"}}>
           <div className="flex justify-center">
-            <img src="/sample.jpg" style={{width:"100%",height:"310px",padding:"30px"}}></img>
+            <img  alt=""src="/sample.jpg" style={{width:"100%",height:"310px",padding:"30px"}}></img>
           </div>
           <div>
             <p className="text-2xl font-bold pb-4 text-gray-400">

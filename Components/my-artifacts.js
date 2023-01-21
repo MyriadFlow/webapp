@@ -5,7 +5,6 @@ import axios from "axios";
 import Web3Modal from "web3modal";
 import { FaEthereum } from "react-icons/fa";
 import Link from "next/link";
-import Layout from "./Layout";
 import { selectUser } from "../slices/userSlice";
 import { useSelector } from "react-redux";
 import HomeComp from "./homeComp";

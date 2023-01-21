@@ -2,7 +2,10 @@ import { useEffect, useState } from "react";
 import { ethers } from "ethers";
 import { useRouter } from "next/router";
 import Web3Modal from "web3modal";
-import { FiFile } from "react-icons/fi";
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
+import Modal from "@mui/material/Modal";
+import Box from "@mui/material/Box";
 import { FaPlusSquare, FaMinusSquare } from "react-icons/fa";
 import { v4 as uuidv4 } from "uuid";
 import WalletConnectProvider from "@walletconnect/web3-provider";
@@ -20,26 +23,41 @@ import { useSelector } from "react-redux";
 import { selectUser } from "../slices/userSlice";
 import { convertUtf8ToHex } from "@walletconnect/utils";
 import { NFTStorage } from "nft.storage";
-import { Tab, Tabs } from "react-bootstrap";
+const style = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 490,
+  bgcolor: "background.paper",
+  border: "2px solid #000",
+  boxShadow: 24,
+  pt: 2,
+  px: 4,
+  pb: 3,
+};
+
 // const Web3 = require("web3");
 const marketplaceAddress = process.env.NEXT_PUBLIC_MARKETPLACE_ADDRESS;
 const storeFrontAddress = process.env.NEXT_PUBLIC_STOREFRONT_ADDRESS;
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 export default function CreateItem() {
+  const [show, setShow] = useState(false);
+  const handleClos = () => setShow(false);
+  const handleShow = () => setShow(true);
   const [model, setmodel] = useState(false);
   const [modelmsg, setmodelmsg] = useState("Transaction in progress!");
-  const [file, setFile] = useState();
-  const [imaget, setimaget] = useState(false);
-  const [videot, setVideot] = useState(false);
-  const [audiot, setAudiot] = useState(false);
-  const [doct, setDoct] = useState(false);
-  const [video, setVideo] = useState();
-  const [audio, setAudio] = useState();
-  const [doc, setDoc] = useState();
-  const [previewImage, setPreviewImage] = useState("");
-  const [previewVideo, setPreviewVideo] = useState("");
-  const [previewAudio, setPreviewAudio] = useState("");
-  const [previewDoc, setPreviewDoc] = useState("");
+  const [previewThumbnail, setPreviewThumbnail] = useState("");
+  const [mediaHash, setMediaHash] = useState({
+    image: "",
+    audio: "",
+    video: "",
+    animation_url: "",
+    doctype:"",
+
+  });
+  const [previewMedia, setpreviewMedia] = useState();
+  const [addImage, setAddImage] = useState(false);
   const [formInput, updateFormInput] = useState({
     price: "",
     name: "",
@@ -47,63 +65,61 @@ export default function CreateItem() {
     alternettext: "",
   });
   const router = useRouter();
-  async function onChange(e) {
-    const file = new File([e.target.files[0]], "nft.png", {
-      type: "image/png",
-    });
+  async function uploadBlobGetHash(file) {
     try {
       const blobDataImage = new Blob([file]);
       const metaHash = await client.storeBlob(blobDataImage);
-      console.log("Image metahash", metaHash);
-      setimaget(metaHash);
-      setPreviewImage(URL.createObjectURL(e.target.files[0]));
+      return metaHash;
+    } catch (error) {
+      console.log("Error uploading file: ", error);
+    }
+  }
+  const getMetaHashURI = (metaHash) => `ipfs://${metaHash}`;
+  async function onChangeThumbnail(e) {
+    const file = e.target.files[0];
+    const thumbnail = new File([file], file.name, {
+      type: file.type,
+    });
+    try {
+      const metaHash = await uploadBlobGetHash(thumbnail);
+      const metaHashURI = getMetaHashURI(metaHash);
+      setMediaHash({ ...mediaHash, image: metaHashURI });
+      setPreviewThumbnail(URL.createObjectURL(e.target.files[0]));
     } catch (error) {
       console.log("Error uploading file: ", error);
     }
   }
 
-  async function onChangeVideo(e) {
-    const video = new File([e.target.files[0]], "nft.mp4", {
-      type: "video/mp4",
+  async function onChangeMediaType(e) {
+    const file = e.target.files[0];
+    const { name, type } = file;
+    const fileType = type.split("/")[0];
+    const validImageTypes = ["image/gif", "image/jpeg", "image/png"];
+    const fileData = new File([file], name, {
+      type: type,
     });
+    if(addImage && fileType=='image'){
+      setAddImage(false);
+    }
+    if (!validImageTypes.includes(type)) {
+      setAddImage(true);
+    }
     try {
-      const blobDataVedio = new Blob([video]);
-      const metaHash = await client.storeBlob(blobDataVedio);
-      console.log("vedio metahash", metaHash);
-      setVideot(metaHash);
-      setPreviewVideo(URL.createObjectURL(e.target.files[0]));
+      const metaHash = await uploadBlobGetHash(fileData);
+      const metaHashURI = getMetaHashURI(metaHash);
+      if (fileType == "audio" || fileType == "video"||fileType=="doctype") {
+        setMediaHash({
+          ...mediaHash,
+          [fileType]: metaHashURI,
+          animation_url: metaHashURI,
+        });
+      } else {
+        setMediaHash({ ...mediaHash, [fileType]: metaHashURI });
+      }
+      console.log("file data",fileData)
+      setpreviewMedia(URL.createObjectURL(e.target.files[0]));
     } catch (error) {
       console.log("Error uploading vedio: ", error);
-    }
-  }
-  async function onChangeAudio(e) {
-    e.preventDefault();
-    const audio = new File([e.target.files[0]], "nft.mp3", {
-      type: "audio/mpeg",
-    });
-    try {
-      const blobDataAudio = new Blob([audio]);
-      const metaHash = await client.storeBlob(blobDataAudio);
-      console.log("audio metahash", metaHash);
-      setAudiot(metaHash);
-      setPreviewAudio(URL.createObjectURL(e.target.files[0]));
-    } catch (error) {
-      console.log("Error uploading audio: ", error);
-    }
-  }
-  async function onChangeDoc(e) {
-    e.preventDefault();
-    const doc = new File([e.target.files[0]], "text.pdf", {
-      type: "pdf/doc/xml/ppt",
-    });
-    try {
-      const blobDataDoc = new Blob([doc]);
-      const metaHash = await client.storeBlob(blobDataDoc);
-      console.log("doc metahash", metaHash);
-      setDoct(metaHash);
-      setPreviewDoc(URL.createObjectURL(e.target.files[0]));
-    } catch (error) {
-      console.log("Error uploading file doc: ", error);
     }
   }
 
@@ -125,7 +141,7 @@ export default function CreateItem() {
       attributes,
       categories,
     };
-    if (!imaget) {
+    if (!mediaHash?.image) {
       setAlertMsg("Image is required to create asset");
       setOpen(true);
       return;
@@ -134,39 +150,7 @@ export default function CreateItem() {
     setmodelmsg("Transaction 1 in  progress");
     setmodel(true);
 
-    let image = "",
-      videoURI = "",
-      audioURI = "",
-      docURI = "";
-    if (imaget) {
-      image = `ipfs://${imaget}`;
-      assetData["image"] = image;
-    }
-
-    if (videot) {
-      videoURI = `ipfs://${videot}`;
-      assetData["video"] = videoURI;
-      assetData["animation_url"] = videoURI;
-    }
-
-    if (audiot) {
-      audioURI = `ipfs://${audiot}`;
-      assetData["audio"] = audioURI;
-      assetData["animation_url"] = audioURI;
-      delete assetData["video"];
-    }
-
-    if (doct) {
-      docURI = `ipfs://${doct}`;
-      assetData["document"] = docURI;
-      if (assetData?.audio || assetData?.video) {
-        delete assetData["video"];
-        delete assetData["audio"];
-        delete assetData["animation_url"];
-      }
-    }
-
-    const data = JSON.stringify({ ...assetData });
+    const data = JSON.stringify({ ...assetData, ...mediaHash });
     console.log("Asset Data before create", data);
 
     const blobData = new Blob([data]);
@@ -175,7 +159,7 @@ export default function CreateItem() {
         const ipfsHash = metaHash;
         const url = `ipfs://${metaHash}`;
         console.log("doc ipfs", ipfsHash, url);
-        await createItem(ipfsHash, url);
+        // await createItem(ipfsHash, url);
       });
     } catch (error) {
       setmodelmsg("Transaction failed");
@@ -254,6 +238,8 @@ export default function CreateItem() {
     } catch (e) {
       console.log(e);
       setmodelmsg("Transaction 2 failed");
+    }finally{
+      //reset all states here
     }
   };
   const [advancemenu, Setadvancemenu] = useState(false);
@@ -294,17 +280,12 @@ export default function CreateItem() {
   };
 
   const [open, setOpen] = useState(false);
-  const [alertMsg, setAlertMsg] = useState("Something went wrong");
-
-  const handleClick = () => {
-    setOpen(true);
-  };
+  const [alertMsg, setAlertMsg] = useState("");
 
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
       return;
     }
-
     setOpen(false);
   };
 
@@ -332,39 +313,7 @@ export default function CreateItem() {
     };
     asyncFn();
   }, []);
-  const authorize = async () => {
-    const { data } = await axios.get(
-      `${BASE_URL}/api/v1.0/flowid?walletAddress=${wallet}`
-    );
 
-    let web3 = new Web3(Web3.givenProvider);
-    let completemsg = data.payload.eula + data.payload.flowId;
-    const hexMsg = convertUtf8ToHex(completemsg);
-    const result = await web3.eth.personal.sign(hexMsg, wallet);
-    var signdata = JSON.stringify({
-      flowId: data.payload.flowId,
-      signature: result,
-    });
-
-    const config = {
-      url: `${BASE_URL}/api/v1.0/authenticate`,
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      data: signdata,
-    };
-    try {
-      const response = await axios(config);
-      const token = await response?.data?.payload?.token;
-      localStorage.setItem("platform_token", token);
-      getRole();
-      return true;
-    } catch (e) {
-      console.log(e);
-      return false;
-    }
-  };
 
   const getRole = async () => {
     const token = localStorage.getItem("platform_token");
@@ -461,9 +410,9 @@ export default function CreateItem() {
                 <div className="p-4 mt-5">
                   <form action="#">
                     <div>
-                      <img
+                      <img className="w-72 h-32"
+                        alt=""
                         src="/NftB1.jpg"
-                        style={{ width: "300px", height: "130px" }}
                       ></img>
                     </div>
                     <h3
@@ -486,7 +435,6 @@ export default function CreateItem() {
                         style={{ width: "75%" }}
                       >
                         <div className="font-bold">Choose Wallet</div>
-                        <div>Preview</div>
                       </div>
                     </div>
                     <div className="flex">
@@ -503,6 +451,7 @@ export default function CreateItem() {
                           <div className="flex">
                             <div style={{ padding: "16px" }}>
                               <img
+                                alt=""
                                 src="/eth.png"
                                 style={{ height: "40px", width: "40px" }}
                               ></img>
@@ -521,27 +470,23 @@ export default function CreateItem() {
                           Upload file
                         </div>
                         <div
-                          className="absolute   translate-y-[-50%]"
+                          className="  translate-y-[-50%]"
                           style={{
                             marginTop: "85px",
                             border: "2px dotted",
                             borderRadius: "10px",
-                            width: "35%",
                             textAlign: "center",
                             padding: "12px",
                           }}
                         >
-                          <div className="flex justify-center">
-                            <FiFile className="text-4xl" />
-                          </div>
                           <h1 className="text-lg font-semibold">
                             Drag file here to upload
                           </h1>
                           <p className="text-[#6a6b76]">
-                            PNG,GIF,WEBP,MP4,or MP3.Max 100mb.
+                            PNG,GIF,WEBP,MP4,or MP3
                             <br />
                             <div
-                              className="text-lg text-black mt-3 cursor-pointer"
+                              className=" text-black mt-3 cursor-pointer"
                               style={{
                                 borderRadius: "10px",
                                 background: "#c5bfbf",
@@ -550,33 +495,80 @@ export default function CreateItem() {
                                 width: "25%",
                               }}
                             >
-                              Choose File
+                               {previewMedia ? (mediaHash?.image && addImage==false) ?
+                                        <img
+                                          src={previewMedia}
+                                          alt=""
+                                          className="w-full object-cover h-72 flex justify-center"
+                                        /> : mediaHash?.video ?
+                                        <video  autoPlay controls>
+                                          <source
+                                          src={previewMedia}
+                                          
+                                        ></source>
+                                        </video>:
+                                        mediaHash?.audio ? <audio  autoPlay controls>
+                                           <source
+                                          src={previewMedia}
+                                         
+                                        ></source>
+                                        </audio> :
+                                        mediaHash?.doctype? <input
+                                        file={previewMedia}
+                                        
+                                       alt=""
+                                        className="w-full object-cover h-72 flex justify-center"
+                                      />:null
+                                       : (
+                              <input
+                                type="file"
+                                accept="image/png, image/jpeg,.txt,.doc,video/mp4,audio/mpeg,.pdf"
+                                onChange={(e) => onChangeMediaType(e)}
+                                className=""
+                              />
+                                      )}
                             </div>
                           </p>
                         </div>
+                        {addImage && (
+                          <>
+                            <div
+                              className="font-bold  mt-5 text-left"
+                            >
+                              Upload preview image
+                            </div>
+                            <div
+                              className="   translate-y-[-50%] rounded-xl border-dashed border-2 border-indigo-600 ... text-center p-3 w-96 ... mt-20"
+                            >
+                              <h1 className="text-lg font-semibold">
+                                Drag file here to upload
+                              </h1>
+                              <p className="text-[#6a6b76]">
+                                PNG, JPG, or GIF
+                                <br />
+                                <div
+                                  className=" text-black mt-3 cursor-pointer rounded-xl p-2.5 m-auto w-1/3 bg-slate-300"
+                                 
+                                >
+                                  {previewThumbnail&&<img src={previewThumbnail} />}
+                                  <input
+                                    type="file"
+                                    accept="image/*"
+                                    onChange={(e) => onChangeThumbnail(e)}
+                                    className=""
+                                  />
+                                </div>
+                              </p>
+                            </div>
+                          </>
+                        )}
                       </div>
-                      <div
-                        className="ml-5 shadow-2xl ..."
-                        style={{
-                          width: "450px",
-                          height: "400px",
-                          borderRadius: "10px",
-                          border: "1px solid ",
-                        }}
-                      >
-                        <div
-                          className="flex justify-center text-secondary"
-                          style={{ height: "100%" }}
-                        >
-                          {" "}
-                          <span>Upload file to preview your brand new NFT</span>
-                        </div>
-                      </div>
+                    
                     </div>
+                   
                     <div className="w-full px-8 py-6">
                       <div
-                        className="bg-gray-100 shadow-sm cursor-pointer p-3 border-2 border-gray-300 rounded-xl font-semibold text-md  dark:bg-gray-800"
-                        style={{ background: "black", color: "white" }}
+                        className="bg-gray-100 shadow-sm cursor-pointer p-3 border-2 border-gray-300 rounded-xl font-semibold text-md  dark:bg-gray-800 bg-black text-white"
                         onClick={() => Setadvancemenu(!advancemenu)}
                       >
                         {advancemenu
@@ -598,9 +590,8 @@ export default function CreateItem() {
                                   <input
                                     name="display_type"
                                     label="First Name"
-                                    style={{ color: "pink" }}
                                     placeholder="Display type"
-                                    className="mt-2 p-3 w-full text-sm input_background outline-none rounded-md dark:bg-gray-900"
+                                    className="mt-2 p-3 w-full text-sm input_background outline-none rounded-md dark:bg-gray-900 text-pink-500"
                                     variant="filled"
                                     value={inputField.display_type}
                                     onChange={(event) =>
@@ -610,9 +601,8 @@ export default function CreateItem() {
                                   <input
                                     name="trait_type"
                                     label="Last Name"
-                                    style={{ color: "pink" }}
                                     placeholder="Trait type"
-                                    className="mt-2 p-3 w-full text-sm input_background outline-none rounded-md dark:bg-gray-900"
+                                    className="mt-2 p-3 w-full text-sm input_background outline-none rounded-md dark:bg-gray-900 text-pink-500"
                                     variant="filled"
                                     value={inputField.trait_type}
                                     onChange={(event) =>
@@ -622,10 +612,9 @@ export default function CreateItem() {
                                   <input
                                     name="value"
                                     type="number"
-                                    style={{ color: "pink" }}
                                     label="First Name"
                                     placeholder="Value"
-                                    className="mt-2 p-3 w-full text-sm input_background outline-none rounded-md dark:bg-gray-900"
+                                    className="mt-2 p-3 w-full text-sm input_background outline-none rounded-md dark:bg-gray-900 text-pink-500"
                                     variant="filled"
                                     value={inputField.value}
                                     onChange={(event) =>
@@ -639,16 +628,155 @@ export default function CreateItem() {
                                       handleRemoveFields(inputField.id)
                                     }
                                   >
-                                    <FaMinusSquare style={{ color: "red" }} />
+                                    <FaMinusSquare className="text-red-500"  />
                                   </button>
                                   <button onClick={handleAddFields}>
-                                    <FaPlusSquare style={{ color: "green" }} />
+                                    <FaPlusSquare className="text-green-500" />
                                   </button>
                                 </div>
                               </div>
                             ))}
                           </form>
-
+                          <div>
+                            <Button onClick={handleShow}>
+                              Open properties
+                            </Button>
+                            <Modal
+                              open={show}
+                              onClose={handleClos}
+                              aria-labelledby="modal-modal-title"
+                              aria-describedby="modal-modal-description"
+                            >
+                              <Box sx={style} className="text-center">
+                                <Typography
+                                  id="modal-modal-title"
+                                  variant="h6"
+                                  component="h2"
+                                  className="text-center"
+                                >
+                                  <div className="flex justify-between">
+                                    <div>Add Properties</div>
+                                    <div>
+                                      <img className="w-3 h-3"
+                                        onClose={handleClos}
+                                        img
+                                        src="cross.png"
+                                        style={{
+                                          width: "13px",
+                                          height: "13px",
+                                        }}
+                                      ></img>
+                                    </div>
+                                  </div>
+                                </Typography>
+                                <Typography
+                                  id="modal-modal-description"
+                                  sx={{ mt: 2 }}
+                                >
+                                  <div>
+                                    Properties show up underneath your item, are
+                                    clickable, and can be filtered in your
+                                    collection's sidebar.
+                                  </div>
+                                  <div className="flex justify-between">
+                                    <div className="font-bold">Type</div>
+                                    <div className="font-bold">Name</div>
+                                  </div>
+                                  {attributes.map((inputField) => (
+                                    <div key={inputField.id}>
+                                      <div className="flex flex-col space-y-4 md:space-y-0 md:flex-row md:space-x-4 pb-2">
+                                        <input
+                                          name="display_type"
+                                          label="First Name"
+                                          style={{ color: "pink" }}
+                                          placeholder="Display type"
+                                          className="mt-2 p-3 w-full text-sm input_background outline-none rounded-md dark:bg-gray-900"
+                                          variant="filled"
+                                          value={inputField.display_type}
+                                          onChange={(event) =>
+                                            handleChangeInput(
+                                              inputField.id,
+                                              event
+                                            )
+                                          }
+                                        />
+                                        <input
+                                          name="trait_type"
+                                          label="Last Name"
+                                          style={{ color: "pink" }}
+                                          placeholder="Trait type"
+                                          className="mt-2 p-3 w-full text-sm input_background outline-none rounded-md dark:bg-gray-900"
+                                          variant="filled"
+                                          value={inputField.trait_type}
+                                          onChange={(event) =>
+                                            handleChangeInput(
+                                              inputField.id,
+                                              event
+                                            )
+                                          }
+                                        />
+                                        <input
+                                          name="value"
+                                          type="number"
+                                          style={{ color: "pink" }}
+                                          label="First Name"
+                                          placeholder="Value"
+                                          className="mt-2 p-3 w-full text-sm input_background outline-none rounded-md dark:bg-gray-900"
+                                          variant="filled"
+                                          value={inputField.value}
+                                          onChange={(event) =>
+                                            handleChangeInput(
+                                              inputField.id,
+                                              event
+                                            )
+                                          }
+                                        />
+                                      </div>
+                                    </div>
+                                  ))}
+                                  <div
+                                    onClick={() =>
+                                      handleRemoveFields(inputField.id)
+                                    }
+                                    className="flex"
+                                  >
+                                    <div className="mt-3">
+                                      <input
+                                        type="text"
+                                        placeholder="Character"
+                                      ></input>
+                                    </div>
+                                    <div className="mt-3 ml-5">
+                                      <input
+                                        type="text"
+                                        placeholder="Male"
+                                      ></input>
+                                    </div>
+                                  </div>
+                                  <div
+                                    className="text-left mt-5"
+                                    style={{
+                                      padding: "10px",
+                                      borderRadius: "10px",
+                                      width: "28%",
+                                      background: "#8f8787",
+                                      color: "white",
+                                    }}
+                                  >
+                                    {" "}
+                                    <button onClick={handleAddFields}>
+                                      Add More
+                                    </button>
+                                  </div>
+                                  <div className="mt-5">
+                                    <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-full">
+                                      Save
+                                    </button>
+                                  </div>
+                                </Typography>
+                              </Box>
+                            </Modal>
+                          </div>
                           <p className="text-md font-semibold mt-6">
                             {" "}
                             Alternative text for NFT{" "}
@@ -687,7 +815,6 @@ export default function CreateItem() {
                         </div>
                       )}
                     </div>
-
                     <div
                       className="flex justify-between"
                       style={{ width: "55%" }}
@@ -702,6 +829,7 @@ export default function CreateItem() {
                       </div>
                       <div>
                         <img
+                          alt=""
                           src="/swich.png"
                           style={{ width: "30px", height: "30px" }}
                         ></img>
@@ -772,245 +900,6 @@ export default function CreateItem() {
                         />
                       </div>
                     </div>
-
-                    {/* <div className="flex items-center rounded-sm flex justify-center" style={{ display: 'block', width: "100%", padding: 30 }}>
-                      <Tabs
-                        defaultActiveKey="image"
-                        id="justify-tab-example"
-                        className="mb-3"
-                        justify
-                        style={{background:"black"}}
-                      >
-                        <Tab eventKey="image" title="Image">
-                          <div>
-                            <div className="p-8 border-[1px] rounded-md border-[#d5d5d6]">
-                              <div className="w-full rounded-md bg-white dark:bg-gray-900">
-                                <div className="w-full">
-                                  <div
-                                    className={
-                                      file
-                                        ? "h-auto w-full border-4 rounded-md"
-                                        : "h-80 w-full rounded-md border-2 border-dashed hover:border-[#286efa] bg-white dark:bg-gray-900"
-                                    }
-                                  >
-                                    <div className="relative h-full">
-                                      {previewImage ? (
-                                        <img
-                                          src={previewImage}
-                                          alt=""
-                                          className="w-full object-cover h-72 flex justify-center"
-                                        />
-                                      ) : (
-                                        <div>
-                                          <div className="">
-                                            <input
-                                              type="file"
-                                              name="Asset"
-                                              className="bg-slate-500 absolute top-0 left-0 w-full h-full opacity-0 z-50"
-                                              onChange={onChange}
-                                            />
-                                            <div className="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]">
-                                              <span className="flex items-center justify-center">
-                                                <FiFile className="text-4xl" />
-                                              </span>
-                                              <h1 className="text-lg font-semibold">
-                                                Drag file here to upload
-                                              </h1>
-                                              <p className="text-[#6a6b76]">
-                                                Alternatively, you can select a
-                                                file by
-                                                <br />
-                                                <span className="text-lg font-bold text-[#2e44ff] cursor-pointer">
-                                                  clicking here
-                                                </span>
-                                              </p>
-                                            </div>
-                                          </div>
-                                        </div>
-                                      )}
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </Tab>
-                        <Tab eventKey="video" title="Video">
-                          <div className="p-8 border-[1px] rounded-md border-[#d5d5d6]">
-                            <div className="w-full rounded-md bg-white dark:bg-gray-900">
-                              <div className="w-full">
-                                <div
-                                  className={
-                                    video
-                                      ? "h-auto w-full border-4 rounded-md"
-                                      : "h-80 w-full rounded-md border-2 border-dashed hover:border-[#286efa] bg-white dark:bg-gray-900"
-                                  }
-                                >
-                                  <div className="relative h-full">
-                                    {previewVideo ? (
-                                      <video
-                                        alt=""
-                                        className="w-full object-cover h-72 flex justify-center"
-                                      >
-                                        <source
-                                          src={previewVideo}
-                                          type="video/mp4"
-                                        ></source>
-                                      </video>
-                                    ) : (
-                                      <div>
-                                        <div className="">
-                                          <input
-                                            type="file"
-                                            name="Asset"
-                                            className="bg-slate-500 absolute top-0 left-0 w-full h-full opacity-0 z-50"
-                                            onChange={onChangeVideo}
-                                            id="default_btn"
-                                          />
-                                          <div className="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]">
-                                            <span className="flex items-center justify-center">
-                                              <FiFile className="text-4xl" />
-                                            </span>
-                                            <h1 className="text-lg font-semibold">
-                                              Drag video here to upload video
-                                            </h1>
-                                            <p className="text-[#6a6b76]">
-                                              Alternatively, you can select a
-                                              video by
-                                              <br />
-                                              <span className="text-lg font-bold text-[#2e44ff] cursor-pointer">
-                                                clicking here
-                                              </span>
-                                            </p>
-                                          </div>
-                                        </div>
-                                      </div>
-                                    )}
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </Tab>
-                        <Tab eventKey="audio" title="Audio">
-                          <div className="p-8 border-[1px] rounded-md border-[#d5d5d6]">
-                            <div className="w-full rounded-md bg-white dark:bg-gray-900">
-                              <div className="w-full">
-                                <div
-                                  className={
-                                    audio
-                                      ? "h-auto w-full border-4 rounded-md"
-                                      : "h-80 w-full rounded-md border-2 border-dashed hover:border-[#286efa] bg-white dark:bg-gray-900"
-                                  }
-                                >
-                                  <div className="relative h-full">
-                                    {previewAudio ? (
-                                      <audio
-                                        controls
-                                        alt=""
-                                        className="w-full object-cover h-72 flex justify-center"
-                                      >
-                                        <source
-                                          src={previewAudio}
-                                          type="audio/mpeg"
-                                        ></source>
-                                      </audio>
-                                    ) : (
-                                      <div>
-                                        <div className="">
-                                          <input
-                                            type="file"
-                                            name="Asset"
-                                            className="bg-slate-500 absolute top-0 left-0 w-full h-full opacity-0 z-50"
-                                            onChange={onChangeAudio}
-                                            id="default_btn"
-                                          />
-                                          <div className="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]">
-                                            <span className="flex items-center justify-center">
-                                              <FiFile className="text-4xl" />
-                                            </span>
-                                            <h1 className="text-lg font-semibold">
-                                              Drag Audio here to upload
-                                            </h1>
-                                            <p className="text-[#6a6b76]">
-                                              Alternatively, you can select a
-                                              Audio by
-                                              <br />
-                                              <span className="text-lg font-bold text-[#2e44ff] cursor-pointer">
-                                                clicking here
-                                              </span>
-                                            </p>
-                                          </div>
-                                        </div>
-                                      </div>
-                                    )}
-                                  </div>
-                                </div>
-                              </div>
-                              <div className=""></div>
-                            </div>
-                          </div>
-                        </Tab>
-                        <Tab eventKey="document" title="Document">
-                          <div className="p-8 border-[1px] rounded-md border-[#d5d5d6]">
-                            <div className="w-full rounded-md bg-white dark:bg-gray-900">
-                              <div className="w-full">
-                                <div
-                                  className={
-                                    doc
-                                      ? "h-auto w-full border-4 rounded-md"
-                                      : "h-80 w-full rounded-md border-2 border-dashed hover:border-[#286efa] bg-white dark:bg-gray-900"
-                                  }
-                                >
-                                  <div className="relative h-full">
-                                    {previewDoc ? (
-                                      <input
-                                        file={previewDoc}
-                                        alt=""
-                                        multiple
-                                        className="w-full object-cover h-72 flex justify-center"
-                                      />
-                                    ) : (
-                                      <div>
-                                        <div className="">
-                                          <input
-                                            type="file"
-                                            name="Upload"
-                                            accept="application/pdf,.csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
-                                            className="bg-slate-500 absolute top-0 left-0 w-full h-full opacity-0 z-50"
-                                            onChange={onChangeDoc}
-                                            id="default_btn"
-                                          />
-                                          <div className="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]">
-                                            <span className="flex items-center justify-center">
-                                              <FiFile className="text-4xl" />
-                                            </span>
-                                            <h1 className="text-lg font-semibold">
-                                              Drag Document here to upload
-                                            </h1>
-                                            <p className="text-[#6a6b76]">
-                                              Alternatively, you can select a
-                                              Document by
-                                              <br />
-                                              <span className="text-lg font-bold text-[#2e44ff] cursor-pointer">
-                                                clicking here
-                                              </span>
-                                            </p>
-                                          </div>
-                                        </div>
-                                      </div>
-                                    )}
-                                  </div>
-                                </div>
-                              </div>
-                              <div className=""></div>
-                            </div>
-                          </div>
-                        </Tab>
-                      </Tabs>
-
-                    
-                    </div> */}
                   </form>
                 </div>
               </div>

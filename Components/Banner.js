@@ -16,13 +16,13 @@ function Banner() {
         showArrows={false}
         >
             <div className="">
-                <img loading="lazy" src="/pic1.png"/>
+                <img alt="" loading="lazy" src="/pic1.png"/>
             </div>
             <div>
-                <img  loading="lazy" src="/pic2.jpg" />
+                <img alt="" loading="lazy" src="/pic2.jpg" />
             </div>
             <div>
-                <img loading="lazy" src="/pic3.jpeg" />
+                <img alt="" loading="lazy" src="/pic3.jpeg" />
             </div>
         </Carousel>
             

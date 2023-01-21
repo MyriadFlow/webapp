@@ -5,7 +5,6 @@ import axios from "axios";
 import Web3Modal from "web3modal";
 import { FaEthereum } from "react-icons/fa";
 import Link from "next/link";
-import Layout from "./Layout";
 import { selectUser } from "../slices/userSlice";
 import { useSelector } from "react-redux";
 import HomeComp from "./homeComp";
@@ -146,10 +145,10 @@ const MyAssets = () => {
           data?.map((item) => {
             return (
               <div
-                key={item.id}
+                key={item.itemId}
                 className="bg-[white] dark:bg-[#1c1c24]  rounded-lg shadow-lg w-full lg:w-72 hover:scale-105 duration-200 transform transition cursor-pointer border-2 dark:border-gray-800"
               >
-                <Link key={item.id} href={`/tokens/${item.id}`}>
+                <Link key={item.itemId} href={`/tokens/${item.itemId}`}>
                   <div>
                     <HomeComp uri={item ? item.metaDataURI : ""} />
 
