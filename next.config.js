@@ -2,5 +2,7 @@
 module.exports = {
   reactStrictMode: true,
   basePath: "",
-  staticPageGenerationTimeout:  100
+  staticPageGenerationTimeout:  100,
+  output: 'standalone',
+  
 };
