@@ -6,7 +6,7 @@ import BigCard from "../Components/Cards/BigCard";
 import SmallCard from "../Components/Cards/SmallCard";
 import Slider from "react-slick";
 
-function landingpage() {
+function LandingPage() {
   const settings = {
     dots: false,
     infinite: true,
@@ -65,7 +65,6 @@ function landingpage() {
         <title>Marketplace</title>
       </Head>
       <Layout>
-        {/* <NotifyContainer /> */}
         <div className="min-h-screen lg:flex justify-center items-center">
           <div className="lg:flex xl:gap-8 lg:w-[1025px] x2:w-[1200px] xxl:w-[1400px] mx-auto lg:mt-12">
             <div className="text-center lg:text-left lg:w-1/2 mt-16 lg:mt-0  p-2 sm:p-4 lg:px-8 lg:pt-0">
@@ -146,7 +145,6 @@ function landingpage() {
             </div>
           </div>
         </div>
-        {/* Call to Action Button */}
         <section className="max-w-[1280px] mx-auto px-8 my-20">
           <div className="bg-white sm:text-xl font-semibold text-black mx-auto p-6 sm:p-8 lg:p-10 gap-x-4 flex items-center justify-between rounded-2xl">
             <h1 className="">Polygon is in beta on MyriadFlow</h1>
@@ -299,4 +297,4 @@ function landingpage() {
   );
 }
 
-export default landingpage;
+export default LandingPage;

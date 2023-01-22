@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import axios from 'axios';
 
-const homecomp2 = ({uri}) => {
+const Homecomp2 = ({uri}) => {
 
     const [response,setResponse] = useState([]);
     const removePrefix = (uri) => {
@@ -27,4 +27,4 @@ const homecomp2 = ({uri}) => {
     )
 }
 
-export default homecomp2;
+export default Homecomp2;

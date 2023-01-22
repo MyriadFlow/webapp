@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import axios from 'axios';
 
-const assetcomp = ({uri}) => {
+const Assetcomp = ({uri}) => {
     const removePrefix = (uri) => {
         return uri.substring(7, uri.length);
       };
@@ -52,4 +52,4 @@ const assetcomp = ({uri}) => {
     )
 }
 
-export default assetcomp;
+export default Assetcomp;

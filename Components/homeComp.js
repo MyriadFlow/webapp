@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
-const homecomp = ({ uri }) => {
+const Homecomp = ({ uri }) => {
   const [response, setResponse] = useState([]);
   const [image, setImage] = useState("");
   const removePrefix = (uri) => {
@@ -39,4 +39,4 @@ const homecomp = ({ uri }) => {
   );
 };
 
-export default homecomp;
+export default Homecomp;

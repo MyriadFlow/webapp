@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { CircularProgress } from '@mui/material';
 // import { CircularProgressBar } from "@tomik23/react-circular-progress-bar";
-const assetProperties = ({ uri }) => {
+const AssetProperties = ({ uri }) => {
 
     const removePrefix = (uri) => {
         return uri.substring(7, uri.length);
@@ -53,4 +53,4 @@ const assetProperties = ({ uri }) => {
     )
 }
 
-export default assetProperties;
+export default AssetProperties;

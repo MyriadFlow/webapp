@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import axios from 'axios';
 
-const assetDesc = ({uri}) => {
+const AssetDesc = ({uri}) => {
 
     const [response,setResponse] = useState([]);
 
@@ -24,4 +24,4 @@ const assetDesc = ({uri}) => {
     )
 }
 
-export default assetDesc;
+export default AssetDesc;

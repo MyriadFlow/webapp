@@ -676,7 +676,7 @@ export default function CreateItem() {
                                   <div>
                                     Properties show up underneath your item, are
                                     clickable, and can be filtered in your
-                                    collection's sidebar.
+                                    collection&apos;s sidebar.
                                   </div>
                                   <div className="flex justify-between">
                                     <div className="font-bold">Type</div>

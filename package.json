@@ -30,7 +30,7 @@
     "@tailwindcss/line-clamp": "^0.4.2",
     "@thirdweb-dev/react": "^3",
     "@thirdweb-dev/sdk": "^3",
-    "@walletconnect/utils": "^2.2.1",
+    "@walletconnect/utils": "^1.6.5",
     "@walletconnect/web3-provider": "^1.8.0",
     "axios": "^1.2.3",
     "D": "^1.0.0",
@@ -48,7 +48,7 @@
     "react-slick": "^0.29.0",
     "reactstrap": "^9.1.5",
     "tw-elements": "^1.0.0-alpha13",
-    "web3": "^1.8.1",
+    "web3": "^1.7.1",
     "web3modal": "^1.9.11"
   },
   "devDependencies": {

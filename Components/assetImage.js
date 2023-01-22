@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import axios from 'axios';
 
-const assetImage = ({uri}) => {
+const AssetImage = ({uri}) => {
 
     const [response,setResponse] = useState([]);
     const [image, setImage] = useState("");
@@ -29,4 +29,4 @@ const assetImage = ({uri}) => {
     )
 }
 
-export default assetImage;
+export default AssetImage;

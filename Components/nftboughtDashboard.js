@@ -13,7 +13,7 @@ import BuyAsset from "./buyAssetModal";
 
 const graphqlAPI = process.env.NEXT_PUBLIC_GRAPHQL_API;
 
-function nftboughtDashboard() {
+function NftboughtDashboard() {
   function getEthPrice(price) {
     return ethers.utils.formatEther(price);
   }
@@ -113,4 +113,4 @@ function nftboughtDashboard() {
   );
 }
 
-export default nftboughtDashboard;
+export default NftboughtDashboard;
