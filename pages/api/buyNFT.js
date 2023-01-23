@@ -1,15 +1,10 @@
 import Web3Modal from "web3modal";
 import { ethers } from "ethers";
-// import { storeFrontAddress, marketplaceAddress } from "../../config";
-import StoreFront from "../../artifacts/contracts/StoreFront.sol/StoreFront.json";
 import Marketplace from "../../artifacts/contracts/Marketplace.sol/Marketplace.json";
 import WalletConnectProvider from "@walletconnect/web3-provider";
 
 const marketplaceAddress = process.env.NEXT_PUBLIC_MARKETPLACE_ADDRESS;
-const storeFrontAddress = process.env.NEXT_PUBLIC_STOREFRONT_ADDRESS;
-
 export const buyNFT = async (nft, setmodel, setmodelmsg) => {
-
   /* needs the user to sign the transaction, so will use Web3Provider and sign it */
   // const web3Modal = new Web3Modal();
   const options = new WalletConnectProvider({
@@ -22,7 +17,7 @@ export const buyNFT = async (nft, setmodel, setmodelmsg) => {
   });
   const providerOptions = {
     walletconnect: {
-      package: WalletConnectProvider, // required
+      package: WalletConnectProvider,
       options: options,
     },
   };
@@ -48,10 +43,7 @@ export const buyNFT = async (nft, setmodel, setmodelmsg) => {
     const options = {
       value: ethers.BigNumber.from(nft.price),
     };
-    const transaction = await contract.createMarketSale(
-      nft.itemId,
-      options
-    );
+    const transaction = await contract.createMarketSale(nft.itemId, options);
     console.log(transaction);
     await transaction.wait();
     setmodel(false);

@@ -1,19 +1,14 @@
 // /* pages/my-artifacts.js */
 import { ethers } from "ethers";
 import { useEffect, useState } from "react";
-import axios from "axios";
 import Web3Modal from "web3modal";
-import { FaEthereum } from "react-icons/fa";
 import Link from "next/link";
 import { selectUser } from "../slices/userSlice";
 import { useSelector } from "react-redux";
 import HomeComp from "./homeComp";
 import HomeComp2 from "./homecomp2";
-import Loader from "./Loader";
 import { useRouter } from "next/router";
 import BuyAsset from "../Components/buyAssetModal";
-// import { gql } from "@apollo/client";
-import client from "../apollo-client";
 import { request, gql } from "graphql-request";
 import StoreFront from "../artifacts/contracts/StoreFront.sol/StoreFront.json";
 import Marketplace from "../artifacts/contracts/Marketplace.sol/Marketplace.json";
@@ -59,9 +54,6 @@ const MyAssets = () => {
     setData(result.marketplaceItems);
     setLoading(false);
   };
-  function getEthPrice(price) {
-    return ethers.utils.formatEther(price);
-  }
   useEffect(() => {
     if (!localStorage.getItem("platform_wallet") && wallet !== undefined) {
       localStorage.setItem("platform_wallet", wallet);
@@ -155,15 +147,7 @@ const MyAssets = () => {
                     <div className="flex px-4 py-6">
                       <HomeComp2 uri={item ? item.metaDataURI : ""} />
                     </div>
-                    {/* <div className=" flex items-center justify-between px-4 mb-2">
-                    <p className="font-1 text-sm font-bold">Price </p>
-                    <div className="flex items-center">
-                      <FaEthereum className="h-4 w-4 text-blue-400" />
-                      <p className="font-extralight dark:text-gray-400">
-                        {getEthPrice(item.price)} MATIC
-                      </p>
-                    </div>
-                  </div> */}
+                   
                   </div>
                 </Link>
                 <div className="form-item w-full">
@@ -187,9 +171,7 @@ const MyAssets = () => {
               </div>
             );
           })
-          //    : (loading?<Loader/>:<div className="text-xl pb-10">
-          //   You haven&apos;t created any asset.
-          // </div>)
+         
         }
       </div>
     </div>

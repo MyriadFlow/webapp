@@ -1,15 +1,9 @@
-import Header from "../../Components/Header";
-import Footer from "../../Components/Footer";
 import AssetComp from "../../Components/assetComp";
-import HomeComp2 from "../../Components/homecomp2";
-import AssetImage from "../../Components/assetImage";
-import AssetDesc from "../../Components/assetDesc";
 import AssetHead from "../../Components/assetHead";
 import AssetProps from "../../Components/assetProperties";
 import AssetCategories from "../../Components/AssetCategories";
 import { BsArrowUpRight } from "react-icons/bs";
-import { BiWallet } from 'react-icons/bi';
-import { FaCopy } from "react-icons/fa";
+import { BiWallet } from "react-icons/bi";
 import { gql } from "@apollo/client";
 import client from "../../apollo-client";
 import React, { useEffect, useState } from "react";
@@ -30,21 +24,21 @@ function Asset({ asset }) {
     return uri.substring(7, uri.length);
   };
   // console.log(asset);
-  const nfturl = `https://cloudflare-ipfs.com/ipfs/${removePrefix(asset.marketplaceItems[0].metaDataURI)}`;
+  const nfturl = `https://cloudflare-ipfs.com/ipfs/${removePrefix(
+    asset.marketplaceItems[0].metaDataURI
+  )}`;
 
   const [response, setResponse] = useState([]);
   const [image, setImage] = useState("");
-  const [isFull,setIsFull] = useState(false);
- 
   const metadata = async () => {
     const { data } = await axios.get(
-      `https://cloudflare-ipfs.com/ipfs/${removePrefix(asset.marketplaceItems[0].metaDataURI)}`
+      `https://cloudflare-ipfs.com/ipfs/${removePrefix(
+        asset.marketplaceItems[0].metaDataURI
+      )}`
     );
     setResponse(data);
-    if(data.image.length > 1)
-    setImage(data.image);
-    else
-    setImage(data.thumbnailimage)
+    if (data.image.length > 1) setImage(data.image);
+    else setImage(data.thumbnailimage);
     let preuri = image.substr(7, 50);
   };
 
@@ -77,7 +71,7 @@ function Asset({ asset }) {
                 <AssetHead
                   uri={
                     asset.marketplaceItems[0]
-                      ? asset.marketplaceItems[0].metaDataURI 
+                      ? asset.marketplaceItems[0].metaDataURI
                       : ""
                   }
                 />
@@ -97,9 +91,7 @@ function Asset({ asset }) {
                         target="_blank"
                         rel="noreferrer"
                       >
-                        <span
-                          className="text-gray-600 dark:text-gray-400 font-bold cursor-pointer"
-                        >
+                        <span className="text-gray-600 dark:text-gray-400 font-bold cursor-pointer">
                           {copy}
                         </span>
                       </Link>
@@ -187,7 +179,7 @@ function Asset({ asset }) {
                       className="flex gap-x-2 items-center justify-center px-5 py-2 bg-blue-600 text-white text-sm font-small rounded-xl hover:bg-blue-500 focus:outline-none focus:bg-blue-500"
                     >
                       <span className="text-lg font-bold">Buy NFT</span>
-                      <BiWallet className="text-3xl"/>
+                      <BiWallet className="text-3xl" />
                     </button>
                   </div>
                 </div>
@@ -198,7 +190,7 @@ function Asset({ asset }) {
                   <AssetProps
                     uri={
                       asset.marketplaceItems[0]
-                        ? asset.marketplaceItems[0].metaDataURI 
+                        ? asset.marketplaceItems[0].metaDataURI
                         : ""
                     }
                   />
@@ -208,7 +200,7 @@ function Asset({ asset }) {
                     <AssetCategories
                       uri={
                         asset.marketplaceItems[0]
-                          ? asset.marketplaceItems[0].metaDataURI 
+                          ? asset.marketplaceItems[0].metaDataURI
                           : ""
                       }
                     />

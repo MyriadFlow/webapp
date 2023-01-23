@@ -271,83 +271,6 @@ function Profile() {
 
   return (
     <Layout>
-       {/* <div
-        className="w-full h-64 object-cover"
-        style={{
-          backgroundColor: "#005bbd",
-          backgroundImage:
-            'url("https://www.transparenttextures.com/patterns/food.png")',
-        }}
-      ></div> */}
-      {/* <div className="flex items-center justify-center -mt-16">
-        {!user ? (
-          <div className="rounded-full h-32 w-32 ring-offset-2 ring-1 ring-white bg-gray-200"></div>
-        ) : (
-          <div
-            className="rounded-full h-32 w-32  ring-offset-2 ring-1 ring-blue-400 connect-profile"
-            style={{
-              backgroundImage: `url(${fileUrl})`,
-              backgroundRepeat: "no-repeat",
-              backgroundSize: "cover",
-              backgroundPosition: "center",
-              backgroundColor: "white",
-            }}
-          ></div>
-        )}
-      </div>  */}
-       {/* <div className=" m-2 flex flex-col items-center justify-center pb-36">
-        <div className="text-center pt-4 pb-4">
-          <div>
-            <p className="text-2xl font-bold pb-4 text-gray-400">
-              Roles :{" "}
-              <span className="text-white">User {hasRole && ", Creator"} </span>{" "}
-            </p>
-          </div>
-          <div className="flex flex-row">
-            <p className="text-2xl font-bold pb-4 pr-2 text-gray-400">
-              Wallet Address :
-            </p>
-            <p
-              className="text-white text-2xl font-bold pb-4 cursor-pointer"
-            >
-              {user}
-            </p>
-          </div>
-          <p className="text-2xl font-bold pb-4 text-gray-400">
-            {" "}
-            Name : <span className="text-white">{username}</span>
-          </p>
-          <p className="text-2xl font-bold pb-4 text-gray-400">
-            {" "}
-            Country : <span className="text-white">{bio}</span>
-          </p>
-        </div>
-        <button
-          className="bg-pink-500 text-white active:bg-pink-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-          type="button"
-          onClick={() => setShowModal(true)}
-        >
-          Edit Profile Details
-        </button> */}
-
-        {/* {!hasRole && (
-          <div className="w-2/3">
-            <h3 className="text-2xl text-center font-semibold pb-1 pt-8 pl-5 pr-5">
-              You do not have the required Role to access create page for
-              creating an asset. Please click on Get creator role button to
-              proceed.
-            </h3>
-            <div className="flex justify-center">
-              <button
-                onClick={authorize}
-                className="bg-blue-800 uppercase shadow-md transition duration-300  
-                                     ease-in text-white font-bold hover:bg-white hover:text-blue-800 px-6 rounded py-2 mt-2"
-              >
-                Get creator role
-              </button>
-            </div>
-          </div>
-        )} */}
         {showModal ? (
           <>
             <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
@@ -367,28 +290,18 @@ function Profile() {
                           <div className="container py-5 h-100">
                             <div className="row d-flex align-items-center justify-content-center h-100">
                               <div
-                                className="col-md-8 col-lg-7 col-xl-6 text-center"
-                                style={{
-                                  display: "flex",
-                                  flexDirection: "column",
-                                  justifyContent: "center",
-                                  alignItems: "center",
-                                }}
+                                className="col-md-8 col-lg-7 col-xl-6 text-center flex justify-center align-center flex-col"
+                               
                               >
                                 <img
                                   src={changefileUrl}
-                                  className="img-fluid"
+                                  className="img-fluid w-6/12"
                                   alt=""
-                                  style={{ width: "50%" }}
                                 />
                                 <input
                                   type="file"
-                                  className="btn btn-primary btn-md ml-20"
-                                  style={{
-                                    marginBottom: 20,
-                                    marginTop: 20,
-                                    width: "50%",
-                                  }}
+                                  className="btn btn-primary btn-md ml-20 w-6/12 mb-5 mt-5"
+                                 
                                   onChange={uploadImage}
                                 />
                               </div>
@@ -452,11 +365,10 @@ function Profile() {
             <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
           </>
         ) : null}
-      {/* </div>  */}
       <div className="flex px-5 py-5 gap-5 justify-center">
-        <div className="shadow-2xl ..." style={{width:"30%",height:"600px",padding:"40px"}}>
+        <div className="shadow-2xl ... p-10 w-1/4" style={{height:"600px"}}>
           <div className="flex justify-center">
-            <img  alt=""src="/sample.jpg" style={{width:"100%",height:"310px",padding:"30px"}}></img>
+            <img  className="w-full h-80 p-7" alt=""src="/sample.jpg"></img>
           </div>
           <div>
             <p className="text-2xl font-bold pb-4 text-gray-400">
@@ -483,7 +395,7 @@ function Profile() {
         </div>
 
         </div>
-        <div className="shadow-2xl ..." style={{width:"30%",height:"600px",padding:"30px"}}>
+        <div className="shadow-2xl ... w-3/12 p-7" style={{height:"600px"}}>
           <div>Wallet Details</div>:{ user}
         </div>
 

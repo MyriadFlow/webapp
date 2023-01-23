@@ -1,6 +1,4 @@
 import useDarkMode from "./useDarkMode";
-import Head from "next/head";
-
 export default function Home() {
   const [colorTheme, setTheme] = useDarkMode();
 

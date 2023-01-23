@@ -10,7 +10,6 @@ const AssetDesc = ({uri}) => {
             `https://cloudflare-ipfs.com/ipfs/${uri}`
         );
         setResponse(data);
-        // console.log(data);
     }
 
     useEffect(() => {

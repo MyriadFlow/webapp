@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { ethers } from "ethers";
 import { useRouter } from "next/router";
 import Web3Modal from "web3modal";
-import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
@@ -28,7 +27,7 @@ const style = {
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: 490,
+  width: 600,
   bgcolor: "background.paper",
   border: "2px solid #000",
   boxShadow: 24,
@@ -53,8 +52,7 @@ export default function CreateItem() {
     audio: "",
     video: "",
     animation_url: "",
-    doctype:"",
-
+    doctype: "",
   });
   const [previewMedia, setpreviewMedia] = useState();
   const [addImage, setAddImage] = useState(false);
@@ -98,7 +96,7 @@ export default function CreateItem() {
     const fileData = new File([file], name, {
       type: type,
     });
-    if(addImage && fileType=='image'){
+    if (addImage && fileType == "image") {
       setAddImage(false);
     }
     if (!validImageTypes.includes(type)) {
@@ -107,7 +105,7 @@ export default function CreateItem() {
     try {
       const metaHash = await uploadBlobGetHash(fileData);
       const metaHashURI = getMetaHashURI(metaHash);
-      if (fileType == "audio" || fileType == "video"||fileType=="doctype") {
+      if (fileType == "audio" || fileType == "video" || fileType == "doctype") {
         setMediaHash({
           ...mediaHash,
           [fileType]: metaHashURI,
@@ -116,7 +114,7 @@ export default function CreateItem() {
       } else {
         setMediaHash({ ...mediaHash, [fileType]: metaHashURI });
       }
-      console.log("file data",fileData)
+      console.log("file data", fileData);
       setpreviewMedia(URL.createObjectURL(e.target.files[0]));
     } catch (error) {
       console.log("Error uploading vedio: ", error);
@@ -159,7 +157,7 @@ export default function CreateItem() {
         const ipfsHash = metaHash;
         const url = `ipfs://${metaHash}`;
         console.log("doc ipfs", ipfsHash, url);
-        // await createItem(ipfsHash, url);
+        await createItem(ipfsHash, url);
       });
     } catch (error) {
       setmodelmsg("Transaction failed");
@@ -178,7 +176,7 @@ export default function CreateItem() {
     });
     const providerOptions = {
       walletconnect: {
-        package: WalletConnectProvider, // required
+        package: WalletConnectProvider, 
         options: options,
       },
     };
@@ -238,8 +236,9 @@ export default function CreateItem() {
     } catch (e) {
       console.log(e);
       setmodelmsg("Transaction 2 failed");
-    }finally{
-      //reset all states here
+    } finally {
+      setpreviewMedia("")
+      setAddImage("");
     }
   };
   const [advancemenu, Setadvancemenu] = useState(false);
@@ -313,58 +312,6 @@ export default function CreateItem() {
     };
     asyncFn();
   }, []);
-
-
-  const getRole = async () => {
-    const token = localStorage.getItem("platform_token");
-
-    const config1 = {
-      url: `${BASE_URL}/api/v1.0/roleId/0x01b9906c77d0f3e5e952265ffbd74a08f1013f607e72528c5c1fbaf8f36e3634`,
-      method: "GET",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    };
-    let roledata;
-    try {
-      roledata = await axios(config1);
-      console.log(roledata);
-    } catch (e) {
-      console.log(e);
-    }
-
-    let web3 = new Web3(Web3.givenProvider);
-    let completemsg = roledata.data.payload.eula + roledata.data.payload.flowId;
-    const hexMsg = convertUtf8ToHex(completemsg);
-    const result = await web3.eth.personal.sign(hexMsg, wallet);
-
-    var signroledata = JSON.stringify({
-      flowId: roledata.data.payload.flowId,
-      signature: result,
-    });
-
-    const config = {
-      url: `${BASE_URL}/api/v1.0/claimrole`,
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      data: signroledata,
-    };
-
-    try {
-      const response = await axios(config);
-      const msg = await response?.data?.message;
-      console.log(msg);
-      setHasRole(true);
-      return true;
-    } catch (e) {
-      console.log(e);
-      return false;
-    }
-  };
-
   const [options, setOptions] = useState([
     "Art",
     "Music",
@@ -410,152 +357,107 @@ export default function CreateItem() {
                 <div className="p-4 mt-5">
                   <form action="#">
                     <div>
-                      <img className="w-72 h-32"
-                        alt=""
-                        src="/NftB1.jpg"
-                      ></img>
+                      <img className="w-72 h-32" alt="" src="/NftB1.jpg"></img>
                     </div>
-                    <h3
-                      className="text-3xl py-4 font-bold "
-                      style={{
-                        color: "pink",
-                        marginBottom: "40px",
-                        fontSize: "40px",
-                        textAlign: "left",
-                      }}
-                    >
+                    <h3 className="text-3xl py-4 font-bold text-pink-600 mt-10 text-left text-4xl">
                       Create New NFT
                     </h3>
                     <div className="text-left">
                       <div className="text-secondary text-lg">
                         Single edition on Ethereum
                       </div>
-                      <div
-                        className="flex justify-between"
-                        style={{ width: "75%" }}
-                      >
+                      <div className="flex justify-between w-3/4">
                         <div className="font-bold">Choose Wallet</div>
                       </div>
                     </div>
                     <div className="flex">
                       <div>
                         <div
-                          className="mt-5 shadow-2xl ..."
+                          className="mt-5 shadow-2xl ...h-20 rounded-lg border-2 border-indigo-600 ..."
                           style={{
                             width: "600px",
-                            height: "75px",
-                            borderRadius: "10px",
-                            border: "1px solid",
                           }}
                         >
                           <div className="flex">
-                            <div style={{ padding: "16px" }}>
+                            <div className="p-4">
                               <img
                                 alt=""
                                 src="/eth.png"
-                                style={{ height: "40px", width: "40px" }}
+                                className="h-10 w-10"
                               ></img>
                             </div>
                             <div className="mt-3">
                               <div>Address</div>
                               <div>Name</div>
                             </div>
-                            <div style={{ margin: "0 auto" }}>Status</div>
+                            <div className="m-auto">Status</div>
                           </div>
                         </div>
-                        <div
-                          className="font-bold  mt-5"
-                          style={{ textAlign: "left" }}
-                        >
+                        <div className="font-bold  mt-5 text-left">
                           Upload file
                         </div>
-                        <div
-                          className="  translate-y-[-50%]"
-                          style={{
-                            marginTop: "85px",
-                            border: "2px dotted",
-                            borderRadius: "10px",
-                            textAlign: "center",
-                            padding: "12px",
-                          }}
-                        >
+                        <div className="rounded-lg text-center p-3 border-2 border-indigo-600 ...mt-20">
                           <h1 className="text-lg font-semibold">
                             Drag file here to upload
                           </h1>
                           <p className="text-[#6a6b76]">
                             PNG,GIF,WEBP,MP4,or MP3
                             <br />
-                            <div
-                              className=" text-black mt-3 cursor-pointer"
-                              style={{
-                                borderRadius: "10px",
-                                background: "#c5bfbf",
-                                padding: "10px",
-                                margin: "0 auto",
-                                width: "25%",
-                              }}
-                            >
-                               {previewMedia ? (mediaHash?.image && addImage==false) ?
-                                        <img
-                                          src={previewMedia}
-                                          alt=""
-                                          className="w-full object-cover h-72 flex justify-center"
-                                        /> : mediaHash?.video ?
-                                        <video  autoPlay controls>
-                                          <source
-                                          src={previewMedia}
-                                          
-                                        ></source>
-                                        </video>:
-                                        mediaHash?.audio ? <audio  autoPlay controls>
-                                           <source
-                                          src={previewMedia}
-                                         
-                                        ></source>
-                                        </audio> :
-                                        mediaHash?.doctype? <input
-                                        file={previewMedia}
-                                        
-                                       alt=""
-                                        className="w-full object-cover h-72 flex justify-center"
-                                      />:null
-                                       : (
-                              <input
-                                type="file"
-                                accept="image/png, image/jpeg,.txt,.doc,video/mp4,audio/mpeg,.pdf"
-                                onChange={(e) => onChangeMediaType(e)}
-                                className=""
-                              />
-                                      )}
+                            <div className=" text-black mt-3 cursor-pointer rounded-lg bg-slate-300 p-2.5 m-auto w-full">
+                              {previewMedia ? (
+                                mediaHash?.image && addImage == false ? (
+                                  <img
+                                    src={previewMedia}
+                                    alt=""
+                                    className="w-full object-cover h-72 flex justify-center"
+                                  />
+                                ) : mediaHash?.video ? (
+                                  <video autoPlay controls>
+                                    <source src={previewMedia}></source>
+                                  </video>
+                                ) : mediaHash?.audio ? (
+                                  <audio autoPlay controls>
+                                    <source src={previewMedia}></source>
+                                  </audio>
+                                ) : mediaHash?.doctype ? (
+                                  <input
+                                    file={previewMedia}
+                                    alt=""
+                                    className=""
+                                  />
+                                ) : null
+                              ) : (
+                                <input
+                                  type="file"
+                                  accept="image/png, image/jpeg,.txt,.doc,video/mp4,audio/mpeg,.pdf"
+                                  onChange={(e) => onChangeMediaType(e)}
+                                  className=""
+                                />
+                              )}
                             </div>
                           </p>
                         </div>
                         {addImage && (
                           <>
-                            <div
-                              className="font-bold  mt-5 text-left"
-                            >
+                            <div className="font-bold  mt-5 text-left">
                               Upload preview image
                             </div>
-                            <div
-                              className="   translate-y-[-50%] rounded-xl border-dashed border-2 border-indigo-600 ... text-center p-3 w-96 ... mt-20"
-                            >
+                            <div className="   rounded-xl border-dashed border-2 border-indigo-600 ... text-center p-3 w-96 ... mt-10">
                               <h1 className="text-lg font-semibold">
                                 Drag file here to upload
                               </h1>
                               <p className="text-[#6a6b76]">
                                 PNG, JPG, or GIF
                                 <br />
-                                <div
-                                  className=" text-black mt-3 cursor-pointer rounded-xl p-2.5 m-auto w-1/3 bg-slate-300"
-                                 
-                                >
-                                  {previewThumbnail&&<img src={previewThumbnail} />}
+                                <div className=" text-black mt-3 cursor-pointer rounded-xl p-2.5 m-auto w-full bg-slate-300">
+                                  {previewThumbnail && (
+                                    <img src={previewThumbnail} />
+                                  )}
                                   <input
                                     type="file"
                                     accept="image/*"
                                     onChange={(e) => onChangeThumbnail(e)}
-                                    className=""
+                                    
                                   />
                                 </div>
                               </p>
@@ -563,9 +465,8 @@ export default function CreateItem() {
                           </>
                         )}
                       </div>
-                    
                     </div>
-                   
+
                     <div className="w-full px-8 py-6">
                       <div
                         className="bg-gray-100 shadow-sm cursor-pointer p-3 border-2 border-gray-300 rounded-xl font-semibold text-md  dark:bg-gray-800 bg-black text-white"
@@ -578,69 +479,21 @@ export default function CreateItem() {
 
                       {advancemenu && (
                         <div>
-                          <p className="text-md font-semibold mt-6">
-                            {" "}
-                            Properties{" "}
-                            <span className="text-gray-400">(Optipnal) </span>
-                          </p>
-                          <form onSubmit={handleSubmit}>
-                            {attributes.map((inputField) => (
-                              <div key={inputField.id}>
-                                <div className="flex flex-col space-y-4 md:space-y-0 md:flex-row md:space-x-4 pb-2">
-                                  <input
-                                    name="display_type"
-                                    label="First Name"
-                                    placeholder="Display type"
-                                    className="mt-2 p-3 w-full text-sm input_background outline-none rounded-md dark:bg-gray-900 text-pink-500"
-                                    variant="filled"
-                                    value={inputField.display_type}
-                                    onChange={(event) =>
-                                      handleChangeInput(inputField.id, event)
-                                    }
-                                  />
-                                  <input
-                                    name="trait_type"
-                                    label="Last Name"
-                                    placeholder="Trait type"
-                                    className="mt-2 p-3 w-full text-sm input_background outline-none rounded-md dark:bg-gray-900 text-pink-500"
-                                    variant="filled"
-                                    value={inputField.trait_type}
-                                    onChange={(event) =>
-                                      handleChangeInput(inputField.id, event)
-                                    }
-                                  />
-                                  <input
-                                    name="value"
-                                    type="number"
-                                    label="First Name"
-                                    placeholder="Value"
-                                    className="mt-2 p-3 w-full text-sm input_background outline-none rounded-md dark:bg-gray-900 text-pink-500"
-                                    variant="filled"
-                                    value={inputField.value}
-                                    onChange={(event) =>
-                                      handleChangeInput(inputField.id, event)
-                                    }
-                                  />
+                          <div className="flex justify-between">
+                            <div>
+                              <p className="text-lg font-bold mt-6">
+                                Properties
+                              </p>
+                            </div>
+                            <div className="mt-7">
+                              <FaPlusSquare
+                                onClick={handleShow}
+                                className="text-green-500 w-10 h-10 p-1.5 border-solid border-2 border-solid-600 ... rounded-lg cursor-pointer"
+                              />
+                            </div>
 
-                                  <button
-                                    disabled={attributes.length === 1}
-                                    onClick={() =>
-                                      handleRemoveFields(inputField.id)
-                                    }
-                                  >
-                                    <FaMinusSquare className="text-red-500"  />
-                                  </button>
-                                  <button onClick={handleAddFields}>
-                                    <FaPlusSquare className="text-green-500" />
-                                  </button>
-                                </div>
-                              </div>
-                            ))}
-                          </form>
-                          <div>
-                            <Button onClick={handleShow}>
-                              Open properties
-                            </Button>
+                            <div></div>
+
                             <Modal
                               open={show}
                               onClose={handleClos}
@@ -657,14 +510,11 @@ export default function CreateItem() {
                                   <div className="flex justify-between">
                                     <div>Add Properties</div>
                                     <div>
-                                      <img className="w-3 h-3"
+                                      <img
+                                        className="w-3 h-3"
                                         onClose={handleClos}
                                         img
                                         src="cross.png"
-                                        style={{
-                                          width: "13px",
-                                          height: "13px",
-                                        }}
                                       ></img>
                                     </div>
                                   </div>
@@ -682,98 +532,89 @@ export default function CreateItem() {
                                     <div className="font-bold">Type</div>
                                     <div className="font-bold">Name</div>
                                   </div>
-                                  {attributes.map((inputField) => (
-                                    <div key={inputField.id}>
-                                      <div className="flex flex-col space-y-4 md:space-y-0 md:flex-row md:space-x-4 pb-2">
-                                        <input
-                                          name="display_type"
-                                          label="First Name"
-                                          style={{ color: "pink" }}
-                                          placeholder="Display type"
-                                          className="mt-2 p-3 w-full text-sm input_background outline-none rounded-md dark:bg-gray-900"
-                                          variant="filled"
-                                          value={inputField.display_type}
-                                          onChange={(event) =>
-                                            handleChangeInput(
-                                              inputField.id,
-                                              event
-                                            )
-                                          }
-                                        />
-                                        <input
-                                          name="trait_type"
-                                          label="Last Name"
-                                          style={{ color: "pink" }}
-                                          placeholder="Trait type"
-                                          className="mt-2 p-3 w-full text-sm input_background outline-none rounded-md dark:bg-gray-900"
-                                          variant="filled"
-                                          value={inputField.trait_type}
-                                          onChange={(event) =>
-                                            handleChangeInput(
-                                              inputField.id,
-                                              event
-                                            )
-                                          }
-                                        />
-                                        <input
-                                          name="value"
-                                          type="number"
-                                          style={{ color: "pink" }}
-                                          label="First Name"
-                                          placeholder="Value"
-                                          className="mt-2 p-3 w-full text-sm input_background outline-none rounded-md dark:bg-gray-900"
-                                          variant="filled"
-                                          value={inputField.value}
-                                          onChange={(event) =>
-                                            handleChangeInput(
-                                              inputField.id,
-                                              event
-                                            )
-                                          }
-                                        />
+                                  <form onSubmit={handleSubmit}>
+                                    {attributes.map((inputField) => (
+                                      <div key={inputField.id}>
+                                        <div className="flex flex-col space-y-4 md:space-y-0 md:flex-row md:space-x-4 pb-2 text-pink-600 align-center">
+                                          <input
+                                            name="display_type"
+                                            label="First Name"
+                                            placeholder="Display type"
+                                            className="mt-2 p-3 w-full text-sm input_background outline-none rounded-md dark:bg-gray-900"
+                                            variant="filled"
+                                            value={inputField.display_type}
+                                            onChange={(event) =>
+                                              handleChangeInput(
+                                                inputField.id,
+                                                event
+                                              )
+                                            }
+                                          />
+                                          <input
+                                            name="trait_type"
+                                            label="Last Name"
+                                            placeholder="Trait type"
+                                            className="mt-2 p-3 w-full text-sm input_background outline-none rounded-md dark:bg-gray-900 text-pink-600"
+                                            variant="filled"
+                                            value={inputField.trait_type}
+                                            onChange={(event) =>
+                                              handleChangeInput(
+                                                inputField.id,
+                                                event
+                                              )
+                                            }
+                                          />
+                                          <input
+                                            name="value"
+                                            type="number"
+                                            label="First Name"
+                                            placeholder="Value"
+                                            className="mt-2 p-3 w-full text-sm input_background outline-none rounded-md dark:bg-gray-900 text-pink-600"
+                                            variant="filled"
+                                            value={inputField.value}
+                                            onChange={(event) =>
+                                              handleChangeInput(
+                                                inputField.id,
+                                                event
+                                              )
+                                            }
+                                          />
+                                          <div>
+                                            <button
+                                              disabled={attributes.length === 1}
+                                              onClick={() =>
+                                                handleRemoveFields(
+                                                  inputField.id
+                                                )
+                                              }
+                                              className="text-left mt-5 p-2.5 rounded-lg  bg-slate-300 text-white flex justify-center"
+                                            >
+                                              <FaMinusSquare
+                                                style={{ color: "red" }}
+                                              />
+                                            </button>
+                                          </div>
+
+                                          <div>
+                                            <button
+                                              className="text-left mt-5 p-2.5 rounded-lg  bg-slate-300 text-white flex justify-center"
+                                              onClick={handleAddFields}
+                                            >
+                                              <FaPlusSquare
+                                                style={{ color: "green" }}
+                                              />
+                                            </button>
+                                          </div>
+                                        </div>
                                       </div>
-                                    </div>
-                                  ))}
-                                  <div
-                                    onClick={() =>
-                                      handleRemoveFields(inputField.id)
-                                    }
-                                    className="flex"
-                                  >
-                                    <div className="mt-3">
-                                      <input
-                                        type="text"
-                                        placeholder="Character"
-                                      ></input>
-                                    </div>
-                                    <div className="mt-3 ml-5">
-                                      <input
-                                        type="text"
-                                        placeholder="Male"
-                                      ></input>
-                                    </div>
-                                  </div>
-                                  <div
-                                    className="text-left mt-5"
-                                    style={{
-                                      padding: "10px",
-                                      borderRadius: "10px",
-                                      width: "28%",
-                                      background: "#8f8787",
-                                      color: "white",
-                                    }}
-                                  >
-                                    {" "}
-                                    <button onClick={handleAddFields}>
-                                      Add More
-                                    </button>
-                                  </div>
-                                  <div className="mt-5">
-                                    <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-full">
-                                      Save
-                                    </button>
-                                  </div>
+                                    ))}
+                                  </form>
                                 </Typography>
+                                <div className="mt-5" onClick={handleSubmit}>
+                                  <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-full">
+                                    Save
+                                  </button>
+                                </div>
                               </Box>
                             </Modal>
                           </div>
@@ -805,20 +646,12 @@ export default function CreateItem() {
                             options={options}
                             selectedValues={[]}
                             showCheckbox
-                            style={{
-                              optionContainer: {
-                                background: "black",
-                                color: "white",
-                              },
-                            }}
+                            className="bg-black text-white"
                           />
                         </div>
                       )}
                     </div>
-                    <div
-                      className="flex justify-between"
-                      style={{ width: "55%" }}
-                    >
+                    <div className="flex justify-between">
                       <div className="text-left">
                         <div className="font-bold text-3xl">
                           Put on marketplace
@@ -828,41 +661,22 @@ export default function CreateItem() {
                         </div>
                       </div>
                       <div>
-                        <img
-                          alt=""
-                          src="/swich.png"
-                          style={{ width: "30px", height: "30px" }}
-                        ></img>
+                        <img alt="" src="/swich.png" className="w-7 h-7"></img>
                       </div>
                     </div>
-                    <div className="flex mt-3 gap-6">
-                      <div
-                        style={{
-                          border: "1px solid",
-                          height: "200px",
-                          width: "280px",
-                          borderRadius: "10px",
-                        }}
-                      >
+                    <div className="flex mt-3 gap-6 ">
+                      <div className="border-2 border-indigo-600 ... h-52 w-80 rounded-lg">
                         Fixed Price
                       </div>
-                      <div
-                        style={{
-                          border: "1px solid",
-                          height: "200px",
-                          width: "280px",
-                          borderRadius: "10px",
-                        }}
-                      >
+                      <div className="border-2 border-indigo-600 ... h-52 w-80 rounded-lg">
                         Timed auction
                       </div>
                     </div>
                     <div className="mt-5">
-                      <div style={{ width: "55%" }}>
+                      <div >
                         <input
                           placeholder="Asset Name"
-                          style={{ color: "pink" }}
-                          className="w-full rounded-md bg-white  dark:bg-gray-900 p-3 outline-none mb-4 border-[1px] border-[#d5d5d6]"
+                          className="w-full rounded-md bg-white  dark:bg-gray-900 p-3 outline-none mb-4 border-[1px] border-[#d5d5d6] text-pink-600"
                           onChange={(e) =>
                             updateFormInput({
                               ...formInput,
@@ -871,12 +685,11 @@ export default function CreateItem() {
                           }
                         />
                       </div>
-                      <div style={{ width: "55%" }}>
+                      <div >
                         <textarea
                           type="text"
                           placeholder="Asset Description"
-                          style={{ color: "pink" }}
-                          className="w-full bg-white  dark:bg-gray-900 rounded-md shadow-sm p-2 outline-none border-[1px] border-[#d5d5d6] mb-4"
+                          className="w-full bg-white  dark:bg-gray-900 rounded-md shadow-sm p-2 outline-none border-[1px] border-[#d5d5d6] mb-4 text-pink-600"
                           onChange={(e) =>
                             updateFormInput({
                               ...formInput,
@@ -885,12 +698,11 @@ export default function CreateItem() {
                           }
                         />
                       </div>
-                      <div style={{ width: "55%" }}>
+                      <div >
                         <input
                           type="text"
-                          style={{ color: "pink" }}
                           placeholder="Asset Price in Matic"
-                          className="w-full bg-white dark:bg-gray-900 rounded-md mb-4 shadow-sm p-2 outline-none border-[1px] border-[#d5d5d6]"
+                          className="w-full bg-white dark:bg-gray-900 rounded-md mb-4 shadow-sm p-2 outline-none border-[1px] border-[#d5d5d6] text-pink-600"
                           onChange={(e) =>
                             updateFormInput({
                               ...formInput,
@@ -903,112 +715,6 @@ export default function CreateItem() {
                   </form>
                 </div>
               </div>
-              {/* <div className="w-full px-8 py-6">
-                <div
-                  className="bg-gray-100 shadow-sm cursor-pointer p-3 border-2 border-gray-300 rounded-xl font-semibold text-md  dark:bg-gray-800" style={{background:"black",color:"white"}}
-                  onClick={() => Setadvancemenu(!advancemenu)}
-                >
-                  {advancemenu ? " Hide advanced menu" : "Show advanced menu"}
-                </div>
-
-                {advancemenu && (
-                  <div>
-                    <p className="text-md font-semibold mt-6">
-                      {" "}
-                      Properties{" "}
-                      <span className="text-gray-400">(Optipnal) </span>
-                    </p>
-                    <form onSubmit={handleSubmit}>
-                      {attributes.map((inputField) => (
-                        <div key={inputField.id}>
-                          <div className="flex flex-col space-y-4 md:space-y-0 md:flex-row md:space-x-4 pb-2">
-                            <input
-                              name="display_type"
-                              label="First Name" style={{color:"pink"}}
-                              placeholder="Display type"
-                              className="mt-2 p-3 w-full text-sm input_background outline-none rounded-md dark:bg-gray-900"
-                              variant="filled"
-                              value={inputField.display_type}
-                              onChange={(event) =>
-                                handleChangeInput(inputField.id, event)
-                              }
-                            />
-                            <input
-                              name="trait_type"
-                              label="Last Name"style={{color:"pink"}}
-                              placeholder="Trait type"
-                              className="mt-2 p-3 w-full text-sm input_background outline-none rounded-md dark:bg-gray-900"
-                              variant="filled"
-                              value={inputField.trait_type}
-                              onChange={(event) =>
-                                handleChangeInput(inputField.id, event)
-                              }
-                            />
-                            <input
-                              name="value"
-                              type="number"style={{color:"pink"}}
-                              label="First Name"
-                              placeholder="Value"
-                              className="mt-2 p-3 w-full text-sm input_background outline-none rounded-md dark:bg-gray-900"
-                              variant="filled"
-                              value={inputField.value}
-                              onChange={(event) =>
-                                handleChangeInput(inputField.id, event)
-                              }
-                            />
-
-                            <button
-                              disabled={attributes.length === 1}
-                              onClick={() => handleRemoveFields(inputField.id)}
-                            >
-                              <FaMinusSquare style={{ color: "red" }} />
-                            </button>
-                            <button onClick={handleAddFields}>
-                              <FaPlusSquare style={{ color: "green" }} />
-                            </button>
-                          </div>
-                        </div>
-                      ))}
-                    </form>
-
-                    <p className="text-md font-semibold mt-6">
-                      {" "}
-                      Alternative text for NFT{" "}
-                      <span className="text-gray-400">(Optipnal) </span>
-                    </p>
-                    <input
-                      placeholder="Image description in details"
-                      className="mt-2 p-3 w-full text-sm input_background outline-none rounded-md dark:bg-gray-900  "
-                      onChange={(e) =>
-                        updateFormInput({
-                          ...formInput,
-                          alternettext: e.target.value,
-                        })
-                      }
-                    />
-
-                    <p className="font-semibold text-lg my-6">Category</p>
-                    <Multiselect
-                      isObject={false}
-                      onRemove={(event) => {
-                        setCategory(event);
-                      }}
-                      onSelect={(event) => {
-                        setCategory(event);
-                      }}
-                      options={options}
-                      selectedValues={[]}
-                      showCheckbox
-                      style={{
-                        optionContainer: {
-                          background: "black",
-                          color: "white",
-                        },
-                      }}
-                    />
-                  </div>
-                )}
-              </div> */}
 
               <div style={{ marginTop: "100px" }}>
                 <button

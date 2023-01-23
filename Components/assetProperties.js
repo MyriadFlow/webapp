@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { CircularProgress } from '@mui/material';
-// import { CircularProgressBar } from "@tomik23/react-circular-progress-bar";
 const AssetProperties = ({ uri }) => {
 
     const removePrefix = (uri) => {
@@ -40,11 +39,11 @@ const AssetProperties = ({ uri }) => {
                     }
                     {
                         item.display_type === "boost_percentage" && (
-                            <div style={{padding:10}}>
+                            <div className="p-2.5">
                             <CircularProgress percent= {width} size="100" fontColor= "green"/>
                             </div>
                         )
-                    }
+                    }   
                     
                 </div>)
             }) : null}

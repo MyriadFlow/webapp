@@ -1,9 +1,5 @@
 // /* pages/my-artifacts.js */
-import { ethers } from "ethers";
 import { useEffect, useState } from "react";
-import axios from "axios";
-import Web3Modal from "web3modal";
-import { FaEthereum } from "react-icons/fa";
 import Link from "next/link";
 import { selectUser } from "../slices/userSlice";
 import { useSelector } from "react-redux";
@@ -40,9 +36,6 @@ const MyAssets = () => {
     setLoading(false);
     console.log(result);
   };
-  function getEthPrice(price) {
-    return ethers.utils.formatEther(price);
-  }
   useEffect(() => {
     if (!localStorage.getItem("platform_wallet") && wallet !== undefined) {
       localStorage.setItem("platform_wallet", wallet);
@@ -71,36 +64,20 @@ console.log("My artifact Data",data);
                 className="bg-[white] dark:bg-[#1c1c24]  rounded-lg shadow-lg w-full lg:w-72 hover:scale-105 duration-200 transform transition cursor-pointer border-2 dark:border-gray-800"
               >
                 <Link key={item.tokenID} href={`/create/${item.tokenID}`}>
-                  <div style={{padding:"25px"}}>
+                  <div className="p-6">
                     <HomeComp uri={item ? item.metaDataURI : ""} />
 
                     <div className="flex px-4 py-6">
                       <HomeComp2 uri={item ? item.metaDataURI : ""} />
                     </div>
-                    {/* <div className=" flex items-center justify-between px-4 mb-2">
-                    <p className="font-1 text-sm font-bold">Price </p>
-                    <div className="flex items-center">
-                      <FaEthereum className="h-4 w-4 text-blue-400" />
-                      <p className="font-extralight dark:text-gray-400">
-                        {getEthPrice(item.price)} MATIC
-                      </p>
-                    </div>
-                  </div> */}
                   <div className="px-3 ">
                   <div className="font-bold">Name</div>
                   <div className="font-bold">Price</div>
-                  <div style={{color:"blue"}}>Place a bid</div>
+                  <div className="text-blue-600">Place a bid</div>
                   </div>
                   </div>
                 </Link>
-                {/* <div className="px-4 py-4 bg-gray-100 dark:bg-gray-700 flex justify-between">
-                    <button
-                      onClick={() => buyNft(nft)}
-                      className="text-blue-500 hover:text-blue-400 font-bold"
-                    >
-                      Place asset to market
-                    </button>
-                  </div> */}
+              
               </div>
             );
           })

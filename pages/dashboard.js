@@ -20,9 +20,7 @@ import { request, gql } from "graphql-request";
 const graphqlAPI = process.env.NEXT_PUBLIC_GRAPHQL_API;
 
 export default function CreatorDashboard() {
-  function getEthPrice(price) {
-    return ethers.utils.formatEther(price);
-  }
+  
   const walletAddr = useSelector(selectUser);
   var wallet = walletAddr ? walletAddr[0] : "";
 
@@ -149,20 +147,12 @@ export default function CreatorDashboard() {
                             <div className="flex items-center">
                               <FaEthereum className="h-4 w-4 text-blue-400" />
                               <p className="font-extralight dark:text-gray-400">
-                                {/* {getEthPrice(item.price)} MATIC */}
                               </p>
                             </div>
                           </div>
                         </div>
                       </Link>
-                      {/* <div className="px-4 py-4 bg-gray-100 dark:bg-gray-700 flex justify-between">
-                  <button
-                    onClick={() => buyNft(nft)}
-                    className="text-blue-500 hover:text-blue-400 font-bold"
-                  >
-                    Buy now
-                  </button>
-                </div> */}
+                     
                     </div>
                   );
                 })

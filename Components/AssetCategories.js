@@ -26,10 +26,7 @@ const AssetProperties = ({ uri }) => {
                     <div style={{ minHeight: 80 }} className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-3 md:grid-cols-2 gap-4 h-auto w-full ">
                         {response ? response.map((item, i) => {
 
-                            // console.log(item);
-
                             return (<div
-                                // key={item.id}
                                 key={i}
                                 className="my-4 bg-white dark:bg-gray-900 rounded-lg shadow-lg w-full hover:scale-105 duration-200 transform transition cursor-pointer">
                                 <div className=" flex items-center justify-between w-full ">
