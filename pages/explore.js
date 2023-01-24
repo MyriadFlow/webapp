@@ -125,19 +125,19 @@ const Home = () => {
           </div>
         </div>
       )}
-
+ 
       <main>
-        {/* <div className="bg-gray-100 dark:bg-gray-700 w-full h-12 fixed top-12 z-30 px-10">
-          <span className="flex h-full items-center">
-            <IoIosArrowDropright
-              onClick={toogle}
-              className="text-3xl text-gray-400 cursor-pointer hover:text-gray-800 "
-            />
-          </span>
-        </div> */}
-        {/* {filter && <Filter toogle={toogle} filter={!filter} />} */}
-        <div className="min-h-screen">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 md:grid-cols-3 gap-4 lg:gap-24 p-4 mt-24">
+       
+      <div className="min-h-screen">
+        <div className="flex" style={{padding:"20px"}}>
+        <button className="bg-blue-100 text-blue-800 text-lg font-medium mr-3 px-2 py-2 rounded dark:bg-blue-900 dark:text-blue-300">All</button>
+        <button className="bg-gray-100 text-gray-800 text-lg font-medium mr-3 px-2 py-2 rounded dark:bg-gray-700 dark:text-gray-300">Art</button>
+        <button className="bg-red-100 text-red-800 text-lg font-medium mr-3 px-2 py-2 rounded dark:bg-red-900 dark:text-red-300">Games</button>
+        <button className="bg-purple-100 text-purple-800 text-lg font-medium mr-3 px-2 py-2 rounded dark:bg-purple-900 dark:text-purple-300">Metaverses</button>
+
+      </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 md:grid-cols-3 gap-4 lg:gap-24 p-4">
+            
             {data.map((item) => {
               console.log(item);
               console.log("Image url", item.metaDataURI);

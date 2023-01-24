@@ -70,7 +70,7 @@ function NftboughtDashboard() {
         {data.length > 0 ? (
           data.map((item) => {
             return (
-              <div
+              <div style={{border:"2px solid"}}
                 key={item.itemId}
                 className="bg-white dark:bg-gray-900  rounded-lg shadow-lg w-full lg:w-72 hover:scale-105 duration-200 transform transition cursor-pointer border-2 dark:border-gray-800"
               >

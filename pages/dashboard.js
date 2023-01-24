@@ -75,7 +75,7 @@ export default function CreatorDashboard() {
       <div className="p-4">
         <div className="bg-[#1e1f26] flex items-center rounded-sm flex justify-center">
           <div
-            className={`dark:text-white hover:text-gray-400 dark:hover:bg-[#131417] text-gray-900 cursor-pointer p-3 border-b-2 border-transparent hover:border-[#47cf73] transition-all ${
+            className={`text-white hover:text-gray-400 dark:hover:bg-[#131417]  cursor-pointer p-3 border-b-2 border-transparent hover:border-[#47cf73] transition-all ${
               page === "created" ? "bg-[#131417] border-[#47cf73]" : ""
             }`}
             onClick={() => setPage("created")}
@@ -87,7 +87,7 @@ export default function CreatorDashboard() {
           </div>
 
           <div
-            className={`dark:text-white hover:text-gray-400 dark:hover:bg-[#131417] text-gray-900 cursor-pointer p-3 border-b-2 border-transparent hover:border-[#47cf73] transition-all ${
+            className={`text-white hover:text-gray-400 dark:hover:bg-[#131417]  cursor-pointer p-3 border-b-2 border-transparent hover:border-[#47cf73] transition-all ${
               page === "sold" ? "bg-[#131417] border-[#47cf73]" : ""
             }`}
             onClick={() => setPage("sold")}
@@ -99,7 +99,7 @@ export default function CreatorDashboard() {
           </div>
 
           <div
-            className={`dark:text-white hover:text-gray-400 dark:hover:bg-[#131417] text-gray-900 cursor-pointer p-3 border-b-2 border-transparent hover:border-[#47cf73] transition-all ${
+            className={`text-white hover:text-gray-400 dark:hover:bg-[#131417]  cursor-pointer p-3 border-b-2 border-transparent hover:border-[#47cf73] transition-all ${
               page === "bought" ? "bg-[#131417] border-[#47cf73]" : ""
             }`}
             onClick={() => setPage("bought")}
@@ -111,7 +111,7 @@ export default function CreatorDashboard() {
           </div>
 
           <div
-            className={`dark:text-white hover:text-gray-400 dark:hover:bg-[#131417] text-gray-900 cursor-pointer p-3 border-b-2 border-transparent hover:border-[#47cf73] transition-all ${
+            className={`text-white hover:text-gray-400 dark:hover:bg-[#131417]  cursor-pointer p-3 border-b-2 border-transparent hover:border-[#47cf73] transition-all ${
               page === "market" ? "bg-[#131417] border-[#47cf73]" : ""
             }`}
             onClick={() => setPage("market")}
@@ -125,11 +125,11 @@ export default function CreatorDashboard() {
 
         {page === "sold" && (
           <div className="p-4 px-10 min-h-screen">
-            <div className=" p-4 mt-10  h-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div  className=" p-4 mt-10  h-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 ">
               {data?.length > 0 ? (
                 data?.map((item) => {
                   return (
-                    <div
+                    <div style={{border:"2px solid"}}
                       key={item.itemId}
                       className="bg-white dark:bg-gray-900  rounded-lg shadow-lg w-full lg:w-72 hover:scale-105 duration-200 transform transition cursor-pointer border-2 dark:border-gray-800"
                     >

@@ -26,27 +26,27 @@ const Footer = () => {
               target="_blank"
               className="hover:text-sky-700 text-blue-500 dark:text-white"
             >
-              <Link href="" className="hover:text-sky-500">
+              <div  className="hover:text-sky-500">
                 <TelegramIcon />
-              </Link>
+              </div>
             </Link>
             <Link
               href="https://twitter.com/0xMyriadFlow"
               target="_blank"
               className="hover:text-sky-700 text-blue-500 dark:text-white"
             >
-              <Link href="" className="hover:text-sky-500">
+              <div  className="hover:text-sky-500">
                 <TwitterIcon />
-              </Link>
+              </div>
             </Link>
             <Link
               href="https://discord.gg/38jktRtuY7"
               target="_blank"
               className="hover:text-sky-700 text-blue-500 dark:text-white"
             >
-              <Link href="" className="hover:text-sky-500">
+              <div  className="hover:text-sky-500">
                 <SiDiscord size={22} />
-              </Link>
+              </div>
             </Link>
           </div>
         </div>

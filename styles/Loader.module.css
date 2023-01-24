@@ -19,7 +19,7 @@
   border: 4px solid hsla(203, 89%, 53%, 0.600);
   border-top-color: #1da1f2;
   border-radius: 50%;
-  animation: rotate .7s linear infinite;
+  animation: rotate .2s linear;
 }
 
 @keyframes rotate {

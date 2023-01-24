@@ -27,7 +27,7 @@ function Asset({ asset }) {
   const nfturl = `https://cloudflare-ipfs.com/ipfs/${removePrefix(
     asset.marketplaceItems[0].metaDataURI
   )}`;
-
+console.log("nfturl",nfturl)
   const [response, setResponse] = useState([]);
   const [image, setImage] = useState("");
   const metadata = async () => {

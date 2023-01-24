@@ -9,6 +9,7 @@ import { FaPlusSquare, FaMinusSquare } from "react-icons/fa";
 import { v4 as uuidv4 } from "uuid";
 import WalletConnectProvider from "@walletconnect/web3-provider";
 import Multiselect from "multiselect-react-dropdown";
+
 const YOUR_API_KEY =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkaWQ6ZXRocjoweDFFODE2RTA3RjBFYTg4MkI3Q0I0MDQ2QTg4NENDQ0Q0MjA4NEU3QTgiLCJpc3MiOiJuZnQtc3RvcmFnZSIsImlhdCI6MTY3MzI0NTEzNDc3MywibmFtZSI6Im5mdCJ9.vP9_nN3dQHIkN9cVQH5KvCLNHRk3M2ZO4x2G99smofw";
 import axios from "axios";
@@ -41,6 +42,7 @@ const marketplaceAddress = process.env.NEXT_PUBLIC_MARKETPLACE_ADDRESS;
 const storeFrontAddress = process.env.NEXT_PUBLIC_STOREFRONT_ADDRESS;
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 export default function CreateItem() {
+  const [toggle, setToggle] = useState(false);
   const [show, setShow] = useState(false);
   const handleClos = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -54,7 +56,7 @@ export default function CreateItem() {
     animation_url: "",
     doctype: "",
   });
-  const [previewMedia, setpreviewMedia] = useState();
+  const [previewMedia, setpreviewMedia] = useState("");
   const [addImage, setAddImage] = useState(false);
   const [formInput, updateFormInput] = useState({
     price: "",
@@ -62,6 +64,7 @@ export default function CreateItem() {
     description: "",
     alternettext: "",
   });
+
   const router = useRouter();
   async function uploadBlobGetHash(file) {
     try {
@@ -176,7 +179,7 @@ export default function CreateItem() {
     });
     const providerOptions = {
       walletconnect: {
-        package: WalletConnectProvider, 
+        package: WalletConnectProvider,
         options: options,
       },
     };
@@ -237,11 +240,12 @@ export default function CreateItem() {
       console.log(e);
       setmodelmsg("Transaction 2 failed");
     } finally {
-      setpreviewMedia("")
+      setpreviewMedia("");
       setAddImage("");
+      setPreviewThumbnail("");
     }
   };
-  const [advancemenu, Setadvancemenu] = useState(false);
+  // const [advancemenu, Setadvancemenu] = useState(false);
   const [attributes, setInputFields] = useState([
     { id: uuidv4(), display_type: "", trait_type: "", value: "" },
   ]);
@@ -354,56 +358,77 @@ export default function CreateItem() {
           <div className="max-w-[1250px] mx-auto myshadow rounded">
             <div className="bg-white dark:bg-gray-800 mb-5">
               <div className="flex">
-                <div className="p-4 mt-5">
+                <div className="p-4 mt-5" style={{ width: "60%" }}>
                   <form action="#">
                     <div>
-                      <img className="w-72 h-32" alt="" src="/NftB1.jpg"></img>
+                      <img
+                        className=" h-32"
+                        alt=""
+                        src="/NftB1.jpg"
+                        style={{ width: "100%" }}
+                      ></img>
                     </div>
                     <h3 className="text-3xl py-4 font-bold text-pink-600 mt-10 text-left text-4xl">
                       Create New NFT
                     </h3>
-                    <div className="text-left">
-                      <div className="text-secondary text-lg">
-                        Single edition on Ethereum
-                      </div>
-                      <div className="flex justify-between w-3/4">
-                        <div className="font-bold">Choose Wallet</div>
-                      </div>
-                    </div>
-                    <div className="flex">
+
+                    <div>
                       <div>
-                        <div
-                          className="mt-5 shadow-2xl ...h-20 rounded-lg border-2 border-indigo-600 ..."
-                          style={{
-                            width: "600px",
-                          }}
-                        >
-                          <div className="flex">
-                            <div className="p-4">
-                              <img
-                                alt=""
-                                src="/eth.png"
-                                className="h-10 w-10"
-                              ></img>
-                            </div>
-                            <div className="mt-3">
-                              <div>Address</div>
-                              <div>Name</div>
-                            </div>
-                            <div className="m-auto">Status</div>
+                        <div className="mt-5">
+                          <div>
+                            <input
+                              placeholder="Asset Name"
+                              className="w-full rounded-md bg-white  dark:bg-gray-900 p-3 outline-none mb-4 border-[1px] border-[#d5d5d6] text-pink-600"
+                              onChange={(e) =>
+                                updateFormInput({
+                                  ...formInput,
+                                  name: e.target.value,
+                                })
+                              }
+                            />
+                          </div>
+                          <div>
+                            <textarea
+                              type="text"
+                              placeholder="Asset Description"
+                              className="w-full bg-white  dark:bg-gray-900 rounded-md shadow-sm p-2 outline-none border-[1px] border-[#d5d5d6] mb-4 text-pink-600"
+                              onChange={(e) =>
+                                updateFormInput({
+                                  ...formInput,
+                                  description: e.target.value,
+                                })
+                              }
+                            />
                           </div>
                         </div>
-                        <div className="font-bold  mt-5 text-left">
-                          Upload file
+                        <div className="flex justify-between">
+                          <div className="font-bold  mt-5 text-left">
+                            Upload file
+                          </div>
+                          <div className="font-bold  mt-5 text-left">
+                            Priview
+                          </div>
                         </div>
-                        <div className="rounded-lg text-center p-3 border-2 border-indigo-600 ...mt-20">
-                          <h1 className="text-lg font-semibold">
-                            Drag file here to upload
-                          </h1>
-                          <p className="text-[#6a6b76]">
-                            PNG,GIF,WEBP,MP4,or MP3
-                            <br />
-                            <div className=" text-black mt-3 cursor-pointer rounded-lg bg-slate-300 p-2.5 m-auto w-full">
+                        <div className="flex gap-6">
+                          <div className=" rounded-lg text-center p-3 border-2 border-indigo-600 ...mt-20 w-2/4">
+                            <h1 className="text-lg font-semibold">
+                              Drag file here to upload
+                            </h1>
+                            <p className="text-[#6a6b76]">
+                              PNG,GIF,WEBP,MP4,or MP3
+                              <br />
+                              <div className="flex text-black mt-3 cursor-pointer rounded-lg bg-slate-300 p-2.5 m-auto w-full">
+                                <input
+                                  type="file"
+                                  accept="image/png, image/jpeg,.txt,.doc,video/mp4,audio/mpeg,.pdf"
+                                  onChange={(e) => onChangeMediaType(e)}
+                                />
+                              </div>
+                            </p>
+                          </div>
+
+                          <div className=" rounded-lg text-center p-3 border-2 border-indigo-600 ...mt-20 w-2/4">
+                            <div className="flex text-black mt-3 cursor-pointer rounded-lg  p-2.5 m-auto w-full">
                               {previewMedia ? (
                                 mediaHash?.image && addImage == false ? (
                                   <img
@@ -420,237 +445,228 @@ export default function CreateItem() {
                                     <source src={previewMedia}></source>
                                   </audio>
                                 ) : mediaHash?.doctype ? (
-                                  <input
-                                    file={previewMedia}
-                                    alt=""
-                                    className=""
-                                  />
+                                  <input file={previewMedia} alt="" />
                                 ) : null
                               ) : (
-                                <input
-                                  type="file"
-                                  accept="image/png, image/jpeg,.txt,.doc,video/mp4,audio/mpeg,.pdf"
-                                  onChange={(e) => onChangeMediaType(e)}
-                                  className=""
-                                />
+                                <div />
                               )}
                             </div>
-                          </p>
+                          </div>
                         </div>
+
                         {addImage && (
                           <>
-                            <div className="font-bold  mt-5 text-left">
-                              Upload preview image
+                            <div className="flex justify-between">
+                              <div className="font-bold  mt-5 text-left">
+                                Upload preview image
+                              </div>
+                              <div className="font-bold  mt-5 text-left">
+                                Priview
+                              </div>
                             </div>
-                            <div className="   rounded-xl border-dashed border-2 border-indigo-600 ... text-center p-3 w-96 ... mt-10">
-                              <h1 className="text-lg font-semibold">
-                                Drag file here to upload
-                              </h1>
-                              <p className="text-[#6a6b76]">
-                                PNG, JPG, or GIF
-                                <br />
-                                <div className=" text-black mt-3 cursor-pointer rounded-xl p-2.5 m-auto w-full bg-slate-300">
-                                  {previewThumbnail && (
-                                    <img src={previewThumbnail} />
-                                  )}
-                                  <input
-                                    type="file"
-                                    accept="image/*"
-                                    onChange={(e) => onChangeThumbnail(e)}
-                                    
-                                  />
+                            <div className="flex gap-6">
+                              <div className="   rounded-xl border-dashed border-2 border-indigo-600 ... text-center p-3 w-96 ... mt-10">
+                                <h1 className="text-lg font-semibold">
+                                  Drag file here to upload
+                                </h1>
+                                <p className="text-[#6a6b76]">
+                                  PNG, JPG, or GIF
+                                  <br />
+                                  <div className=" text-black mt-3 cursor-pointer rounded-xl p-2.5 m-auto w-full bg-slate-300">
+                                    <input
+                                      type="file"
+                                      accept="image/*"
+                                      onChange={(e) => onChangeThumbnail(e)}
+                                    />
+                                  </div>
+                                </p>
+                              </div>
+                              <div className="   rounded-xl border-dashed border-2 border-indigo-600 ... text-center p-3 w-96 ... mt-10">
+                                <div className="text-[#6a6b76]">
+                                  <div className=" text-black mt-3 cursor-pointer rounded-xl p-2.5 m-auto w-full ">
+                                    {previewThumbnail && (
+                                      <img src={previewThumbnail} />
+                                    )}
+                                    <div />
+                                  </div>
                                 </div>
-                              </p>
+                              </div>
                             </div>
                           </>
                         )}
                       </div>
                     </div>
 
-                    <div className="w-full px-8 py-6">
-                      <div
-                        className="bg-gray-100 shadow-sm cursor-pointer p-3 border-2 border-gray-300 rounded-xl font-semibold text-md  dark:bg-gray-800 bg-black text-white"
-                        onClick={() => Setadvancemenu(!advancemenu)}
-                      >
-                        {advancemenu
-                          ? " Hide advanced menu"
-                          : "Show advanced menu"}
+                    <div className="w-full py-6">
+                      <div className="bg-gray-100 shadow-sm cursor-pointer p-3 border-2 border-gray-300 rounded-xl font-semibold text-md  dark:bg-gray-800 bg-black text-white">
+                        Show Advance Menu
                       </div>
 
-                      {advancemenu && (
+                      <div className="flex justify-between">
                         <div>
-                          <div className="flex justify-between">
-                            <div>
-                              <p className="text-lg font-bold mt-6">
-                                Properties
-                              </p>
-                            </div>
-                            <div className="mt-7">
-                              <FaPlusSquare
-                                onClick={handleShow}
-                                className="text-green-500 w-10 h-10 p-1.5 border-solid border-2 border-solid-600 ... rounded-lg cursor-pointer"
-                              />
-                            </div>
+                          <p className="text-lg font-bold mt-6">Properties</p>
+                        </div>
+                        <div
+                          onClick={handleShow}
+                          className="mt-7 text-green-500  h-10 p-1.5 border-solid border-2 border-solid-600 ... rounded-lg cursor-pointer"
+                        >
+                          Add Properties
+                        </div>
 
-                            <div></div>
-
-                            <Modal
-                              open={show}
-                              onClose={handleClos}
-                              aria-labelledby="modal-modal-title"
-                              aria-describedby="modal-modal-description"
+                        <Modal
+                          open={show}
+                          onClose={handleClos}
+                          aria-labelledby="modal-modal-title"
+                          aria-describedby="modal-modal-description"
+                        >
+                          <Box sx={style} className="text-center">
+                            <Typography
+                              id="modal-modal-title"
+                              variant="h6"
+                              component="h2"
+                              className="text-center"
                             >
-                              <Box sx={style} className="text-center">
-                                <Typography
-                                  id="modal-modal-title"
-                                  variant="h6"
-                                  component="h2"
-                                  className="text-center"
-                                >
-                                  <div className="flex justify-between">
-                                    <div>Add Properties</div>
-                                    <div>
-                                      <img
-                                        className="w-3 h-3"
-                                        onClose={handleClos}
-                                        img
-                                        src="cross.png"
-                                      ></img>
+                              <div className="flex justify-between">
+                                <div>Add Properties</div>
+                                <div>
+                                  <img
+                                    className="w-3 h-3"
+                                    onClose={handleClos}
+                                    img
+                                    src="cross.png"
+                                  ></img>
+                                </div>
+                              </div>
+                            </Typography>
+                            <Typography
+                              id="modal-modal-description"
+                              sx={{ mt: 2 }}
+                            >
+                              <div>
+                                Properties show up underneath your item, are
+                                clickable, and can be filtered in your
+                                collection&apos;s sidebar.
+                              </div>
+                              <div className="flex justify-between">
+                                <div className="font-bold">Type</div>
+                                <div className="font-bold">Name</div>
+                              </div>
+                              <form onSubmit={handleSubmit}>
+                                {attributes.map((inputField) => (
+                                  <div key={inputField.id}>
+                                    <div className="flex flex-col space-y-4 md:space-y-0 md:flex-row md:space-x-4 pb-2 text-pink-600 align-center">
+                                      <input
+                                        name="display_type"
+                                        label="First Name"
+                                        placeholder="Display type"
+                                        className="mt-2 p-3 w-full text-sm input_background outline-none rounded-md dark:bg-gray-900"
+                                        variant="filled"
+                                        value={inputField.display_type}
+                                        onChange={(event) =>
+                                          handleChangeInput(
+                                            inputField.id,
+                                            event
+                                          )
+                                        }
+                                      />
+                                      <input
+                                        name="trait_type"
+                                        label="Last Name"
+                                        placeholder="Trait type"
+                                        className="mt-2 p-3 w-full text-sm input_background outline-none rounded-md dark:bg-gray-900 text-pink-600"
+                                        variant="filled"
+                                        value={inputField.trait_type}
+                                        onChange={(event) =>
+                                          handleChangeInput(
+                                            inputField.id,
+                                            event
+                                          )
+                                        }
+                                      />
+                                      <input
+                                        name="value"
+                                        type="number"
+                                        label="First Name"
+                                        placeholder="Value"
+                                        className="mt-2 p-3 w-full text-sm input_background outline-none rounded-md dark:bg-gray-900 text-pink-600"
+                                        variant="filled"
+                                        value={inputField.value}
+                                        onChange={(event) =>
+                                          handleChangeInput(
+                                            inputField.id,
+                                            event
+                                          )
+                                        }
+                                      />
+                                      <div>
+                                        <button
+                                          disabled={attributes.length === 1}
+                                          onClick={() =>
+                                            handleRemoveFields(inputField.id)
+                                          }
+                                          className="text-left mt-5 p-2.5 rounded-lg  bg-slate-300 text-white flex justify-center"
+                                        >
+                                          <FaMinusSquare
+                                            style={{ color: "red" }}
+                                          />
+                                        </button>
+                                      </div>
+
+                                      <div>
+                                        <button
+                                          className="text-left mt-5 p-2.5 rounded-lg  bg-slate-300 text-white flex justify-center"
+                                          onClick={handleAddFields}
+                                        >
+                                          <FaPlusSquare
+                                            style={{ color: "green" }}
+                                          />
+                                        </button>
+                                      </div>
                                     </div>
                                   </div>
-                                </Typography>
-                                <Typography
-                                  id="modal-modal-description"
-                                  sx={{ mt: 2 }}
-                                >
-                                  <div>
-                                    Properties show up underneath your item, are
-                                    clickable, and can be filtered in your
-                                    collection&apos;s sidebar.
-                                  </div>
-                                  <div className="flex justify-between">
-                                    <div className="font-bold">Type</div>
-                                    <div className="font-bold">Name</div>
-                                  </div>
-                                  <form onSubmit={handleSubmit}>
-                                    {attributes.map((inputField) => (
-                                      <div key={inputField.id}>
-                                        <div className="flex flex-col space-y-4 md:space-y-0 md:flex-row md:space-x-4 pb-2 text-pink-600 align-center">
-                                          <input
-                                            name="display_type"
-                                            label="First Name"
-                                            placeholder="Display type"
-                                            className="mt-2 p-3 w-full text-sm input_background outline-none rounded-md dark:bg-gray-900"
-                                            variant="filled"
-                                            value={inputField.display_type}
-                                            onChange={(event) =>
-                                              handleChangeInput(
-                                                inputField.id,
-                                                event
-                                              )
-                                            }
-                                          />
-                                          <input
-                                            name="trait_type"
-                                            label="Last Name"
-                                            placeholder="Trait type"
-                                            className="mt-2 p-3 w-full text-sm input_background outline-none rounded-md dark:bg-gray-900 text-pink-600"
-                                            variant="filled"
-                                            value={inputField.trait_type}
-                                            onChange={(event) =>
-                                              handleChangeInput(
-                                                inputField.id,
-                                                event
-                                              )
-                                            }
-                                          />
-                                          <input
-                                            name="value"
-                                            type="number"
-                                            label="First Name"
-                                            placeholder="Value"
-                                            className="mt-2 p-3 w-full text-sm input_background outline-none rounded-md dark:bg-gray-900 text-pink-600"
-                                            variant="filled"
-                                            value={inputField.value}
-                                            onChange={(event) =>
-                                              handleChangeInput(
-                                                inputField.id,
-                                                event
-                                              )
-                                            }
-                                          />
-                                          <div>
-                                            <button
-                                              disabled={attributes.length === 1}
-                                              onClick={() =>
-                                                handleRemoveFields(
-                                                  inputField.id
-                                                )
-                                              }
-                                              className="text-left mt-5 p-2.5 rounded-lg  bg-slate-300 text-white flex justify-center"
-                                            >
-                                              <FaMinusSquare
-                                                style={{ color: "red" }}
-                                              />
-                                            </button>
-                                          </div>
+                                ))}
+                              </form>
+                            </Typography>
+                            <div className="mt-5" onClick={handleSubmit}>
+                              <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-full">
+                                Save
+                              </button>
+                            </div>
+                          </Box>
+                        </Modal>
+                      </div>
+                      <p className="text-md font-semibold mt-6">
+                        {" "}
+                        Alternative text for NFT{" "}
+                        <span className="text-gray-400">(Optipnal) </span>
+                      </p>
+                      <input
+                        placeholder="Image description in details"
+                        className="mt-2 p-3 w-full text-sm input_background outline-none rounded-md dark:bg-gray-900  "
+                        onChange={(e) =>
+                          updateFormInput({
+                            ...formInput,
+                            alternettext: e.target.value,
+                          })
+                        }
+                      />
 
-                                          <div>
-                                            <button
-                                              className="text-left mt-5 p-2.5 rounded-lg  bg-slate-300 text-white flex justify-center"
-                                              onClick={handleAddFields}
-                                            >
-                                              <FaPlusSquare
-                                                style={{ color: "green" }}
-                                              />
-                                            </button>
-                                          </div>
-                                        </div>
-                                      </div>
-                                    ))}
-                                  </form>
-                                </Typography>
-                                <div className="mt-5" onClick={handleSubmit}>
-                                  <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-full">
-                                    Save
-                                  </button>
-                                </div>
-                              </Box>
-                            </Modal>
-                          </div>
-                          <p className="text-md font-semibold mt-6">
-                            {" "}
-                            Alternative text for NFT{" "}
-                            <span className="text-gray-400">(Optipnal) </span>
-                          </p>
-                          <input
-                            placeholder="Image description in details"
-                            className="mt-2 p-3 w-full text-sm input_background outline-none rounded-md dark:bg-gray-900  "
-                            onChange={(e) =>
-                              updateFormInput({
-                                ...formInput,
-                                alternettext: e.target.value,
-                              })
-                            }
-                          />
-
-                          <p className="font-semibold text-lg my-6">Category</p>
-                          <Multiselect
-                            isObject={false}
-                            onRemove={(event) => {
-                              setCategory(event);
-                            }}
-                            onSelect={(event) => {
-                              setCategory(event);
-                            }}
-                            options={options}
-                            selectedValues={[]}
-                            showCheckbox
-                            className="bg-black text-white"
-                          />
-                        </div>
-                      )}
+                      <p className="font-semibold text-lg my-6">Category</p>
+                      <Multiselect
+                        isObject={false}
+                        onRemove={(event) => {
+                          setCategory(event);
+                        }}
+                        onSelect={(event) => {
+                          setCategory(event);
+                        }}
+                        options={options}
+                        selectedValues={[]}
+                        showCheckbox
+                        className="bg-black text-white"
+                      />
                     </div>
+
                     <div className="flex justify-between">
                       <div className="text-left">
                         <div className="font-bold text-3xl">
@@ -660,45 +676,17 @@ export default function CreateItem() {
                           Enter price to allow users instantly your NFT{" "}
                         </div>
                       </div>
-                      <div>
-                        <img alt="" src="/swich.png" className="w-7 h-7"></img>
-                      </div>
+
+                      <input
+                        className="h-5 w-5 "
+                        onClick={() => {
+                          setToggle(!toggle);
+                        }}
+                        type="checkbox"
+                      />
                     </div>
-                    <div className="flex mt-3 gap-6 ">
-                      <div className="border-2 border-indigo-600 ... h-52 w-80 rounded-lg">
-                        Fixed Price
-                      </div>
-                      <div className="border-2 border-indigo-600 ... h-52 w-80 rounded-lg">
-                        Timed auction
-                      </div>
-                    </div>
-                    <div className="mt-5">
-                      <div >
-                        <input
-                          placeholder="Asset Name"
-                          className="w-full rounded-md bg-white  dark:bg-gray-900 p-3 outline-none mb-4 border-[1px] border-[#d5d5d6] text-pink-600"
-                          onChange={(e) =>
-                            updateFormInput({
-                              ...formInput,
-                              name: e.target.value,
-                            })
-                          }
-                        />
-                      </div>
-                      <div >
-                        <textarea
-                          type="text"
-                          placeholder="Asset Description"
-                          className="w-full bg-white  dark:bg-gray-900 rounded-md shadow-sm p-2 outline-none border-[1px] border-[#d5d5d6] mb-4 text-pink-600"
-                          onChange={(e) =>
-                            updateFormInput({
-                              ...formInput,
-                              description: e.target.value,
-                            })
-                          }
-                        />
-                      </div>
-                      <div >
+                    {toggle && (
+                      <div className="flex mt-3 gap-6 ">
                         <input
                           type="text"
                           placeholder="Asset Price in Matic"
@@ -709,9 +697,9 @@ export default function CreateItem() {
                               price: e.target.value,
                             })
                           }
-                        />
+                        />{" "}
                       </div>
-                    </div>
+                    )}
                   </form>
                 </div>
               </div>

@@ -11,6 +11,8 @@ import StoreFront from "../artifacts/contracts/StoreFront.sol/StoreFront.json";
 const YOUR_API_KEY =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkaWQ6ZXRocjoweDFFODE2RTA3RjBFYTg4MkI3Q0I0MDQ2QTg4NENDQ0Q0MjA4NEU3QTgiLCJpc3MiOiJuZnQtc3RvcmFnZSIsImlhdCI6MTY3MzI0NTEzNDc3MywibmFtZSI6Im5mdCJ9.vP9_nN3dQHIkN9cVQH5KvCLNHRk3M2ZO4x2G99smofw";
 import axios from "axios";
+import Link from "next/link";
+import { Instagram } from "@mui/icons-material";
 const client = new NFTStorage({ token: YOUR_API_KEY });
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 const storeFrontAddress = process.env.NEXT_PUBLIC_STOREFRONT_ADDRESS;
@@ -397,6 +399,16 @@ function Profile() {
         </div>
         <div className="shadow-2xl ... w-3/12 p-7" style={{height:"600px"}}>
           <div>Wallet Details</div>:{ user}
+          <div>Instagram Link</div>
+          <Link
+              href="https://www.instagram.com/p/CnjIQSEss-5/"
+              target="_blank"
+              className="hover:text-sky-700 text-blue-500 dark:text-white"
+            >
+              <div  className="hover:text-sky-500">
+                <Instagram size={22} />
+              </div>
+            </Link>
         </div>
 
 

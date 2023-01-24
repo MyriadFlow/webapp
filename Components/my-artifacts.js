@@ -47,21 +47,15 @@ const MyAssets = () => {
 console.log("My artifact Data",data);
   return (
     <div className="p-4 px-10 min-h-screen">
-      <div className="flex">
-        <button className="bg-blue-100 text-blue-800 text-lg font-medium mr-3 px-2 py-2 rounded dark:bg-blue-900 dark:text-blue-300">All</button>
-        <button className="bg-gray-100 text-gray-800 text-lg font-medium mr-3 px-2 py-2 rounded dark:bg-gray-700 dark:text-gray-300">Art</button>
-        <button className="bg-red-100 text-red-800 text-lg font-medium mr-3 px-2 py-2 rounded dark:bg-red-900 dark:text-red-300">Games</button>
-        <button className="bg-purple-100 text-purple-800 text-lg font-medium mr-3 px-2 py-2 rounded dark:bg-purple-900 dark:text-purple-300">Metaverses</button>
-
-      </div>
-      <div className="p-4 mt-10  h-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8" >
+     
+      <div className="p-4 mt-10  h-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 " >
         {data?.length > 0 ? (
           data.map((item) => {
             console.log(item);
             return (
-              <div
+              <div style={{border:"2px solid"}}
                 key={item.tokenID}
-                className="bg-[white] dark:bg-[#1c1c24]  rounded-lg shadow-lg w-full lg:w-72 hover:scale-105 duration-200 transform transition cursor-pointer border-2 dark:border-gray-800"
+                className="bg-[white] dark:bg-[#1c1c24]  rounded-lg shadow-lg w-full lg:w-72 hover:scale-105 duration-200 transform transition cursor-pointer"
               >
                 <Link key={item.tokenID} href={`/create/${item.tokenID}`}>
                   <div className="p-6">

@@ -20,12 +20,12 @@ function MyApp({ Component, pageProps }) {
   });
   return (
     <>
-      {isLoading && <Loader />}
+      
 
       <ThemeProvider enableSystem={true} attribute="class">
         <ThirdwebProvider desiredChainId={desiredChainId}>
           <Provider store={store}>
-            <Component {...pageProps} />
+            <Component {...pageProps} {...isLoading && <Loader />}/>
           </Provider>
         </ThirdwebProvider>
       </ThemeProvider>
