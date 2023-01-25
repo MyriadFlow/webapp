@@ -57,7 +57,7 @@ console.log("My artifact Data",data);
                 key={item.tokenID}
                 className="bg-[white] dark:bg-[#1c1c24]  rounded-lg shadow-lg w-full lg:w-72 hover:scale-105 duration-200 transform transition cursor-pointer"
               >
-                <Link key={item.tokenID} href={`/create/${item.tokenID}`}>
+                <Link key={item.tokenID} href={`/assets/${item.tokenID}`}>
                   <div className="p-6">
                     <HomeComp uri={item ? item.metaDataURI : ""} />
 

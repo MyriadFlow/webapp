@@ -159,11 +159,12 @@ function Token({ asset }) {
 
 export async function getServerSideProps(context) {
   const { tokenid } = context.query;
+  
 
   const { data } = await client.query({
     query: gql`
         query Query($where:  MarketplaceItem_filter) {
-          marketplaceItems(where: {id:${tokenid}}){
+          marketplaceItems(where: {tokenId:${tokenid}}){
             id
             itemId
             nftContract

@@ -142,7 +142,7 @@ const Home = () => {
               console.log(item);
               console.log("Image url", item.metaDataURI);
               return (
-                <div
+                <div style={{border:"2px solid"}}
                   key={item.tokenId}
                   className="mycard p-3 shadow-lg w-full lg:w-72 cursor-pointer"
                 >

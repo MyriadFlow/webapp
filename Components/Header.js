@@ -236,7 +236,7 @@ function Header() {
                   Explore
                 </div>
               </Link>
-              <Link href="/create">
+              <Link href="/assets">
                 <div className="block py-4 rounded-sm hover:bg-gray-300 transition duration-200 ease-in-out">
                   Create
                 </div>
