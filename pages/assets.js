@@ -9,10 +9,15 @@ import { FaPlusSquare, FaMinusSquare } from "react-icons/fa";
 import { v4 as uuidv4 } from "uuid";
 import WalletConnectProvider from "@walletconnect/web3-provider";
 import Multiselect from "multiselect-react-dropdown";
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+import Button from '@mui/material/Button';
 
 const YOUR_API_KEY =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkaWQ6ZXRocjoweDFFODE2RTA3RjBFYTg4MkI3Q0I0MDQ2QTg4NENDQ0Q0MjA4NEU3QTgiLCJpc3MiOiJuZnQtc3RvcmFnZSIsImlhdCI6MTY3MzI0NTEzNDc3MywibmFtZSI6Im5mdCJ9.vP9_nN3dQHIkN9cVQH5KvCLNHRk3M2ZO4x2G99smofw";
-import axios from "axios";
 const client = new NFTStorage({ token: YOUR_API_KEY });
 import Marketplace from "../artifacts/contracts/Marketplace.sol/Marketplace.json";
 import StoreFront from "../artifacts/contracts/StoreFront.sol/StoreFront.json";
@@ -21,7 +26,6 @@ import { Alert, Snackbar } from "@mui/material";
 import Layout from "../Components/Layout";
 import { useSelector } from "react-redux";
 import { selectUser } from "../slices/userSlice";
-import { convertUtf8ToHex } from "@walletconnect/utils";
 import { NFTStorage } from "nft.storage";
 const style = {
   position: "absolute",
@@ -40,7 +44,6 @@ const style = {
 // const Web3 = require("web3");
 const marketplaceAddress = process.env.NEXT_PUBLIC_MARKETPLACE_ADDRESS;
 const storeFrontAddress = process.env.NEXT_PUBLIC_STOREFRONT_ADDRESS;
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 export default function CreateItem() {
   const [toggle, setToggle] = useState(false);
   const [show, setShow] = useState(false);
@@ -59,7 +62,7 @@ export default function CreateItem() {
   const [previewMedia, setpreviewMedia] = useState("");
   const [addImage, setAddImage] = useState(false);
   const [formInput, updateFormInput] = useState({
-    price: "",
+    price: 10,
     name: "",
     description: "",
     alternettext: "",
@@ -333,9 +336,22 @@ export default function CreateItem() {
     loader;
   }
 
+
+  const [priviewAssetsM, setpriviewAssetsM] = useState(false);
+
+  const handleClickOpen = () => {
+    setpriviewAssetsM(true);
+  };
+
+  const handleClosePM = () => {
+    setpriviewAssetsM(false);
+  };
   return (
     <Layout>
       <div className=" w-full">
+
+
+     
         <div className="dark:bg-gray-800 kumbh text-center">
           <Snackbar
             anchorOrigin={{ vertical: "top", horizontal: "right" }}
@@ -358,7 +374,7 @@ export default function CreateItem() {
           <div className="max-w-[1250px] mx-auto myshadow rounded">
             <div className="bg-white dark:bg-gray-800 mb-5">
               <div className="flex">
-                <div className="p-4 mt-5" style={{ width: "60%" }}>
+                <div className="p-4 mt-5" style={{ width: "100%" }}>
                   <form action="#">
                     <div>
                       <img
@@ -377,6 +393,7 @@ export default function CreateItem() {
                         <div className="mt-5">
                           <div>
                             <input
+                              required="required"
                               placeholder="Asset Name"
                               className="w-full rounded-md bg-white  dark:bg-gray-900 p-3 outline-none mb-4 border-[1px] border-[#d5d5d6] text-pink-600"
                               onChange={(e) =>
@@ -387,6 +404,7 @@ export default function CreateItem() {
                               }
                             />
                           </div>
+
                           <div>
                             <textarea
                               type="text"
@@ -498,10 +516,6 @@ export default function CreateItem() {
                     </div>
 
                     <div className="w-full py-6">
-                      <div className="bg-gray-100 shadow-sm cursor-pointer p-3 border-2 border-gray-300 rounded-xl font-semibold text-md  dark:bg-gray-800 bg-black text-white">
-                        Show Advance Menu
-                      </div>
-
                       <div className="flex justify-between">
                         <div>
                           <p className="text-lg font-bold mt-6">Properties</p>
@@ -641,7 +655,394 @@ export default function CreateItem() {
                         <span className="text-gray-400">(Optipnal) </span>
                       </p>
                       <input
-                        placeholder="Image description in details"
+                        placeholder="NFT description in details"
+                        className="mt-2 p-3 w-full text-sm input_background outline-none rounded-md dark:bg-gray-900  "
+                        onChange={(e) =>
+                          updateFormInput({
+                            ...formInput,
+                            alternettext: e.target.value,
+                          })
+                        }
+                      />
+
+                      <p className="font-semibold text-lg my-6">Category</p>
+                      <Multiselect
+                        isObject={false}
+                        onRemove={(event) => {
+                          setCategory(event);
+                        }}
+                        onSelect={(event) => {
+                          setCategory(event);
+                        }}
+                        options={options}
+                        selectedValues={[]}
+                        showCheckbox
+                        className="bg-black text-white"
+                      />
+                    </div>
+
+<div className="font-semibold text-lg my-6">Tags</div>
+<Multiselect
+                        isObject={false}
+                        onRemove={(event) => {
+                          setCategory(event);
+                        }}
+                        onSelect={(event) => {
+                          setCategory(event);
+                        }}
+                        options={options}
+                        selectedValues={[]}
+                        showCheckbox
+                        className="bg-black text-white"
+                      />
+                    <div className="flex justify-between">
+                      <div className="text-left">
+                        <div className="font-bold text-3xl">
+                          Put on marketplace
+                        </div>
+                        <div>
+                          Enter price to allow users instantly Buy your NFT{" "}
+                        </div>
+                      </div>
+
+                      <input
+                        className="h-5 w-5 "
+                        onClick={() => {
+                          setToggle(!toggle);
+                        }}
+                        type="checkbox"
+                      />
+                    </div>
+                    {toggle && (
+                      <div className="flex mt-3 gap-6 ">
+                        <input
+
+                          type="number"
+                          min="1" max="10" 
+                           required="true"
+                          placeholder="Asset Price in Matic"
+                          className="w-full bg-white dark:bg-gray-900 rounded-md mb-4 shadow-sm p-2 outline-none border-[1px] border-[#d5d5d6] text-pink-600"
+                          onChange={(e) =>
+                            updateFormInput({
+                              ...formInput,
+                              price: e.target.value,
+                            })
+                          }
+                        />{" "}
+                      </div>
+                    )}
+                  </form>
+                </div>
+              </div>
+              <div className="flex justify-between p-5">
+                <div>
+                  <button
+                    onClick={(e) => createMarket(e)}
+                    className="bg-[black] rounded-xl dark:bg-black text-white py-3 px-3 mb-8"
+                  >
+                    Create digital assets
+                  </button>
+                </div>
+                <div>
+                  <button  onClick={handleClickOpen} className="bg-[black] rounded-xl dark:bg-black text-white py-3 px-3 mb-8">
+                    Priview Assets
+                  </button>
+                </div>
+              </div>
+              <Dialog
+        open={priviewAssetsM}
+        onClose={handleClosePM}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">
+          {"Use Google's location service?"}
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+          <div className="flex">
+                <div className="p-4 mt-5" style={{ width: "100%" }}>
+                  <form action="#">
+                    <div>
+                      <img
+                        className=" h-32"
+                        alt=""
+                        src="/NftB1.jpg"
+                        style={{ width: "100%" }}
+                      ></img>
+                    </div>
+                    <h3 className="text-3xl py-4 font-bold text-pink-600 mt-10 text-left text-4xl">
+                      Create New NFT
+                    </h3>
+
+                    <div>
+                      <div>
+                        <div className="mt-5">
+                          <div>
+                            <input
+                              required="required"
+                              placeholder="Asset Name"
+                              className="w-full rounded-md bg-white  dark:bg-gray-900 p-3 outline-none mb-4 border-[1px] border-[#d5d5d6] text-pink-600"
+                              onChange={(e) =>
+                                updateFormInput({
+                                  ...formInput,
+                                  name: e.target.value,
+                                })
+                              }
+                            />
+                          </div>
+
+                          <div>
+                            <textarea
+                              type="text"
+                              placeholder="Asset Description"
+                              className="w-full bg-white  dark:bg-gray-900 rounded-md shadow-sm p-2 outline-none border-[1px] border-[#d5d5d6] mb-4 text-pink-600"
+                              onChange={(e) =>
+                                updateFormInput({
+                                  ...formInput,
+                                  description: e.target.value,
+                                })
+                              }
+                            />
+                          </div>
+                        </div>
+                        <div className="flex justify-between">
+                          <div className="font-bold  mt-5 text-left">
+                            Upload file
+                          </div>
+                          <div className="font-bold  mt-5 text-left">
+                            Priview
+                          </div>
+                        </div>
+                        <div className="flex gap-6">
+                          <div className=" rounded-lg text-center p-3 border-2 border-indigo-600 ...mt-20 w-2/4">
+                            <h1 className="text-lg font-semibold">
+                              Drag file here to upload
+                            </h1>
+                            <p className="text-[#6a6b76]">
+                              PNG,GIF,WEBP,MP4,or MP3
+                              <br />
+                              <div className="flex text-black mt-3 cursor-pointer rounded-lg bg-slate-300 p-2.5 m-auto w-full">
+                                <input
+                                  type="file"
+                                  accept="image/png, image/jpeg,.txt,.doc,video/mp4,audio/mpeg,.pdf"
+                                  onChange={(e) => onChangeMediaType(e)}
+                                />
+                              </div>
+                            </p>
+                          </div>
+
+                          <div className=" rounded-lg text-center p-3 border-2 border-indigo-600 ...mt-20 w-2/4">
+                            <div className="flex text-black mt-3 cursor-pointer rounded-lg  p-2.5 m-auto w-full">
+                              {previewMedia ? (
+                                mediaHash?.image && addImage == false ? (
+                                  <img
+                                    src={previewMedia}
+                                    alt=""
+                                    className="w-full object-cover h-72 flex justify-center"
+                                  />
+                                ) : mediaHash?.video ? (
+                                  <video autoPlay controls>
+                                    <source src={previewMedia}></source>
+                                  </video>
+                                ) : mediaHash?.audio ? (
+                                  <audio autoPlay controls>
+                                    <source src={previewMedia}></source>
+                                  </audio>
+                                ) : mediaHash?.doctype ? (
+                                  <input file={previewMedia} alt="" />
+                                ) : null
+                              ) : (
+                                <div />
+                              )}
+                            </div>
+                          </div>
+                        </div>
+
+                        {addImage && (
+                          <>
+                            <div className="flex justify-between">
+                              <div className="font-bold  mt-5 text-left">
+                                Upload preview image
+                              </div>
+                              <div className="font-bold  mt-5 text-left">
+                                Priview
+                              </div>
+                            </div>
+                            <div className="flex gap-6">
+                              <div className="   rounded-xl border-dashed border-2 border-indigo-600 ... text-center p-3 w-96 ... mt-10">
+                                <h1 className="text-lg font-semibold">
+                                  Drag file here to upload
+                                </h1>
+                                <p className="text-[#6a6b76]">
+                                  PNG, JPG, or GIF
+                                  <br />
+                                  <div className=" text-black mt-3 cursor-pointer rounded-xl p-2.5 m-auto w-full bg-slate-300">
+                                    <input
+                                      type="file"
+                                      accept="image/*"
+                                      onChange={(e) => onChangeThumbnail(e)}
+                                    />
+                                  </div>
+                                </p>
+                              </div>
+                              <div className="   rounded-xl border-dashed border-2 border-indigo-600 ... text-center p-3 w-96 ... mt-10">
+                                <div className="text-[#6a6b76]">
+                                  <div className=" text-black mt-3 cursor-pointer rounded-xl p-2.5 m-auto w-full ">
+                                    {previewThumbnail && (
+                                      <img src={previewThumbnail} />
+                                    )}
+                                    <div />
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </>
+                        )}
+                      </div>
+                    </div>
+
+                    <div className="w-full py-6">
+                      <div className="flex justify-between">
+                        <div>
+                          <p className="text-lg font-bold mt-6">Properties</p>
+                        </div>
+                        <div
+                          onClick={handleShow}
+                          className="mt-7 text-green-500  h-10 p-1.5 border-solid border-2 border-solid-600 ... rounded-lg cursor-pointer"
+                        >
+                          Add Properties
+                        </div>
+
+                        <Modal
+                          open={show}
+                          onClose={handleClos}
+                          aria-labelledby="modal-modal-title"
+                          aria-describedby="modal-modal-description"
+                        >
+                          <Box sx={style} className="text-center">
+                            <Typography
+                              id="modal-modal-title"
+                              variant="h6"
+                              component="h2"
+                              className="text-center"
+                            >
+                              <div className="flex justify-between">
+                                <div>Add Properties</div>
+                                <div>
+                                  <img
+                                    className="w-3 h-3"
+                                    onClose={handleClos}
+                                    img
+                                    src="cross.png"
+                                  ></img>
+                                </div>
+                              </div>
+                            </Typography>
+                            <Typography
+                              id="modal-modal-description"
+                              sx={{ mt: 2 }}
+                            >
+                              <div>
+                                Properties show up underneath your item, are
+                                clickable, and can be filtered in your
+                                collection&apos;s sidebar.
+                              </div>
+                              <div className="flex justify-between">
+                                <div className="font-bold">Type</div>
+                                <div className="font-bold">Name</div>
+                              </div>
+                              <form onSubmit={handleSubmit}>
+                                {attributes.map((inputField) => (
+                                  <div key={inputField.id}>
+                                    <div className="flex flex-col space-y-4 md:space-y-0 md:flex-row md:space-x-4 pb-2 text-pink-600 align-center">
+                                      <input
+                                        name="display_type"
+                                        label="First Name"
+                                        placeholder="Display type"
+                                        className="mt-2 p-3 w-full text-sm input_background outline-none rounded-md dark:bg-gray-900"
+                                        variant="filled"
+                                        value={inputField.display_type}
+                                        onChange={(event) =>
+                                          handleChangeInput(
+                                            inputField.id,
+                                            event
+                                          )
+                                        }
+                                      />
+                                      <input
+                                        name="trait_type"
+                                        label="Last Name"
+                                        placeholder="Trait type"
+                                        className="mt-2 p-3 w-full text-sm input_background outline-none rounded-md dark:bg-gray-900 text-pink-600"
+                                        variant="filled"
+                                        value={inputField.trait_type}
+                                        onChange={(event) =>
+                                          handleChangeInput(
+                                            inputField.id,
+                                            event
+                                          )
+                                        }
+                                      />
+                                      <input
+                                        name="value"
+                                        type="number"
+                                        label="First Name"
+                                        placeholder="Value"
+                                        className="mt-2 p-3 w-full text-sm input_background outline-none rounded-md dark:bg-gray-900 text-pink-600"
+                                        variant="filled"
+                                        value={inputField.value}
+                                        onChange={(event) =>
+                                          handleChangeInput(
+                                            inputField.id,
+                                            event
+                                          )
+                                        }
+                                      />
+                                      <div>
+                                        <button
+                                          disabled={attributes.length === 1}
+                                          onClick={() =>
+                                            handleRemoveFields(inputField.id)
+                                          }
+                                          className="text-left mt-5 p-2.5 rounded-lg  bg-slate-300 text-white flex justify-center"
+                                        >
+                                          <FaMinusSquare
+                                            style={{ color: "red" }}
+                                          />
+                                        </button>
+                                      </div>
+
+                                      <div>
+                                        <button
+                                          className="text-left mt-5 p-2.5 rounded-lg  bg-slate-300 text-white flex justify-center"
+                                          onClick={handleAddFields}
+                                        >
+                                          <FaPlusSquare
+                                            style={{ color: "green" }}
+                                          />
+                                        </button>
+                                      </div>
+                                    </div>
+                                  </div>
+                                ))}
+                              </form>
+                            </Typography>
+                            <div className="mt-5" onClick={handleSubmit}>
+                              <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-full">
+                                Save
+                              </button>
+                            </div>
+                          </Box>
+                        </Modal>
+                      </div>
+                      <p className="text-md font-semibold mt-6">
+                        {" "}
+                        Alternative text for NFT{" "}
+                        <span className="text-gray-400">(Optipnal) </span>
+                      </p>
+                      <input
+                        placeholder="NFT description in details"
                         className="mt-2 p-3 w-full text-sm input_background outline-none rounded-md dark:bg-gray-900  "
                         onChange={(e) =>
                           updateFormInput({
@@ -673,7 +1074,7 @@ export default function CreateItem() {
                           Put on marketplace
                         </div>
                         <div>
-                          Enter price to allow users instantly your NFT{" "}
+                          Enter price to allow users instantly Buy your NFT{" "}
                         </div>
                       </div>
 
@@ -689,6 +1090,7 @@ export default function CreateItem() {
                       <div className="flex mt-3 gap-6 ">
                         <input
                           type="text"
+                         
                           placeholder="Asset Price in Matic"
                           className="w-full bg-white dark:bg-gray-900 rounded-md mb-4 shadow-sm p-2 outline-none border-[1px] border-[#d5d5d6] text-pink-600"
                           onChange={(e) =>
@@ -703,17 +1105,17 @@ export default function CreateItem() {
                   </form>
                 </div>
               </div>
-
-              <div style={{ marginTop: "100px" }}>
-                <button
-                  onClick={(e) => createMarket(e)}
-                  className="bg-[black] rounded-xl dark:bg-black text-white py-3 px-3 mb-8"
-                >
-                  Create digital artifact
-                </button>
-              </div>
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClosePM}>Disagree</Button>
+          <Button onClick={handleClosePM} autoFocus>
+            Agree
+          </Button>
+        </DialogActions>
+      </Dialog>
             </div>
-          </div>
+          </div>            
         </div>
       </div>
     </Layout>

@@ -14,19 +14,17 @@ import Layout from "../../Components/Layout";
 import Link from "next/link";
 
 function Token({ asset }) {
-  console.log(asset);
-  const [model, setmodel] = useState(false);
-  const [modelmsg, setmodelmsg] = useState("buying in progress!");
-  const nfturl = `https://cloudflare-ipfs.com/ipfs/${asset?.marketplaceItems[0].metaDataURI?.substr(
-    7,
-    50
-  )}`;
-
-  const [response, setResponse] = useState([]);
-  const [image, setImage] = useState("");
   const removePrefix = (uri) => {
     return uri.substring(7, uri.length);
   };
+
+  console.log(asset);
+  const [model, setmodel] = useState(false);
+  const [modelmsg, setmodelmsg] = useState("buying in progress!");
+  const nfturl = `https://cloudflare-ipfs.com/ipfs/${removePrefix(asset?.marketplaceItems[0].metaDataURI)}`;
+
+  const [response, setResponse] = useState([]);
+  const [image, setImage] = useState("");
   const metadata = async () => {
     const { data } = await axios.get(
       `https://cloudflare-ipfs.com/ipfs/${removePrefix(
@@ -44,6 +42,9 @@ function Token({ asset }) {
   let preuri = removePrefix(image);
 
   const imgurl = `https://cloudflare-ipfs.com/ipfs/${preuri}`;
+  const transaction = `https://mumbai.polygonscan.com/token/${asset.marketplaceItems[0].nftContract}?a=${asset.marketplaceItems[0].id}`;
+  const copy = asset.marketplaceItems[0].nftContract;
+
   return (
     <Layout>
       <div className="max-w-[1400px] mx-auto bg-[#f8f7fc] p-8 dark:bg-[#131417] my-8 rounded-3xl">
@@ -66,13 +67,26 @@ function Token({ asset }) {
                     <h3 className="font-bold dark:text-white uppercase">
                       NFT Details
                     </h3>
-
+                    <div className="flex items-center justify-between my-4 overflow-scroll m41:overflow-hidden">
+                      <h3 className="text-[#9298b0] font-medium dark:text-gray-300">
+                        Contract Address
+                      </h3>
+                      <Link
+                        href={`https://mumbai.polygonscan.com/address/${copy}`}
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        <span className="text-gray-600 dark:text-gray-400 font-bold cursor-pointer">
+                          {copy}
+                        </span>
+                      </Link>
+                    </div>
                     <div className="flex items-center justify-between my-4">
                       <h3 className="font-medium text-[#9298b0] dark:text-gray-300">
                         Token ID
                       </h3>
                       <span className="text-[#253262] font-bold text-sm dark:text-gray-400">
-                        {asset.marketplaceItems[0].id}
+                        {asset.marketplaceItems[0].tokenId}
                       </span>
                     </div>
                     <div className="flex items-center justify-between my-4">
@@ -105,6 +119,21 @@ function Token({ asset }) {
                       <span className="text-gray-600 text-sm">
                         <Link
                           href={nfturl}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="text-[#253262] text-lg dark:text-gray-400"
+                        >
+                          <BsArrowUpRight />
+                        </Link>
+                      </span>
+                    </div>
+                    <div className="flex items-center justify-between my-4">
+                      <h3 className="text-[#9298b0] font-medium dark:text-gray-300">
+                        Token Lifecycle
+                      </h3>
+                      <span className="text-gray-600 text-sm">
+                        <Link
+                          href={transaction}
                           target="_blank"
                           rel="noreferrer"
                           className="text-[#253262] text-lg dark:text-gray-400"
@@ -167,6 +196,7 @@ export async function getServerSideProps(context) {
           marketplaceItems(where: {tokenId:${tokenid}}){
             id
             itemId
+            tokenId
             nftContract
             metaDataURI
             seller

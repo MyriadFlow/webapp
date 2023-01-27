@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
-const Homecomp = ({ uri }) => {
+const Homecomp = ({HomeProps, uri }) => {
   const [response, setResponse] = useState([]);
   const [image, setImage] = useState("");
   const removePrefix = (uri) => {
@@ -13,6 +13,7 @@ const Homecomp = ({ uri }) => {
       const parsedURI = removePrefix(uri);
       const { data } = await axios.get(`https://cloudflare-ipfs.com/ipfs/${parsedURI}`);
       setResponse(data);
+      HomeProps(data);
       console.log("Data ipfs:  ",data);
       if (data.image.length > 1) setImage(data.image);
       else setImage(data.thumbnailimage);
@@ -23,6 +24,7 @@ const Homecomp = ({ uri }) => {
 
   useEffect(() => {
     metadata();
+
   }, [uri]);
 
   let preuri = image;
@@ -35,6 +37,10 @@ const Homecomp = ({ uri }) => {
         alt=""
         className=" w-full object-fit rounded-lg mb-3"
       />
+      <div className="flex justify-between">
+        <div>{response.name}</div>
+        <div>{response.description}</div>
+      </div>
     </div>
   );
 };

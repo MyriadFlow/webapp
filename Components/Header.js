@@ -181,9 +181,9 @@ function Header() {
             </Link>
 
             {user && hasRole ? (
-              <Link href="/create">
+              <Link href="/assets">
                 <NavLink
-                  className={router.pathname == "/create" ? "active" : ""}
+                  className={router.pathname == "/assets" ? "active" : ""}
                   style={{ cursor: "pointer" }}
                 >
                   Create
