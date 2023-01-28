@@ -15,10 +15,13 @@ import BuyAsset from "../Components/buyAssetModal";
 import { buyNFT } from "./api/buyNFT";
 import Layout from "../Components/Layout";
 import { Category } from "@mui/icons-material";
+import { getMetaData, removePrefix } from "../utils/ipfsUtil";
+import { MarketPlaceCard } from "../Components/Cards/MarketPlaceCard";
 const graphqlAPI = process.env.NEXT_PUBLIC_GRAPHQL_API;
 
 const Home = () => {
-  
+  const [data, setData] = useState([]);
+  const [shallowData, setShallowData] = useState([]);
   const logoutmodel = useSelector(selectModel);
   const dispatch = useDispatch();
 
@@ -36,15 +39,19 @@ const Home = () => {
   const [filter, Setfilter] = useState(false);
   const [model, setmodel] = useState(false);
   const [modelmsg, setmodelmsg] = useState("buying in progress!");
-  const [categories, setCategory] = useState(["All","Art","Music", "Sports","Video","Cartoon",
-"Others"]);
+  const [categories, setCategory] = useState([
+    "All",
+    "Music",
+    "Image",
+    "Video",
+    "Document",
+    "Others",
+  ]);
 
-const HomeProps=(data)=>{
-  console.log("explore data",data.categories)
-  setCategory(data.categories)
-}
-
-
+  const HomeProps = (data) => {
+    console.log("explore data", data.categories);
+    setCategory(data.categories);
+  };
 
   const toogle = () => {
     Setfilter(!filter);
@@ -62,12 +69,20 @@ const HomeProps=(data)=>{
   async function loadNFTs() {
     setLoadingState("loaded");
   }
+  const filterNFTs = (cat) => {
+    if (cat === "All") {
+      setData(shallowData);
+      return;
+    }
+    let localData = [...data];
+    localData = localData.filter((item) => item.categories.includes(cat));
+    console.log("Filter by category", localData);
+    setData(localData);
+  };
   async function buyNft(nft) {
     setmodelmsg("Buying in Progress");
     await buyNFT(nft, setmodel, setmodelmsg);
   }
-
-  const [data, setData] = useState([]);
 
   const market = async () => {
     const query = gql`
@@ -83,27 +98,39 @@ const HomeProps=(data)=>{
           activity
           blockTimestamp
           price
-
         }
       }
     `;
 
-    console.log(process.env);
     const result = await request(graphqlAPI, query);
-    setData(result.marketplaceItems);
-    console.log(result);
+    const fResult = await Promise.all(
+      result.marketplaceItems.map(async function (obj, index) {
+        const nftData = await getMetaData(obj.metaDataURI);
+        const { name, description, categories, image } = nftData;
+        return {
+          ...obj,
+          name,
+          description,
+          categories: categories,
+          image: nftData?.image? `${process.env.NEXT_PUBLIC_IPFS_CLIENT}${removePrefix(
+            image
+          )}`:"",
+        };
+      })
+    );
+    const sortedNFts = fResult.sort((a, b) => {
+      if (a.itemId < b.itemId) return -1;
+    });
+    setData(sortedNFts);
+    setShallowData(sortedNFts);
   };
 
   useEffect(() => {
     market();
   }, []);
-
   return (
     <Layout>
       {model && <BuyAsset open={model} setOpen={setmodel} message={modelmsg} />}
-
-      {/* logout model  */}
-
       {logoutmodel && (
         <div className="flex items-center  shadow-md justify-center w-full h-screen model-overlay fixed  top-0 z-50">
           <div className="h-56 w-80 bg-white  dark:bg-gray-800 shadow-lg rounded-md fixed z-50 flex items-center justify-center  ring-offset-2 ring-2 ring-blue-400">
@@ -139,51 +166,63 @@ const HomeProps=(data)=>{
       <main>
         <div className="min-h-screen">
           <div className="flex mt-5">
-          <div className=" ml-5 ">Select Category</div>
-          <div>
-          <select>
-          {/* {categories.map(Category)} */}
-            <option value="All">
+            <div className=" ml-5 ">Select Category</div>
+            <div>
+              <div className="flex gap-6">
+                {categories.map((category, key) => {
+                  return (
+                    <div key={key}>
+                      <button
+                        onClick={() => filterNFTs(category)}
+                        className="bg-blue-100 text-blue-800 text-lg font-medium mr-3 px-2 py-2 rounded dark:bg-blue-900 dark:text-blue-300"
+                      >
+                        {category}
+                      </button>
+                    </div>
+                  );
+                })}
+              </div>
+              {/* {categories.map((category)=>{
+
+            <div className="flex gap-6">
+              <div>
               <button className="bg-blue-100 text-blue-800 text-lg font-medium mr-3 px-2 py-2 rounded dark:bg-blue-900 dark:text-blue-300">
-                All
+                category
               </button>
-            </option>
-            <option value="Art">
-              <button className="bg-gray-100 text-gray-800 text-lg font-medium mr-3 px-2 py-2 rounded dark:bg-gray-700 dark:text-gray-300">
-                Art
-              </button>
-            </option>
-            <option value="Music">
+              </div>
+             
+              <div >
               <button className="bg-red-100 text-red-800 text-lg font-medium mr-3 px-2 py-2 rounded dark:bg-red-900 dark:text-red-300">
                 Music
               </button>
-            </option>
-            <option value="Sports">
+              </div>
+              <div >
               <button className="bg-purple-100 text-purple-800 text-lg font-medium mr-3 px-2 py-2 rounded dark:bg-purple-900 dark:text-purple-300">
-                Sports
+                Image
               </button>
-            </option>
-            <option value="Video">
+              </div>
+              <div>
               <button className="bg-purple-100 text-purple-800 text-lg font-medium mr-3 px-2 py-2 rounded dark:bg-purple-900 dark:text-purple-300">
                 Video
               </button>
-            </option>
-            <option value="Cartoon">
+              </div>
+              <div>
               <button className="bg-purple-100 text-purple-800 text-lg font-medium mr-3 px-2 py-2 rounded dark:bg-purple-900 dark:text-purple-300">
-                Cartoon
+                Document
               </button>
-            </option>
-            <option value="Others">
+              </div>
+              <div>
               <button className="bg-purple-100 text-purple-800 text-lg font-medium mr-3 px-2 py-2 rounded dark:bg-purple-900 dark:text-purple-300">
                 Others
               </button>
-            </option>
-          </select>
-
-          </div>
+              </div>
+            </div>
+         
+        })} */}
+            </div>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 md:grid-cols-3 gap-4 lg:gap-24 p-4">
-            {data.map((item) => {
+            {data.length ? data?.map((item) => {
               return (
                 <div
                   style={{ border: "2px solid" }}
@@ -192,7 +231,8 @@ const HomeProps=(data)=>{
                 >
                   <Link key={item.tokenId} href={`/explore/${item.tokenId}`}>
                     <div>
-                      <HomeComp HomeProps={HomeProps} uri={item ? item.metaDataURI : ""} />
+                      {/* <HomeComp HomeProps={HomeProps} uri={item ? item.metaDataURI : ""} /> */}
+                      <MarketPlaceCard {...item} />
 
                       {/* <HomeComp2  uri={item ? item.metaDataURI : ""} /> */}
                       <div className="flex items-center justify-between mb-2">
@@ -214,7 +254,7 @@ const HomeProps=(data)=>{
                   </button>
                 </div>
               );
-            })}
+            }):<h1>No NFT found for selected category</h1>}
           </div>
         </div>
       </main>

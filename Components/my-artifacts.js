@@ -61,9 +61,9 @@ console.log("My artifact Data",data);
                   <div className="p-6">
                     <HomeComp uri={item ? item.metaDataURI : ""} />
 
-                    <div className="flex px-4 py-6">
+                    {/* <div className="flex px-4 py-6">
                       <HomeComp2 uri={item ? item.metaDataURI : ""} />
-                    </div>
+                    </div> */}
                   <div className="px-3 ">
                   <div className="font-bold">Name</div>
                   <div className="font-bold">Price</div>

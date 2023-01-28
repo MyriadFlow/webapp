@@ -144,9 +144,9 @@ const MyAssets = () => {
                   <div>
                     <HomeComp uri={item ? item.metaDataURI : ""} />
 
-                    <div className="flex px-4 py-6">
+                    {/* <div className="flex px-4 py-6">
                       <HomeComp2 uri={item ? item.metaDataURI : ""} />
-                    </div>
+                    </div> */}
                    
                   </div>
                 </Link>

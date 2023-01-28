@@ -77,9 +77,9 @@ function NftboughtDashboard() {
                 <Link key={item.itemId} href={`/assets/${item.itemId}`}>
                   <div>
                     <HomeComp uri={item ? item.metaDataURI : ""} />
-                    <div className="flex px-4 py-6">
+                    {/* <div className="flex px-4 py-6">
                       <HomeComp2 uri={item ? item.metaDataURI : ""} />
-                    </div>
+                    </div> */}
                     <div className=" flex items-center justify-between px-4 mb-2">
                       <p className="font-1 text-sm font-bold">Price </p>
                       <div className="flex items-center">

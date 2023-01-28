@@ -4,9 +4,9 @@ import { ThemeProvider } from "next-themes";
 import { Provider } from "react-redux";
 import store from "../store";
 import Router from "next/router";
-import Loader from "../Components/Loader";
 import { ThirdwebProvider } from "@thirdweb-dev/react";
 import "../styles/globals.css";
+import Loader from "../Components/Loader";
 
 function MyApp({ Component, pageProps }) {
   const desiredChainId = 80001;
@@ -20,7 +20,8 @@ function MyApp({ Component, pageProps }) {
   });
   return (
     <>
-      
+            {isLoading && <Loader />}
+
 
       <ThemeProvider enableSystem={true} attribute="class">
         <ThirdwebProvider desiredChainId={desiredChainId}>
