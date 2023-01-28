@@ -9,14 +9,6 @@ import { FaPlusSquare, FaMinusSquare } from "react-icons/fa";
 import { v4 as uuidv4 } from "uuid";
 import WalletConnectProvider from "@walletconnect/web3-provider";
 import Multiselect from "multiselect-react-dropdown";
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
-import Button from '@mui/material/Button';
-import { confirmAlert } from 'react-confirm-alert'; // Import
-import "../node_modules/react-confirm-alert/src/react-confirm-alert.css"
 const YOUR_API_KEY =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkaWQ6ZXRocjoweDFFODE2RTA3RjBFYTg4MkI3Q0I0MDQ2QTg4NENDQ0Q0MjA4NEU3QTgiLCJpc3MiOiJuZnQtc3RvcmFnZSIsImlhdCI6MTY3MzI0NTEzNDc3MywibmFtZSI6Im5mdCJ9.vP9_nN3dQHIkN9cVQH5KvCLNHRk3M2ZO4x2G99smofw";
 const client = new NFTStorage({ token: YOUR_API_KEY });
@@ -345,49 +337,7 @@ export default function CreateItem() {
     loader;
   }
 
-//  const submit = () => {
-//     confirmAlert({
-//       title: 'Confirm to submit',
-//       message: 'Are you sure to do this.',
-//       buttons: [
-//         {
-//           label: 'Yes',
-//           onClick: () => alert('Click Yes')
-//         },
-//         {
-//           label: 'No',
-//           onClick: () => alert('Click No')
-//         }
-//       ]
-//     });
-//   };
 
-  // const options = {
-  //   title: 'Title',
-  //   message: 'Message',
-  //   buttons: [
-  //     {
-  //       label: 'Yes',
-  //       onClick: () => alert('Click Yes')
-  //     },
-  //     {
-  //       label: 'No',
-  //       onClick: () => alert('Click No')
-  //     }
-  //   ],
-  //   closeOnEscape: true,
-  //   closeOnClickOutside: true,
-  //   keyCodeForClose: [8, 32],
-  //   willUnmount: () => {},
-  //   afterClose: () => {},
-  //   onClickOutside: () => {},
-  //   onKeypress: () => {},
-  //   onKeypressEscape: () => {},
-  //   overlayClassName: "overlay-custom-class-name"
-  // };
-  
-  // confirmAlert(options);
-  
   return (
     <Layout>
       <div className=" w-full">
