@@ -69,7 +69,7 @@ function LandingPage() {
         <title>Marketplace</title>
       </Head>
       <Layout>
-        <div className="min-h-screen lg:flex justify-center items-center">
+        <div className="min-h-screen lg:flex justify-center items-center gradient-blue">
           <div className="lg:flex xl:gap-8 lg:w-[1025px] x2:w-[1200px] xxl:w-[1400px] mx-auto lg:mt-12">
             <div className="text-center lg:text-left lg:w-1/2 mt-16 lg:mt-0  p-2 sm:p-4 lg:px-8 lg:pt-0">
               <h3 className=" dark:text-white font-poppins font-bold m48:w-[470px] l32:w-[450px] xxl:w-auto  text-3xl sm:text-4xl lg:text-6xl x2:text-7xl xxl:text-8xl capitalize mb-8 x2:mb-10 mx-auto lg:mx-0">
@@ -161,16 +161,7 @@ function LandingPage() {
                   </div>
                 </div>
         </section>
-        {/* <section className="max-w-[1280px] mx-auto px-8 my-20">
-          <div className=" bg-white sm:text-xl font-semibold text-black mx-auto p-6 sm:p-8 lg:p-10 gap-x-4 flex items-center justify-between rounded-2xl">
-            <h1 className="">Polygon is in beta on MyriadFlow</h1>
-            <Link href="" className="text-white bg-[#0162ff] py-2 px-3 rounded-md">
-              Explore
-            </Link>
-          </div>
-        </section> */}
-
-        {/* Trending Section */}
+       
         <section className="mb-20 mt-10">
           <h1 className="text-center text-3xl font-semibold mb-10">Trending Collections</h1>
           <div className="bg-[#161a1d] py-16 gradient-blue">
@@ -210,11 +201,11 @@ function LandingPage() {
         </section>
         {/* End Of Trending Section */}
         {/* Highlight Section */}
-        <div className="mb-20">
+        <div className="mb-20 gradient-blue">
           <h1 className="text-center text-3xl font-semibold mb-20">
             Highlights
           </h1>
-          <div className="max-w-[1280px] mx-auto bg-[#161a1d] rounded-3xl ">
+          <div className="max-w-[1280px] mx-auto rounded-3xl gradient-blue">
             {/* <div className="px-10 py-10 bg-[#0e1012] rounded-tl-3xl rounded-bl-3xl myhigh inline-block">
               <article className="w-[285px] sm:w-[400px] flex-shrink-0">
                 <h1 className="text-center text-2xl font-semibold mb-10">
@@ -306,7 +297,7 @@ function LandingPage() {
             </Slider>
           </div>
         </div>
-        <div className="flex justify-around gradient-blue mt-5 p-11">
+        <div className="flex justify-around gradient-blue  mt-5 p-11">
           <div>
           <div className="font-bold text-3xl" style={{width:"30%"}}>
           Create NFT
@@ -320,7 +311,7 @@ community
                   className={router.pathname == "/assets" ? "active" : ""}
                   style={{ cursor: "pointer" }}
                 >
-                  Create Nfts
+                  Create NFTs
                 </NavLink>
               </Link>
           </div>
