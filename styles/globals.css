@@ -116,7 +116,40 @@ body {
     background: linear-gradient(to right, #8E2DE2,#4A00E0 );
 
 }
-
+.rewards-style{
+    background: linear-gradient(90deg, #F58529 0%, #FEDA77 33.12%, #DD2A78 63.33%, #0162FF 94.58%);
+    -webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+background-clip: text;
+text-fill-color: transparent;
+}
+.create-landing-nft{
+    border-radius: 10px;
+    padding: 10px;
+    color: white;
+    width: 50%;
+    border: 2px solid black;
+}
+.explore-more{
+    border-radius: 10px;
+    padding: 10px;
+    color: white;
+    width: 50%;
+}
+.explore-btn-border{
+    /* border-width: 4px;
+  border-style: solid;
+  border-image: linear-gradient(to right,#F58529,pink, darkblue) 1; */
+  color: black;
+  background: linear-gradient(white, white) padding-box,
+  linear-gradient(to right,#F58529,pink, darkblue) border-box;
+border-radius: 50em;
+border: 4px solid transparent;
+}
+.gradient-blue{
+    background: radial-gradient(16.89% 81.1% at 100% 108.96%, #0162FF 0%, rgba(1, 98, 255, 0) 100%) 
+    , radial-gradient(24.53% 50.87% at 7.44% 6.07%, #0162FF 0%, rgba(1, 98, 255, 0) 100%) 
+}
 .connect-profile{
     background: linear-gradient(to right, #e22d5d,#4A00E0 );
 }
