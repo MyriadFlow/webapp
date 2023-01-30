@@ -130,7 +130,7 @@ const MyAssets = () => {
   }
 
   return (
-    <div className="p-4 px-10 min-h-screen">
+    <div className="p-4 px-10 min-h-screen gradient-blue">
       {model && <BuyAsset open={model} setOpen={setmodel} message={modelmsg} />}
       <div className=" p-4 mt-20  h-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
         {

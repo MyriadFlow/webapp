@@ -5,7 +5,7 @@ const SmallCard = ({ title, img, price, like, name }) => {
   return (
     <article className="w-[240px] flex-shrink-0">
       <img
-        src={img}
+        src={img} 
         className="rounded-t-3xl w-full max-w-[240px] h-[240px] object-cover"
         alt=""
       />

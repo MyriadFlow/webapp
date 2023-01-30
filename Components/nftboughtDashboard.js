@@ -64,7 +64,7 @@ function NftboughtDashboard() {
 
   return (
     
-    <div className="min-h-screen">
+    <div className="min-h-screen gradient-blue">
        {model && <BuyAsset open={model} setOpen={setmodel} message={modelmsg} />}
       <div className=" p-4 mt-10 h-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
         {data.length > 0 ? (

@@ -2,8 +2,8 @@ import Link from "next/link";
 import { BsHeart } from "react-icons/bs";
 const BigCard = ({ name, price, title, img,like }) => {
   return (
-    <article className="w-[285px] sm:w-auto flex-shrink-0">
-      <img
+    <article className="w-[240px] sm:w-auto flex-shrink-0">
+      <img 
         src={img}
         className="rounded-t-3xl w-full  max-w-[400px] h-[280px] sm:h-[400px] object-cover"
         alt=""

@@ -362,11 +362,17 @@ export default function CreateItem() {
             <BuyAsset open={model} setOpen={setmodel} message={modelmsg} />
           )}
 
-          <div className="max-w-[1250px] mx-auto myshadow rounded">
-            <div className="bg-white dark:bg-gray-800 mb-5">
-              <div className="flex">
-                <div className="p-4 mt-5" style={{ width: "100%" }}>
-                  <form action="#">
+
+
+<div className="flex justify-center mt-5 gradient-blue" >
+  <div className="bg-black text-white"style={{padding:"205px 10px 10px 10px"}}>
+<div className="font-bold text-3xl" style={{margin:"0 auto",width:'35%'}}>Effective
+Efficient
+Easy</div>
+<div className="mt-5 text-2xl font-bold">Way To create NFT</div>
+</div>
+<div style={{background:"#d9d2d2",padding:"10px"}}>
+  <form action="#">
                     <div>
                       <img
                         className=" h-32"
@@ -375,14 +381,14 @@ export default function CreateItem() {
                         style={{ width: "100%" }}
                       ></img>
                     </div>
-                    <h3 className="text-3xl py-4 font-bold text-pink-600 mt-10 text-left text-4xl">
+                    <h3 className="text-3xl py-4 font-bold mt-10 text-left text-4xl rewards-style">
                       Create New NFT
                     </h3>
 
                     <div>
                       <div>
                         <div className="mt-5">
-                          <div>
+                          
                             <input
                               required="required"
                               placeholder="Asset Name"
@@ -394,7 +400,7 @@ export default function CreateItem() {
                                 })
                               }
                             />
-                          </div>
+                        
 
                           <div>
                             <textarea
@@ -723,24 +729,20 @@ export default function CreateItem() {
                       </div>
                     )}
                   </form>
-                </div>
-              </div>
-              {/* <button onClick={()=>{submit()}}>Confirm dialog</button> */}
-
-              <div className="flex justify-between p-5">
+                  <div className="flex justify-between p-5">
                 <div>
                   <button
                     onClick={(e) => createMarket(e)}
-                    className="bg-[black] rounded-xl dark:bg-black text-white py-3 px-3 mb-8"
+                    className="bg-[black] rounded-xl dark:bg-black text-white py-3 px-3 mb-8 "
                   >
                     Create digital assets
                   </button>
                 </div>
              
               </div>
-            
-            </div>
-          </div>            
+</div>
+</div>
+                
         </div>
       </div>
     </Layout>

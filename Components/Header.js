@@ -106,7 +106,7 @@ function Header() {
     asyncFn();
   }, [hasRole]);
   return (
-    <header className="border-b-[1px] bg-white dark:bg-[#13131a] dark:border-[#282a32] border-[#eff1f6]">
+    <header className="border-b-[1px] bg-white dark:bg-[#13131a] dark:border-[#282a32] border-[#eff1f6] gradient-blue">
       <div className="w-[90%] h-[81px] mx-auto flex items-center justify-between font-poppins">
         <div className="flex items-center">
           <FaBars
@@ -124,7 +124,7 @@ function Header() {
             </div>
           </Link>
           <Link href="/">
-            <p className="text-3xl lg:block md:block font-semibold cursor-pointer pl-4 transition-all tracking-wide">
+            <p className="text-3xl lg:block md:block font-semibold cursor-pointer pl-4 transition-all tracking-wide rewards-style">
               MarketPlace
             </p>
           </Link>
@@ -136,7 +136,7 @@ function Header() {
             <Link href="">
              <NavLink>
             <div className="flex justify-center mt-3">
-          <div className="mb-3 xl:w-96">
+          <div className="mb-3">
             <div className="input-group relative flex flex-wrap items-stretch w-full">
               <input
                 type="search"
@@ -171,7 +171,7 @@ function Header() {
         </div>
         </NavLink> 
             </Link>
-            <Link href="/explore">
+            <Link className="rewards-style" href="/explore">
               <NavLink
                 className={router.pathname == "/explore" ? "active " : ""}
                 style={{ cursor: "pointer" }}
@@ -179,9 +179,16 @@ function Header() {
                 Explore
               </NavLink>
             </Link>
-
+            <Link className="rewards-style" href="/rewards">
+              <NavLink
+                className={router.pathname == "/rewards" ? "active " : ""}
+                style={{ cursor: "pointer" }}
+              >
+                Rewards
+              </NavLink>
+            </Link>
             {user && hasRole ? (
-              <Link href="/assets">
+              <Link className="rewards-style" href="/assets">
                 <NavLink
                   className={router.pathname == "/assets" ? "active" : ""}
                   style={{ cursor: "pointer" }}
@@ -195,7 +202,7 @@ function Header() {
             {!user ? (
               ""
             ) : (
-              <Link href="/dashboard">
+              <Link className="rewards-style" href="/dashboard">
                 <NavLink
                   className={router.pathname == "/dashboard" ? "active" : ""}
                   style={{ cursor: "pointer" }}
@@ -248,7 +255,7 @@ function Header() {
               </Link>
               <Link href="">
               <div className="flex justify-center mt-3">
-             <div className="mb-3 xl:w-96">
+             <div className="mb-3">
             <div className="input-group relative flex flex-wrap items-stretch w-full">
               <input
                 type="search"

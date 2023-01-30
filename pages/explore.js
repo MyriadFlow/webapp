@@ -163,10 +163,9 @@ const Home = () => {
         </div>
       )}
 
-      <main>
+      <main className="gradient-blue">
         <div className="min-h-screen">
-          <div className="flex mt-5">
-            <div className=" ml-5 ">Select Category</div>
+          <div className="flex mt-5 ml-5">
             <div>
               <div className="flex gap-6">
                 {categories.map((category, key) => {
@@ -182,43 +181,6 @@ const Home = () => {
                   );
                 })}
               </div>
-              {/* {categories.map((category)=>{
-
-            <div className="flex gap-6">
-              <div>
-              <button className="bg-blue-100 text-blue-800 text-lg font-medium mr-3 px-2 py-2 rounded dark:bg-blue-900 dark:text-blue-300">
-                category
-              </button>
-              </div>
-             
-              <div >
-              <button className="bg-red-100 text-red-800 text-lg font-medium mr-3 px-2 py-2 rounded dark:bg-red-900 dark:text-red-300">
-                Music
-              </button>
-              </div>
-              <div >
-              <button className="bg-purple-100 text-purple-800 text-lg font-medium mr-3 px-2 py-2 rounded dark:bg-purple-900 dark:text-purple-300">
-                Image
-              </button>
-              </div>
-              <div>
-              <button className="bg-purple-100 text-purple-800 text-lg font-medium mr-3 px-2 py-2 rounded dark:bg-purple-900 dark:text-purple-300">
-                Video
-              </button>
-              </div>
-              <div>
-              <button className="bg-purple-100 text-purple-800 text-lg font-medium mr-3 px-2 py-2 rounded dark:bg-purple-900 dark:text-purple-300">
-                Document
-              </button>
-              </div>
-              <div>
-              <button className="bg-purple-100 text-purple-800 text-lg font-medium mr-3 px-2 py-2 rounded dark:bg-purple-900 dark:text-purple-300">
-                Others
-              </button>
-              </div>
-            </div>
-         
-        })} */}
             </div>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 md:grid-cols-3 gap-4 lg:gap-24 p-4">
@@ -231,10 +193,7 @@ const Home = () => {
                 >
                   <Link key={item.tokenId} href={`/explore/${item.tokenId}`}>
                     <div>
-                      {/* <HomeComp HomeProps={HomeProps} uri={item ? item.metaDataURI : ""} /> */}
                       <MarketPlaceCard {...item} />
-
-                      {/* <HomeComp2  uri={item ? item.metaDataURI : ""} /> */}
                       <div className="flex items-center justify-between mb-2">
                         <p className="text-sm font-bold">Price </p>
                         <div className="flex items-center">

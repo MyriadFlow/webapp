@@ -124,7 +124,7 @@ export default function CreatorDashboard() {
         </div>
 
         {page === "sold" && (
-          <div className="p-4 px-10 min-h-screen">
+          <div className="p-4 px-10 min-h-screen gradient-blue">
             <div  className=" p-4 mt-10  h-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 ">
               {data?.length > 0 ? (
                 data?.map((item) => {
