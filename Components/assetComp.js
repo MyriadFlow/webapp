@@ -13,7 +13,6 @@ const Assetcomp = ({ uri }) => {
       `https://cloudflare-ipfs.com/ipfs/${removePrefix(uri)}`
     );
     setResponse(data);
-    console.log("Asset compo image", uri);
     if (data.image.length > 1) setImage(data.image);
     else setImage(data.thumbnailimage);
     let preuri = image.substr(7, 50);
@@ -24,7 +23,6 @@ const Assetcomp = ({ uri }) => {
   }, [uri]);
 
   let preuri = removePrefix(image);
-  console.log("Asset compo image", preuri, image);
 
   return (
     <div>

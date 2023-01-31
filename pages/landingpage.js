@@ -1,12 +1,12 @@
 import Head from "next/head";
 import Link from "next/link";
 import Layout from "../Components/Layout";
-import { BsHeart } from "react-icons/bs";
 import BigCard from "../Components/Cards/BigCard";
 import SmallCard from "../Components/Cards/SmallCard";
 import Slider from "react-slick";
 import { NavLink } from "reactstrap";
 import { useRouter } from "next/router";
+import Document from "next/document";
 
 function LandingPage() {
   const router = useRouter();
@@ -77,8 +77,7 @@ function LandingPage() {
               </h3>
               <h6 className="text-lg x2:text-2xl text-slate-500 m48:max-w-[487px] mx-auto lg:mx-0 lg:w-[80%] font-opensans mb-8">
                 A NFT marketplace to explore the digital gold mine, that
-                supports the creators. A place where you can Make Collect and
-                Sell digital arts.
+                supports the creators. A place where you can Create, Collect and Sell Digital Assets.
               </h6>
               <div className="lg:flex items-center lg:gap-x-4 x2:gap-x-6 xl:gap-x-10 mb-8 lg:mb-0">
                 <div>
@@ -88,13 +87,6 @@ function LandingPage() {
                   </Link>
                 </button>
                 </div>
-               <div>
-               <button className="py-3 px-6 rounded-lg bg-[#0162ff] text-white font-semibold mb-8 lg:mb-0">
-                  <Link href="/sell">
-                    <span className="font-raleway">Sell</span>
-                  </Link>
-                </button>
-               </div>
               
               </div>
             </div>
@@ -206,36 +198,7 @@ function LandingPage() {
             Highlights
           </h1>
           <div className="max-w-[1280px] mx-auto rounded-3xl gradient-blue">
-            {/* <div className="px-10 py-10 bg-[#0e1012] rounded-tl-3xl rounded-bl-3xl myhigh inline-block">
-              <article className="w-[285px] sm:w-[400px] flex-shrink-0">
-                <h1 className="text-center text-2xl font-semibold mb-10">
-                  Highlight of the Day
-                </h1>
-                <img
-                  src="nft-gb70e4bed1_1920.jpg"
-                  className="rounded-t-3xl w-full max-w-[400px] h-[400px] object-cover"
-                  alt=""
-                />
-                <div className="bg-white p-6 text-black rounded-b-3xl">
-                  <h1 className="text-2xl font-bold mb-2">Warrior #786</h1>
-                  <h2 className="text-2xl font-bold mb-12">
-                    <span className="text-xl">$</span>100,000
-                  </h2>
-                  <div className="flex justify-between items-center">
-                    <div className="flex items-center gap-2">
-                      <img src="vr.png" className="w-10 rounded-full" alt="" />
-                      <p className="font-medium">Warrior</p>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <Link href="">
-                        <BsHeart className="text-2xl" />
-                      </Link>
-                      <p>76</p>
-                    </div>
-                  </div>
-                </div>
-              </article>
-            </div> */}
+           \
             <Slider {...settings2}>
               <SmallCard
                 title="Monkey #AK007"
@@ -306,7 +269,7 @@ for your
 community
           </div>
           <div className="mt-5">
-            <Link className="rewards-style create-landing-nft" href="/assets">
+            <Link className="explore-more create-landing-nft explore-btn-border" href="/assets">
                 <NavLink
                   className={router.pathname == "/assets" ? "active" : ""}
                   style={{ cursor: "pointer" }}

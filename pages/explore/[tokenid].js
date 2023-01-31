@@ -18,7 +18,6 @@ function Token({ asset }) {
     return uri.substring(7, uri.length);
   };
 
-  console.log(asset);
   const [model, setmodel] = useState(false);
   const [modelmsg, setmodelmsg] = useState("buying in progress!");
   const nfturl = `https://cloudflare-ipfs.com/ipfs/${removePrefix(asset?.marketplaceItems[0].metaDataURI)}`;

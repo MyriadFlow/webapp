@@ -52,7 +52,6 @@ function Connectmenu({ toogle, dark, setDark }) {
     );
     const roleid = await contract.STOREFRONT_CREATOR_ROLE();
     localStorage.setItem("platform_roleid", roleid);
-    console.log(localStorage.getItem("platform_roleid"));
   };
 
   const connectwallethandler = () => {
@@ -81,7 +80,6 @@ function Connectmenu({ toogle, dark, setDark }) {
     let roledata;
     try {
       roledata = await axios(config1);
-      console.log(roledata);
     } catch (e) {
       console.log(e);
     }
@@ -109,7 +107,6 @@ function Connectmenu({ toogle, dark, setDark }) {
     try {
       const response = await axios(config);
       const msg = await response?.data?.message;
-      console.log(msg);
 
       return true;
     } catch (e) {
@@ -156,22 +153,20 @@ function Connectmenu({ toogle, dark, setDark }) {
             <div className="h-10 w-10 rounded-full connect-profile cursor-pointer"></div>
           )}
           <Link href="/profile">
-            <Link className="" href="/profile">
-              MyAccount{" "}
-            </Link>
+          MyAccount
           </Link>
         </div>
       </div>
       <div className="border-b-[1px] border-[#e5e7eb] dark:border-[#282a32] py-2">
         {userbalance ? (
           <div className="flex hover:bg-[#f5f4fd] dark:hover:bg-[#1c2339] px-4 py-3 hover:rounded-xl cursor-pointer">
-            <p className="text-md font-semibold text-gray-600  dark:text-gray-400 flex items-center">
+            <div className="text-md font-semibold text-gray-600  dark:text-gray-400 flex items-center">
               Balance:
               <FaEthereum className="h-4 w-4 text-gray-400 flex " />
               <span className="text-gray-600 dark:text-gray-400">
                 {userbalance.toString().substr(0, 12)}
               </span>
-            </p>
+            </div>
           </div>
         ) : (
           ""
@@ -181,7 +176,7 @@ function Connectmenu({ toogle, dark, setDark }) {
       <div>
         <div className="border-b-[1px] border-[#e5e7eb] dark:border-[#282a32] py-2 cursor-pointer">
           <div className="hover:bg-[#f5f4fd] dark:hover:bg-[#1c2339] px-4 py-3 hover:rounded-xl">
-            <Link onClick={connectwallethandler} className="">
+            <Link onClick={connectwallethandler}>
               {!user ? "Connect" : "Connected"}
             </Link>
           </div>

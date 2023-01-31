@@ -10,7 +10,6 @@ export const getMetaData = async (uri) => {
     const { data } = await axios.get(
       `${process.env.NEXT_PUBLIC_IPFS_CLIENT}${parsedURI}`
     );
-    // console.log("Before sending URI data", data);
     return data;
   } catch (error) {
     console.log(error);

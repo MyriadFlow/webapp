@@ -34,7 +34,6 @@ const MyAssets = () => {
     setLoading(true);
     setData(result.assetCreateds);
     setLoading(false);
-    console.log(result);
   };
   useEffect(() => {
     if (!localStorage.getItem("platform_wallet") && wallet !== undefined) {
@@ -44,14 +43,12 @@ const MyAssets = () => {
     }
     fetchUserAssests(`${localStorage.getItem("platform_wallet")}`);
   }, []);
-console.log("My artifact Data",data);
   return (
     <div className="p-4 px-10 min-h-screen gradient-blue">
      
       <div className="p-4 mt-10  h-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 " >
         {data?.length > 0 ? (
           data.map((item) => {
-            console.log(item);
             return (
               <div style={{border:"2px solid"}}
                 key={item.tokenID}
@@ -61,9 +58,7 @@ console.log("My artifact Data",data);
                   <div className="p-6">
                     <HomeComp uri={item ? item.metaDataURI : ""} />
 
-                    {/* <div className="flex px-4 py-6">
-                      <HomeComp2 uri={item ? item.metaDataURI : ""} />
-                    </div> */}
+                  
                   <div className="px-3 ">
                   <div className="font-bold">Name</div>
                   <div className="font-bold">Price</div>

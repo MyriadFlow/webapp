@@ -119,7 +119,6 @@ function Profile() {
     let roledata;
     try {
       roledata = await axios(config1);
-      console.log(roledata);
     } catch (e) {
       console.log(e);
     }
@@ -127,9 +126,7 @@ function Profile() {
     let web3 = new Web3(Web3.givenProvider);
     let completemsg = roledata.data.payload.eula + roledata.data.payload.flowId;
     const hexMsg = convertUtf8ToHex(completemsg);
-    // console.log(hexMsg);
     const result = await web3.eth.personal.sign(hexMsg, wallet);
-    // console.log(result);
 
     var signroledata = JSON.stringify({
       flowId: roledata.data.payload.flowId,
@@ -148,7 +145,6 @@ function Profile() {
 
     try {
       const response = await axios(config);
-      // console.log(response);
       const msg = await response?.data?.message;
       console.log(msg);
       setHasRole(true);
@@ -183,13 +179,11 @@ function Profile() {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        //  "Token":`Bearer ${token}`
       },
       data: signdata,
     };
     try {
       const response = await axios(config);
-      // console.log(response);
       const token = await response?.data?.payload?.token;
       localStorage.setItem("platform_token", token);
 
@@ -217,7 +211,6 @@ function Profile() {
         config
       )
       .then((res) => {
-        console.log(res.data);
         setUsername(res.data.payload.name);
         setBio(res.data.payload.country ? res.data.payload.country : "");
         setFileUrl(res.data.payload.profilePictureUrl);
@@ -240,14 +233,12 @@ function Profile() {
     );
     const roleid = await contract.STOREFRONT_CREATOR_ROLE();
     localStorage.setItem("platform_roleid", roleid);
-    console.log(localStorage.getItem("platform_roleid"));
   };
 
   useEffect(() => {
     const asyncFn = async () => { 
 
       const token = localStorage.getItem("platform_token");
-      console.log(token);
       connectweb();
       if (!token) {
         authorize();
@@ -373,19 +364,19 @@ function Profile() {
             <img  className="w-full h-80 p-7" alt=""src="/sample.jpg"></img>
           </div>
           <div>
-            <p className="text-2xl font-bold pb-4 text-gray-400">
+            <div className="text-2xl font-bold pb-4 text-gray-400">
               Roles :{" "}
               <span className="text-white">User {hasRole && ", Creator"} </span>{" "}
-            </p>
+            </div>
           </div>
-          <p className="text-2xl font-bold pb-4 text-gray-400">
+          <div className="text-2xl font-bold pb-4 text-gray-400">
             {" "}
             Name : <span className="text-white">{username}</span>
-          </p>
-          <p className="text-2xl font-bold pb-4 text-gray-400">
+          </div>
+          <div className="text-2xl font-bold pb-4 text-gray-400">
             {" "}
             Country : <span className="text-white">{bio}</span>
-          </p>
+          </div>
           <div className="flex justify-center">
           <button
           className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 ... text-white active:bg-pink-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"

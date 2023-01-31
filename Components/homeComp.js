@@ -9,11 +9,9 @@ const Homecomp = ({HomeProps, uri }) => {
   };
   const metadata = async () => {
     try {
-      console.log("URI to fetch json", uri);
       const parsedURI = removePrefix(uri);
       const { data } = await axios.get(`https://cloudflare-ipfs.com/ipfs/${parsedURI}`);
       setResponse(data);
-      // HomeProps(data);
       console.log("Data ipfs:  ",data);
       if (data.image.length > 1) setImage(data.image);
       else setImage(data.thumbnailimage);
@@ -28,7 +26,6 @@ const Homecomp = ({HomeProps, uri }) => {
   }, [uri]);
 
   let preuri = image;
-  console.log("image", image);
 
   return (
     <div>

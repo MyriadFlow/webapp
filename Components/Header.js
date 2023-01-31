@@ -34,7 +34,6 @@ function Header() {
 
   const user = useSelector(selectUser);
   const [navOpen, setNavOpen] = useState(false);
-  const [darkMode, SetDarkMode] = useState(false);
   const [connectMenu, setConnectMenu] = useState(false);
   const toogle = () => {
     setConnectMenu((prev) => !prev);
@@ -91,8 +90,6 @@ function Header() {
       const connection = await web3Modal.connect();
       const provider = new ethers.providers.Web3Provider(connection);
       const signer = provider.getSigner();
-
-      /* next, create the item */
       let contract = new ethers.Contract(
         storeFrontAddress,
         StoreFront.abi,
@@ -101,7 +98,6 @@ function Header() {
       setHasRole(
         await contract.hasRole(await contract.STOREFRONT_CREATOR_ROLE(), wallet)
       );
-      console.log(hasRole);
     };
     asyncFn();
   }, [hasRole]);
@@ -124,7 +120,7 @@ function Header() {
             </div>
           </Link>
           <Link href="/">
-            <p className="text-3xl lg:block md:block font-semibold cursor-pointer pl-4 transition-all tracking-wide rewards-style">
+            <p className="text-3xl lg:block md:block font-semibold cursor-pointer pl-4 transition-all tracking-wide ">
               MarketPlace
             </p>
           </Link>
@@ -135,12 +131,12 @@ function Header() {
           <div className="lg:flex  hidden gap-x-6 text-lg tracking-wide font-medium text-black dark:text-[#0162ff] items-center">
             <Link href="">
              <NavLink>
-            <div className="flex justify-center mt-3">
-          <div className="mb-3">
+            <div className=" flex justify-center mt-3">
+          <div className=" mb-3">
             <div className="input-group relative flex flex-wrap items-stretch w-full">
               <input
                 type="search"
-                className="form-control relative flex-auto min-w-0 block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                className=" form-control relative flex-auto min-w-0 block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                 placeholder="Search"
                 aria-label="Search"
                 aria-describedby="button-addon2"
@@ -171,7 +167,7 @@ function Header() {
         </div>
         </NavLink> 
             </Link>
-            <Link className="rewards-style" href="/explore">
+            <Link  href="/explore">
               <NavLink
                 className={router.pathname == "/explore" ? "active " : ""}
                 style={{ cursor: "pointer" }}
@@ -188,7 +184,7 @@ function Header() {
               </NavLink>
             </Link>
             {user && hasRole ? (
-              <Link className="rewards-style" href="/assets">
+              <Link  href="/assets">
                 <NavLink
                   className={router.pathname == "/assets" ? "active" : ""}
                   style={{ cursor: "pointer" }}
@@ -202,7 +198,7 @@ function Header() {
             {!user ? (
               ""
             ) : (
-              <Link className="rewards-style" href="/dashboard">
+              <Link href="/dashboard">
                 <NavLink
                   className={router.pathname == "/dashboard" ? "active" : ""}
                   style={{ cursor: "pointer" }}

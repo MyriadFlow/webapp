@@ -67,7 +67,6 @@ const MyAssets = () => {
     let contract;
     let transaction;
     console.table(price);
-    console.log(tokenId);
     try {
       setmodelmsg("Transaction 2 in progress");
       contract = new ethers.Contract(
@@ -91,7 +90,6 @@ const MyAssets = () => {
 
   async function placeNft(tokenId) {
     const { price } = formInput;
-    console.log("price",price);
     if (!price) {
       setAlertMsg("Please Fill the Required Fields");
       setOpen(true);
@@ -119,7 +117,6 @@ const MyAssets = () => {
       let value = event.args[2]
       let tokenId = value.toNumber()
       const price = ethers.utils.parseUnits(formInput.price, "ether");
-      console.log(price);
       await listItem(tokenId, price, signer);
     } catch (e) {
       console.log(e);
@@ -144,9 +141,7 @@ const MyAssets = () => {
                   <div>
                     <HomeComp uri={item ? item.metaDataURI : ""} />
 
-                    {/* <div className="flex px-4 py-6">
-                      <HomeComp2 uri={item ? item.metaDataURI : ""} />
-                    </div> */}
+                 
                    
                   </div>
                 </Link>

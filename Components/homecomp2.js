@@ -12,7 +12,6 @@ const Homecomp2 = ({uri}) => {
             `https://cloudflare-ipfs.com/ipfs/${removePrefix(uri)}`
         );
         setResponse(data);
-        console.log(data);
     }
 
     useEffect(() => {

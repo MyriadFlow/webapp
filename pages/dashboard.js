@@ -48,7 +48,6 @@ export default function CreatorDashboard() {
     setLoading(true);
     setData(result.marketplaceItems);
     setLoading(false);
-    // console.log(result);
   };
 
   useEffect(() => {
@@ -58,7 +57,6 @@ export default function CreatorDashboard() {
     }
     fetchUserAssests(`${localStorage.getItem("platform_wallet")}`);
     loadNFTs();
-    // console.log(user);
   }, []);
   async function loadNFTs() {
     const web3Modal = new Web3Modal({
@@ -137,9 +135,7 @@ export default function CreatorDashboard() {
                         <div>
                           <HomeComp uri={item ? item.metaDataURI : ""} />
 
-                          {/* <div className="flex px-4 py-6">
-                            <HomeComp2 uri={item ? item.metaDataURI : ""} />
-                          </div> */}
+                         
                           <div className=" flex items-center justify-between px-4 mb-2">
                             <p className="font-1 text-sm font-bold">
                               Sold at price{" "}
