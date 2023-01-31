@@ -10,7 +10,6 @@ const AssetProperties = ({ uri }) => {
             `https://cloudflare-ipfs.com/ipfs/${uri}`
         );
         setResponse(data.categories ? data.categories : '');
-        console.log(data);
     }
 
     useEffect(() => {
