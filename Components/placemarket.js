@@ -133,7 +133,7 @@ const MyAssets = () => {
         {
           data?.map((item) => {
             return (
-              <div style={{border:"2px solid"}}
+              <div style={{border:"2px solid",padding:"10px"}}
                 key={item.itemId}
                 className="bg-[white] dark:bg-[#1c1c24]  rounded-lg shadow-lg w-full lg:w-72 hover:scale-105 duration-200 transform transition cursor-pointer border-2 dark:border-gray-800"
               >
@@ -154,6 +154,10 @@ const MyAssets = () => {
                       updateFormInput({ ...formInput, price: e.target.value })
                     }
                   />
+                </div>
+                <div>
+                  <div className="font-bold">Wallet Address</div>
+                  <div style={{fontSize:"12px"}}>{item.owner}</div>
                 </div>
                 <div className="px-4 py-4 bg-gray-100 dark:bg-gray-700 flex justify-between">
                   <button

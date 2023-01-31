@@ -24,6 +24,7 @@ const MyAssets = () => {
         id
         tokenID
         creator
+        
         blockNumber
         blockTimestamp
         metaDataURI
@@ -46,23 +47,27 @@ const MyAssets = () => {
   return (
     <div className="p-4 px-10 min-h-screen gradient-blue">
      
-      <div className="p-4 mt-10  h-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 " >
+      <div className=" mt-10  h-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 " >
         {data?.length > 0 ? (
           data.map((item) => {
             return (
-              <div style={{border:"2px solid"}}
+              <div style={{border:"2px solid",padding:'10px'}}
                 key={item.tokenID}
                 className="bg-[white] dark:bg-[#1c1c24]  rounded-lg shadow-lg w-full lg:w-72 hover:scale-105 duration-200 transform transition cursor-pointer"
               >
                 <Link key={item.tokenID} href={`/assets/${item.tokenID}`}>
-                  <div className="p-6">
+                  <div>
                     <HomeComp uri={item ? item.metaDataURI : ""} />
 
                   
-                  <div className="px-3 ">
+                  <div>
                   <div className="font-bold">Name</div>
                   <div className="font-bold">Price</div>
                   <div className="text-blue-600">Place a bid</div>
+                  <div>
+                  <div className="font-bold">Wallet Address</div>
+                  <div style={{fontSize:"12px"}}>{item.creator}</div>
+                </div>
                   </div>
                   </div>
                 </Link>

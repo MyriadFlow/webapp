@@ -69,7 +69,7 @@ function NftboughtDashboard() {
         {data.length > 0 ? (
           data.map((item) => {
             return (
-              <div style={{border:"2px solid"}}
+              <div style={{border:"2px solid",padding:'10px'}}
                 key={item.itemId}
                 className="bg-white dark:bg-gray-900  rounded-lg shadow-lg w-full lg:w-72 hover:scale-105 duration-200 transform transition cursor-pointer border-2 dark:border-gray-800"
               >
@@ -86,6 +86,10 @@ function NftboughtDashboard() {
                         </p>
                       </div>
                     </div>
+                    <div>
+                  <div className="font-bold">Wallet Address</div>
+                  <div style={{fontSize:"12px"}}>{item.owner}</div>
+                </div>
                   </div>
                 </Link>
 
