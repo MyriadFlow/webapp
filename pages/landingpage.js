@@ -6,7 +6,6 @@ import SmallCard from "../Components/Cards/SmallCard";
 import Slider from "react-slick";
 import { NavLink } from "reactstrap";
 import { useRouter } from "next/router";
-import Document from "next/document";
 
 function LandingPage() {
   const router = useRouter();
