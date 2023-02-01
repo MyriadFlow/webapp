@@ -8,7 +8,6 @@ import Layout from "../Components/Layout";
 import { selectUser } from "../slices/userSlice";
 import { useSelector } from "react-redux";
 import HomeComp from "../Components/homeComp";
-import HomeComp2 from "../Components/homecomp2";
 import BoughtItems from "../Components/nftboughtDashboard";
 import Myartifacts from "../Components/my-artifacts";
 import Placemarket from "../Components/placemarket";
@@ -17,16 +16,35 @@ import { BsShop } from "react-icons/bs";
 import { IoCreate, IoEaselSharp } from "react-icons/io5";
 import { RiMoneyDollarCircleLine } from "react-icons/ri";
 import { request, gql } from "graphql-request";
+// import web3Modal from "../utils/web3Init";
+// import { useRouter } from 'next/router'
+
 const graphqlAPI = process.env.NEXT_PUBLIC_GRAPHQL_API;
 
 export default function CreatorDashboard() {
-  
   const walletAddr = useSelector(selectUser);
   var wallet = walletAddr ? walletAddr[0] : "";
+  // const router = useRouter()
 
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState("created");
+  // const [provider, setProvider] = useState();
+  // const [error, setError] = useState("");
+
+  // const [account, setAccount] = useState();
+  // const [authState, setAuthState] = useState({
+  //   token: "",
+  //  });
+ 
+
+//    const setUserAuthInfo = ({ data }) => {
+//     console.log("Token Info", data);
+//    const token = localStorage.setItem("token", JSON.stringify(data?.data ?? data));
+//    setAuthState({
+//     token,
+//    });
+//  };
 
   const fetchUserAssests = async (walletAddr) => {
     const query = gql`
@@ -50,6 +68,54 @@ export default function CreatorDashboard() {
     setLoading(false);
   };
 
+
+
+  // const connectWallet = async () => {
+  //   try {
+  //     const provider = await web3Modal.connect();
+  //     const library = new ethers.providers.Web3Provider(provider);
+  //     const accounts = await library.listAccounts();
+  //     setProvider(provider);
+  //     if (accounts){
+  //       setAuthState({data:accounts[0]})
+  //       setAccount(accounts[0]);
+  //     } 
+  //   } 
+  // catch (error) {
+  //     setError(error);
+  //   }
+
+  // };
+  // useEffect(() => {
+  //   if (web3Modal.cachedProvider) {
+  //     connectWallet();
+  //   }
+  // }, []); 
+
+  // useEffect(() => {
+  //   if (provider?.on) {
+  //     const handleAccountsChanged = (accounts) => {
+  //       console.log("accountsChanged", accounts);
+  //       if (accounts) setAccount(accounts[0]);
+  //     };
+  //     const handleDisconnect = () => {
+  //       logout()
+  //     };
+
+  //     provider.on("accountsChanged", handleAccountsChanged);
+  //     provider.on("disconnect", handleDisconnect);
+
+  //     return () => {
+  //       if (provider.removeListener) {
+  //         provider.removeListener("accountsChanged", handleAccountsChanged);
+  //         provider.removeListener("disconnect", handleDisconnect);
+  //       }
+  //     };
+  //   }
+  // }, [provider]);
+
+
+  
   useEffect(() => {
     if (!localStorage.getItem("platform_wallet") && wallet !== undefined) {
       localStorage.setItem("platform_wallet", wallet);
@@ -70,6 +136,13 @@ export default function CreatorDashboard() {
   }
   return (
     <Layout>
+           
+             {/* <button className="signup" onClick={(e)=>{
+                e.preventDefault()
+                connectWallet()
+              }
+              }>Connect Wallet</button> */}
+
       <div className="p-4">
         <div className="bg-[#1e1f26] flex items-center rounded-sm flex justify-center">
           <div
@@ -159,7 +232,7 @@ export default function CreatorDashboard() {
               ) : loading ? (
                 <Loader />
               ) : (
-                <div className="text-xl pb-10 ">
+                <div className="text-2xl pb-10 text-center font-bold">
                   You haven&apos;t sold any asset.
                 </div>
               )}
