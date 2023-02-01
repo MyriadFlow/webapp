@@ -107,7 +107,7 @@ function NftboughtDashboard() {
         ) : loading ? (
           <Loader />
         ) : (
-          <div className="text-xl pb-10 ">You haven&apos;t buy any asset.</div>
+          <div className="text-2xl pb-10 font-bold text-center">You haven&apos;t buy any asset.</div>
         )}
       </div>
     </div>

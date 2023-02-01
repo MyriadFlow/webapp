@@ -227,7 +227,11 @@ function Profile() {
     const signer = provider.getSigner();
 
     /* next, create the item */
-    let contract = new ethers.Contract(storeFrontAddress, StoreFront.abi, signer);
+    let contract = new ethers.Contract(
+      storeFrontAddress,
+      StoreFront.abi,
+      signer
+    );
     setHasRole(
       await contract.hasRole(await contract.STOREFRONT_CREATOR_ROLE(), wallet)
     );
@@ -236,8 +240,7 @@ function Profile() {
   };
 
   useEffect(() => {
-    const asyncFn = async () => { 
-
+    const asyncFn = async () => {
       const token = localStorage.getItem("platform_token");
       connectweb();
       if (!token) {
@@ -245,164 +248,173 @@ function Profile() {
       } else {
         getProfile();
       }
-  
+
       const web3Modal = new Web3Modal();
       const connection = await web3Modal.connect();
       const provider = new ethers.providers.Web3Provider(connection);
       const signer = provider.getSigner();
-  
+
       /* next, create the item */
-      let contract = new ethers.Contract(storeFrontAddress, StoreFront.abi, signer);
+      let contract = new ethers.Contract(
+        storeFrontAddress,
+        StoreFront.abi,
+        signer
+      );
       setHasRole(
         await contract.hasRole(await contract.STOREFRONT_CREATOR_ROLE(), wallet)
       );
-     };
+    };
     asyncFn();
   }, [hasRole]);
 
-
-
   return (
     <Layout>
-        {showModal ? (
-          <>
-            <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
-              <div className="relative w-auto my-6 mx-auto max-w-3xl">
-            
-                <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
-        
-                  <div className="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
-                    <h3 className="text-3xl font-semibold text-gray-400">
-                      Edit Profile Details
-                    </h3>
-                  </div>
-                  <div className="relative p-6 flex-auto">
-                    <div className="update-page">
-                      <div>
-                        <section>
-                          <div className="container py-5 h-100">
-                            <div className="row d-flex align-items-center justify-content-center h-100">
-                              <div
-                                className="col-md-8 col-lg-7 col-xl-6 text-center flex justify-center align-center flex-col"
-                               
-                              >
-                                <img
-                                  src={changefileUrl}
-                                  className="img-fluid w-6/12"
-                                  alt=""
-                                />
-                                <input
-                                  type="file"
-                                  className="btn btn-primary btn-md ml-20 w-6/12 mb-5 mt-5"
-                                 
-                                  onChange={uploadImage}
-                                />
-                              </div>
-                              <div
-                                className="col-md-7 col-lg-5 col-xl-5 offset-xl-1 text-center"
-                                style={{ zIndex: "1000" }}
-                              >
-                                <form onSubmit={updateData}>
-                                  <div className="md-form mb-3">
-                                    <input
-                                      type="text"
-                                      id="form1Example13"
-                                      className="form-control form-control-lg pl-2"
-                                      value={changeusername}
-                                      onChange={(e) =>
-                                        changesetUsername(e.target.value)
-                                      }
-                                      placeholder="Name"
-                                    />
-                                  </div>
-
-                                  <div className="md-form mb-3">
-                                    <input
-                                      type="text"
-                                      id="form1Example13"
-                                      className="form-control form-control-lg pl-2"
-                                      value={changebio}
-                                      onChange={(e) =>
-                                        changesetBio(e.target.value)
-                                      }
-                                      placeholder="Country"
-                                    />
-                                  </div>
-
-                                  <button
-                                    type="submit"
-                                    className="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                                  >
-                                    Update Profile
-                                  </button>
-                                </form>
-                              </div>
-                            </div>
-                          </div>
-                        </section>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">
-                    <button
-                      className="text-white rounded bg-red-500 font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                      type="button"
-                      onClick={() => setShowModal(false)}
-                    >
-                      Close
-                    </button>
+      {showModal ? (
+        <>
+          <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none gradient-blue">
+            <div className="relative w-auto my-6 mx-auto max-w-3xl">
+              <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none" style={{padding:"15px"}}>
+                <div className="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
+                  <div className="text-3xl font-bold" style={{margin:"0 auto"}}>
+                    Edit Profile Details
                   </div>
                 </div>
+                <div className="relative p-6 flex-auto">
+                  <div className="update-page">
+                    <div>
+                      <section>
+                        <div className="container py-5 h-100">
+                          <div className="row d-flex align-items-center justify-content-center h-100">
+                           
+                            <div
+                              className="col-md-7 col-lg-5 col-xl-5 offset-xl-1 text-center"
+                              style={{ zIndex: "1000" }}
+                            >
+                              <form onSubmit={updateData}>
+                                <div className="md-form mb-3">
+                                  <input
+                                    type="text"
+                                    id="form1Example13"
+                                    className="form-control form-control-lg px-2 py-2 pl-2 bg-black w-full"
+                                    value={changeusername}
+                                    onChange={(e) =>
+                                      changesetUsername(e.target.value)
+                                    }
+                                    placeholder="Name"
+                                  />
+                                </div>
+
+                                <div className="md-form mb-3">
+                                  <input
+                                    type="text"
+                                    id="form1Example13"
+                                    className="form-control form-control-lg px-2 py-2 pl-2 bg-black w-full"
+                                    value={changebio}
+                                    onChange={(e) =>
+                                      changesetBio(e.target.value)
+                                    }
+                                    placeholder="Country"
+                                  />
+                                </div>
+                                <div className="col-md-8 col-lg-7 col-xl-6 text-center justify-center align-center flex-col">
+                              <img
+                                src={changefileUrl}
+                                className="img-fluid w-6/12"
+                                alt=""
+                              />
+                              <input
+                                type="file"
+                                className="btn btn-primary btn-md  mb-5 mt-5"
+                                onChange={uploadImage}
+                              />
+                            </div>
+                            <div className="flex gap-6">
+                              <div> <button style={{background:"#0162FF"}}
+                                  type="submit"
+                                  className=" text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                                >
+                                  Update Profile
+                                </button></div>
+                            <div className="flex items-center justify-end  border-t border-solid border-slate-200 rounded-b">
+                  <button
+                    className="text-white rounded bg-red-500 font-bold uppercase px-6 py-3 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                    type="button"
+                    onClick={() => setShowModal(false)}
+                  >
+                    Close
+                  </button>
+                </div>
+                            </div>
+                               
+                              </form>
+                            </div>
+                          </div>
+                        </div>
+                      </section>
+                    </div>
+                  </div>
+                </div>
+              
               </div>
             </div>
-            <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
-          </>
-        ) : null}
-      <div className="flex px-5 py-5 gap-5 justify-center">
-        <div className="shadow-2xl ... p-10 w-1/4" style={{height:"600px"}}>
-          <div className="flex justify-center">
-            <img  className="w-full h-80 p-7" alt=""src="/sample.jpg"></img>
+          </div>
+          <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
+        </>
+      ) : null}
+      <div className="flex px-5 py-5 gap-5 justify-center gradient-blue">
+        <div className=" flex shadow-2xl ... p-10 gap-6">
+          <div className="">
+            <img className="w-full h-80 p-7" alt="" src="/sample.jpg"></img>
           </div>
           <div>
-            <div className="text-2xl font-bold pb-4 text-gray-400">
-              Roles :{" "}
-              <span className="text-white">User {hasRole && ", Creator"} </span>{" "}
+            <div className="font-bold text-2xl">User Details</div>
+            <div>
+             
+             <div className="flex mt-3"> <div className="pb-4">Wallet Details:</div>
+             <div className="ml-5">{user}</div></div>
+            </div>
+            <div className="flex">
+              <div className="pb-4">Instagram Link:</div>
+              <div className="ml-5 ">
+                <Link
+                  href="https://www.instagram.com/p/CnjIQSEss-5/"
+                  target="_blank"
+                  className="hover:text-sky-700 text-blue-500 dark:text-white"
+                >
+                  <div className="hover:text-sky-500">
+                    <Instagram size={22} />
+                  </div>
+                </Link>
+              </div>
+            </div>
+            <div>
+              <div className=" pb-4 ">
+                Roles :{" "}
+                <span className="text-white">
+                  User {hasRole && ", Creator"}{" "}
+                </span>{" "}
+              </div>
+            </div>
+            <div className="  pb-4 ">
+              {" "}
+              Name : <span className="text-white">{username}</span>
+            </div>
+            <div className="  pb-4">
+              {" "}
+              Country : <span className="text-white">{bio}</span>
+            </div>
+            <div className="flex justify-center">
+              <button style={{background:"#0162FF"}}
+                className="  text-white active:bg-pink-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                type="button"
+                onClick={() => setShowModal(true)}
+              >
+                Edit Profile 
+              </button>
             </div>
           </div>
-          <div className="text-2xl font-bold pb-4 text-gray-400">
-            {" "}
-            Name : <span className="text-white">{username}</span>
-          </div>
-          <div className="text-2xl font-bold pb-4 text-gray-400">
-            {" "}
-            Country : <span className="text-white">{bio}</span>
-          </div>
-          <div className="flex justify-center">
-          <button
-          className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 ... text-white active:bg-pink-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-          type="button"
-          onClick={() => setShowModal(true)}
-        >
-          Edit Profile Details
-        </button> 
         </div>
-
-        </div>
-        <div className="shadow-2xl ... w-3/12 p-7" style={{height:"600px"}}>
-          <div>Wallet Details</div>:{ user}
-          <div>Instagram Link</div>
-          <Link
-              href="https://www.instagram.com/p/CnjIQSEss-5/"
-              target="_blank"
-              className="hover:text-sky-700 text-blue-500 dark:text-white"
-            >
-              <div  className="hover:text-sky-500">
-                <Instagram size={22} />
-              </div>
-            </Link>
-        </div>
-
-
+        
       </div>
     </Layout>
   );

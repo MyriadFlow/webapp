@@ -78,7 +78,7 @@ const MyAssets = () => {
         ) : loading ? (
           <Loader />
         ) : (
-          <div className="text-xl pb-10 ">
+          <div className="text-2xl pb-10 font-bold text-center">
             You haven&apos;t created any asset.
           </div>
         )}

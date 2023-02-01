@@ -165,7 +165,7 @@ const Home = () => {
 
       <main className="gradient-blue">
         <div className="min-h-screen">
-          <div className="flex mt-5 ml-5">
+          <div className="flex justify-center mt-5 ml-5 "style={{borderBottom:"2px solid",padding:"18px"}}>
             <div>
               <div className="flex gap-6">
                 {categories.map((category, key) => {
@@ -173,7 +173,7 @@ const Home = () => {
                     <div key={key}>
                       <button
                         onClick={() => filterNFTs(category)}
-                        className="bg-blue-100 text-blue-800 text-lg font-medium mr-3 px-2 py-2 rounded dark:bg-blue-900 dark:text-blue-300"
+                        className="bg-blue-100 text-blue-800 text-lg mr-3 px-5 py-2 rounded dark:bg-blue-900 dark:text-blue-300 font-bold "
                       >
                         {category}
                       </button>
@@ -213,7 +213,9 @@ const Home = () => {
                   </button>
                 </div>
               );
-            }):<h1>No NFT found for selected category</h1>}
+            }):
+            <div className="font-bold text-2xl">No NFT found for selected category</div>
+            }
           </div>
         </div>
       </main>
