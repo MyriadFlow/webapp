@@ -338,7 +338,7 @@ export default function CreateItem() {
   }
 
   return (
-    <Layout>
+    <Layout title="Assets"description="This is used to create NFTs">
       <div className=" w-full">
         <div className="dark:bg-gray-800 kumbh text-center">
           <Snackbar

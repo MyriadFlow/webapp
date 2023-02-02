@@ -8,13 +8,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../slices/userSlice";
 import { logoutbalance } from "../slices/balanceSlice";
 import { close } from "../slices/modelSlice";
-import HomeComp from "../Components/homeComp";
-import HomeComp2 from "../Components/homecomp2";
 import { request, gql } from "graphql-request";
 import BuyAsset from "../Components/buyAssetModal";
 import { buyNFT } from "./api/buyNFT";
 import Layout from "../Components/Layout";
-import { Category } from "@mui/icons-material";
 import { getMetaData, removePrefix } from "../utils/ipfsUtil";
 import { MarketPlaceCard } from "../Components/Cards/MarketPlaceCard";
 const graphqlAPI = process.env.NEXT_PUBLIC_GRAPHQL_API;
@@ -129,7 +126,8 @@ const Home = () => {
     market();
   }, []);
   return (
-    <Layout>
+    
+    <Layout title="Explore" description="Used to show the created categories of the Nfts">
       {model && <BuyAsset open={model} setOpen={setmodel} message={modelmsg} />}
       {logoutmodel && (
         <div className="flex items-center  shadow-md justify-center w-full h-screen model-overlay fixed  top-0 z-50">

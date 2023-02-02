@@ -22,7 +22,6 @@ function Header() {
   const router = useRouter();
   const address = useAddress();
   const { contract } = useContract(address);
-  // const { data: myData, isLoading } = useContractRead(contract, "myFunction");
   
   // function to open the drop menu
   const opendropmenu = () => {

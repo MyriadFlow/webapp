@@ -1,4 +1,3 @@
-import Head from "next/head";
 import Link from "next/link";
 import Layout from "../Components/Layout";
 import BigCard from "../Components/Cards/BigCard";
@@ -6,10 +5,9 @@ import SmallCard from "../Components/Cards/SmallCard";
 import Slider from "react-slick";
 import { NavLink } from "reactstrap";
 import { useRouter } from "next/router";
-
+import Head from "next/head";
 function LandingPage() {
   const router = useRouter();
-
   const settings = {
     dots: false,
     infinite: true,
@@ -52,22 +50,9 @@ function LandingPage() {
     ],
   };
   return (
-    <div>
-      <Head>
-        <link
-          rel="stylesheet"
-          type="text/css"
-          charSet="UTF-8"
-          href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.min.css"
-        />
-        <link
-          rel="stylesheet"
-          type="text/css"
-          href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css"
-        />
-        <title>Marketplace</title>
-      </Head>
-      <Layout>
+    <>
+     
+      <Layout title="Marketplace"description="Used to show the Marketplace information">
         <div className="min-h-screen lg:flex justify-center items-center gradient-blue">
           <div className="lg:flex xl:gap-8 lg:w-[1025px] x2:w-[1200px] xxl:w-[1400px] mx-auto lg:mt-12">
             <div className="text-center lg:text-left lg:w-1/2 mt-16 lg:mt-0  p-2 sm:p-4 lg:px-8 lg:pt-0">
@@ -295,7 +280,7 @@ community
         </div>
        
       </Layout>
-    </div>
+      </>
   );
 }
 
