@@ -182,7 +182,7 @@ function LandingPage() {
             Highlights
           </h1>
           <div className="max-w-[1280px] mx-auto rounded-3xl gradient-blue">
-           \
+      
             <Slider {...settings2}>
               <SmallCard
                 title="Monkey #AK007"
