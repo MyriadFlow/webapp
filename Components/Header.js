@@ -9,7 +9,7 @@ import { selectUser } from "../slices/userSlice";
 import { useSelector } from "react-redux";
 import { FaUserCircle } from "react-icons/fa";
 import { FaBars } from "react-icons/fa";
-import { ConnectWallet } from "@thirdweb-dev/react";
+import { ConnectWallet ,useAddress, useContract, useContractRead} from "@thirdweb-dev/react";
 import DarkTheme from "./DarkTheme";
 
 import { NavLink } from "reactstrap";
@@ -19,9 +19,11 @@ const storeFrontAddress = process.env.NEXT_PUBLIC_STOREFRONT_ADDRESS;
 
 function Header() {
   const [dropmenu, setDropMenu] = useState(false);
-
   const router = useRouter();
-
+  const address = useAddress();
+  const { contract } = useContract(address);
+  // const { data: myData, isLoading } = useContractRead(contract, "myFunction");
+  
   // function to open the drop menu
   const opendropmenu = () => {
     setDropMenu(true);
@@ -183,7 +185,7 @@ function Header() {
                 Rewards
               </NavLink>
             </Link>
-            {user && hasRole ? (
+            {(user && address ) && hasRole ? (
               <Link  href="/assets">
                 <NavLink
                   className={router.pathname == "/assets" ? "active" : ""}
@@ -195,9 +197,7 @@ function Header() {
             ) : (
               ""
             )}
-            {!user ? (
-              ""
-            ) : (
+            {(user && address )?  (
               <Link href="/dashboard">
                 <NavLink
                   className={router.pathname == "/dashboard" ? "active" : ""}
@@ -208,7 +208,7 @@ function Header() {
               </Link>
               
 
-            )}
+            ): null}
             <Link href="">
               <NavLink>
             <div className="relative">
@@ -216,16 +216,17 @@ function Header() {
             <DarkTheme />
 
             <div onMouseEnter={opendropmenu}>
-              {!user ? (
-                <FaUserCircle className="text-3xl text-gray-500" />
-              ) : (
+              {(user && address ) ? (
                 <Link href="/profile">
-                  <div className="h-8 w-8 rounded-full connect-profile ring-offset-2 ring-2 ring-blue-400 cursor-pointer"></div>
-                </Link>
+                <div className="h-8 w-8 rounded-full connect-profile ring-offset-2 ring-2 ring-blue-400 cursor-pointer"></div>
+              </Link>
+              ) : (
+                <FaUserCircle className="text-3xl text-gray-500" />
+
               )}
             </div>
             <div className={styles.connect}>
-             {user && <ConnectWallet className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 ..." />}
+              <ConnectWallet className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 ..." />
             </div>
           </div>
         </div>
