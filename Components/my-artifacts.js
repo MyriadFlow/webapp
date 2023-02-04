@@ -24,7 +24,6 @@ const MyAssets = () => {
         id
         tokenID
         creator
-        
         blockNumber
         blockTimestamp
         metaDataURI
@@ -61,11 +60,10 @@ const MyAssets = () => {
 
                   
                   <div>
-                  <div className="font-bold">Name</div>
-                  <div className="font-bold">Price</div>
+                  <div className="font-bold">Price :</div>
                   <div className="text-blue-600">Place a bid</div>
                   <div>
-                  <div className="font-bold">Wallet Address</div>
+                  <div className="font-bold">Wallet Address : </div>
                   <div style={{fontSize:"12px"}}>{item.creator}</div>
                 </div>
                   </div>

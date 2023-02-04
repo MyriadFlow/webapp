@@ -71,7 +71,7 @@ const Home = () => {
       setData(shallowData);
       return;
     }
-    let localData = [...data];
+    let localData = [...shallowData];
     localData = localData.filter((item) => item.categories.includes(cat));
     console.log("Filter by category", localData);
     setData(localData);
@@ -83,16 +83,13 @@ const Home = () => {
 
   const market = async () => {
     const query = gql`
-      query Query($where: MarketplaceItem_filter) {
-        marketplaceItems(where: { forSale: true }) {
+      query Query($where: ItemForSale_filter) {
+        itemForSales(first:100) {
           itemId
           tokenId
           nftContract
           metaDataURI
           seller
-          owner
-          forSale
-          activity
           blockTimestamp
           price
         }
@@ -101,7 +98,7 @@ const Home = () => {
 
     const result = await request(graphqlAPI, query);
     const fResult = await Promise.all(
-      result.marketplaceItems.map(async function (obj, index) {
+      result.itemForSales.map(async function (obj, index) {
         const nftData = await getMetaData(obj.metaDataURI);
         const { name, description, categories, image } = nftData;
         return {
@@ -109,7 +106,7 @@ const Home = () => {
           name,
           description,
           categories: categories,
-          image: nftData?.image? `${process.env.NEXT_PUBLIC_IPFS_CLIENT}${removePrefix(
+          image: nftData?.image? `${process.env.NEXT_PUBLIC_IPFS_GATEWAY}${removePrefix(
             image
           )}`:"",
         };
@@ -118,6 +115,7 @@ const Home = () => {
     const sortedNFts = fResult.sort((a, b) => {
       if (a.itemId < b.itemId) return -1;
     });
+    console.log("refined data",sortedNFts);
     setData(sortedNFts);
     setShallowData(sortedNFts);
   };
@@ -212,9 +210,10 @@ const Home = () => {
                 </div>
               );
             }):
-            <div className="font-bold text-2xl">No NFT found for selected category</div>
+            null
             }
           </div>
+          {data?.length == 0 && <div className="font-bold text-2xl">No NFT found for selected category</div>}
         </div>
       </main>
     </Layout>

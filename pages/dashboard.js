@@ -141,9 +141,9 @@ export default function CreatorDashboard() {
                           <HomeComp uri={item ? item.metaDataURI : ""} />
 
                          
-                          <div className=" flex items-center justify-between mb-2">
+                          <div className=" flex items-center justify-between mb-2 mt-3">
                             <p className="font-1 text-sm font-bold">
-                              Sold at price{" "}
+                              Sold at price :
                             </p>
                             <div className="flex items-center">
                               <FaEthereum className="h-4 w-4 text-blue-400" />
@@ -152,7 +152,7 @@ export default function CreatorDashboard() {
                             </div>
                           </div>
                           <div>
-                  <div className="font-bold">Wallet Address</div>
+                  <div className="font-bold">Wallet Address :</div>
                   <div style={{fontSize:"12px"}}>{item.owner}</div>
                 </div>
                         </div>

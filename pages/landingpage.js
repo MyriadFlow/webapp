@@ -175,8 +175,7 @@ function LandingPage() {
             </div>
           </div>
         </section>
-        {/* End Of Trending Section */}
-        {/* Highlight Section */}
+      
         <div className="mb-20 gradient-blue">
           <h1 className="text-center text-3xl font-semibold mb-20">
             Highlights
@@ -262,9 +261,7 @@ community
                 </NavLink>
               </Link>
           </div>
-          <div className="mt-5">
-            <button className="explore-more explore-btn-border font-bold">Explore More</button>
-          </div>
+         
           </div>
           <div className="flex gap-6">
             <div>

@@ -77,8 +77,8 @@ function NftboughtDashboard() {
                   <div>
                     <HomeComp uri={item ? item.metaDataURI : ""} />
                    
-                    <div className=" flex items-center justify-between px-4 mb-2">
-                      <p className="font-1 text-sm font-bold">Price </p>
+                    <div className=" flex items-center justify-between mb-2">
+                      <p className="font-1 text-sm font-bold mt-3">Price : </p>
                       <div className="flex items-center">
                         <FaEthereum className="h-4 w-4 text-blue-400" />
                         <p className="font-extralight dark:text-gray-400">
@@ -87,13 +87,13 @@ function NftboughtDashboard() {
                       </div>
                     </div>
                     <div>
-                  <div className="font-bold">Wallet Address</div>
+                  <div className="font-bold mt-3">Wallet Address :</div>
                   <div style={{fontSize:"12px"}}>{item.owner}</div>
                 </div>
                   </div>
                 </Link>
 
-                <div className="px-4 py-4 bg-gray-100 dark:bg-gray-700 flex justify-between">
+                <div className="px-4 py-4 bg-white  flex justify-center mt-5">
                   <button
                     onClick={() => buyNFT(item)}
                     className="text-blue-500 hover:text-blue-400 font-bold"

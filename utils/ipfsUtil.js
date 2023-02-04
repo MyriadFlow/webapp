@@ -8,7 +8,7 @@ export const getMetaData = async (uri) => {
   try {
     const parsedURI = removePrefix(uri);
     const { data } = await axios.get(
-      `${process.env.NEXT_PUBLIC_IPFS_CLIENT}${parsedURI}`
+      `${process.env.NEXT_PUBLIC_IPFS_GATEWAY}${parsedURI}`
     );
     return data;
   } catch (error) {

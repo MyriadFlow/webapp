@@ -219,6 +219,7 @@ function Header() {
                 <Link href="/profile">
                 <div className="h-8 w-8 rounded-full connect-profile ring-offset-2 ring-2 ring-blue-400 cursor-pointer"></div>
               </Link>
+              
               ) : (
                 <FaUserCircle className="text-3xl text-gray-500" />
 
@@ -227,7 +228,11 @@ function Header() {
             <div className={styles.connect}>
               <ConnectWallet className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 ..." />
             </div>
+            <Link href="/authWallet">
+                <div className="  cursor-pointer">Auth</div>
+              </Link>
           </div>
+          
         </div>
         </NavLink>
             </Link>

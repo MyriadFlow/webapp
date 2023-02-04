@@ -59,6 +59,14 @@ body {
 .mygradient {
     background:linear-gradient(-20deg, #ff2846 0%, #6944ff 100%);
 }
+.reward-text{
+    background: linear-gradient(89.87deg, #2300AB 1.79%, #00FFBD 49.61%, #C100BA 87.93%);
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+background-clip: text;
+text-fill-color: transparent;
+
+}
 @import url('https://fonts.googleapis.com/css2?family=Didact+Gothic&display=swap'); 
     @layer base{
         body {
@@ -151,6 +159,10 @@ border: 4px solid transparent;
 }
 .connect-profile{
     background: linear-gradient(to right, #e22d5d,#4A00E0 );
+}
+.auth-gradient{
+    background:radial-gradient(39.89% 105.1% at 100% 23.96%, #0162EE 25%, rgba(1, 98, 255, 0) 100%) , radial-gradient(44.53% 79.87% at 38.44% 45.07%, #0162BA 35%, rgba(1, 98, 255, 0) 100%);
+padding: 35px;
 }
 
 .model-overlay{

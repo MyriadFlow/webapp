@@ -120,9 +120,16 @@ export default function CreateItem() {
     }
   }
 
+  const verifyUserRole=(walletAddress)=>{
+    contract
+  }
+
+
   function createMarket(e) {
     e.preventDefault();
     e.stopPropagation();
+    // verifyUserRole('0x81F38172f439a9CA255c5886A0Ca4fAc06d132B7')
+
     const { name, description, price, alternettext } = formInput;
     let assetData = {};
     if (!name || !description || !price) {
@@ -157,6 +164,7 @@ export default function CreateItem() {
         const ipfsHash = metaHash;
         const url = `ipfs://${metaHash}`;
         console.log("doc ipfs", ipfsHash, url);
+
         await createItem(ipfsHash, url);
       });
     } catch (error) {
@@ -200,7 +208,12 @@ export default function CreateItem() {
     console.log("ipfs://" + ipfsHash);
 
     try {
-      let transaction = await contract.createAsset(url);
+      let result = await contract.hasRole('0xe33b6e97cc3e2c153e7d27085788d6eba971a5601129d1cd19d746e26b587e26','0x6963f2BA24E0033F699f6edD7659375700Bb98D6')
+      // console.log("ROLE RESULT",result);
+      // return
+      if(!result){alert("Please grant role..!"); return;}
+    
+      let transaction = await contract.createAsset(url,500);
       let tx = await transaction.wait();
       console.log("transaction", transaction);
       setmodelmsg("Transaction 1 Complete");
@@ -225,7 +238,7 @@ export default function CreateItem() {
         Marketplace.abi,
         signer
       );
-      transaction = await contract.createMarketItem(
+      transaction = await contract.listSaleItem(
         storeFrontAddress,
         tokenId,
         price

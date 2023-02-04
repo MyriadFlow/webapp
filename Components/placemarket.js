@@ -74,7 +74,7 @@ const MyAssets = () => {
         Marketplace.abi,
         signer
       );
-      transaction = await contract.createMarketItem(
+      transaction = await contract.listSaleItem(
         storeFrontAddress,
         tokenId,
         price
@@ -110,7 +110,7 @@ const MyAssets = () => {
     );
 
     try {
-      let transaction = await contract.createArtifact(url);
+      let transaction = await contract.createAsset(url,500);//add second param as a number 
       let tx = await transaction.wait();
       setmodelmsg("Transaction 1 Complete");
       let event = tx.events[0]
@@ -145,21 +145,21 @@ const MyAssets = () => {
                    
                   </div>
                 </Link>
-                <div className="form-item w-full">
+                <div className="form-item w-full mt-3">
                   <input
-                    type="text"
+                    type="number"
                     placeholder="Asset Price in Matic"
-                    className="w-full input_background bg-white dark:bg-gray-900 rounded-md shadow-sm p-3 outline-none "
+                    className="w-full input_background  rounded-md shadow-sm outline-none p-4"
                     onChange={(e) =>
                       updateFormInput({ ...formInput, price: e.target.value })
                     }
                   />
                 </div>
                 <div>
-                  <div className="font-bold">Wallet Address</div>
+                  <div className="font-bold mt-3">Wallet Address :</div>
                   <div style={{fontSize:"12px"}}>{item.owner}</div>
                 </div>
-                <div className="px-4 py-4 bg-gray-100 dark:bg-gray-700 flex justify-between">
+                <div className="px-4 py-4 bg-white  flex justify-center mt-3">
                   <button
                     onClick={() => placeNft(item.itemId)}
                     className="text-blue-500 hover:text-blue-400 font-bold"

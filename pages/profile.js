@@ -83,7 +83,7 @@ function Profile() {
           data: signroledata,
         };
         await axios.patch(
-          "https://marketplace-engine.lazarus.network/api/v1.0/profile",
+          "https://testnet.gateway.myriadflow.com/api/v1/profile",
           {
             name: changeusername,
             country: changebio,
@@ -207,7 +207,7 @@ function Profile() {
     };
     axios
       .get(
-        "https://marketplace-engine.lazarus.network/api/v1.0/profile",
+        "https://testnet.gateway.myriadflow.com/api/v1/profile",
         config
       )
       .then((res) => {

@@ -34,7 +34,7 @@ const Homecomp = ({HomeProps, uri }) => {
         alt=""
         className=" w-full object-fit rounded-lg mb-3"
       />
-      <div className="flex justify-between">
+      <div className="flex justify-between mt-3">
         <div>{response.name}</div>
         <div>{response.description}</div>
       </div>
