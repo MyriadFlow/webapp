@@ -6,6 +6,8 @@ import Web3Modal from "web3modal";
 import { ethers } from "ethers";
 const Web3 = require("web3");
 import { NFTStorage } from "nft.storage";
+import { FaUserCircle } from "react-icons/fa";
+
 import { convertUtf8ToHex } from "@walletconnect/utils";
 import StoreFront from "../artifacts/contracts/StoreFront.sol/StoreFront.json";
 const YOUR_API_KEY =
@@ -19,8 +21,6 @@ const storeFrontAddress = process.env.NEXT_PUBLIC_STOREFRONT_ADDRESS;
 function Profile() {
   const walletAddr = useSelector(selectUser);
   var wallet = walletAddr ? walletAddr[0] : "";
-  console.log(wallet);
-
   const [hasRole, setHasRole] = useState(true);
 
   const [showModal, setShowModal] = useState(false);
@@ -30,18 +30,25 @@ function Profile() {
   const [changebio, changesetBio] = useState("");
   const [fileUrl, setFileUrl] = useState(null);
   const [changefileUrl, changesetFileUrl] = useState(null);
+  const toBase64 = file => new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = error => reject(error);
+});
+
   async function uploadImage(e) {
     e.preventDefault();
-    const changefileUrl = changesetFileUrl(
-      URL.createObjectURL(e.target.files[0])
-    );
+    // const result=await toBase64(e.target.files[0])
+    console.log("Fileeee",e.target.files[0]);
+    changesetFileUrl(e.target.files[0]);
+    
     try {
       const metadata = await client.store({
         name: "My sweet NFT",
         description: "Just try to funge it. You can't do it.",
-        image: changefileUrl,
+        image: e.target.files[0],
       });
-      console.log(e.target.files);
       console.log("Meta data after uploading", metadata);
     } catch (error) {
       console.log("Error uploading file: ", error);
@@ -70,20 +77,21 @@ function Profile() {
         alert("Do not leave any field empty!");
       else {
         var signroledata = JSON.stringify({
-          name: "Devsi singh",
+          name: "Alka Rashinkar",
           country: "India",
           profilePictureUrl: "https://unsplash.it/500",
         });
 
         const config = {
           headers: {
+            Accept: "application/json, text/plain, */*",
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
           },
           data: signroledata,
         };
         await axios.patch(
-          "https://testnet.gateway.myriadflow.com/api/v1/profile",
+          "https://testnet.gateway.myriadflow.com/api/v1.0/profile",
           {
             name: changeusername,
             country: changebio,
@@ -99,7 +107,14 @@ function Profile() {
     } catch (error) {
       console.log(error);
       alert("Something went wrong!");
+    }finally{
+      changesetFileUrl("");
+      changesetUsername("");
+      changesetBio("");
+
+
     }
+
   };
 
   const user = useSelector(selectUser);
@@ -132,7 +147,7 @@ function Profile() {
       flowId: roledata.data.payload.flowId,
       signature: result,
     });
-
+//This is used to create a role/generate the flowid and signature
     const config = {
       url: `${BASE_URL}/api/v1.0/claimrole`,
       method: "POST",
@@ -154,7 +169,7 @@ function Profile() {
       return false;
     }
   };
-
+//use to generate the hex msg and 
   const authorize = async () => {
     const { data } = await axios.get(
       `${BASE_URL}/api/v1.0/flowid?walletAddress=${wallet}`
@@ -173,7 +188,7 @@ function Profile() {
       flowId: data.payload.flowId,
       signature: result,
     });
-
+//this is use to genarate the token /perceto
     const config = {
       url: `${BASE_URL}/api/v1.0/authenticate`,
       method: "POST",
@@ -201,16 +216,16 @@ function Profile() {
     const token = localStorage.getItem("platform_token");
     const config = {
       headers: {
+        Accept: "application/json, text/plain, */*",
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
     };
-    axios
-      .get(
-        "https://testnet.gateway.myriadflow.com/api/v1/profile",
+    axios.get(
+        `${BASE_URL}/api/v1.0/profile`,
         config
-      )
-      .then((res) => {
+      ).then((res) => {
+        console.log("Profile res>>>>>>>>>>>>>>>>",res);
         setUsername(res.data.payload.name);
         setBio(res.data.payload.country ? res.data.payload.country : "");
         setFileUrl(res.data.payload.profilePictureUrl);
@@ -295,7 +310,7 @@ function Profile() {
                                   <input
                                     type="text"
                                     id="form1Example13"
-                                    className="form-control form-control-lg px-2 py-2 pl-2 bg-black w-full"
+                                    className="form-control form-control-lg px-2 py-2 pl-2 bg-black w-full text-white"
                                     value={changeusername}
                                     onChange={(e) =>
                                       changesetUsername(e.target.value)
@@ -308,7 +323,7 @@ function Profile() {
                                   <input
                                     type="text"
                                     id="form1Example13"
-                                    className="form-control form-control-lg px-2 py-2 pl-2 bg-black w-full"
+                                    className="form-control form-control-lg px-2 py-2 pl-2 bg-black w-full text-white"
                                     value={changebio}
                                     onChange={(e) =>
                                       changesetBio(e.target.value)
@@ -318,14 +333,15 @@ function Profile() {
                                 </div>
                                 <div className="col-md-8 col-lg-7 col-xl-6 text-center justify-center align-center flex-col">
                               <img
-                                src={changefileUrl}
+                                src={changefileUrl?URL.createObjectURL(changefileUrl):""}
                                 className="img-fluid w-6/12"
                                 alt=""
                               />
                               <input
                                 type="file"
+                                accept="image/*"
                                 className="btn btn-primary btn-md  mb-5 mt-5"
-                                onChange={uploadImage}
+                                onChange={(e) => uploadImage(e)}
                               />
                             </div>
                             <div className="flex gap-6">
@@ -335,6 +351,7 @@ function Profile() {
                                 >
                                   Update Profile
                                 </button></div>
+                               
                             <div className="flex items-center justify-end  border-t border-solid border-slate-200 rounded-b">
                   <button
                     className="text-white rounded bg-red-500 font-bold uppercase px-6 py-3 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
@@ -363,9 +380,16 @@ function Profile() {
       ) : null}
       <div className="flex px-5 py-5 gap-5 justify-center gradient-blue">
         <div className=" flex shadow-2xl ... p-10 gap-6">
-          <div className="">
-            <img className="w-full h-80 p-7" alt="" src="/sample.jpg"></img>
-          </div>
+         
+          {fileUrl ? (
+                <div >
+            <img className="w-full h-80 p-7" alt="" src={fileUrl}></img>
+              </div>
+              
+              ) : (
+                <FaUserCircle className="text-3xl text-gray-500 " style={{height:"200px",width:"200px"}} />
+
+              )}
           <div>
             <div className="font-bold text-2xl">User Details</div>
             <div>
@@ -390,18 +414,18 @@ function Profile() {
             <div>
               <div className=" pb-4 ">
                 Roles :{" "}
-                <span className="text-white">
+                <span className="text-black">
                   User {hasRole && ", Creator"}{" "}
                 </span>{" "}
               </div>
             </div>
             <div className="  pb-4 ">
               {" "}
-              Name : <span className="text-white">{username}</span>
+              Name : <span className="text-black">{username}</span>
             </div>
             <div className="  pb-4">
               {" "}
-              Country : <span className="text-white">{bio}</span>
+              Country : <span className="text-black">{bio}</span>
             </div>
             <div className="flex justify-center">
               <button style={{background:"#0162FF"}}
