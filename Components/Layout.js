@@ -18,7 +18,7 @@ const Layout = ({ children, title ,description}) => {
       SetUserBalance,
       dispatch
     );
-  }, );
+  }, []);
 
   return (
     <>

@@ -21,7 +21,7 @@ export default function Home() {
       SetUserBalance,
       dispatch
     );
-  }, );
+  }, []);
 
   return (
     <div>
