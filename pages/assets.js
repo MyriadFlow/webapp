@@ -20,6 +20,7 @@ import Layout from "../Components/Layout";
 import { useSelector } from "react-redux";
 import { selectUser } from "../slices/userSlice";
 import { NFTStorage } from "nft.storage";
+import Image from "next/image";
 const style = {
   position: "absolute",
   top: "50%",
@@ -389,12 +390,13 @@ export default function CreateItem() {
               style={{ background: "#d9d2d2", padding: "10px", width: "45%" }}
             >
               <div>
-                <img
+                <Image
                   className=" h-32"
-                  alt=""
+                  alt="assets1"
                   src="/NftB1.jpg"
-                  style={{ width: "100%" }}
-                ></img>
+                  width="200"
+                  height="200"
+                />
               </div>
               <h3 className="text-3xl py-4 font-bold mt-10 text-center text-4xl">
                 Create New NFT
@@ -455,10 +457,12 @@ export default function CreateItem() {
                       <div className="flex text-black mt-3 cursor-pointer rounded-lg  p-2.5 m-auto w-full">
                         {previewMedia ? (
                           mediaHash?.image && addImage == false ? (
-                            <img
+                            <Image
                               src={previewMedia}
-                              alt=""
+                              alt="assets2"
                               className="w-full object-cover h-72 flex justify-center"
+                              width="200"
+                              height="200"
                             />
                           ) : mediaHash?.video ? (
                             <video autoPlay controls>
@@ -507,7 +511,7 @@ export default function CreateItem() {
                           <div className="text-[#6a6b76]">
                             <div className=" text-black mt-3 cursor-pointer rounded-xl p-2.5 m-auto w-full ">
                               {previewThumbnail && (
-                                <img src={previewThumbnail} />
+                                <Image alt="" width="200" height="200" src={previewThumbnail} />
                               )}
                               <div />
                             </div>
@@ -547,12 +551,15 @@ export default function CreateItem() {
                         <div className="flex justify-between">
                           <div>Add Properties</div>
                           <div>
-                            <img
+                            <Image
                               className="w-3 h-3"
                               onClose={handleClos}
                               img
-                              src="cross.png"
-                            ></img>
+                              src="/cross.png"
+                              width="200"
+                              height="200"
+                              alt=""
+                            />
                           </div>
                         </div>
                       </Typography>

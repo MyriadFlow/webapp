@@ -4,9 +4,11 @@ import { ThemeProvider } from "next-themes";
 import { Provider } from "react-redux";
 import store from "../store";
 import Router from "next/router";
-import { ThirdwebProvider } from "@thirdweb-dev/react";
+import { ThirdwebProvider, useAddress } from "@thirdweb-dev/react";
 import "../styles/globals.css";
 import Loader from "../Components/Loader";
+import LandingPage from "./landingpage";
+
 
 function MyApp({ Component, pageProps }) {
   const desiredChainId = 80001;
@@ -18,13 +20,16 @@ function MyApp({ Component, pageProps }) {
   Router.events.on("routeChangeComplete", (url) => {
     isSetLoading(false);
   });
+  // const address = useAddress();
+  // console.log("adde",address)
   return (
     <>
       {isLoading && <Loader />}
       <ThemeProvider enableSystem={true} attribute="class">
         <ThirdwebProvider desiredChainId={desiredChainId}>
           <Provider store={store}>
-            <Component {...pageProps}/>
+          {/* {!address?<Component {...pageProps}/>:<LandingPage/>} */}
+          <Component {...pageProps}/>
           </Provider>
         </ThirdwebProvider>
       </ThemeProvider>

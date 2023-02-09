@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css"
 
@@ -14,13 +15,13 @@ function Banner() {
         showArrows={false}
         >
             <div className="">
-                <img alt="" loading="lazy" src="/pic1.png"/>
+                <Image width="200" height="200" alt="banner" loading="lazy" src="/pic1.png"/>
             </div>
             <div>
-                <img alt="" loading="lazy" src="/pic2.jpg" />
+                <Image width="200" height="200" alt="banner2" loading="lazy" src="/pic2.jpg" />
             </div>
             <div>
-                <img alt="" loading="lazy" src="/pic3.jpeg" />
+                <Image width="200" height="200" alt="banner3" loading="lazy" src="/pic3.jpeg" />
             </div>
         </Carousel>
             

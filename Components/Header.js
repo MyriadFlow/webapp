@@ -9,11 +9,12 @@ import { selectUser } from "../slices/userSlice";
 import { useSelector } from "react-redux";
 import { FaUserCircle } from "react-icons/fa";
 import { FaBars } from "react-icons/fa";
-import { ConnectWallet ,useAddress, useContract, useContractRead} from "@thirdweb-dev/react";
+import { ConnectWallet ,useAddress, useContract } from "@thirdweb-dev/react";
 import DarkTheme from "./DarkTheme";
 
 import { NavLink } from "reactstrap";
 import styles from "../styles/Home.module.css";
+import Image from "next/image";
 const marketplaceAddress = process.env.NEXT_PUBLIC_MARKETPLACE_ADDRESS;
 const storeFrontAddress = process.env.NEXT_PUBLIC_STOREFRONT_ADDRESS;
 
@@ -113,10 +114,10 @@ function Header() {
            <Link href="/">
             <div className="pt-2 transition-all cursor-pointer">
               <span className="dark:block hidden">
-                <img src="/dark.svg" width="60" height="60" />
+                <Image alt="dark" src="/dark.svg" width="60" height="60" />
               </span>
               <span className="dark:hidden ">
-                <img src="/light.svg" width="60" height="60" />
+                <Image alt="light" src="/light.svg" width="60" height="60" />
               </span>
             </div>
           </Link>

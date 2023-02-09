@@ -7,7 +7,6 @@ import { ethers } from "ethers";
 const Web3 = require("web3");
 import { NFTStorage } from "nft.storage";
 import { FaUserCircle } from "react-icons/fa";
-
 import { convertUtf8ToHex } from "@walletconnect/utils";
 import StoreFront from "../artifacts/contracts/StoreFront.sol/StoreFront.json";
 const YOUR_API_KEY =
@@ -15,65 +14,40 @@ const YOUR_API_KEY =
 import axios from "axios";
 import Link from "next/link";
 import { Instagram } from "@mui/icons-material";
+import { removePrefix } from "../utils/ipfsUtil";
+import Loader from "../Components/Loader";
 const client = new NFTStorage({ token: YOUR_API_KEY });
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 const storeFrontAddress = process.env.NEXT_PUBLIC_STOREFRONT_ADDRESS;
 function Profile() {
+  const profile={name:'',country:'',profilePictureUrl:''}
   const walletAddr = useSelector(selectUser);
   var wallet = walletAddr ? walletAddr[0] : "";
   const [hasRole, setHasRole] = useState(true);
-
   const [showModal, setShowModal] = useState(false);
-  const [username, setUsername] = useState("");
-  const [bio, setBio] = useState("");
-  const [changeusername, changesetUsername] = useState("");
-  const [changebio, changesetBio] = useState("");
-  const [fileUrl, setFileUrl] = useState(null);
-  const [changefileUrl, changesetFileUrl] = useState(null);
-  const toBase64 = file => new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = () => resolve(reader.result);
-    reader.onerror = error => reject(error);
-});
+  const [profileData, setProfileData] = useState({...profile})
+  const [updateProfile, setupdateProfile] = useState({...profile})
+  const [loading, setLoading] = useState(false)
 
   async function uploadImage(e) {
     e.preventDefault();
-    // const result=await toBase64(e.target.files[0])
-    console.log("Fileeee",e.target.files[0]);
-    changesetFileUrl(e.target.files[0]);
-    
-    try {
-      const metadata = await client.store({
-        name: "My sweet NFT",
-        description: "Just try to funge it. You can't do it.",
-        image: e.target.files[0],
-      });
-      console.log("Meta data after uploading", metadata);
-    } catch (error) {
-      console.log("Error uploading file: ", error);
-    }
+      try {
+        setLoading(true)
+        const blobDataImage = new Blob([ e.target.files[0]]);
+        const metaHash = await client.storeBlob(blobDataImage);
+        setupdateProfile({...updateProfile,profilePictureUrl:`ipfs://${metaHash}`})
+      } catch (error) {
+        console.log("Error uploading file: ", error);
+      } finally{
+        setLoading(false)
+      }
   }
-
-  const convertBase64 = (file) => {
-    return new Promise((resolve, reject) => {
-      const fileReader = new FileReader();
-      fileReader.readAsDataURL(file);
-      fileReader.onload = () => {
-        resolve(fileReader.result);
-      };
-
-      fileReader.onerror = (err) => {
-        reject(err);
-      };
-    });
-  };
 
   const updateData = async (e) => {
     e.preventDefault();
     const token = localStorage.getItem("platform_token");
     try {
-      if (!changeusername.trim() || !changebio.trim())
+      if (!updateProfile.name.trim() || !updateProfile.country.trim())
         alert("Do not leave any field empty!");
       else {
         var signroledata = JSON.stringify({
@@ -90,17 +64,13 @@ function Profile() {
           },
           data: signroledata,
         };
+        setLoading(true)
         await axios.patch(
           "https://testnet.gateway.myriadflow.com/api/v1.0/profile",
-          {
-            name: changeusername,
-            country: changebio,
-            profilePictureUrl: changefileUrl,
-          },
+          {...updateProfile},
           config
         );
         alert("Updation successful!");
-        console.log(file);
         setShowModal(false);
         getProfile();
       }
@@ -108,18 +78,13 @@ function Profile() {
       console.log(error);
       alert("Something went wrong!");
     }finally{
-      changesetFileUrl("");
-      changesetUsername("");
-      changesetBio("");
-
-
+      setupdateProfile({profile})
+      setLoading(false)
     }
 
   };
 
   const user = useSelector(selectUser);
-  const [page, setPage] = useState("collected");
-
   const getRole = async () => {
     const token = localStorage.getItem("platform_token");
     const role_id = localStorage.getItem("platform_roleid");
@@ -201,10 +166,8 @@ function Profile() {
       const response = await axios(config);
       const token = await response?.data?.payload?.token;
       localStorage.setItem("platform_token", token);
-
       getProfile();
       getRole();
-
       return true;
     } catch (e) {
       console.log(e);
@@ -221,18 +184,22 @@ function Profile() {
         Authorization: `Bearer ${token}`,
       },
     };
+    setLoading(true)
     axios.get(
         `${BASE_URL}/api/v1.0/profile`,
         config
       ).then((res) => {
-        console.log("Profile res>>>>>>>>>>>>>>>>",res);
-        setUsername(res.data.payload.name);
-        setBio(res.data.payload.country ? res.data.payload.country : "");
-        setFileUrl(res.data.payload.profilePictureUrl);
+        const {data:{payload:{name,country,profilePictureUrl}}}=res
+        console.log("Profile res>>>>>>>>>>>>>>>>",{name,country,profilePictureUrl});
+        setProfileData({...profileData,name,country,profilePictureUrl})
+        setupdateProfile({...profileData,name,country,profilePictureUrl})
+        setLoading(true)
       })
       .catch((error) => {
         console.log(error);
-      });
+      }).finally(()=>{
+        setLoading(false)
+      })
   };
 
   const connectweb = async () => {
@@ -253,6 +220,11 @@ function Profile() {
     const roleid = await contract.STOREFRONT_CREATOR_ROLE();
     localStorage.setItem("platform_roleid", roleid);
   };
+
+  const onUpdateProfile=(e)=>{
+    const {name,value}= e.target
+    setupdateProfile({...updateProfile,[name]:value})
+  }
 
   useEffect(() => {
     const asyncFn = async () => {
@@ -281,9 +253,11 @@ function Profile() {
     };
     asyncFn();
   }, [hasRole]);
-
+const {name,country,profilePictureUrl}=profileData
+// console.log("before ruturn",{name,country,profilePic});
   return (
     <Layout title="Profile"description="Use to show metamask Profile details of the users">
+      {loading &&  <Loader />}
       {showModal ? (
         <>
           <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none gradient-blue">
@@ -311,9 +285,11 @@ function Profile() {
                                     type="text"
                                     id="form1Example13"
                                     className="form-control form-control-lg px-2 py-2 pl-2 bg-black w-full text-white"
-                                    value={changeusername}
+                                    value={updateProfile.name}
+                                    name="name"
                                     onChange={(e) =>
-                                      changesetUsername(e.target.value)
+                                      // changesetUsername(e.target.value)
+                                      onUpdateProfile(e)
                                     }
                                     placeholder="Name"
                                   />
@@ -324,23 +300,28 @@ function Profile() {
                                     type="text"
                                     id="form1Example13"
                                     className="form-control form-control-lg px-2 py-2 pl-2 bg-black w-full text-white"
-                                    value={changebio}
+                                    value={updateProfile.country}
+                                    name="country"
                                     onChange={(e) =>
-                                      changesetBio(e.target.value)
+                                      onUpdateProfile(e)
+                                      // changesetBio(e.target.value)
                                     }
                                     placeholder="Country"
                                   />
                                 </div>
                                 <div className="col-md-8 col-lg-7 col-xl-6 text-center justify-center align-center flex-col">
-                              <img
-                                src={changefileUrl?URL.createObjectURL(changefileUrl):""}
+                               { updateProfile?.profilePictureUrl&&<img
+                                src={`${process.env.NEXT_PUBLIC_IPFS_GATEWAY}/${removePrefix(updateProfile?.profilePictureUrl)}`}
                                 className="img-fluid w-6/12"
                                 alt=""
-                              />
+                                width="200"
+                                height="200"
+                              />}
                               <input
                                 type="file"
                                 accept="image/*"
                                 className="btn btn-primary btn-md  mb-5 mt-5"
+                                name="profilePic"
                                 onChange={(e) => uploadImage(e)}
                               />
                             </div>
@@ -381,9 +362,9 @@ function Profile() {
       <div className="flex px-5 py-5 gap-5 justify-center gradient-blue">
         <div className=" flex shadow-2xl ... p-10 gap-6">
          
-          {fileUrl ? (
+          {profilePictureUrl ? (
                 <div >
-            <img className="w-full h-80 p-7" alt="" src={fileUrl}></img>
+            <img width="200" height="200" className="w-full h-80 p-7" alt=""   src={`${process.env.NEXT_PUBLIC_IPFS_GATEWAY}/${removePrefix(profilePictureUrl)}`}/>
               </div>
               
               ) : (
@@ -421,11 +402,11 @@ function Profile() {
             </div>
             <div className="  pb-4 ">
               {" "}
-              Name : <span className="text-black">{username}</span>
+              Name : <span className="text-black">{name}</span>
             </div>
             <div className="  pb-4">
               {" "}
-              Country : <span className="text-black">{bio}</span>
+              Country : <span className="text-black">{country}</span>
             </div>
             <div className="flex justify-center">
               <button style={{background:"#0162FF"}}

@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import React from 'react'
 import Layout from '../Components/Layout'
 
@@ -6,7 +7,7 @@ export default function rewards() {
    <Layout title="Rewards"description="This is used to show the drops info">
     <div className='flex'>
 <div>
-  <img src="imagere.png"></img>
+  <Image alt="" width="200" height="200" src="/imagere.png"/>
 </div>
 <div> 
   <div className='reward-text text-4xl font-bold mt-20'>Huge Airdrop Alert:</div>

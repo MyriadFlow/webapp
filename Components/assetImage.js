@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import axios from 'axios';
+import Image from 'next/image';
 
 const AssetImage = ({uri}) => {
 
@@ -22,9 +23,9 @@ const AssetImage = ({uri}) => {
 
     return (
         <div>
-             <img
+             <img  
                  src={`https://cloudflare-ipfs.com/ipfs/${preuri}`}
-                 alt="" className="h-40 p-2 w-40 object-fit" />
+                 alt="alt-name" className="h-40 p-2 w-40 object-fit" />
             </div>
     )
 }

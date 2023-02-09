@@ -6,6 +6,7 @@ import Slider from "react-slick";
 import { NavLink } from "reactstrap";
 import { useRouter } from "next/router";
 import Head from "next/head";
+import Image from "next/image";
 function LandingPage() {
   const router = useRouter();
   const settings = {
@@ -77,44 +78,58 @@ function LandingPage() {
             <div className="lg:w-1/2 lg:pr-8">
               <div className="flex gap-2 m48:gap-3 lg:gap-5">
                 <div className="flex flex-col gap-5 w-1/3 justify-between">
-                  <img
+                  <Image
                     src="/design/1.jpg"
                     className="rounded-xl m37:rounded-3xl"
                     alt=""
+                    width="200"
+                    height="200"
                   />
-                  <img
+                  <Image
                     src="/design/2.jpg"
                     className="rounded-xl m37:rounded-3xl"
                     alt=""
+                    width="200"
+                    height="200"
                   />
-                  <img
+                  <Image
                     src="/design/4.jpg"
                     className="rounded-xl m37:rounded-3xl"
                     alt=""
+                    width="200"
+                    height="200"
                   />
                 </div>
                 <div className="flex flex-col gap-5 w-1/3">
-                  <img
+                  <Image
                     src="/design/8.jpg"
                     className="rounded-xl m37:rounded-3xl"
                     alt=""
+                    width="200"
+                    height="200"
                   />
-                  <img
+                  <Image
                     src="/design/9.jpg"
                     className="rounded-xl m37:rounded-3xl"
                     alt=""
+                    width="200"
+                    height="200"
                   />
-                  <img
+                  <Image
                     src="/design/7.jpg"
                     className="rounded-xl m37:rounded-3xl"
                     alt=""
+                    width="200"
+                    height="200"
                   />
                 </div>
                 <div className="flex w-1/3">
-                  <img
+                  <Image
                     src="/design/3.jpg"
                     className="object-cover rounded-xl m37:rounded-3xl"
                     alt=""
+                    width="200"
+                    height="200"
                   />
                 </div>
               </div>
@@ -145,28 +160,28 @@ function LandingPage() {
               <Slider {...settings} className="max-w-[1280px] mx-auto">
                 <BigCard
                   title="VR BOY #007"
-                  img="vr.png"
+                  img="/vr.png"
                   price="100,000"
                   name="John Sanders"
                   like={76}
                 />
                 <BigCard
                   title="VR BOY #007"
-                  img="vr.png"
+                  img="/vr.png"
                   price="100,000"
                   name="John Sanders"
                   like={76}
                 />
                 <BigCard
                   title="Monkey #AK007"
-                  img="monkey.png"
+                  img="/monkey.png"
                   price="100,000"
                   name="Bernie Sanders"
                   like={99}
                 />
                 <BigCard
                   title="Warrior #786"
-                  img="nft-gb70e4bed1_1920.jpg"
+                  img="/nft-gb70e4bed1_1920.jpg"
                   price="100,000"
                   name="Warrior"
                   like={101}
@@ -185,7 +200,7 @@ function LandingPage() {
             <Slider {...settings2}>
               <SmallCard
                 title="Monkey #AK007"
-                img="monkey.png"
+                img="/monkey.png"
                 price="100,000"
                 name="Bernie Sanders"
                 like={99}
@@ -193,49 +208,49 @@ function LandingPage() {
 
               <SmallCard
                 title="Monkey #AK007"
-                img="monkey.png"
+                img="/monkey.png"
                 price="100,000"
                 name="Bernie Sanders"
                 like={99}
               />
               <SmallCard
                 title="Monkey #AK007"
-                img="monkey.png"
+                img="/monkey.png"
                 price="100,000"
                 name="Bernie Sanders"
                 like={99}
               />
               <SmallCard
                 title="Monkey #AK007"
-                img="monkey.png"
+                img="/monkey.png"
                 price="100,000"
                 name="Bernie Sanders"
                 like={99}
               />
               <SmallCard
                 title="Monkey #AK007"
-                img="monkey.png"
+                img="/monkey.png"
                 price="100,000"
                 name="Bernie Sanders"
                 like={99}
               />
               <SmallCard
                 title="Monkey #AK007"
-                img="monkey.png"
+                img="/monkey.png"
                 price="100,000"
                 name="Bernie Sanders"
                 like={99}
               />
               <SmallCard
                 title="Monkey #AK007"
-                img="monkey.png"
+                img="/monkey.png"
                 price="100,000"
                 name="Bernie Sanders"
                 like={99}
               />
               <SmallCard
                 title="Monkey #AK007"
-                img="monkey.png"
+                img="/monkey.png"
                 price="100,000"
                 name="Bernie Sanders"
                 like={99}
@@ -265,13 +280,13 @@ community
           </div>
           <div className="flex gap-6">
             <div>
-              <img src="vr.png" style={{width:"300px"}}></img>
+              <Image src="/vr.png" width="300"height="300"/>
             </div>
             <div>
-              <img src="vr.png" style={{width:"300px"}}></img>
+              <Image src="/vr.png"width="300"height="300" />
             </div>
             <div>
-              <img src="vr.png" style={{width:"300px"}}></img>
+              <Image src="/vr.png"width="300"height="300" />
             </div>
           </div>
         </div>

@@ -5,6 +5,7 @@ import { SiDiscord } from "react-icons/si";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { NavLink } from "reactstrap";
+import Image from "next/image";
 
 const Footer = () => {
   let date = new Date();
@@ -25,10 +26,10 @@ const Footer = () => {
               <Link href="/">
                 <div className="pt-2 transition-all cursor-pointer">
                   <span className="dark:block hidden">
-                    <img src="/dark.svg" width="60" height="60" />
+                    <Image alt="dark" src="/dark.svg" width="60" height="60" />
                   </span>
                   <span className="dark:hidden ">
-                    <img src="/light.svg" width="60" height="60" />
+                    <Image alt="light" src="/light.svg" width="60" height="60" />
                   </span>
                 </div>
               </Link>

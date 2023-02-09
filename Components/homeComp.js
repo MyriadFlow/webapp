@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import Image from "next/image";
 
 const Homecomp = ({HomeProps, uri }) => {
   const [response, setResponse] = useState([]);
@@ -31,8 +32,10 @@ const Homecomp = ({HomeProps, uri }) => {
     <div>
       <img
         src={`https://cloudflare-ipfs.com/ipfs/${removePrefix(preuri)}`}
-        alt=""
+        alt="home-img"
         className=" w-full object-fit rounded-lg mb-3"
+       
+
       />
       <div className="flex justify-between mt-3">
         <div>{response.name}</div>

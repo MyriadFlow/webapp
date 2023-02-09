@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import Image from "next/image";
 
 const Assetcomp = ({ uri }) => {
   const removePrefix = (uri) => {
@@ -26,9 +27,9 @@ const Assetcomp = ({ uri }) => {
 
   return (
     <div>
-      <img
+      <img 
         src={`https://cloudflare-ipfs.com/ipfs/${preuri}`}
-        alt=""
+        alt="alt"
         className=" h-100  p-2 w-full object-fit"
       />
     </div>

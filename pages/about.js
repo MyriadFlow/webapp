@@ -3,6 +3,7 @@ import React from "react";
 import { NavLink } from "reactstrap";
 import Layout from "../Components/Layout";
 import { useRouter } from "next/router";
+import Image from 'next/image'
 export default function About() {
   const router = useRouter();
   return (
@@ -20,20 +21,20 @@ export default function About() {
           </div>
           <div className="mt-10 text-2xl">From Exploration to Launch</div>
           <div className="mt-10 text-sm">
-            {/* NFT stands for Non-Fungible Token, which is a unique digital asset
+            NFT stands for Non-Fungible Token, which is a unique digital asset
             stored on a blockchain. NFTs are unique and cannot be replaced or
-            exchanged on a one-to-one basis. . NFTs can be used to represent a
+            exchanged on a one-to-one basis. NFTs can be used to represent a
             wide range of assets, including digital art, music, videos,
             collectibles, and more. They are becoming increasingly popular as a
             way to own and trade unique digital assets in a secure and
-            verifiable manner. */}
+            verifiable manner.
           </div>
           <div className="mt-10 text-sm">
-            {/* MyriadFlow is an innovative platform to explore & launch NFT
-            Experiences. Dive into the next generation of Utility NFTs through
+            MyriadFlow is an innovative platform to explore and launch NFT
+            Experiences into the next generation of Utility NFTs through
             our Revolutionary App Store. A secure platform with robust measures
-            in place to protect users' digital assets is essential for users to
-            feel confident and secure in their NFT transactions. */}
+            in place to protect users digital assets is essential for users to
+            feel confident and secure in their NFT transactions.
           </div>
           <div className="mt-10">Interested in Joining us ?</div>
           <div className="mt-5 ">
@@ -53,7 +54,7 @@ export default function About() {
           </div>
         </div>
         <div className="w-full mt-28" style={{ padding: "0px 70px 0px 0px" }}>
-          <img className="" src="aboutIm.png"></img>
+          <Image  width={7000} height={700}  src="/aboutIm.png"alt="Picture of the author"/>
         </div>
       </div>
     </Layout>
