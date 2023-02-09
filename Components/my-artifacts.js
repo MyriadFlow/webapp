@@ -42,7 +42,7 @@ const MyAssets = () => {
       setwlt(localStorage.getItem("platform_wallet"));
     }
     fetchUserAssests(`${localStorage.getItem("platform_wallet")}`);
-  }, []);
+  }, );
   return (
     <div className="p-4 px-10 min-h-screen gradient-blue">
      

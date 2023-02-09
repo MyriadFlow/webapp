@@ -326,7 +326,7 @@ export default function CreateItem() {
       );
     };
     asyncFn();
-  }, []);
+  },);
   const [options1, setOptions] = useState([
     "Image",
     "Music",

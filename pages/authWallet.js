@@ -2,7 +2,7 @@ import Image from 'next/image'
 import React from 'react'
 import Layout from '../Components/Layout'
 
-export default function authWallet() {
+export default function AuthWallet() {
   return (
     <Layout>
     <div className='text-center auth-gradient'>

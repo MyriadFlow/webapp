@@ -60,7 +60,7 @@ export default function CreatorDashboard() {
     }
     fetchUserAssests(`${localStorage.getItem("platform_wallet")}`);
     loadNFTs();
-  }, []);
+  },);
   async function loadNFTs() {
     const web3Modal = new Web3Modal({
       network: "mumbai",

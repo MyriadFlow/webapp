@@ -61,7 +61,7 @@ const MyAssets = () => {
       setwlt(localStorage.getItem("platform_wallet"));
     }
     fetchUserAssests(`${localStorage.getItem("platform_wallet")}`);
-  }, []);
+  },);
 
   const listItem = async (tokenId, price, signer) => {
     let contract;

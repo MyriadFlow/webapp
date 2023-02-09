@@ -57,7 +57,7 @@ const Home = () => {
   const [loadingState, setLoadingState] = useState("not-loaded");
   useEffect(() => {
     loadNFTs();
-  }, []);
+  }, );
 
   function getEthPrice(price) {
     return ethers.utils.formatEther(price);
@@ -122,7 +122,7 @@ const Home = () => {
 
   useEffect(() => {
     market();
-  }, []);
+  }, );
   return (
     
     <Layout title="Explore" description="Used to show the created categories of the Nfts">
@@ -180,7 +180,7 @@ const Home = () => {
             </div>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 md:grid-cols-3 gap-4 lg:gap-24 p-4">
-            {data.length ? data?.map((item) => {
+            {data?.length ? data?.map((item) => {
               return (
                 <div
                   style={{ border: "2px solid" }}

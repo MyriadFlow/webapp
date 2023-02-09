@@ -59,7 +59,7 @@ function NftboughtDashboard() {
     } else {
     }
     fetchUserAssests(`${localStorage.getItem("platform_wallet")}`);
-  }, []);
+  },);
 
   return (
     

@@ -5,8 +5,7 @@ export const MarketPlaceCard = (props) => {
     return (
         <div>
           <img
-          width="200"
-          height="200"
+         
             src={image}
             alt="marketcard"
             className=" w-full object-fit rounded-lg mb-3"
