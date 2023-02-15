@@ -16,39 +16,54 @@ import { BsShop } from "react-icons/bs";
 import { IoCreate, IoEaselSharp } from "react-icons/io5";
 import { RiMoneyDollarCircleLine } from "react-icons/ri";
 import { request, gql } from "graphql-request";
-const graphqlAPI = process.env.NEXT_PUBLIC_GRAPHQL_API;
+const graphqlAPI = process.env.NEXT_PUBLIC_MARKETPLACE_API;
 
 export default function CreatorDashboard() {
   const walletAddr = useSelector(selectUser);
   var wallet = walletAddr ? walletAddr[0] : "";
 
   const [data, setData] = useState([]);
+  const [auction, setAuction] = useState([]);
+
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState("created");
 
   const fetchUserAssests = async (walletAddr) => {
     const query = gql`
-      query Query($where: MarketplaceItem_filter) {
-        marketplaceItems(where: { activity: "itemSale" }) {
+      query Query($where: ItemSold_filter) {
+        itemSolds(first:100, where:{seller: "${walletAddr}"}) {
           itemId
           tokenId
           nftContract
-          metaDataURI
+          metadataURI
           seller
-          owner
-          forSale
-          activity
           blockTimestamp
         }
       }
     `;
     const result = await request(graphqlAPI, query);
     setLoading(true);
-    setData(result.marketplaceItems);
+    setData(result.itemSolds);
     setLoading(false);
   };
 
-
+  const fetchAuction = async (walletAddr) => {
+    const query = gql`
+      query Query($where: AuctionEnded_filter) {
+        auctionEndeds(first:100, where:{auctioneer: "${walletAddr}"}) {
+          auctioneer
+          tokenId
+          nftContract
+          metadataURI
+          blockTimestamp
+        }
+      }
+    `;
+    const result = await request(graphqlAPI, query);
+    setLoading(true);
+    setAuction(result.auctionEndeds);
+    setLoading(false);
+  };
 
 
 
@@ -59,6 +74,8 @@ export default function CreatorDashboard() {
     } else {
     }
     fetchUserAssests(`${localStorage.getItem("platform_wallet")}`);
+    fetchAuction(`${localStorage.getItem("platform_wallet")}`);
+
     loadNFTs();
   }, []);
   async function loadNFTs() {
@@ -127,6 +144,7 @@ export default function CreatorDashboard() {
         </div>
 
         {page === "sold" && (
+          <div>
           <div className="p-4 px-10 min-h-screen gradient-blue">
             <div  className=" p-4 mt-10  h-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 ">
               {data?.length > 0 ? (
@@ -170,6 +188,51 @@ export default function CreatorDashboard() {
               )}
             </div>
           </div>
+          <div className="p-4 px-10 min-h-screen gradient-blue">
+            <div  className=" p-4 mt-10  h-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 ">
+              {auction?.length > 0 ? (
+                auction?.map((item) => {
+                  return (
+                    <div style={{border:"2px solid",padding:'10px'}}
+                      key={item.id}
+                      className="bg-white dark:bg-gray-900  rounded-lg shadow-lg w-full lg:w-72 hover:scale-105 duration-200 transform transition cursor-pointer border-2 dark:border-gray-800"
+                    >
+                      <Link key={item.itemId} href={`/assets/${item.id}`}>
+                        <div>
+                          <HomeComp uri={item ? item.metaDataURI : ""} />
+
+                         
+                          <div className=" flex items-center justify-between mb-2 mt-3">
+                            <p className="font-1 text-sm font-bold">
+                              Sold at price :
+                            </p>
+                            <div className="flex items-center">
+                              <FaEthereum className="h-4 w-4 text-blue-400" />
+                              <p className="font-extralight dark:text-gray-400">
+                              </p>
+                            </div>
+                          </div>
+                          <div>
+                  <div className="font-bold">Wallet Address :</div>
+                  <div style={{fontSize:"12px"}}>{item.owner}</div>
+                </div>
+                        </div>
+                      </Link>
+                     
+                    </div>
+                  );
+                })
+              ) : loading ? (
+                <Loader />
+              ) : (
+                <div className="text-2xl pb-10 text-center font-bold">
+                  You haven&apos;t sold any asset.
+                </div>
+              )}
+            </div>
+          </div>
+          </div>
+          
         )}
         {page === "bought" && (
           <div className="p-4 px-10">

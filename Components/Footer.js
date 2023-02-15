@@ -47,25 +47,40 @@ const Footer = () => {
           <div className="flex gap-24 cursor-pointer">
             <div>
               <div className="font-bold text-2xl">Explore</div>
-              <div className="mt-5 text-sm">All</div>
-              <div className="text-sm">Image</div>
-              <div className="text-sm">Music</div>
-              <div className="text-sm">Video</div>
-              <div className="text-sm">Document</div>
-              <div className="text-sm">Others</div>
+              <div className="mt-5 text-sm" ></div>
+              <Link  href="/explore">
+              <NavLink
+                className={router.pathname == "/explore" ? "active " : ""}
+                style={{ cursor: "pointer" }}
+              >
+                All
+              </NavLink>
+            </Link>
             </div>
             <div>
-              <div className="font-bold text-2xl">Dashboard</div>
-              <div className="mt-5 text-sm">Created</div>
-              <div className="text-sm">Sold</div>
-              <div className="text-sm">Buy</div>
-              <div className="text-sm">Market</div>
+              <Link  href="/">
+              <NavLink
+                className={router.pathname == "/" ? "active " : ""}
+                style={{ cursor: "pointer" }}
+              >
+                Dashboard
+              </NavLink>
+            </Link>
+              
+              <Link  href="/assets">
+              <NavLink
+                className={router.pathname == "/assets" ? "active " : ""}
+                style={{ cursor: "pointer" }}
+              >
+                Created
+              </NavLink>
+            </Link>
+              
             </div>
             <div>
-              <div className="font-bold text-2xl"> profile</div>
+              <div className="font-bold text-2xl"> Profile</div>
               <div className="mt-5 text-sm">Create</div>
               <div className="text-sm">Wishlist</div>
-              <div className="text-sm">Cart</div>
             </div>
             <div>
               <div className="font-bold text-2xl">Company</div>

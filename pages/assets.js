@@ -60,6 +60,7 @@ export default function CreateItem() {
     name: "",
     description: "",
     alternettext: "",
+    royalties:500
   });
 
   const router = useRouter();
@@ -126,7 +127,7 @@ export default function CreateItem() {
   }
 
 
-  function createMarket(e) {
+  function createMarket(e) { //store
     e.preventDefault();
     e.stopPropagation();
     // verifyUserRole('0x81F38172f439a9CA255c5886A0Ca4fAc06d132B7')
@@ -209,12 +210,12 @@ export default function CreateItem() {
     console.log("ipfs://" + ipfsHash);
 
     try {
-      let result = await contract.hasRole('0xe33b6e97cc3e2c153e7d27085788d6eba971a5601129d1cd19d746e26b587e26','0x6963f2BA24E0033F699f6edD7659375700Bb98D6')
+      let result = await contract.hasRole('0xbf65e91af2ef3a62ffb82ef557601962052b015e9a7acce052f63aaaea41dfc1','0x6963f2BA24E0033F699f6edD7659375700Bb98D6')
       // console.log("ROLE RESULT",result);
       // return
       if(!result){alert("Please grant role..!"); return;}
     
-      let transaction = await contract.createAsset(url,500);
+      let transaction = await contract.createAsset(url,500);//500 - royalites dynamic
       let tx = await transaction.wait();
       console.log("transaction", transaction);
       setmodelmsg("Transaction 1 Complete");
@@ -222,7 +223,8 @@ export default function CreateItem() {
       let value = event.args[2];
       let tokenId = value.toNumber();
       const price = ethers.utils.parseUnits(formInput.price, "ether");
-      await listItem(transaction, contract, tokenId, price, signer);
+      const forAuction=false, endTime=0
+      await listItem(transaction, contract, tokenId, price,forAuction,endTime, signer);//Putting item to sale
     } catch (e) {
       console.log(e);
       setmodelmsg("Transaction 1 failed");
@@ -231,7 +233,7 @@ export default function CreateItem() {
     /* then list the item for sale on the marketplace */
     router.push("/explore");
   }
-  const listItem = async (transaction, contract, tokenId, price, signer) => {
+  const listItem = async (transaction, contract, tokenId, price, forAuction,endTime, signer) => {
     try {
       setmodelmsg("Transaction 2 in progress");
       contract = new ethers.Contract(
@@ -239,11 +241,14 @@ export default function CreateItem() {
         Marketplace.abi,
         signer
       );
-      transaction = await contract.listSaleItem(
+      transaction = await contract.listItem(
         storeFrontAddress,
         tokenId,
-        price
+        price,
+        forAuction,//putting for sale/auction
+        endTime //number time in minutes always
       );
+
       await transaction.wait();
       console.log("transaction completed");
       setmodelmsg("Transaction 2 Complete !!");
@@ -430,6 +435,21 @@ export default function CreateItem() {
                         }
                       />
                     </div>
+                    <div className="text-md font-semibold mt-6">
+                   Creator Royalties
+                  <span className="text-gray-400">*</span>
+                </div>
+                <input
+                  value={5} // value * 100
+                  className="mt-2 p-3 w-full text-sm input_background outline-none rounded-md dark:bg-gray-900  "
+                  type="number"
+                  onChange={(e) =>
+                    updateFormInput({
+                      ...formInput,
+                      alternettext: e.target.value,
+                    })
+                  }
+                />%
                   </div>
                   <div className="flex justify-around">
                     <div className="font-bold  mt-5 ">Upload file</div>

@@ -8,7 +8,7 @@ import HomeComp2 from "./homecomp2";
 import Loader from "./Loader";
 import { request, gql } from "graphql-request";
 
-const graphqlAPI = process.env.NEXT_PUBLIC_GRAPHQL_API;
+const graphqlAPI = process.env.NEXT_PUBLIC_STOREFRONT_API;
 
 const MyAssets = () => {
   const walletAddr = useSelector(selectUser); 

@@ -11,7 +11,7 @@ import Loader from "../Components/Loader";
 import { buyNFT } from "../pages/api/buyNFT";
 import BuyAsset from "./buyAssetModal";
 
-const graphqlAPI = process.env.NEXT_PUBLIC_GRAPHQL_API;
+const graphqlAPI = process.env.NEXT_PUBLIC_MARKETPLACE_API;
 
 function NftboughtDashboard() {
   function getEthPrice(price) {
@@ -21,22 +21,22 @@ function NftboughtDashboard() {
   var wallet = walletAddr ? walletAddr[0] : "";
 
   const [data, setData] = useState([]);
+  const [auction, setAuction] = useState([]);
+
   const [loading, setLoading] = useState(true);
   const [model, setmodel] = useState(false);
   const [modelmsg, setmodelmsg] = useState("buying in progress!");
 
   const fetchUserAssests = async (walletAddr) => {
     const query = gql`
-    query Query($where: MarketplaceItem_filter) {
-      marketplaceItems(first: 100, where: {owner: "${walletAddr}"}) {
+    query Query($where: ItemSold_filter) {
+      itemSolds(first: 100, where: {buyer: "${walletAddr}"}) {
         itemId
         tokenId
         nftContract
-        metaDataURI
+        metadataURI
         seller
-        owner
-        forSale
-        activity
+        buyer   
         blockTimestamp
         price
             }
@@ -44,9 +44,30 @@ function NftboughtDashboard() {
           `;
     const result = await request(graphqlAPI, query);
     setLoading(true);
-    setData(result.marketplaceItems);
+    setData(result.itemSolds);
     setLoading(false);
   };
+
+  const fetchAuction = async (walletAddr) => {
+    const query = gql`
+    query Query($where: AuctionEnded_filter) {
+      auctionEndeds(first: 100, where: {highestBidder: "${walletAddr}"}) {
+        id
+        tokenId
+        nftContract
+        metadataURI
+        highestBidder   
+        blockTimestamp
+            }
+          }
+          `;
+    const result = await request(graphqlAPI, query);
+    setLoading(true);
+    setData(result.auctionEndeds);
+    setLoading(false);
+  };
+
+
   async function buyNft(nft) {
     setmodelmsg("Buying in Progress");
     await buyNFT(nft, setmodel, setmodelmsg);
@@ -59,6 +80,8 @@ function NftboughtDashboard() {
     } else {
     }
     fetchUserAssests(`${localStorage.getItem("platform_wallet")}`);
+    fetchAuction(`${localStorage.getItem("platform_wallet")}`);
+
   }, []);
 
   return (
@@ -89,6 +112,43 @@ function NftboughtDashboard() {
                     <div>
                   <div className="font-bold mt-3">Wallet Address :</div>
                   <div style={{fontSize:"12px"}}>{item.owner}</div>
+                </div>
+                  </div>
+                </Link>
+
+                <div className="px-4 py-4 bg-white  flex justify-center mt-5">
+                  <button
+                    onClick={() => buyNFT(item)}
+                    className="text-blue-500 hover:text-blue-400 font-bold"
+                  >
+                    Sell now
+                  </button>
+                </div>
+              </div>
+            );
+          })
+        ) : loading ? (
+          <Loader />
+        ) : (
+          <div className="text-2xl pb-10 font-bold text-center">You haven&apos;t buy any asset.</div>
+        )}
+      </div>
+      <div className=" p-4 mt-10 h-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        {auction.length > 0 ? (
+          auction.map((item) => {
+            return (
+              <div style={{border:"2px solid",padding:'10px'}}
+                key={item.id}
+                className="bg-white dark:bg-gray-900  rounded-lg shadow-lg w-full lg:w-72 hover:scale-105 duration-200 transform transition cursor-pointer border-2 dark:border-gray-800"
+              >
+                <Link key={item.itemId} href={`/assets/${item.id}`}>
+                  <div>
+                    <HomeComp uri={item ? item.metaDataURI : ""} />
+                   
+                    
+                    <div>
+                  <div className="font-bold mt-3">Wallet Address :</div>
+                  <div style={{fontSize:"12px"}}>{item.highestBidder}</div>
                 </div>
                   </div>
                 </Link>

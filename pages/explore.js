@@ -14,7 +14,7 @@ import { buyNFT } from "./api/buyNFT";
 import Layout from "../Components/Layout";
 import { getMetaData, removePrefix } from "../utils/ipfsUtil";
 import { MarketPlaceCard } from "../Components/Cards/MarketPlaceCard";
-const graphqlAPI = process.env.NEXT_PUBLIC_GRAPHQL_API;
+const graphqlAPI = process.env.NEXT_PUBLIC_MARKETPLACE_API;
 
 const Home = () => {
   const [data, setData] = useState([]);
@@ -83,8 +83,8 @@ const Home = () => {
 
   const market = async () => {
     const query = gql`
-      query Query($where: ItemForSale_filter) {
-        itemForSales(first:100) {
+      query Query($where: SaleStarted_filter) {
+        saleStarteds(first:100) {
           itemId
           tokenId
           nftContract
@@ -98,7 +98,7 @@ const Home = () => {
 
     const result = await request(graphqlAPI, query);
     const fResult = await Promise.all(
-      result.itemForSales.map(async function (obj, index) {
+      result.saleStarteds.map(async function (obj, index) {
         const nftData = await getMetaData(obj.metaDataURI);
         const { name, description, categories, image } = nftData;
         return {

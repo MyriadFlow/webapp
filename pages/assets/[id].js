@@ -222,8 +222,8 @@ export async function getServerSideProps(context) {
 
   const { data } = await client.query({
     query: gql`
-        query Query($where: MarketplaceItem_filter) {
-          marketplaceItems(where: {tokenId:${id}}){
+        query Query($where: SaleStarted_filter) {
+          saleStarteds(where: {tokenId:${id}}){
             id
             itemId
             tokenId

@@ -12,9 +12,10 @@ import BuyAsset from "../Components/buyAssetModal";
 import { request, gql } from "graphql-request";
 import StoreFront from "../artifacts/contracts/StoreFront.sol/StoreFront.json";
 import Marketplace from "../artifacts/contracts/Marketplace.sol/Marketplace.json";
+import Loader from "./Loader";
 const marketplaceAddress = process.env.NEXT_PUBLIC_MARKETPLACE_ADDRESS;
 const storeFrontAddress = process.env.NEXT_PUBLIC_STOREFRONT_ADDRESS;
-const graphqlAPI = process.env.NEXT_PUBLIC_GRAPHQL_API;
+const graphqlAPI = process.env.NEXT_PUBLIC_MARKETPLACE_API;
 
 const MyAssets = () => {
   const walletAddr = useSelector(selectUser);
@@ -33,16 +34,13 @@ const MyAssets = () => {
 
   const fetchUserAssests = async (walletAddr) => {
     const query = gql`
-      query Query($where: MarketplaceItem_filter) {
-        marketplaceItems(first: 100,where: {owner: "${walletAddr}"}) {
+      query Query($where: SaleStarted_filter) {
+        saleStarteds(first: 100,where: {seller: "${walletAddr}"}) {
           itemId
           tokenId
           nftContract
           metaDataURI
           seller
-          owner
-          forSale
-          activity
           blockTimestamp
           price
         }
@@ -51,7 +49,7 @@ const MyAssets = () => {
 
     const result = await request(graphqlAPI, query);
     setLoading(true);
-    setData(result.marketplaceItems);
+    setData(result.saleStarteds);
     setLoading(false);
   };
   useEffect(() => {
@@ -74,7 +72,7 @@ const MyAssets = () => {
         Marketplace.abi,
         signer
       );
-      transaction = await contract.listSaleItem(
+      transaction = await contract.listItem(
         storeFrontAddress,
         tokenId,
         price
@@ -130,7 +128,8 @@ const MyAssets = () => {
     <div className="p-4 px-10 min-h-screen gradient-blue">
       {model && <BuyAsset open={model} setOpen={setmodel} message={modelmsg} />}
       <div className=" p-4 mt-20  h-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-        {
+        
+        {data.length > 0 ? (  
           data?.map((item) => {
             return (
               <div style={{border:"2px solid",padding:"10px"}}
@@ -157,7 +156,7 @@ const MyAssets = () => {
                 </div>
                 <div>
                   <div className="font-bold mt-3">Wallet Address :</div>
-                  <div style={{fontSize:"12px"}}>{item.owner}</div>
+                  <div style={{fontSize:"12px"}}>{item.seller}</div>
                 </div>
                 <div className="px-4 py-4 bg-white  flex justify-center mt-3">
                   <button
@@ -170,8 +169,12 @@ const MyAssets = () => {
               </div>
             );
           })
-         
-        }
+          ) : loading ? (
+            <Loader />
+          ) : (
+            <div className="text-2xl pb-10 font-bold text-center">You haven&apos;t Place any item on market.</div>
+          )}
+        
       </div>
     </div>
   );
