@@ -396,11 +396,10 @@ export default function CreateItem() {
             >
               <div>
                 <Image
-                  className=" h-32"
                   alt="assets1"
-                  src="/NftB1.jpg"
-                  width="200"
-                  height="200"
+                  src="/create.jpg"
+                  width="700"
+                  height="500"
                 />
               </div>
               <h3 className="text-3xl py-4 font-bold mt-10 text-center text-4xl">
@@ -739,7 +738,21 @@ export default function CreateItem() {
                         price: e.target.value,
                       })
                     }
-                  />{" "}
+                  />
+                   <input
+                    type="number"
+                    min="1"
+                    max="10"
+                    required="true"
+                    placeholder="Auction"
+                    className="w-full bg-white dark:bg-gray-900 rounded-md mb-4 shadow-sm p-2 outline-none border-[1px] border-[#d5d5d6] text-pink-600"
+                    onChange={(e) =>
+                      updateFormInput({
+                        ...formInput,
+                        forAuction: e.target.value,
+                      })
+                    }
+                  />
                 </div>
               )}
 

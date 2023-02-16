@@ -22,9 +22,9 @@ const Footer = () => {
       <div className="bg-white dark:bg-gray-900 p-6 ">
         <div className="flex text-center "style={{padding:"10px 24px 10px 40px"}}>
           <div>
-            <div>
+            <div className="flex">
               <Link href="/">
-                <div className="pt-2 transition-all cursor-pointer">
+                <div className="transition-all cursor-pointer">
                   <span className="dark:block hidden">
                     <Image alt="dark" src="/dark.svg" width="60" height="60" />
                   </span>
@@ -33,10 +33,11 @@ const Footer = () => {
                   </span>
                 </div>
               </Link>
+              <div className="font-bold text-2xl text-left cursor-pointer mt-5 ml-3">Myriadflow</div>
+
             </div>
            
-              <div className="font-bold text-2xl text-left cursor-pointer">Myriadflow</div>
-              <div className="mt-5 text-sm text-left" style={{width:"33%"}}>
+              <div className="mt-3 text-sm text-left">
                 MyriadFlow is an innovative platform to explore & launch NFT
                 Experiences. Dive into the next generation of Utility NFTs
                 through our Revolutionary App Store Explore.
@@ -57,7 +58,7 @@ const Footer = () => {
               </NavLink>
             </Link>
             </div>
-            <div>
+            <div className="font-bold text-2xl">
               <Link  href="/">
               <NavLink
                 className={router.pathname == "/" ? "active " : ""}
@@ -67,16 +68,9 @@ const Footer = () => {
               </NavLink>
             </Link>
               
-              <Link  href="/assets">
-              <NavLink
-                className={router.pathname == "/assets" ? "active " : ""}
-                style={{ cursor: "pointer" }}
-              >
-                Created
-              </NavLink>
-            </Link>
               
             </div>
+           
             <div>
               <div className="font-bold text-2xl"> Profile</div>
               <div className="mt-5 text-sm">Create</div>
