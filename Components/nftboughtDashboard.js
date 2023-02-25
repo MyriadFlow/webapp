@@ -86,7 +86,7 @@ function NftboughtDashboard() {
 
   return (
     
-    <div className="min-h-screen gradient-blue">
+    <div className="min-h-screen body-back">
        {model && <BuyAsset open={model} setOpen={setmodel} message={modelmsg} />}
       <div className=" p-4 mt-10 h-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
         {data.length > 0 ? (
@@ -101,12 +101,12 @@ function NftboughtDashboard() {
                     <HomeComp uri={item ? item.metaDataURI : ""} />
                    
                     <div className=" flex items-center justify-between mb-2">
-                      <p className="font-1 text-sm font-bold mt-3">Price : </p>
+                      <div className="font-1 text-sm font-bold mt-3">Price : </div>
                       <div className="flex items-center">
                         <FaEthereum className="h-4 w-4 text-blue-400" />
-                        <p className="font-extralight dark:text-gray-400">
+                        <div className="font-extralight dark:text-gray-400">
                           {getEthPrice(item.price)} MATIC
-                        </p>
+                        </div>
                       </div>
                     </div>
                     <div>
@@ -130,7 +130,7 @@ function NftboughtDashboard() {
         ) : loading ? (
           <Loader />
         ) : (
-          <div className="text-2xl pb-10 font-bold text-center">You haven&apos;t buy any asset.</div>
+          <div className="text-2xl pb-10 font-bold text-center text-gray-500 dark:text-white">You Haven&apos;t Buy Any Asset.</div>
         )}
       </div>
       <div className=" p-4 mt-10 h-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -158,7 +158,7 @@ function NftboughtDashboard() {
                     onClick={() => buyNFT(item)}
                     className="text-blue-500 hover:text-blue-400 font-bold"
                   >
-                    Sell now
+                    Sell Now
                   </button>
                 </div>
               </div>
@@ -167,7 +167,7 @@ function NftboughtDashboard() {
         ) : loading ? (
           <Loader />
         ) : (
-          <div className="text-2xl pb-10 font-bold text-center">You haven&apos;t buy any asset.</div>
+          <div className="text-2xl pb-10 font-bold text-center text-gray-500 dark:text-white">You haven&apos;t Buy Any Auction.</div>
         )}
       </div>
     </div>

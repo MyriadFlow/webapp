@@ -92,60 +92,60 @@ export default function CreatorDashboard() {
     <Layout title="Dashboard"description="This is used to show the Create,Buy,Sell and Market the NFTs ">
            
             
-      <div className="p-4">
+      <div className="p-4 body-back">
         <div className="bg-[#1e1f26] flex items-center rounded-sm flex justify-center">
           <div
-            className={`text-white hover:text-gray-400 dark:hover:bg-[#131417]  cursor-pointer p-3 border-b-2 border-transparent hover:border-[#47cf73] transition-all ${
+            className={`text-gray-500 dark:text-white hover:text-gray-400 dark:hover:bg-[#131417]  cursor-pointer p-3 border-b-2 border-transparent hover:border-[#47cf73] transition-all ${
               page === "created" ? "bg-[#131417] border-[#47cf73]" : ""
             }`}
             onClick={() => setPage("created")}
           >
             <div className="flex items-center gap-x-2">
-              <IoCreate className="text-xl dark:text-white" />
-              <p className="text-xl font-semibold">Created</p>
+              <IoCreate className="text-xl text-gray-500 dark:text-white" />
+              <div className="text-xl font-semibold">Created</div>
             </div>
           </div>
 
           <div
-            className={`text-white hover:text-gray-400 dark:hover:bg-[#131417]  cursor-pointer p-3 border-b-2 border-transparent hover:border-[#47cf73] transition-all ${
+            className={`text-gray-500 dark:text-white hover:text-gray-400 dark:hover:bg-[#131417]  cursor-pointer p-3 border-b-2 border-transparent hover:border-[#47cf73] transition-all ${
               page === "sold" ? "bg-[#131417] border-[#47cf73]" : ""
             }`}
             onClick={() => setPage("sold")}
           >
             <div className="flex items-center gap-x-2">
-              <RiMoneyDollarCircleLine className="text-xl dark:text-white" />
-              <p className="text-xl font-semibold">Sold</p>
+              <RiMoneyDollarCircleLine className="text-xl text-gray-500 dark:text-white" />
+              <div className="text-xl font-semibold">Sold</div>
             </div>
           </div>
 
           <div
-            className={`text-white hover:text-gray-400 dark:hover:bg-[#131417]  cursor-pointer p-3 border-b-2 border-transparent hover:border-[#47cf73] transition-all ${
+            className={`text-gray-500 dark:text-white hover:text-gray-400 dark:hover:bg-[#131417]  cursor-pointer p-3 border-b-2 border-transparent hover:border-[#47cf73] transition-all ${
               page === "bought" ? "bg-[#131417] border-[#47cf73]" : ""
             }`}
             onClick={() => setPage("bought")}
           >
             <div className="flex items-center gap-x-2">
               <IoEaselSharp className="text-xl" />
-              <p className="text-xl font-semibold">Bought</p>
+              <div className="text-xl font-semibold">Bought</div>
             </div>
           </div>
 
           <div
-            className={`text-white hover:text-gray-400 dark:hover:bg-[#131417]  cursor-pointer p-3 border-b-2 border-transparent hover:border-[#47cf73] transition-all ${
+            className={`text-gray-500 dark:text-white hover:text-gray-400 dark:hover:bg-[#131417]  cursor-pointer p-3 border-b-2 border-transparent hover:border-[#47cf73] transition-all ${
               page === "market" ? "bg-[#131417] border-[#47cf73]" : ""
             }`}
             onClick={() => setPage("market")}
           >
             <div className="flex items-center gap-x-2">
               <BsShop className="text-xl" />
-              <p className="text-xl font-semibold">Market</p>
+              <div className="text-xl font-semibold">Market</div>
             </div>
           </div>
         </div>
 
         {page === "sold" && (
           <div>
-          <div className="p-4 px-10 min-h-screen gradient-blue">
+          <div className="p-4 px-10 min-h-screen ">
             <div  className=" p-4 mt-10  h-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 ">
               {data?.length > 0 ? (
                 data?.map((item) => {
@@ -160,18 +160,16 @@ export default function CreatorDashboard() {
 
                          
                           <div className=" flex items-center justify-between mb-2 mt-3">
-                            <p className="font-1 text-sm font-bold">
-                              Sold at price :
-                            </p>
+                            <div className="font-1 text-sm font-bold">
+                              Sold at Price :
+                            </div>
                             <div className="flex items-center">
                               <FaEthereum className="h-4 w-4 text-blue-400" />
-                              <p className="font-extralight dark:text-gray-400">
-                              </p>
+                              <div className="font-extralight dark:text-gray-400">
+                              </div>
                             </div>
                           </div>
                           <div>
-                  <div className="font-bold">Wallet Address :</div>
-                  <div style={{fontSize:"12px"}}>{item.owner}</div>
                 </div>
                         </div>
                       </Link>
@@ -182,13 +180,13 @@ export default function CreatorDashboard() {
               ) : loading ? (
                 <Loader />
               ) : (
-                <div className="text-2xl pb-10 text-center font-bold">
-                  You haven&apos;t sold any asset.
+                <div className="text-2xl pb-10 text-center font-bold text-gray-500 dark:text-white">
+                  You Haven&apos;t Sold Any Asset.
                 </div>
               )}
             </div>
           </div>
-          <div className="p-4 px-10 min-h-screen gradient-blue">
+          <div className="p-4 px-10 min-h-screen ">
             <div  className=" p-4 mt-10  h-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 ">
               {auction?.length > 0 ? (
                 auction?.map((item) => {
@@ -203,13 +201,13 @@ export default function CreatorDashboard() {
 
                          
                           <div className=" flex items-center justify-between mb-2 mt-3">
-                            <p className="font-1 text-sm font-bold">
-                              Sold at price :
-                            </p>
+                            <div className="font-1 text-sm font-bold">
+                              Sold At Price :
+                            </div>
                             <div className="flex items-center">
                               <FaEthereum className="h-4 w-4 text-blue-400" />
-                              <p className="font-extralight dark:text-gray-400">
-                              </p>
+                              <div className="font-extralight dark:text-gray-400">
+                              </div>
                             </div>
                           </div>
                           <div>
@@ -225,8 +223,8 @@ export default function CreatorDashboard() {
               ) : loading ? (
                 <Loader />
               ) : (
-                <div className="text-2xl pb-10 text-center font-bold">
-                  You haven&apos;t sold any asset.
+                <div className="text-2xl pb-10 text-center font-bold text-gray-500 dark:text-white">
+                  You Haven&apos;t Sold Any Asset.
                 </div>
               )}
             </div>

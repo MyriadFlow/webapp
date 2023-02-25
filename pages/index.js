@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import {
   connectwallethandler,
 } from "./api/setConnection";
+import NoSSR from "./NoSSR";
 
 export default function Home() {
   const dispatch = useDispatch();
@@ -25,7 +26,10 @@ export default function Home() {
 
   return (
     <div>
+      <NoSSR>
       <Landingpage />
+      
+      </NoSSR>
 
     </div>
   );

@@ -30,7 +30,7 @@ const Assetcomp = ({ uri }) => {
       <img 
         src={`https://cloudflare-ipfs.com/ipfs/${preuri}`}
         alt="alt"
-        className=" h-100  p-2 w-full object-fit"
+        className=" h-100  p-2 w-full object-fit grow"
       />
     </div>
   );

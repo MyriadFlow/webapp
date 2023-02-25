@@ -19,7 +19,7 @@ const AssetProperties = ({ uri }) => {
     return (
         response.length>1 && (
         <div className="border rounded-md w-full px-4 py-3">
-        <h3 className="text-gray-700 font-medium dark:text-white">Properties</h3>
+        <h3 className="text-gray-700 font-medium text-gray-500 dark:text-white">Properties</h3>
         <div style={{ minHeight: 80 }}>
             {response.length > 0 ? response.map((item) => {
                 const width = item.value;
@@ -28,7 +28,7 @@ const AssetProperties = ({ uri }) => {
                     className="my-4 bg-white dark:bg-gray-900 rounded-lg shadow-lg w-full hover:scale-105 duration-200 transform transition cursor-pointer">
                     <div className=" flex items-center justify-between px-4 mb-2">
                         <div className="flex items-center">
-                            <p className="font-extralight">{item && item.trait_type}</p>
+                            <div className="font-extralight">{item && item.trait_type}</div>
                         </div>
                     </div>
                     {

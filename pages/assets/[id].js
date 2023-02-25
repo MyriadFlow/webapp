@@ -13,6 +13,9 @@ import BuyAsset from "../../Components/buyAssetModal";
 import Layout from "../../Components/Layout";
 import { ethers } from "ethers";
 import Link from "next/link";
+import { saleStartedQuery } from "../../utils/gqlUtil";
+import request from "graphql-request";
+const graphqlAPI = process.env.NEXT_PUBLIC_MARKETPLACE_API;
 
 function Asset({ asset }) {
   function getEthPrice(price) {
@@ -24,15 +27,14 @@ function Asset({ asset }) {
     return uri.substring(7, uri.length);
   };
   const nfturl = `https://cloudflare-ipfs.com/ipfs/${removePrefix(
-    asset.marketplaceItems[0].metaDataURI
+    asset.metaDataURI
   )}`;
-console.log("nfturl",nfturl)
   const [response, setResponse] = useState([]);
   const [image, setImage] = useState("");
   const metadata = async () => {
     const { data } = await axios.get(
       `https://cloudflare-ipfs.com/ipfs/${removePrefix(
-        asset.marketplaceItems[0].metaDataURI
+        asset.metaDataURI
       )}`
     );
     setResponse(data);
@@ -43,42 +45,42 @@ console.log("nfturl",nfturl)
 
   useEffect(() => {
     metadata();
-  }, [asset.marketplaceItems[0].metaDataURI]);
+  }, [asset.metaDataURI]);
 
   let preuri = removePrefix(image);
 
   const imgurl = `https://cloudflare-ipfs.com/ipfs/${preuri}`;
-  const transaction = `https://mumbai.polygonscan.com/token/${asset.marketplaceItems[0].nftContract}?a=${asset.marketplaceItems[0].id}`;
-  const copy = asset.marketplaceItems[0].nftContract;
+  const transaction = `https://mumbai.polygonscan.com/token/${asset.nftContract}?a=${asset.id}`;
+  const copy = asset.nftContract;
 
   return (
     <Layout>
-      <div className="max-w-[1400px] mx-auto bg-[#f8f7fc] p-8 dark:bg-[#131417] my-8 rounded-3xl gradient-blue">
+      <div className="max-w-[1400px] mx-auto bg-[#f8f7fc] p-8 dark:bg-[#131417] my-8 rounded-3xl body-back">
         <div className="flex flex-col lg:flex-row gap-x-8">
           <div className="w-full lg:w-[50%]" onClick={() => isSetFull(true)}>
             <AssetComp
               uri={
-                asset.marketplaceItems[0]
-                  ? asset.marketplaceItems[0].metaDataURI
+                asset
+                  ? asset.metaDataURI
                   : ""
               }
             />
           </div>
           <div className="lg:w-[50%]">
             <div className="flex flex-col gap-y-4">
-              <h3 className="text-gray-700 text-2xl font-medium">
+              <div className="text-gray-700 text-2xl font-medium">
                 <AssetHead
                   uri={
-                    asset.marketplaceItems[0]
-                      ? asset.marketplaceItems[0].metaDataURI
+                    asset
+                      ? asset.metaDataURI
                       : ""
                   }
                 />
-              </h3>
-              <div className="gradient-blue">
+              </div>
+              <div className="body-back">
                 <div className="">
                   <div className="rounded-3xl w-full px-4 py-3 bg-white dark:bg-[#1e1f26] myshadow text-[#253262]">
-                    <h3 className="font-bold dark:text-white uppercase">
+                    <h3 className="font-bold text-gray-500 dark:text-white uppercase">
                       NFT Details
                     </h3>
                     <div className="flex items-center justify-between my-4 overflow-scroll m41:overflow-hidden">
@@ -100,7 +102,7 @@ console.log("nfturl",nfturl)
                         Token ID
                       </h3>
                       <span className="text-[#253262] font-bold text-sm dark:text-gray-400">
-                        {asset.marketplaceItems[0].tokenId}
+                        {asset.tokenId}
                       </span>
                     </div>
                     <div className="flex items-center justify-between my-4">
@@ -163,19 +165,19 @@ console.log("nfturl",nfturl)
                 <div className="">
                   <div className="rounded-3xl w-full px-4 py-3 bg-white dark:bg-[#1e1f26] myshadow text-[#253262]">
                     <div className="flex items-center justify-between">
-                      <h4 className="text-[#9298b0] text-base font-medium dark:text-white mb-2">
+                      <h4 className="text-[#9298b0] text-base font-medium text-gray-500 dark:text-white mb-2">
                         Current price
                       </h4>
                     </div>
                     <div className="text-[#253262] text-4xl font-bold dark:text-gray-400 mb-2 overflow-x-auto">
-                      {getEthPrice(asset.marketplaceItems[0].price)}{" "}
+                      {getEthPrice(asset.price)}{" "}
                       <span className="text-lg font-medium">MATIC</span>
                     </div>
                     <button
                       onClick={() =>
-                        buyNFT(asset.marketplaceItems[0], setmodel, setmodelmsg)
+                        buyNFT(asset, setmodel, setmodelmsg)
                       }
-                      className="flex gap-x-2 items-center justify-center px-5 py-2 bg-blue-600 text-white text-sm font-small rounded-xl hover:bg-blue-500 focus:outline-none focus:bg-blue-500"
+                      className="flex gap-x-2 items-center justify-center px-5 py-2 bg-blue-600 text-gray-500 dark:text-white text-sm font-small rounded-xl hover:bg-blue-500 focus:outline-none focus:bg-blue-500"
                     >
                       <span className="text-lg font-bold">Buy NFT</span>
                       <BiWallet className="text-3xl" />
@@ -188,8 +190,8 @@ console.log("nfturl",nfturl)
                 <div className="lg:w-1/2 bg-white rounded-lg">
                   <AssetProps
                     uri={
-                      asset.marketplaceItems[0]
-                        ? asset.marketplaceItems[0].metaDataURI
+                      asset
+                        ? asset.metaDataURI
                         : ""
                     }
                   />
@@ -198,8 +200,8 @@ console.log("nfturl",nfturl)
                   <div className="flex justify-center lg:justify-end">
                     <AssetCategories
                       uri={
-                        asset.marketplaceItems[0]
-                          ? asset.marketplaceItems[0].metaDataURI
+                        asset
+                          ? asset.metaDataURI
                           : ""
                       }
                     />
@@ -219,32 +221,15 @@ console.log("nfturl",nfturl)
 
 export async function getServerSideProps(context) {
   const { id } = context.query;
-
-  const { data } = await client.query({
-    query: gql`
-        query Query($where: SaleStarted_filter) {
-          saleStarteds(where: {tokenId:${id}}){
-            id
-            itemId
-            tokenId
-            nftContract
-            metaDataURI
-            seller
-            owner
-            forSale
-            activity
-            blockTimestamp
-            price
-            }
-          }
-    `,
-  });
-
-  return {
-    props: {
-      asset: data,
-    },
-  };
+ 
+    const { saleStarteds } = await request(graphqlAPI, saleStartedQuery, {
+      where: { tokenId: id },
+    });
+    return {
+      props: {
+        asset: saleStarteds[0],
+      },
+    };
+ 
 }
-
 export default Asset;

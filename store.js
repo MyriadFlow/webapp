@@ -6,9 +6,9 @@ import modelReducer from "./slices/modelSlice"
 
 export default configureStore({
     reducer:{
-        user:userReducer,
-        balance:balanceReducer,
-        model:modelReducer,
+        user: userReducer,
+        balance: balanceReducer,
+        model: modelReducer,
     }
 })
 

@@ -13,7 +13,6 @@ const Homecomp = ({HomeProps, uri }) => {
       const parsedURI = removePrefix(uri);
       const { data } = await axios.get(`https://cloudflare-ipfs.com/ipfs/${parsedURI}`);
       setResponse(data);
-      console.log("Data ipfs:  ",data);
       if (data.image.length > 1) setImage(data.image);
       else setImage(data.thumbnailimage);
     } catch (error) {

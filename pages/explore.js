@@ -14,9 +14,15 @@ import { buyNFT } from "./api/buyNFT";
 import Layout from "../Components/Layout";
 import { getMetaData, removePrefix } from "../utils/ipfsUtil";
 import { MarketPlaceCard } from "../Components/Cards/MarketPlaceCard";
+import { NavLink } from "reactstrap";
+import { useRouter } from "next/router";
+import { saleStartedQuery } from "../utils/gqlUtil";
+
 const graphqlAPI = process.env.NEXT_PUBLIC_MARKETPLACE_API;
 
 const Home = () => {
+  const router = useRouter();
+
   const [data, setData] = useState([]);
   const [shallowData, setShallowData] = useState([]);
   const logoutmodel = useSelector(selectModel);
@@ -42,7 +48,6 @@ const Home = () => {
     "Image",
     "Video",
     "Document",
-    "Others",
   ]);
 
   const HomeProps = (data) => {
@@ -80,23 +85,13 @@ const Home = () => {
     setmodelmsg("Buying in Progress");
     await buyNFT(nft, setmodel, setmodelmsg);
   }
+useEffect(() => {
+  filterNFTs();
+
+}, [])
 
   const market = async () => {
-    const query = gql`
-      query Query($where: SaleStarted_filter) {
-        saleStarteds(first:100) {
-          itemId
-          tokenId
-          nftContract
-          metaDataURI
-          seller
-          blockTimestamp
-          price
-        }
-      }
-    `;
-
-    const result = await request(graphqlAPI, query);
+    const result = await request(graphqlAPI, saleStartedQuery);
     const fResult = await Promise.all(
       result.saleStarteds.map(async function (obj, index) {
         const nftData = await getMetaData(obj.metaDataURI);
@@ -115,7 +110,6 @@ const Home = () => {
     const sortedNFts = fResult.sort((a, b) => {
       if (a.itemId < b.itemId) return -1;
     });
-    console.log("refined data",sortedNFts);
     setData(sortedNFts);
     setShallowData(sortedNFts);
   };
@@ -131,10 +125,10 @@ const Home = () => {
         <div className="flex items-center  shadow-md justify-center w-full h-screen model-overlay fixed  top-0 z-50">
           <div className="h-56 w-80 bg-white  dark:bg-gray-800 shadow-lg rounded-md fixed z-50 flex items-center justify-center  ring-offset-2 ring-2 ring-blue-400">
             <div className="flex flex-col justify-center items-center">
-              <p className="text-lg font-semibold dark:text-gray-200">
+              <div className="text-lg font-semibold dark:text-gray-200">
                 {" "}
-                Are you sure wanna logout ?
-              </p>
+                Are You Sure Wanna Logout ?
+              </div>
               <div className="flex items-center space-x-8 mt-10 ">
                 <div>
                   <button
@@ -159,9 +153,10 @@ const Home = () => {
         </div>
       )}
 
-      <main className="gradient-blue">
+      <main className="body-back">
         <div className="min-h-screen">
-          <div className="flex justify-center mt-5 ml-5 "style={{borderBottom:"2px solid",padding:"18px"}}>
+          <div className="flex justify-between" style={{borderBottom:"2px solid",padding:"18px"}}>
+          <div className="flex justify-center mt-5 ml-5 ">
             <div>
               <div className="flex gap-6">
                 {categories.map((category, key) => {
@@ -179,31 +174,49 @@ const Home = () => {
               </div>
             </div>
           </div>
+          <div className="mt-5 mr-5">
+          
+
+            <Link href="/explore">
+              <NavLink
+                className={router.pathname == "/explore" ? "active " : ""}
+                style={{ cursor: "pointer" }}
+              >
+                <button
+                  className="bg-white py-3 px-6  text-gray-500 dark:text-black font-semibold mb-8 lg:mb-0"
+                >
+                  More Sale
+                </button>
+              </NavLink>
+            </Link>
+          </div>
+          
+          </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 md:grid-cols-3 gap-4 lg:gap-24 p-4">
             {data?.length ? data?.map((item) => {
               return (
                 <div
-                  style={{ border: "2px solid" }}
-                  key={item.tokenId}
+                  style={{ border: "2px solid white" }}
+                  key={item.itemId}
                   className="mycard p-3 shadow-lg w-full lg:w-72 cursor-pointer"
                 >
-                  <Link key={item.tokenId} href={`/explore/${item.tokenId}`}>
+                  <Link key={item.itemId} href={`/explore/${item.itemId}`}>
                     <div>
                       <MarketPlaceCard {...item} />
                       <div className="flex items-center justify-between mb-2">
-                        <p className="text-sm font-bold">Price </p>
+                        <div className="text-sm font-bold text-gray-500 dark:text-white">Price </div>
                         <div className="flex items-center">
-                          <FaEthereum className="w-4 text-white" />
-                          <p className=" dark:text-white font-semibold">
+                          <FaEthereum className="w-4 text-gray-500 dark:text-white" />
+                          <div className="text-gray-500 dark:text-white font-semibold">
                             {getEthPrice(item.price)} MATIC
-                          </p>
+                          </div>
                         </div>
                       </div>
                     </div>
                   </Link>
                   <button
                     onClick={() => buyNft(item)}
-                    className="text-black bg-[#CAFC01] w-full rounded-md py-2 font-bold"
+                    className="text-gray-500 dark:text-black bg-[#CAFC01] w-full rounded-md py-2 font-bold"
                   >
                     Buy Now
                   </button>
@@ -213,8 +226,10 @@ const Home = () => {
             null
             }
           </div>
-          {data?.length == 0 && <div className="font-bold text-2xl">No NFT found for selected category</div>}
+          {data?.length == 0 && <div className="font-bold text-2xl">No NFT Found For Selected Category</div>}
         </div>
+       
+       
       </main>
     </Layout>
   );

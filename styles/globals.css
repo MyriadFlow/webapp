@@ -20,6 +20,32 @@
 .kumbh{
     font-family: 'Kumbh Sans', sans-serif;
 }
+.wish{
+    background: #265657;
+    border-radius: 15px;
+    padding: 5px;
+
+}
+.easy-way{
+    background: linear-gradient(90deg, #F58529 0%, #FEDA77 31.04%, #DD2A78 62.81%, #0162FF 87.81%);
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+background-clip: text;
+text-fill-color: transparent;
+}
+.body-back{
+    background: linear-gradient(90deg, rgba(1, 98, 255, 0.4) 1.81%, rgba(24, 19, 30, 0.4) 32.6%, rgba(19, 19, 26, 0.4) 65.42%, rgba(1, 98, 255, 0.4) 96.25%), #13131A;
+}
+.add-t0-cart{
+    background: #177dc7;
+    padding: 10px;
+    color: white;
+    border-radius: 10px;
+    font-weight: bold;
+
+}
+.grow { transition: all .2s ease-in-out; }
+.grow:hover { transform: scale(1.1); }
 .mycard {
 background: rgba(255, 255, 255, 0.02);
 border-radius: 16px;
@@ -75,6 +101,11 @@ text-fill-color: transparent;
     }
 .logo{
     font-family: 'Nova Script', cursive
+}
+.card-shadow{
+    background: #4b4040;
+    padding: 12px;
+
 }
 .card{
     height:80%;
@@ -144,25 +175,23 @@ text-fill-color: transparent;
     color: white;
 }
 .explore-btn-border{
-    /* border-width: 4px;
-  border-style: solid;
-  border-image: linear-gradient(to right,#F58529,pink, darkblue) 1; */
+   
   color: black;
   background: linear-gradient(white, white) padding-box,
   linear-gradient(to right,#F58529,pink, darkblue) border-box;
 border-radius: 50em;
 border: 4px solid transparent;
 }
-.gradient-blue{
-    background: radial-gradient(16.89% 81.1% at 100% 108.96%, #0162FF 0%, rgba(1, 98, 255, 0) 100%) 
-    , radial-gradient(24.53% 50.87% at 7.44% 6.07%, #0162FF 0%, rgba(1, 98, 255, 0) 100%) 
-}
 .connect-profile{
     background: linear-gradient(to right, #e22d5d,#4A00E0 );
 }
-.auth-gradient{
-    background:radial-gradient(39.89% 105.1% at 100% 23.96%, #0162EE 25%, rgba(1, 98, 255, 0) 100%) , radial-gradient(44.53% 79.87% at 38.44% 45.07%, #0162BA 35%, rgba(1, 98, 255, 0) 100%);
-padding: 35px;
+.select-profile-option{
+    border-radius: 10px;
+    font-size: 13px;
+    padding: 0px 14px 0px 14px;
+    background: black;
+    color: white;
+    border: 1px solid;
 }
 
 .model-overlay{

@@ -21,6 +21,7 @@ import { useSelector } from "react-redux";
 import { selectUser } from "../slices/userSlice";
 import { NFTStorage } from "nft.storage";
 import Image from "next/image";
+import etherContract from "../utils/web3Modal";
 const style = {
   position: "absolute",
   top: "50%",
@@ -60,7 +61,7 @@ export default function CreateItem() {
     name: "",
     description: "",
     alternettext: "",
-    royalties:500
+    royalties: 5
   });
 
   const router = useRouter();
@@ -121,11 +122,6 @@ export default function CreateItem() {
       console.log("Error uploading vedio: ", error);
     }
   }
-
-  const verifyUserRole=(walletAddress)=>{
-    contract
-  }
-
 
   function createMarket(e) { //store
     e.preventDefault();
@@ -197,6 +193,7 @@ export default function CreateItem() {
       network: "testnet",
       version: "mumbai",
     });
+    
     const connection = await web3Modal.connect();
     const provider = new ethers.providers.Web3Provider(connection);
     const signer = provider.getSigner();
@@ -210,12 +207,8 @@ export default function CreateItem() {
     console.log("ipfs://" + ipfsHash);
 
     try {
-      let result = await contract.hasRole('0xbf65e91af2ef3a62ffb82ef557601962052b015e9a7acce052f63aaaea41dfc1','0x6963f2BA24E0033F699f6edD7659375700Bb98D6')
-      // console.log("ROLE RESULT",result);
-      // return
-      if(!result){alert("Please grant role..!"); return;}
     
-      let transaction = await contract.createAsset(url,500);//500 - royalites dynamic
+      let transaction = await contract.createAsset(url, formInput.royalties*100);//500 - royalites dynamic
       let tx = await transaction.wait();
       console.log("transaction", transaction);
       setmodelmsg("Transaction 1 Complete");
@@ -232,6 +225,8 @@ export default function CreateItem() {
     }
     /* then list the item for sale on the marketplace */
     router.push("/explore");
+    router.push("/wishlist");
+
   }
   const listItem = async (transaction, contract, tokenId, price, forAuction,endTime, signer) => {
     try {
@@ -311,27 +306,23 @@ export default function CreateItem() {
   const walletAddr = useSelector(selectUser);
   var wallet = walletAddr ? walletAddr[0] : "";
 
-  const [hasRole, setHasRole] = useState(true);
+  const [hasRole, setHasRole] = useState(false);
 
   useEffect(() => {
     const asyncFn = async () => {
-      const web3Modal = new Web3Modal();
-      const connection = await web3Modal.connect();
-      const provider = new ethers.providers.Web3Provider(connection);
-      const signer = provider.getSigner();
-
-      /* next, create the item */
-      let contract = new ethers.Contract(
-        storeFrontAddress,
-        StoreFront.abi,
-        signer
-      );
-      setHasRole(
-        await contract.hasRole(await contract.STOREFRONT_CREATOR_ROLE(), wallet)
-      );
+      const contract = await etherContract(storeFrontAddress,StoreFront.abi)
+      const hasCreatorRole = await contract.hasRole(await contract.STOREFRONT_CREATOR_ROLE(), wallet)
+      setHasRole(hasCreatorRole)
+      console.log("hasCreatorRole",hasCreatorRole);
+        if (hasCreatorRole) {
+          router.push('/assets')
+      } else {
+        router.push('/authWallet')
+      }
     };
     asyncFn();
   }, []);
+
   const [options1, setOptions] = useState([
     "Image",
     "Music",
@@ -349,16 +340,15 @@ export default function CreateItem() {
   const [categories, setCategory] = useState([]);
   const [tags, setTags] = useState([]);
 
-  if (!hasRole) {
-    const loader = setTimeout(() => {
-      router.push("/profile");
-    }, 1000);
-    loader;
-  }
+  // if (!hasRole) {
+  //    setTimeout(() => {
+  //     router.push("/profile");
+  //   }, 1000);
+  // }
 
   return (
     <Layout title="Assets"description="This is used to create NFTs">
-      <div className=" w-full">
+      <div className="body-back">
         <div className="dark:bg-gray-800 kumbh text-center">
           <Snackbar
             anchorOrigin={{ vertical: "top", horizontal: "right" }}
@@ -378,41 +368,33 @@ export default function CreateItem() {
             <BuyAsset open={model} setOpen={setmodel} message={modelmsg} />
           )}
 
-          <div className="flex justify-center mt-5 gradient-blue">
-            <div
-              className="bg-black text-white flex text-left"
-              style={{ padding: "300px 10px 10px 10px", width: "30%" }}
-            >
-              <div className="font-bold text-5xl ">
-                <div>Effective</div>
-                <div>Efficient</div>
-                <div>Easy</div>
-                <div className="mt-5 text-2xl font-bold">Way To create NFT</div>
-
+               <div className="font-bold text-4xl easy-way ">
+                <div>Effective
+                Efficient
+                Easy Way To create NFT
+                </div>
               </div>
-            </div>
-            <div className="gradient-blue"
-              style={{ background: "#d9d2d2", padding: "10px", width: "45%" }}
-            >
-              <div>
-                <Image
-                  alt="assets1"
-                  src="/create.jpg"
-                  width="700"
-                  height="500"
-                />
-              </div>
-              <h3 className="text-3xl py-4 font-bold mt-10 text-center text-4xl">
+              <div className="flex justify-around mt-28">
+                <div>
+                <h3 className="text-3xl py-4 font-bold text-center text-gray-500 dark:text-white">
                 Create New NFT
               </h3>
-
+                </div>
+                <div className="text-3xl py-4 font-bold text-center text-gray-500 dark:text-white">preview</div>
+              </div>
+              
+              <div className="flex justify-evenly">
+          <div className="p-9 overflow-y-scroll ..." style={{width:"50%"}}>
+           
+            <div 
+            >
               <div>
                 <div>
                   <div className="mt-5">
                     <input
                       required="required"
                       placeholder="Asset Name"
-                      className="w-full rounded-md bg-white  dark:bg-gray-900 p-3 outline-none mb-4 border-[1px] border-[#d5d5d6] text-pink-600"
+                      className="w-full rounded-md bg-white  dark:bg-gray-900 p-3 outline-none mb-4 border-[1px] border-[#d5d5d6] text-gray-600"
                       onChange={(e) =>
                         updateFormInput({
                           ...formInput,
@@ -425,7 +407,7 @@ export default function CreateItem() {
                       <textarea
                         type="text"
                         placeholder="Asset Description"
-                        className="w-full bg-white  dark:bg-gray-900 rounded-md shadow-sm p-2 outline-none border-[1px] border-[#d5d5d6] mb-4 text-pink-600"
+                        className="w-full bg-white  dark:bg-gray-900 rounded-md shadow-sm p-2 outline-none border-[1px] border-[#d5d5d6] mb-4 text-gray-600"
                         onChange={(e) =>
                           updateFormInput({
                             ...formInput,
@@ -434,32 +416,48 @@ export default function CreateItem() {
                         }
                       />
                     </div>
-                    <div className="text-md font-semibold mt-6">
+                    <div className="text-md font-semibold mt-6 text-gray-500 dark:text-white">
                    Creator Royalties
-                  <span className="text-gray-400">*</span>
+                  <span className="text-gray-400 text-gray-500 dark:text-white">*</span>
                 </div>
                 <input
-                  value={5} // value * 100
+                  value={formInput.royalties} // value * 100
+                  min={1}
+                  max={5}
                   className="mt-2 p-3 w-full text-sm input_background outline-none rounded-md dark:bg-gray-900  "
                   type="number"
-                  onChange={(e) =>
+                  onChange={(e) =>{
                     updateFormInput({
                       ...formInput,
-                      alternettext: e.target.value,
+                      royalties: e.target.value,
                     })
+                    // const {value} = e.target
+                    // console.log("valllll".value,e.target.valu);
+                    // if(value >=1 && value<=5){
+                    //   updateFormInput({
+                    //     ...formInput,
+                    //     royalties: value,
+                    //   })
+                    // }else{
+                    //   updateFormInput({
+                    //     ...formInput,
+                    //     royalties: formInput.royalties,
+                    //   })
+                    // }
+                   
                   }
-                />%
+                }
+                />
                   </div>
                   <div className="flex justify-around">
-                    <div className="font-bold  mt-5 ">Upload file</div>
-                    <div className="font-bold  mt-5 ">Preview</div>
+                    <div className="font-bold  mt-5 text-gray-500 dark:text-white">Upload File</div>
                   </div>
                   <div className="flex gap-6">
-                    <div className=" rounded-lg text-center p-3 border-2 border-indigo-600 ...mt-20 w-2/4">
+                    <div className=" rounded-lg text-center p-3 border-2 border-indigo-600 ...mt-20 text-gray-500 dark:text-white" style={{width:"100%"}}>
                       <h1 className="text-lg font-semibold">
-                        Drag file here to upload
+                        Drag File Here to Upload
                       </h1>
-                      <div className="text-[#6a6b76]">
+                      <div className="text-gray-500 dark:text-white">
                         PNG,GIF,WEBP,MP4,or MP3
                         <br />
                         <div className="flex text-black mt-3 cursor-pointer rounded-lg bg-slate-300 p-2.5 m-auto w-full">
@@ -471,8 +469,276 @@ export default function CreateItem() {
                         </div>
                       </div>
                     </div>
+                  </div>
+                  {addImage && (
+                    <>
+                      <div className="flex justify-between">
+                        <div className="font-bold  mt-5 text-left text-gray-500 dark:text-white">
+                          Upload Preview Image
+                        </div>
+                        <div className="font-bold  mt-5 text-left text-gray-500 dark:text-white">Priview</div>
+                      </div>
+                      <div className="flex gap-6">
+                        <div className="   rounded-xl border-dashed border-2 border-indigo-600 ... text-center p-3 w-96 ... mt-3">
+                          <h1 className="text-lg font-semibold text-gray-500 dark:text-white">
+                            Drag File Here to Upload
+                          </h1>
+                          <div className="text-gray-500 dark:text-white">
+                            PNG, JPG, or GIF
+                            <br />
+                            <div className=" text-black mt-3 cursor-pointer rounded-xl p-2.5 m-auto w-full bg-slate-300">
+                              <input
+                                type="file"
+                                accept="image/*"
+                                onChange={(e) => onChangeThumbnail(e)}
+                              />
+                            </div>
+                          </div>
+                        </div>
+                        <div className="   rounded-xl border-dashed border-2 border-indigo-600 ... text-center p-3 w-96 ... mt-3">
+                          <div className="text-[#6a6b76]">
+                            <div className=" text-black mt-3 cursor-pointer rounded-xl p-2.5 m-auto w-full ">
+                              {previewThumbnail && (
+                                <Image alt="alt" width="200" height="200" src={previewThumbnail} />
+                              )}
+                              <div />
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </>
+                  )}
 
-                    <div className=" rounded-lg text-center p-3 border-2 border-indigo-600 ...mt-20 w-2/4">
+                </div>
+              </div>
+              <div className="w-full py-6">
+                <div className="flex justify-between">
+                  <div>
+                    <div className="text-lg font-bold mt-6 text-gray-500 dark:text-white">Properties</div>
+                  </div>
+                  <div
+                    onClick={handleShow}
+                    className="mt-7   h-10 p-1.5 border-solid border-2 border-solid-600 ... rounded-lg cursor-pointer text-gray-500 dark:text-white"
+                  >
+                    Add Properties
+                  </div>
+
+                  <Modal
+                    open={show}
+                    onClose={handleClos}
+                    aria-labelledby="modal-modal-title"
+                    aria-describedby="modal-modal-description"
+                  >
+                    <Box sx={style} className="text-center bg-black border-[1px] bg-white dark:bg-[#13131a] dark:border-[#bf2180] border-[#eff1f6]" >
+                      <Typography
+                        id="modal-modal-title"
+                        variant="h6"
+                        component="h2"
+                        className="text-center "
+                      >
+                        <div className="flex justify-between text-gray-500 dark:text-white">
+                          <div>Add Properties</div>
+                          <div >
+                            <Image
+                              className="w-3 h-3 "style={{color:'white'}}
+                              onClose={handleClos}
+                              img
+                              src="/cross.png"
+                              width="200"
+                              height="200"
+                              alt="alt"
+                            />
+                          </div>
+                        </div>
+                      </Typography>
+                      <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+                        <div className="text-gray-500 dark:text-white">
+                          Properties Show Up Underneath Your Item, are
+                          Clickable, and Can be Filtered in Your
+                          Collection&apos;s Sidebar.
+                        </div>
+                        <div className="flex justify-between text-gray-500 dark:text-white">
+                          <div className="font-bold">Type</div>
+                          <div className="font-bold">Name</div>
+                        </div>
+                        <form onSubmit={handleSubmit}>
+                          {attributes.map((inputField) => (
+                            <div key={inputField.id}>
+                              <div className="flex flex-col space-y-4 md:space-y-0 md:flex-row md:space-x-4 pb-2 text-gray-600 align-center">
+                                <input
+                                  name="display_type"
+                                  label="First Name"
+                                  placeholder="Display type"
+                                  className="mt-2 p-3 w-full text-sm input_background outline-none rounded-md dark:bg-gray-900"
+                                  variant="filled"
+                                  value={inputField.display_type}
+                                  onChange={(event) =>
+                                    handleChangeInput(inputField.id, event)
+                                  }
+                                />
+                                <input
+                                  name="trait_type"
+                                  label="Last Name"
+                                  placeholder="Trait type"
+                                  className="mt-2 p-3 w-full text-sm input_background outline-none rounded-md dark:bg-gray-900 text-gray-600"
+                                  variant="filled"
+                                  value={inputField.trait_type}
+                                  onChange={(event) =>
+                                    handleChangeInput(inputField.id, event)
+                                  }
+                                />
+                                <input
+                                  name="value"
+                                  type="number"
+                                  label="First Name"
+                                  placeholder="Value"
+                                  className="mt-2 p-3 w-full text-sm input_background outline-none rounded-md dark:bg-gray-900 text-gray-600"
+                                  variant="filled"
+                                  value={inputField.value}
+                                  onChange={(event) =>
+                                    handleChangeInput(inputField.id, event)
+                                  }
+                                />
+                                <div>
+                                  <button
+                                    disabled={attributes.length === 1}
+                                    onClick={() =>
+                                      handleRemoveFields(inputField.id)
+                                    }
+                                    className="text-left mt-5 p-2.5 rounded-lg  bg-slate-300 text-gray-500 dark:text-white flex justify-center"
+                                  >
+                                    <FaMinusSquare style={{ color: "red" }} />
+                                  </button>
+                                </div>
+
+                                <div>
+                                  <button
+                                    className="text-left mt-5 p-2.5 rounded-lg  bg-slate-300 text-gray-500 dark:text-white flex justify-center"
+                                    onClick={handleAddFields}
+                                  >
+                                    <FaPlusSquare style={{ color: "green" }} />
+                                  </button>
+                                </div>
+                              </div>
+                            </div>
+                          ))}
+                        </form>
+                      </Typography>
+                      <div className="mt-5" onClick={handleSubmit}>
+                        <button className="bg-blue-500 hover:bg-blue-700 text-gray-500 dark:text-white font-bold py-2 px-4 rounded w-full">
+                          Save
+                        </button>
+                      </div>
+                    </Box>
+                  </Modal>
+                </div>
+                <div className="text-md font-semibold mt-6 text-gray-500 dark:text-white">
+                  {" "}
+                  Alternative Text for NFT{" "}
+                  <span className="text-gray-400 text-gray-500 dark:text-white">(Optipnal) </span>
+                </div>
+                <input
+                  placeholder="NFT description in details"
+                  className="mt-2 p-3 w-full text-sm input_background outline-none rounded-md dark:bg-gray-900  "
+                  onChange={(e) =>
+                    updateFormInput({
+                      ...formInput,
+                      alternettext: e.target.value,
+                    })
+                  }
+                />
+
+                <div className="font-semibold text-lg my-6 text-gray-500 dark:text-white">Category</div>
+                <Multiselect
+                  isObject={false}
+                  onRemove={(event) => {
+                    setCategory(event);
+                  }}
+                  onSelect={(event) => {
+                    setCategory(event);
+                  }}
+                  options={options1}
+                  selectedValues={[]}
+                  showCheckbox
+                  className=" bg-white  dark:bg-gray-900 text-gray-500 dark:text-white"
+                />
+              </div>
+              <div className="font-semibold text-lg my-6 text-gray-500 dark:text-white">Tags</div>
+              <Multiselect
+                isObject={false}
+                onRemove={(event) => {
+                  setTags(event);
+                }}
+                onSelect={(event) => {
+                  setTags(event);
+                }}
+                options={options2}
+                selectedValues={[]}
+                showCheckbox
+                className="bg-white  dark:bg-gray-900 text-gray-500 dark:text-white"
+              />
+              <div className="flex justify-between mt-5">
+                <div className="text-left">
+                  <div className="font-bold text-3xl text-gray-500 dark:text-white">Put on Marketplace</div>
+                  <div className="text-gray-500 dark:text-white">Enter price to Allow Users Instantly Buy your NFT </div>
+                </div>
+
+                <input
+                  className="h-5 w-5 "
+                  onClick={() => {
+                    setToggle(!toggle);
+                  }}
+                  type="checkbox"
+                />
+              </div>
+              {toggle && (
+                <div className="flex mt-3 gap-6 ">
+                  <input
+                    type="number"
+                    min="1"
+                    max="10"
+                    required="true"
+                    placeholder="Asset Price in Matic"
+                    className="w-full bg-white dark:bg-gray-900 rounded-md mb-4 shadow-sm p-2 outline-none border-[1px] border-[#d5d5d6] text-gray-600"
+                    onChange={(e) =>
+                      updateFormInput({
+                        ...formInput,
+                        price: e.target.value,
+                      })
+                    }
+                  />
+                   {/* <input
+                    type="number"
+                    min="1"
+                    max="10"
+                    required="true"
+                    placeholder="Auction"
+                    className="w-full bg-white dark:bg-gray-900 rounded-md mb-4 shadow-sm p-2 outline-none border-[1px] border-[#d5d5d6] text-gray-600"
+                    onChange={(e) =>
+                      updateFormInput({
+                        ...formInput,
+                        forAuction: e.target.value,
+                      })
+                    }
+                  /> */}
+                </div>
+              )}
+              <div className="flex justify-between p-5">
+                <div>
+                  <button
+                    onClick={(e) => createMarket(e)}
+                    className="bg-white  dark:bg-gray-900 rounded-xl dark:bg-black text-gray-500 dark:text-white py-3 px-3 mb-8 "
+                  >
+                    Create  Assets
+                  </button>
+                </div>
+              </div>
+            </div>
+        
+        
+          </div>
+
+          <div className=" rounded-lg text-center p-3 border-2 border-indigo-600 ...mt-20 " style={{width:"20%",height:"450px"}}>
                       <div className="flex text-black mt-3 cursor-pointer rounded-lg  p-2.5 m-auto w-full">
                         {previewMedia ? (
                           mediaHash?.image && addImage == false ? (
@@ -499,275 +765,9 @@ export default function CreateItem() {
                         )}
                       </div>
                     </div>
-                  </div>
-
-                  {addImage && (
-                    <>
-                      <div className="flex justify-between">
-                        <div className="font-bold  mt-5 text-left">
-                          Upload preview image
-                        </div>
-                        <div className="font-bold  mt-5 text-left">Priview</div>
-                      </div>
-                      <div className="flex gap-6">
-                        <div className="   rounded-xl border-dashed border-2 border-indigo-600 ... text-center p-3 w-96 ... mt-10">
-                          <h1 className="text-lg font-semibold">
-                            Drag file here to upload
-                          </h1>
-                          <div className="text-[#6a6b76]">
-                            PNG, JPG, or GIF
-                            <br />
-                            <div className=" text-black mt-3 cursor-pointer rounded-xl p-2.5 m-auto w-full bg-slate-300">
-                              <input
-                                type="file"
-                                accept="image/*"
-                                onChange={(e) => onChangeThumbnail(e)}
-                              />
-                            </div>
-                          </div>
-                        </div>
-                        <div className="   rounded-xl border-dashed border-2 border-indigo-600 ... text-center p-3 w-96 ... mt-10">
-                          <div className="text-[#6a6b76]">
-                            <div className=" text-black mt-3 cursor-pointer rounded-xl p-2.5 m-auto w-full ">
-                              {previewThumbnail && (
-                                <Image alt="" width="200" height="200" src={previewThumbnail} />
-                              )}
-                              <div />
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </>
-                  )}
-                </div>
-              </div>
-
-              <div className="w-full py-6">
-                <div className="flex justify-between">
-                  <div>
-                    <p className="text-lg font-bold mt-6">Properties</p>
-                  </div>
-                  <div
-                    onClick={handleShow}
-                    className="mt-7 text-black-500  h-10 p-1.5 border-solid border-2 border-solid-600 ... rounded-lg cursor-pointer"
-                  >
-                    Add Properties
-                  </div>
-
-                  <Modal
-                    open={show}
-                    onClose={handleClos}
-                    aria-labelledby="modal-modal-title"
-                    aria-describedby="modal-modal-description"
-                  >
-                    <Box sx={style} className="text-center">
-                      <Typography
-                        id="modal-modal-title"
-                        variant="h6"
-                        component="h2"
-                        className="text-center"
-                      >
-                        <div className="flex justify-between">
-                          <div>Add Properties</div>
-                          <div>
-                            <Image
-                              className="w-3 h-3"
-                              onClose={handleClos}
-                              img
-                              src="/cross.png"
-                              width="200"
-                              height="200"
-                              alt=""
-                            />
-                          </div>
-                        </div>
-                      </Typography>
-                      <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                        <div>
-                          Properties show up underneath your item, are
-                          clickable, and can be filtered in your
-                          collection&apos;s sidebar.
-                        </div>
-                        <div className="flex justify-between">
-                          <div className="font-bold">Type</div>
-                          <div className="font-bold">Name</div>
-                        </div>
-                        <form onSubmit={handleSubmit}>
-                          {attributes.map((inputField) => (
-                            <div key={inputField.id}>
-                              <div className="flex flex-col space-y-4 md:space-y-0 md:flex-row md:space-x-4 pb-2 text-pink-600 align-center">
-                                <input
-                                  name="display_type"
-                                  label="First Name"
-                                  placeholder="Display type"
-                                  className="mt-2 p-3 w-full text-sm input_background outline-none rounded-md dark:bg-gray-900"
-                                  variant="filled"
-                                  value={inputField.display_type}
-                                  onChange={(event) =>
-                                    handleChangeInput(inputField.id, event)
-                                  }
-                                />
-                                <input
-                                  name="trait_type"
-                                  label="Last Name"
-                                  placeholder="Trait type"
-                                  className="mt-2 p-3 w-full text-sm input_background outline-none rounded-md dark:bg-gray-900 text-pink-600"
-                                  variant="filled"
-                                  value={inputField.trait_type}
-                                  onChange={(event) =>
-                                    handleChangeInput(inputField.id, event)
-                                  }
-                                />
-                                <input
-                                  name="value"
-                                  type="number"
-                                  label="First Name"
-                                  placeholder="Value"
-                                  className="mt-2 p-3 w-full text-sm input_background outline-none rounded-md dark:bg-gray-900 text-pink-600"
-                                  variant="filled"
-                                  value={inputField.value}
-                                  onChange={(event) =>
-                                    handleChangeInput(inputField.id, event)
-                                  }
-                                />
-                                <div>
-                                  <button
-                                    disabled={attributes.length === 1}
-                                    onClick={() =>
-                                      handleRemoveFields(inputField.id)
-                                    }
-                                    className="text-left mt-5 p-2.5 rounded-lg  bg-slate-300 text-white flex justify-center"
-                                  >
-                                    <FaMinusSquare style={{ color: "red" }} />
-                                  </button>
-                                </div>
-
-                                <div>
-                                  <button
-                                    className="text-left mt-5 p-2.5 rounded-lg  bg-slate-300 text-white flex justify-center"
-                                    onClick={handleAddFields}
-                                  >
-                                    <FaPlusSquare style={{ color: "green" }} />
-                                  </button>
-                                </div>
-                              </div>
-                            </div>
-                          ))}
-                        </form>
-                      </Typography>
-                      <div className="mt-5" onClick={handleSubmit}>
-                        <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-full">
-                          Save
-                        </button>
-                      </div>
-                    </Box>
-                  </Modal>
-                </div>
-                <div className="text-md font-semibold mt-6">
-                  {" "}
-                  Alternative text for NFT{" "}
-                  <span className="text-gray-400">(Optipnal) </span>
-                </div>
-                <input
-                  placeholder="NFT description in details"
-                  className="mt-2 p-3 w-full text-sm input_background outline-none rounded-md dark:bg-gray-900  "
-                  onChange={(e) =>
-                    updateFormInput({
-                      ...formInput,
-                      alternettext: e.target.value,
-                    })
-                  }
-                />
-
-                <p className="font-semibold text-lg my-6">Category</p>
-                <Multiselect
-                  isObject={false}
-                  onRemove={(event) => {
-                    setCategory(event);
-                  }}
-                  onSelect={(event) => {
-                    setCategory(event);
-                  }}
-                  options={options1}
-                  selectedValues={[]}
-                  showCheckbox
-                  className="bg-black text-white"
-                />
-              </div>
-
-              <div className="font-semibold text-lg my-6">Tags</div>
-              <Multiselect
-                isObject={false}
-                onRemove={(event) => {
-                  setTags(event);
-                }}
-                onSelect={(event) => {
-                  setTags(event);
-                }}
-                options={options2}
-                selectedValues={[]}
-                showCheckbox
-                className="bg-black text-white"
-              />
-              <div className="flex justify-between mt-5">
-                <div className="text-left">
-                  <div className="font-bold text-3xl">Put on marketplace</div>
-                  <div>Enter price to allow users instantly Buy your NFT </div>
-                </div>
-
-                <input
-                  className="h-5 w-5 "
-                  onClick={() => {
-                    setToggle(!toggle);
-                  }}
-                  type="checkbox"
-                />
-              </div>
-              {toggle && (
-                <div className="flex mt-3 gap-6 ">
-                  <input
-                    type="number"
-                    min="1"
-                    max="10"
-                    required="true"
-                    placeholder="Asset Price in Matic"
-                    className="w-full bg-white dark:bg-gray-900 rounded-md mb-4 shadow-sm p-2 outline-none border-[1px] border-[#d5d5d6] text-pink-600"
-                    onChange={(e) =>
-                      updateFormInput({
-                        ...formInput,
-                        price: e.target.value,
-                      })
-                    }
-                  />
-                   <input
-                    type="number"
-                    min="1"
-                    max="10"
-                    required="true"
-                    placeholder="Auction"
-                    className="w-full bg-white dark:bg-gray-900 rounded-md mb-4 shadow-sm p-2 outline-none border-[1px] border-[#d5d5d6] text-pink-600"
-                    onChange={(e) =>
-                      updateFormInput({
-                        ...formInput,
-                        forAuction: e.target.value,
-                      })
-                    }
-                  />
-                </div>
-              )}
-
-              <div className="flex justify-between p-5">
-                <div>
-                  <button
-                    onClick={(e) => createMarket(e)}
-                    className="bg-[black] rounded-xl dark:bg-black text-white py-3 px-3 mb-8 "
-                  >
-                    Create digital assets
-                  </button>
-                </div>
-              </div>
-            </div>
           </div>
+         
+               
         </div>
       </div>
     </Layout>

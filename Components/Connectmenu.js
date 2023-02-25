@@ -117,7 +117,6 @@ function Connectmenu({ toogle, dark, setDark }) {
 
   const accountChangedHandler = (newAccount) => {
     SetdefaultAccount(newAccount);
-
     dispatch(login([ethereum.selectedAddress]));
     getUserBalance(newAccount.toString());
   };
@@ -246,7 +245,7 @@ function Connectmenu({ toogle, dark, setDark }) {
 
               className="h-10 w-10 rounded-full hover:text-white  cursor-pointer p-2 cursor-pointer"
             />
-            <p>Log out</p>
+            <div>Log out</div>
           </div>
         ) : (
           ""

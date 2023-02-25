@@ -9,10 +9,11 @@ import HomeComp from "./homeComp";
 import HomeComp2 from "./homecomp2";
 import { useRouter } from "next/router";
 import BuyAsset from "../Components/buyAssetModal";
-import { request, gql } from "graphql-request";
+import { request } from "graphql-request";
 import StoreFront from "../artifacts/contracts/StoreFront.sol/StoreFront.json";
 import Marketplace from "../artifacts/contracts/Marketplace.sol/Marketplace.json";
 import Loader from "./Loader";
+import { saleStartedQuery } from "../utils/gqlUtil";
 const marketplaceAddress = process.env.NEXT_PUBLIC_MARKETPLACE_ADDRESS;
 const storeFrontAddress = process.env.NEXT_PUBLIC_STOREFRONT_ADDRESS;
 const graphqlAPI = process.env.NEXT_PUBLIC_MARKETPLACE_API;
@@ -33,21 +34,7 @@ const MyAssets = () => {
   const [alertMsg, setAlertMsg] = useState("Something went wrong");
 
   const fetchUserAssests = async (walletAddr) => {
-    const query = gql`
-      query Query($where: SaleStarted_filter) {
-        saleStarteds(first: 100,where: {seller: "${walletAddr}"}) {
-          itemId
-          tokenId
-          nftContract
-          metaDataURI
-          seller
-          blockTimestamp
-          price
-        }
-      }
-    `;
-
-    const result = await request(graphqlAPI, query);
+    const result = await request(graphqlAPI, saleStartedQuery,{where:{seller:walletAddr }});
     setLoading(true);
     setData(result.saleStarteds);
     setLoading(false);
@@ -72,13 +59,8 @@ const MyAssets = () => {
         Marketplace.abi,
         signer
       );
-      transaction = await contract.listItem(
-        storeFrontAddress,
-        tokenId,
-        price
-      );
+      transaction = await contract.listItem(storeFrontAddress, tokenId, price);
       await transaction.wait();
-      console.log("transaction completed");
       setmodelmsg("Transaction 2 Complete !!");
     } catch (e) {
       console.log(e);
@@ -108,12 +90,12 @@ const MyAssets = () => {
     );
 
     try {
-      let transaction = await contract.createAsset(url,500);//add second param as a number 
+      let transaction = await contract.createAsset(url, 500); //add second param as a number
       let tx = await transaction.wait();
       setmodelmsg("Transaction 1 Complete");
-      let event = tx.events[0]
-      let value = event.args[2]
-      let tokenId = value.toNumber()
+      let event = tx.events[0];
+      let value = event.args[2];
+      let tokenId = value.toNumber();
       const price = ethers.utils.parseUnits(formInput.price, "ether");
       await listItem(tokenId, price, signer);
     } catch (e) {
@@ -125,23 +107,20 @@ const MyAssets = () => {
   }
 
   return (
-    <div className="p-4 px-10 min-h-screen gradient-blue">
+    <div className="p-4 px-10 min-h-screen body-back">
       {model && <BuyAsset open={model} setOpen={setmodel} message={modelmsg} />}
       <div className=" p-4 mt-20  h-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-        
-        {data.length > 0 ? (  
+        {data.length > 0 ? (
           data?.map((item) => {
             return (
-              <div style={{border:"2px solid",padding:"10px"}}
+              <div
+                style={{ border: "2px solid", padding: "10px" }}
                 key={item.itemId}
                 className="bg-[white] dark:bg-[#1c1c24]  rounded-lg shadow-lg w-full lg:w-72 hover:scale-105 duration-200 transform transition cursor-pointer border-2 dark:border-gray-800"
               >
                 <Link key={item.itemId} href={`/assets/${item.itemId}`}>
                   <div>
                     <HomeComp uri={item ? item.metaDataURI : ""} />
-
-                 
-                   
                   </div>
                 </Link>
                 <div className="form-item w-full mt-3">
@@ -156,25 +135,26 @@ const MyAssets = () => {
                 </div>
                 <div>
                   <div className="font-bold mt-3">Wallet Address :</div>
-                  <div style={{fontSize:"12px"}}>{item.seller}</div>
+                  <div style={{ fontSize: "12px" }}>{item.seller}</div>
                 </div>
                 <div className="px-4 py-4 bg-white  flex justify-center mt-3">
                   <button
                     onClick={() => placeNft(item.itemId)}
                     className="text-blue-500 hover:text-blue-400 font-bold"
                   >
-                    Place asset to market
+                    Manage
                   </button>
                 </div>
               </div>
             );
           })
-          ) : loading ? (
-            <Loader />
-          ) : (
-            <div className="text-2xl pb-10 font-bold text-center">You haven&apos;t Place any item on market.</div>
-          )}
-        
+        ) : loading ? (
+          <Loader />
+        ) : (
+          <div className="text-2xl pb-10 font-bold text-center">
+            You haven&apos;t Place any item on market.
+          </div>
+        )}
       </div>
     </div>
   );

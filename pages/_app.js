@@ -7,8 +7,8 @@ import Router from "next/router";
 import { ThirdwebProvider, useAddress } from "@thirdweb-dev/react";
 import "../styles/globals.css";
 import Loader from "../Components/Loader";
-import LandingPage from "./landingpage";
 
+// Fixes: Hydration failed because the initial UI does not match what was rendered on the server.
 
 function MyApp({ Component, pageProps }) {
   const desiredChainId = 80001;
@@ -20,15 +20,13 @@ function MyApp({ Component, pageProps }) {
   Router.events.on("routeChangeComplete", (url) => {
     isSetLoading(false);
   });
-  // const address = useAddress();
-  // console.log("adde",address)
+  
   return (
     <>
       {isLoading && <Loader />}
       <ThemeProvider enableSystem={true} attribute="class">
         <ThirdwebProvider desiredChainId={desiredChainId}>
           <Provider store={store}>
-          {/* {!address?<Component {...pageProps}/>:<LandingPage/>} */}
           <Component {...pageProps}/>
           </Provider>
         </ThirdwebProvider>

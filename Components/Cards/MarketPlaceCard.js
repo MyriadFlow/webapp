@@ -8,11 +8,11 @@ export const MarketPlaceCard = (props) => {
          
             src={image}
             alt="marketcard"
-            className=" w-full object-fit rounded-lg mb-3"
+            className=" w-full object-fit rounded-lg mb-3 grow"
           />
           <div className="flex justify-between">
-            <div>{name}</div>
-            <div>{description}</div>
+            <div className='text-gray-500 dark:text-white'>{name}</div>
+            <div className='text-gray-500 dark:text-white'>{description}</div>
           </div>
         </div>
       );
