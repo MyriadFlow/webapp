@@ -52,7 +52,7 @@ if (typeof window !== "undefined") {
     version: "mumbai",
   });
 }
-export default function notConnectWallet() {
+export default function NotConnectWallet() {
   const [provider, setProvider] = useState();
   const [account, setAccount] = useState();
   const [error, setError] = useState("");

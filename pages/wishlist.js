@@ -15,7 +15,7 @@ import { saleStartedQuery } from '../utils/gqlUtil';
 
 const graphqlAPI = process.env.NEXT_PUBLIC_MARKETPLACE_API;
 
-export default function wishlist() {
+export default function Wishlist() {
     const [data, setData] = useState([]);
     const [modelmsg, setmodelmsg] = useState("buying in progress!");
     const [model, setmodel] = useState(false);

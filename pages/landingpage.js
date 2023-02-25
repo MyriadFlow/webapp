@@ -191,6 +191,7 @@ function LandingPage() {
                   return (
                    
                     <BigCard
+                    key={i}
                       title={data.product_name}
                       img={data.image}
                       price={data.price}

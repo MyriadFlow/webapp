@@ -24,7 +24,7 @@ const marketplaceAddress = process.env.NEXT_PUBLIC_MARKETPLACE_ADDRESS;
 const graphqlAPI = process.env.NEXT_PUBLIC_MARKETPLACE_API;
 const storeFrontAddress = process.env.NEXT_PUBLIC_STOREFRONT_ADDRESS;
 
-export default function manage() {
+export default function Manage() {
   const [loading, setLoading] = useState(true);
   const [hasRole, setHasRole] = useState(true);
   const [operator, setOperator] = useState(true);
