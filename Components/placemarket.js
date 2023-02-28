@@ -59,6 +59,7 @@ const MyAssets = () => {
         Marketplace.abi,
         signer
       );
+
       transaction = await contract.listItem(storeFrontAddress, tokenId, price);
       await transaction.wait();
       setmodelmsg("Transaction 2 Complete !!");
@@ -114,9 +115,8 @@ const MyAssets = () => {
           data?.map((item) => {
             return (
               <div
-                style={{ border: "2px solid", padding: "10px" }}
                 key={item.itemId}
-                className="bg-[white] dark:bg-[#1c1c24]  rounded-lg shadow-lg w-full lg:w-72 hover:scale-105 duration-200 transform transition cursor-pointer border-2 dark:border-gray-800"
+                className=" border-2 p-2.5 dark:bg-[#1c1c24]  rounded-lg shadow-lg w-full lg:w-72 hover:scale-105 duration-200 transform transition cursor-pointer border-2 dark:border-gray-800"
               >
                 <Link key={item.itemId} href={`/assets/${item.itemId}`}>
                   <div>
@@ -133,9 +133,9 @@ const MyAssets = () => {
                     }
                   />
                 </div>
-                <div>
-                  <div className="font-bold mt-3">Wallet Address :</div>
-                  <div style={{ fontSize: "12px" }}>{item.seller}</div>
+                <div className="flex justify-between mt-3 text-gray-500 dark:text-white">
+                  <div className="font-bold">Wallet Address :</div>
+                  <div className="text-xs">{item.seller.slice(-6)}</div>
                 </div>
                 <div className="px-4 py-4 bg-white  flex justify-center mt-3">
                   <button

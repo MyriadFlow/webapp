@@ -92,9 +92,9 @@ function NftboughtDashboard() {
         {data.length > 0 ? (
           data.map((item) => {
             return (
-              <div style={{border:"2px solid",padding:'10px'}}
+              <div 
                 key={item.itemId}
-                className="bg-white dark:bg-gray-900  rounded-lg shadow-lg w-full lg:w-72 hover:scale-105 duration-200 transform transition cursor-pointer border-2 dark:border-gray-800"
+                className=" border-2 p-2.5 bg-white dark:bg-gray-900  rounded-lg shadow-lg w-full lg:w-72 hover:scale-105 duration-200 transform transition cursor-pointer border-2 dark:border-gray-800"
               >
                 <Link key={item.itemId} href={`/assets/${item.itemId}`}>
                   <div>
@@ -111,7 +111,7 @@ function NftboughtDashboard() {
                     </div>
                     <div>
                   <div className="font-bold mt-3">Wallet Address :</div>
-                  <div style={{fontSize:"12px"}}>{item.owner}</div>
+                  <div className="text-xs">{item.owner.slice(-6)}</div>
                 </div>
                   </div>
                 </Link>
@@ -137,9 +137,9 @@ function NftboughtDashboard() {
         {auction.length > 0 ? (
           auction.map((item) => {
             return (
-              <div style={{border:"2px solid",padding:'10px'}}
+              <div
                 key={item.id}
-                className="bg-white dark:bg-gray-900  rounded-lg shadow-lg w-full lg:w-72 hover:scale-105 duration-200 transform transition cursor-pointer border-2 dark:border-gray-800"
+                className=" border-2 p-2.5 bg-white dark:bg-gray-900  rounded-lg shadow-lg w-full lg:w-72 hover:scale-105 duration-200 transform transition cursor-pointer border-2 dark:border-gray-800"
               >
                 <Link key={item.itemId} href={`/assets/${item.id}`}>
                   <div>
@@ -148,7 +148,7 @@ function NftboughtDashboard() {
                     
                     <div>
                   <div className="font-bold mt-3">Wallet Address :</div>
-                  <div style={{fontSize:"12px"}}>{item.highestBidder}</div>
+                  <div className="text-xs">{item.highestBidder}</div>
                 </div>
                   </div>
                 </Link>

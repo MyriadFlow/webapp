@@ -185,7 +185,7 @@ function LandingPage() {
             <h1 className="text-center text-3xl font-semibold mb-20 text-gray-500 dark:text-white">
               Highlights
             </h1>
-            <div className="max-w-[1280px] mx-auto rounded-3xl flex " style={{gap:"30px"}}>
+            <div className="max-w-[1280px] mx-auto rounded-3xl flex gap-7">
                 {info?.map(function (data, i) {
                    
                   return (

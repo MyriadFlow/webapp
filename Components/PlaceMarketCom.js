@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Image from "next/image";
 
-const Homecomp = ({HomeProps, uri }) => {
+const PlaceMarketCom = ({ uri }) => {
   const [response, setResponse] = useState([]);
   const [image, setImage] = useState("");
   const removePrefix = (uri) => {
@@ -41,12 +41,9 @@ const Homecomp = ({HomeProps, uri }) => {
         <div>{response.description}</div>
 
       </div>
-      <div className="flex justify-between mt-3 text-gray-500 dark:text-white">
-  <div>Price</div>
-  <div>{response.price}</div>
-</div>
+     
     </div>
   );
 };
 
-export default Homecomp;
+export default PlaceMarketCom;

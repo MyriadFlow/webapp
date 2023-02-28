@@ -40,7 +40,6 @@ function Asset({ asset }) {
     setResponse(data);
     if (data.image.length > 1) setImage(data.image);
     else setImage(data.thumbnailimage);
-    let preuri = image.substr(7, 50);
   };
 
   useEffect(() => {

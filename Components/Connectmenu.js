@@ -116,6 +116,7 @@ function Connectmenu({ toogle, dark, setDark }) {
   };
 
   const accountChangedHandler = (newAccount) => {
+    console.log("Ether modal connect");
     SetdefaultAccount(newAccount);
     dispatch(login([ethereum.selectedAddress]));
     getUserBalance(newAccount.toString());
@@ -133,7 +134,7 @@ function Connectmenu({ toogle, dark, setDark }) {
 
   // fuction to open the model
   const openmodel = () => {
-    dispatch(open());
+    // dispatch(open());
   };
 
   return (

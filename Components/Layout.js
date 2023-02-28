@@ -34,6 +34,7 @@ const Layout = ({ children, title ,description}) => {
           type="text/css"
           href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css"
         />
+        <link rel="stylesheet" href="https://unpkg.com/primeicons@6.0.1/primeicons.css"></link>
         <link rel="shortcut icon" href="/dark.svg"width="60" height="60"/>
         <title>{title}</title>
         <meta name="description" content={description}/>

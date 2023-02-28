@@ -13,7 +13,7 @@ export default function AuthWallet() {
     description="This is used to show the Contact To The Marketplace Admin Page">
     <div className='text-center  body-back'>
         <div className='mt-10'>
-            <Image alt="alt" width="200" height="200" src="/sadface.png" style={{margin:"0 auto"}}/>
+            <Image alt="alt" width="200" height="200" className='m-auto' src="/sadface.png"/>
         </div>
         <div className='mt-5 text-gray-500 dark:text-white'>We’ re Sorry!</div>
         <div className='mt-5 text-gray-500 dark:text-white'>Currently You Do Not Have Access to 
@@ -23,7 +23,6 @@ the Wallet Authentication Process.</div>
     <Link className=" bg-white text-black px-4 py-2 rounded-full ... text-sm" href="/explore">
               <NavLink
                 className={router.pathname == "/explore" ? "active " : ""}
-                style={{ cursor: "pointer" }}
               >
                 Explore
               </NavLink>

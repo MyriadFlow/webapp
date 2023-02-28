@@ -14,8 +14,7 @@ export default function About() {
       <div className="flex body-back">
         <div style={{ padding: "10px 10px 10px 106px" }}>
           <div
-            className="text-3xl font-bold mt-10 text-gray-500 dark:text-white"
-            style={{ color: "#00FFBD" }}
+            className="text-3xl font-bold mt-10 text-gray-500 dark:text-white text-green-400"
           >
             Experience the Power of NFTs:
           </div>
@@ -41,11 +40,9 @@ export default function About() {
             <Link href="/explore">
               <NavLink
                 className={router.pathname == "/explore" ? "active " : ""}
-                style={{ cursor: "pointer" }}
               >
                 <button
-                  className="bg-white text-black px-4 py-2 rounded-full ... text-sm"
-                  style={{ border: "1px solid " }}
+                  className="bg-white text-black px-4 py-2 rounded-full ... text-sm border-black"
                 >
                   Explore Now
                 </button>

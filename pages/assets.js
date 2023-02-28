@@ -1,14 +1,17 @@
 import { useEffect, useState } from "react";
 import { ethers } from "ethers";
 import { useRouter } from "next/router";
-import Web3Modal from "web3modal";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
 import { FaPlusSquare, FaMinusSquare } from "react-icons/fa";
 import { v4 as uuidv4 } from "uuid";
-import WalletConnectProvider from "@walletconnect/web3-provider";
 import Multiselect from "multiselect-react-dropdown";
+import '../node_modules/primeicons/primeicons.css';
+import '../node_modules/primereact/resources/themes/lara-dark-indigo/theme.css';
+import '../node_modules/primereact/resources/primereact.css';
+import { InputNumber } from 'primereact/inputnumber';
+
 const YOUR_API_KEY =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkaWQ6ZXRocjoweDFFODE2RTA3RjBFYTg4MkI3Q0I0MDQ2QTg4NENDQ0Q0MjA4NEU3QTgiLCJpc3MiOiJuZnQtc3RvcmFnZSIsImlhdCI6MTY3MzI0NTEzNDc3MywibmFtZSI6Im5mdCJ9.vP9_nN3dQHIkN9cVQH5KvCLNHRk3M2ZO4x2G99smofw";
 const client = new NFTStorage({ token: YOUR_API_KEY });
@@ -35,12 +38,12 @@ const style = {
   px: 4,
   pb: 3,
 };
-
-// const Web3 = require("web3");
 const marketplaceAddress = process.env.NEXT_PUBLIC_MARKETPLACE_ADDRESS;
 const storeFrontAddress = process.env.NEXT_PUBLIC_STOREFRONT_ADDRESS;
 export default function CreateItem() {
   const [toggle, setToggle] = useState(false);
+  const [toggleinput, setToggleInput] = useState(false);
+  const [auctionToggle, setAuctionToggle] = useState(false);
   const [show, setShow] = useState(false);
   const handleClos = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -126,12 +129,10 @@ export default function CreateItem() {
   function createMarket(e) { //store
     e.preventDefault();
     e.stopPropagation();
-    // verifyUserRole('0x81F38172f439a9CA255c5886A0Ca4fAc06d132B7')
-
     const { name, description, price, alternettext } = formInput;
     let assetData = {};
     if (!name || !description || !price) {
-      setAlertMsg("Please Fill All Fields");
+      // setAlertMsg("Please Fill All Fields");
       setOpen(true);
       return;
     }
@@ -172,40 +173,8 @@ export default function CreateItem() {
   }
 
   async function createItem(ipfsHash, url) {
-    const options = new WalletConnectProvider({
-      rpc: {
-        137: "https://rpc-mumbai.maticvigil.com/v1/f336dfba703440ee198bf937d5c065b8fe04891c",
-      },
-      rpcUrl:
-        "https://rpc-mumbai.maticvigil.com/v1/f336dfba703440ee198bf937d5c065b8fe04891c",
-      infuraId: process.env.INFURA_KEY,
-    });
-    const providerOptions = {
-      walletconnect: {
-        package: WalletConnectProvider,
-        options: options,
-      },
-    };
-
-    const web3Modal = new Web3Modal({
-      cacheProvider: true,
-      providerOptions,
-      network: "testnet",
-      version: "mumbai",
-    });
-    
-    const connection = await web3Modal.connect();
-    const provider = new ethers.providers.Web3Provider(connection);
-    const signer = provider.getSigner();
-
-    /* next, create the item */
-    let contract = new ethers.Contract(
-      storeFrontAddress,
-      StoreFront.abi,
-      signer
-    );
     console.log("ipfs://" + ipfsHash);
-
+    const contract = await etherContract(storeFrontAddress,StoreFront.abi)
     try {
     
       let transaction = await contract.createAsset(url, formInput.royalties*100);//500 - royalites dynamic
@@ -216,7 +185,7 @@ export default function CreateItem() {
       let value = event.args[2];
       let tokenId = value.toNumber();
       const price = ethers.utils.parseUnits(formInput.price, "ether");
-      const forAuction=false, endTime=0
+      const forAuction='', endTime=0
       await listItem(transaction, contract, tokenId, price,forAuction,endTime, signer);//Putting item to sale
     } catch (e) {
       console.log(e);
@@ -256,7 +225,6 @@ export default function CreateItem() {
       setPreviewThumbnail("");
     }
   };
-  // const [advancemenu, Setadvancemenu] = useState(false);
   const [attributes, setInputFields] = useState([
     { id: uuidv4(), display_type: "", trait_type: "", value: "" },
   ]);
@@ -384,7 +352,7 @@ export default function CreateItem() {
               </div>
               
               <div className="flex justify-evenly">
-          <div className="p-9 overflow-y-scroll ..." style={{width:"50%"}}>
+          <div className=" w-3/6 p-9 overflow-y-scroll ...">
            
             <div 
             >
@@ -420,30 +388,20 @@ export default function CreateItem() {
                    Creator Royalties
                   <span className="text-gray-400 text-gray-500 dark:text-white">*</span>
                 </div>
-                <input
+                <InputNumber
                   value={formInput.royalties} // value * 100
-                  min={1}
-                  max={5}
+                  suffix="%"
+                  minFractionDigits={2} maxFractionDigits={5}
+                  inputId="percent"
+                  mode="decimal"
                   className="mt-2 p-3 w-full text-sm input_background outline-none rounded-md dark:bg-gray-900  "
-                  type="number"
-                  onChange={(e) =>{
+                  showButtons
+                  onValueChange={(e) =>{
                     updateFormInput({
                       ...formInput,
                       royalties: e.target.value,
                     })
-                    // const {value} = e.target
-                    // console.log("valllll".value,e.target.valu);
-                    // if(value >=1 && value<=5){
-                    //   updateFormInput({
-                    //     ...formInput,
-                    //     royalties: value,
-                    //   })
-                    // }else{
-                    //   updateFormInput({
-                    //     ...formInput,
-                    //     royalties: formInput.royalties,
-                    //   })
-                    // }
+                    
                    
                   }
                 }
@@ -453,7 +411,7 @@ export default function CreateItem() {
                     <div className="font-bold  mt-5 text-gray-500 dark:text-white">Upload File</div>
                   </div>
                   <div className="flex gap-6">
-                    <div className=" rounded-lg text-center p-3 border-2 border-indigo-600 ...mt-20 text-gray-500 dark:text-white" style={{width:"100%"}}>
+                    <div className=" rounded-lg text-center p-3 border-2 border-indigo-600 ...mt-20 text-gray-500 dark:text-white w-full">
                       <h1 className="text-lg font-semibold">
                         Drag File Here to Upload
                       </h1>
@@ -540,7 +498,7 @@ export default function CreateItem() {
                           <div>Add Properties</div>
                           <div >
                             <Image
-                              className="w-3 h-3 "style={{color:'white'}}
+                              className="w-3 h-3 text-white"
                               onClose={handleClos}
                               img
                               src="/cross.png"
@@ -607,7 +565,7 @@ export default function CreateItem() {
                                     }
                                     className="text-left mt-5 p-2.5 rounded-lg  bg-slate-300 text-gray-500 dark:text-white flex justify-center"
                                   >
-                                    <FaMinusSquare style={{ color: "red" }} />
+                                    <FaMinusSquare className="text-red-600" />
                                   </button>
                                 </div>
 
@@ -616,7 +574,7 @@ export default function CreateItem() {
                                     className="text-left mt-5 p-2.5 rounded-lg  bg-slate-300 text-gray-500 dark:text-white flex justify-center"
                                     onClick={handleAddFields}
                                   >
-                                    <FaPlusSquare style={{ color: "green" }} />
+                                    <FaPlusSquare className="text-green-600" />
                                   </button>
                                 </div>
                               </div>
@@ -692,37 +650,46 @@ export default function CreateItem() {
                 />
               </div>
               {toggle && (
+                <div className="flex text-gray-500 dark:text-white justify-between">
+                <div className="flex mt-3 gap-6 border-[1px] border-[#d5d5d6] rounded-xl p-3"  onClick={() => {
+                  setToggleInput(!toggleinput);
+                }}> Direct Sale</div>
+                 <div className="flex mt-3 gap-6 border-[1px] border-[#d5d5d6] rounded-xl p-3"  onClick={() => {
+                  setAuctionToggle(!auctionToggle);
+                }}>Auction</div>
+                </div>
+              )}
+
+
+             {toggleinput && (
                 <div className="flex mt-3 gap-6 ">
-                  <input
-                    type="number"
-                    min="1"
-                    max="10"
-                    required="true"
-                    placeholder="Asset Price in Matic"
-                    className="w-full bg-white dark:bg-gray-900 rounded-md mb-4 shadow-sm p-2 outline-none border-[1px] border-[#d5d5d6] text-gray-600"
-                    onChange={(e) =>
+                 
+              <InputNumber  placeholder="Asset Price in Matic"  onValueChange={(e) =>
                       updateFormInput({
                         ...formInput,
                         price: e.target.value,
-                      })
-                    }
-                  />
-                   {/* <input
-                    type="number"
-                    min="1"
-                    max="10"
-                    required="true"
-                    placeholder="Auction"
-                    className="w-full bg-white dark:bg-gray-900 rounded-md mb-4 shadow-sm p-2 outline-none border-[1px] border-[#d5d5d6] text-gray-600"
-                    onChange={(e) =>
+                      })} mode="decimal" showButtons/>
+
+                  
+                </div>
+              )}
+
+              {auctionToggle && (
+                <div className="flex mt-3 gap-6 ">
+                  <InputNumber placeholder="Asset Price in Matic"  onValueChange={(e) =>
+                      updateFormInput({
+                        ...formInput,
+                        price: e.target.value,
+                      })} mode="decimal" inputId="minmax-buttons" showButtons  />
+                  
+                   <InputNumber placeholder="Auction Duration"  inputId="expiry" suffix=" days" onValueChange={(e) =>
                       updateFormInput({
                         ...formInput,
                         forAuction: e.target.value,
-                      })
-                    }
-                  /> */}
+                      })} mode="decimal" showButtons min={0} max={100} />
                 </div>
               )}
+
               <div className="flex justify-between p-5">
                 <div>
                   <button
@@ -738,7 +705,7 @@ export default function CreateItem() {
         
           </div>
 
-          <div className=" rounded-lg text-center p-3 border-2 border-indigo-600 ...mt-20 " style={{width:"20%",height:"450px"}}>
+          <div className=" rounded-lg text-center p-3 border-2 border-indigo-600 ...mt-20 w-1/5" style={{height:"450px"}}>
                       <div className="flex text-black mt-3 cursor-pointer rounded-lg  p-2.5 m-auto w-full">
                         {previewMedia ? (
                           mediaHash?.image && addImage == false ? (

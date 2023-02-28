@@ -28,7 +28,6 @@ export default function Rewards() {
   <Link className="rewards-style" href="/explore">
               <NavLink
                 className={router.pathname == "/explore" ? "active " : ""}
-                style={{ cursor: "pointer" }}
               >
                 Explore Now
               </NavLink>
