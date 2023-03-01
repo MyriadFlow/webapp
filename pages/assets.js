@@ -209,8 +209,8 @@ export default function CreateItem() {
       let value = event.args[2];
       let tokenId = value.toNumber();
       const price = ethers.utils.parseUnits(formInput.price, "ether");
-      const forAuction='';
-      await listItem(transaction, contract, tokenId, price,forAuction, signer);//Putting item to sale
+      const forAuction=false,endTime=0;
+      await listItem(transaction, contract, tokenId, price,forAuction, signer,endTime);//Putting item to sale
     } catch (e) {
       console.log(e);
       setmodelmsg("Transaction 1 failed");
@@ -220,7 +220,7 @@ export default function CreateItem() {
     router.push("/explore");
 
   }
-  const listItem = async (transaction, contract, tokenId, price, forAuction, signer) => {
+  const listItem = async (transaction, contract, tokenId, price, forAuction, signer,endTime) => {
     try {
       setmodelmsg("Transaction 2 in progress");
       contract = new ethers.Contract(
