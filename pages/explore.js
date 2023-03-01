@@ -155,7 +155,7 @@ useEffect(() => {
 
       <main className="body-back">
         <div className="min-h-screen">
-          <div className="flex justify-between" style={{borderBottom:"2px solid",padding:"18px"}}>
+          <div className="flex justify-between p-4 border-y-2">
           <div className="flex justify-center mt-5 ml-5 ">
             <div>
               <div className="flex gap-6">
@@ -180,7 +180,6 @@ useEffect(() => {
             <Link href="/explore">
               <NavLink
                 className={router.pathname == "/explore" ? "active " : ""}
-                style={{ cursor: "pointer" }}
               >
                 <button
                   className="bg-white py-3 px-6  text-gray-500 dark:text-black font-semibold mb-8 lg:mb-0"
@@ -196,9 +195,8 @@ useEffect(() => {
             {data?.length ? data?.map((item) => {
               return (
                 <div
-                  style={{ border: "2px solid white" }}
                   key={item.itemId}
-                  className="mycard p-3 shadow-lg w-full lg:w-72 cursor-pointer"
+                  className=" border-white mycard p-3 shadow-lg w-full lg:w-72 cursor-pointer"
                 >
                   <Link key={item.itemId} href={`/explore/${item.itemId}`}>
                     <div>

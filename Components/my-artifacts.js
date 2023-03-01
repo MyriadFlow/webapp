@@ -50,9 +50,9 @@ const MyAssets = () => {
         {data?.length > 0 ? (
           data.map((item) => {
             return (
-              <div style={{border:"2px solid",padding:'10px'}}
+              <div 
                 key={item.tokenID}
-                className="bg-[white] dark:bg-[#1c1c24]  rounded-lg shadow-lg w-full lg:w-72 hover:scale-105 duration-200 transform transition cursor-pointer"
+                className=" border-2 p-2.5  dark:bg-[#1c1c24]  rounded-lg shadow-lg w-full lg:w-72 hover:scale-105 duration-200 transform transition cursor-pointer"
               >
                 <Link key={item.tokenID} href={`/assets/${item.tokenID}`}>
                   <div>
@@ -60,11 +60,13 @@ const MyAssets = () => {
 
                   
                   <div>
-                  <div className="font-bold">Price :</div>
-                  <div className="text-blue-600">Place a bid</div>
+                  <div className="text-blue-600 text-gray-500 dark:text-white">Place a bid</div>
                   <div>
-                  <div className="font-bold">Wallet Address : </div>
-                  <div style={{fontSize:"12px"}}>{item.creator}</div>
+                    <div className="flex justify-between mt-3">
+                    <div className="font-bold text-gray-500 dark:text-white">Wallet Address : </div>
+                  <div className="text-xs text-gray-500 dark:text-white">{item.creator.slice(-6)}</div>
+                    </div>
+                  
                 </div>
                   </div>
                   </div>

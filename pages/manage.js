@@ -237,7 +237,7 @@ console.log("data manage create",data)
         >
           About
         </div>
-        <div className="flex justify-around mt-5 text-gray-500 dark:text-white">
+        <div className=" p-2.5 border-y-2 flex justify-around mt-5 text-gray-500 dark:text-white">
           <div className="flex">
             <div>
               <label>Name : </label>
@@ -275,8 +275,7 @@ console.log("data manage create",data)
         <form onSubmit={updateManageDataInfo} className="w-full card-shadow">
           <div className="flex justify-evenly">
             <div
-              className="md:items-center mb-6 mt-10"
-              style={{ width: "30%" }}
+              className="md:items-center mb-6 mt-10 w-2/6"
             >
               <div className=" text-gray-500 dark:text-white">
                 <label
@@ -299,8 +298,7 @@ console.log("data manage create",data)
               </div>
             </div>
             <div
-              className=" md:items-center mb-6 mt-10"
-              style={{ width: "30%" }}
+              className=" md:items-center mb-6 mt-10 w-2/6"
             >
               <div className=" text-gray-500 dark:text-white">
                 <label
@@ -367,14 +365,11 @@ console.log("data manage create",data)
               </div>{" "}
             </div>
           </div>
-          <div style={{ textAlign: "center", color: "black" }}>
+          <div  className="text-center text-black">
             <button
               type="submit"
-              style={{
-                background: "white",
-                padding: "10px",
-                borderRadius: "10px",
-              }}
+              className="bg-white p-2.5 rounded-xl"
+             
             >
               Update
             </button>
@@ -387,7 +382,7 @@ console.log("data manage create",data)
             <h1 className="text-center text-3xl font-semibold mb-20 text-gray-500 dark:text-white">
               Highlights
             </h1>
-            <div className="max-w-[1280px] mx-auto rounded-3xl flex " style={{gap:"30px"}}>
+            <div className="max-w-[1280px] mx-auto rounded-3xl flex gap-7">
                 {highlights?.map(function (data, i) {
                    
                   return (
@@ -412,14 +407,13 @@ console.log("data manage create",data)
             return (
               <div key={item.id} className="card-shadow mt-10">
                 <div
-                  className="flex justify-between "
-                  style={{ padding: "10px", borderBottom: "1px solid" }}
+                  className="flex justify-between p-2.5 border-y-2"
                 >
                   <div className=" text-gray-500 dark:text-white text-xl  ">
                     Creators
                   </div>
                   <div>
-                    <FaPlusSquare style={{ color: "green" }} />
+                    <FaPlusSquare className="text-green-600"  />
                   </div>
                 </div>
                 <div className="flex justify-between mt-10 text-gray-500 dark:text-white text-xl">

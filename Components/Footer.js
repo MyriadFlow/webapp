@@ -52,7 +52,6 @@ const Footer = () => {
               <Link className="text-gray-500 dark:text-white"  href="/explore">
               <NavLink
                 className={router.pathname == "/explore" ? "active " : ""}
-                style={{ cursor: "pointer" }}
               >
                 All
               </NavLink>
@@ -67,7 +66,6 @@ const Footer = () => {
               <Link  className="text-gray-500 dark:text-white" href="/profile">
               <NavLink
                 className={router.pathname == "/profile" ? "active " : ""}
-                style={{ cursor: "pointer" }}
               >
                 Create
               </NavLink>
@@ -77,7 +75,6 @@ const Footer = () => {
               <Link  className="text-gray-500 dark:text-white" href="/wishlist">
               <NavLink
                 className={router.pathname == "/wishlist" ? "active " : ""}
-                style={{ cursor: "pointer" }}
               >
                 Wishlist
               </NavLink>
@@ -92,7 +89,6 @@ const Footer = () => {
               <Link className="text-gray-500 dark:text-white" href="/about">
               <NavLink
                 className={router.pathname == "/about" ? "active " : ""}
-                style={{ cursor: "pointer" }}
               >
                 About
               </NavLink>
@@ -136,7 +132,7 @@ const Footer = () => {
          
         </div>
 
-        <div className="m-auto  text-sm flex flex-col text-gray-500 dark:text-white py-2 px-1  text-center gradient-blue mt-10" style={{borderTop:"1px solid"}}>
+        <div className="m-auto  text-sm flex flex-col text-gray-500 dark:text-white py-2 px-1  text-center gradient-blue mt-10 border-y-2">
           <div className="font-bold text-gray-500 dark:text-white">
             MyriadFlow | Copyright © {year} Lazarus Network Inc. All Rights
             Reserved.

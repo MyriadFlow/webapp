@@ -96,11 +96,11 @@ export default function Wishlist() {
     <div className='body-back'>
         <div className='text-center mt-5'>
     <div>
-        <img alt="alt" className='wish ' src="wish.png" style={{margin:'0 auto'}}></img>
+        <img alt="alt" className='wish m-auto' src="wish.png"></img>
     </div>
     <div className='font-bold mt-5 text-2xl text-gray-500 dark:text-white'>My Wishlist</div>
     </div>
-    <div className="flex justify-center mt-5 ml-5 "style={{borderBottom:"2px solid",padding:"18px"}}></div>
+    <div className="flex justify-center mt-5 ml-5 p-4 border-y-2"></div>
 
      <div className='flex justify-around mt-5 text-gray-500 dark:text-white'>
         <div>NFT Collection</div>
@@ -116,7 +116,7 @@ export default function Wishlist() {
         return( 
              <div key={item.itemId} className='flex justify-around mt-5 items-center text-gray-500 dark:text-white ' >
        <Link key={item.itemId} href={`/explore/${item.itemId}`}>
-        <div className='mycard p-3' style={{ border: "2px solid white" }}>
+        <div className='mycard p-3 border-white'>
             <MarketPlaceCardWish  {...item} />
 
         </div>

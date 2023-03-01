@@ -4,7 +4,7 @@ import { BsHeart } from "react-icons/bs";
 import LandingMetaData from "../LandingMetaData";
 const BigCard = ({ name,description, price, title, img,like }) => {
   return (
-    <article className="w-[240px] sm:w-auto flex-shrink-0 mycard p-3"style={{border:"2px solid white"}}>
+    <article className="w-[240px] sm:w-auto flex-shrink-0 mycard p-3 border-white">
       <img
         src={img}
         className=" grow rounded-t-3xl w-full  max-w-[300px] h-[280px] sm:h-[300px] object-cover"
