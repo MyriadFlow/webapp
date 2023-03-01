@@ -15,7 +15,6 @@ const style = {
   boxShadow: 24,
   p: 4,
 };
-//use to show transaction status in modal format
 export default function BuyAsset({open , setOpen , message}) {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -30,7 +29,7 @@ export default function BuyAsset({open , setOpen , message}) {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style} className="text-center">
-          <Typography id="modal-modal-title" variant="h6" component="h2" className='text-center'>
+          <Typography id="modal-modal-title" variant="h6" component="h2" className='text-center text-gray-500 dark:text-white'>
             {message}
           </Typography>
         

@@ -58,7 +58,7 @@ function Header() {
         <div className="flex items-center">
           <FaBars
             onClick={handleNav}
-            className="lg:hidden cursor-pointer text-2xl text-gray-500 text-gray-500 dark:text-white"
+            className="lg:hidden cursor-pointer text-2xl text-gray-500 dark:text-white"
           />
           <Link href="/">
             <div className="pt-2 transition-all cursor-pointer">

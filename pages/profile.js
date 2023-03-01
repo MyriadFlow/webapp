@@ -2,8 +2,6 @@ import { useSelector } from "react-redux";
 import { selectUser } from "../slices/userSlice";
 import Layout from "../Components/Layout";
 import React, { useState, useEffect } from "react";
-import Web3Modal from "web3modal";
-import { ethers } from "ethers";
 const Web3 = require("web3");
 import { NFTStorage } from "nft.storage";
 import { FaUserCircle } from "react-icons/fa";
