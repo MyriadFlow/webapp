@@ -6,7 +6,6 @@ import Link from "next/link";
 import { selectUser } from "../slices/userSlice";
 import { useSelector } from "react-redux";
 import HomeComp from "./homeComp";
-import HomeComp2 from "./homecomp2";
 import { useRouter } from "next/router";
 import BuyAsset from "../Components/buyAssetModal";
 import { request } from "graphql-request";
@@ -14,6 +13,7 @@ import StoreFront from "../artifacts/contracts/StoreFront.sol/StoreFront.json";
 import Marketplace from "../artifacts/contracts/Marketplace.sol/Marketplace.json";
 import Loader from "./Loader";
 import { saleStartedQuery } from "../utils/gqlUtil";
+import etherContract from "../utils/web3Modal";
 const marketplaceAddress = process.env.NEXT_PUBLIC_MARKETPLACE_ADDRESS;
 const storeFrontAddress = process.env.NEXT_PUBLIC_STOREFRONT_ADDRESS;
 const graphqlAPI = process.env.NEXT_PUBLIC_MARKETPLACE_API;
@@ -48,19 +48,13 @@ const MyAssets = () => {
     fetchUserAssests(`${localStorage.getItem("platform_wallet")}`);
   }, []);
 
-  const listItem = async (tokenId, price, signer) => {
-    let contract;
+  const listItem = async (tokenId, price) => {
     let transaction;
     console.table(price);
     try {
       setmodelmsg("Transaction 2 in progress");
-      contract = new ethers.Contract(
-        marketplaceAddress,
-        Marketplace.abi,
-        signer
-      );
-
-      transaction = await contract.listItem(storeFrontAddress, tokenId, price);
+      const marketPlacecontract = await etherContract(marketplaceAddress,Marketplace.abi)
+      transaction = await marketPlacecontract.listItem(storeFrontAddress, tokenId, price, false,0);
       await transaction.wait();
       setmodelmsg("Transaction 2 Complete !!");
     } catch (e) {
@@ -79,26 +73,12 @@ const MyAssets = () => {
     setmodelmsg("Transaction in progress");
     setmodel(true);
 
-    const web3Modal = new Web3Modal();
-    const connection = await web3Modal.connect();
-    const provider = new ethers.providers.Web3Provider(connection);
-    const signer = provider.getSigner();
-
-    let contract = new ethers.Contract(
-      storeFrontAddress,
-      StoreFront.abi,
-      signer
-    );
+    
 
     try {
-      let transaction = await contract.createAsset(url, 500); //add second param as a number
-      let tx = await transaction.wait();
-      setmodelmsg("Transaction 1 Complete");
-      let event = tx.events[0];
-      let value = event.args[2];
-      let tokenId = value.toNumber();
+      
       const price = ethers.utils.parseUnits(formInput.price, "ether");
-      await listItem(tokenId, price, signer);
+      await listItem(tokenId, price);
     } catch (e) {
       console.log(e);
       setmodelmsg("Transaction failed");
@@ -118,7 +98,7 @@ const MyAssets = () => {
                 key={item.itemId}
                 className=" border-2 p-2.5 dark:bg-[#1c1c24]  rounded-lg shadow-lg w-full lg:w-72 hover:scale-105 duration-200 transform transition cursor-pointer border-2 dark:border-gray-800"
               >
-                <Link key={item.itemId} href={`/assets/${item.itemId}`}>
+                <Link key={item.itemId} href={`/assets/${item.tokenId}`}>
                   <div>
                     <HomeComp uri={item ? item.metaDataURI : ""} />
                   </div>
@@ -139,7 +119,7 @@ const MyAssets = () => {
                 </div>
                 <div className="px-4 py-4 bg-white  flex justify-center mt-3">
                   <button
-                    onClick={() => placeNft(item.itemId)}
+                    onClick={() => placeNft(item.tokenId)}
                     className="text-blue-500 hover:text-blue-400 font-bold"
                   >
                     Manage

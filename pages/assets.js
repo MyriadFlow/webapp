@@ -66,7 +66,8 @@ export default function CreateItem() {
     name: "",
     description: "",
     alternettext: "",
-    royalties: 5
+    royalties: 5,
+    auctionTime:2
   });
 
   const router = useRouter();
@@ -131,7 +132,7 @@ export default function CreateItem() {
   function createMarket(e) { //store
     e.preventDefault();
     e.stopPropagation();
-    const { name, description, price, alternettext } = formInput;
+    const { name, description, price, alternettext,auctionTime } = formInput;
     let assetData = {};
     if (!name || !description || !price) {
       setAlertMsg("Please Fill All Fields");
@@ -145,8 +146,11 @@ export default function CreateItem() {
       alternettext,
       attributes,
       categories,
-      tags
+      tags,
+      auctionTime
+
     };
+
     if (!mediaHash?.image) {
       setAlertMsg("Image is required to create asset");
       setOpen(true);
@@ -158,7 +162,7 @@ export default function CreateItem() {
 
     const data = JSON.stringify({ ...assetData, ...mediaHash });
     console.log("Asset Data before create", data);
-
+     console.log("auction time",assetData,data,assetData.auctionTime)
     const blobData = new Blob([data]);
     try {
       client.storeBlob(blobData).then(async (metaHash) => {
@@ -166,7 +170,7 @@ export default function CreateItem() {
         const url = `ipfs://${metaHash}`;
         console.log("doc ipfs", ipfsHash, url);
 
-        await (ipfsHash, url);
+        await createItem(ipfsHash, url);
       });
     } catch (error) {
       setmodelmsg("Transaction failed");
@@ -185,22 +189,29 @@ export default function CreateItem() {
     });
     const providerOptions = {
       walletconnect: {
-        package: WalletConnectProvider, // required
+        package: WalletConnectProvider, 
         options: options,
       },
     };
-
-    const web3Modal = new Web3Modal({cacheProvider: true,
-      providerOptions, network: "testnet",
-      version: "mumbai" });
+    /* next, create the item */
+    const web3Modal = new Web3Modal({
+      cacheProvider: true,
+      providerOptions,
+      network: "testnet",
+      version: "mumbai",
+    });
     const connection = await web3Modal.connect();
     const provider = new ethers.providers.Web3Provider(connection);
     const signer = provider.getSigner();
 
     /* next, create the item */
-    let contract = new ethers.Contract(storeFrontAddress, StoreFront.abi, signer);
+    let contract = new ethers.Contract(
+      storeFrontAddress,
+      StoreFront.abi,
+      signer
+    );
     console.log("ipfs://" + ipfsHash);    try {
-    
+    console.log('assets crete ',url, formInput.royalties*100)
       let transaction = await contract.createAsset(url, formInput.royalties*100);//500 - royalites dynamic
       let tx = await transaction.wait();
       console.log("transaction", transaction);
@@ -209,8 +220,9 @@ export default function CreateItem() {
       let value = event.args[2];
       let tokenId = value.toNumber();
       const price = ethers.utils.parseUnits(formInput.price, "ether");
-      const forAuction=false,endTime=0;
-      await listItem(transaction, contract, tokenId, price,forAuction, signer,endTime);//Putting item to sale
+      const forAuction = false, endTime=0;
+      
+      await listItem(transaction, contract, tokenId, price, forAuction, signer, endTime);//Putting item to sale
     } catch (e) {
       console.log(e);
       setmodelmsg("Transaction 1 failed");
@@ -232,7 +244,9 @@ export default function CreateItem() {
         storeFrontAddress,
         tokenId,
         price,
-        forAuction,//putting for sale/auction
+        forAuction,
+        endTime
+        //putting for sale/auction
          //number time in minutes always
       );
 
@@ -414,11 +428,11 @@ export default function CreateItem() {
                 <input type="number"
                   value={formInput.royalties} // value * 100
                   suffix="%"
-                  inputId="percent"
+                  
                   mode="decimal"
                   className="mt-2 p-3 w-full text-sm input_background outline-none rounded-md dark:bg-gray-900  "
                   showButtons
-                  onValueChange={(e) =>{
+                  onChange={(e) =>{
                     updateFormInput({
                       ...formInput,
                       royalties: e.target.value,
@@ -674,9 +688,11 @@ export default function CreateItem() {
               {toggle && (
                 <div className="flex text-gray-500 dark:text-white justify-between">
                 <div className="flex mt-3 gap-6 border-[1px] border-[#d5d5d6] rounded-xl p-3"  onClick={() => {
+                  setAuctionToggle(false);
                   setToggleInput(!toggleinput);
                 }}> Direct Sale</div>
                  <div className="flex mt-3 gap-6 border-[1px] border-[#d5d5d6] rounded-xl p-3"  onClick={() => {
+                   setToggleInput(false);
                   setAuctionToggle(!auctionToggle);
                 }}>Auction</div>
                 </div>
@@ -699,11 +715,17 @@ export default function CreateItem() {
               {auctionToggle && (
                 <div className="flex mt-3 gap-6 ">
                  
-                  
-                   <InputNumber className="w-full p-2" placeholder="Auction Duration"  inputId="expiry" suffix=" days" onValueChange={(e) =>
+                   <input type="number" className="w-full p-2"  placeholder="Asset Price in Matic"  onChange={(e) =>
                       updateFormInput({
                         ...formInput,
-                        forAuction: e.target.value,
+                        price: e.target.value,
+                      })}/>
+
+                  
+                   <InputNumber className="w-full p-2" placeholder="Auction Duration"  inputId="expiry" suffix=" minutes" onValueChange={(e) =>
+                      updateFormInput({
+                        ...formInput,
+                        auctionTime: e.target.value,
                       })} mode="decimal" showButtons min={0} max={100} />
                 </div>
               )}
