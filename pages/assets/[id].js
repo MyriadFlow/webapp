@@ -18,8 +18,6 @@ import request from "graphql-request";
 const graphqlAPI = process.env.NEXT_PUBLIC_MARKETPLACE_API;
 
 function Asset({ asset }) {
-  console.log("Asset in id page",asset);
-  if(!asset) return null
   function getEthPrice(price) {
     return ethers.utils.formatEther(price);
   }
