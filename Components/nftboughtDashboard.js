@@ -88,17 +88,18 @@ function NftboughtDashboard() {
     
     <div className="min-h-screen body-back">
        {model && <BuyAsset open={model} setOpen={setmodel} message={modelmsg} />}
-      <div className=" p-4 mt-10 h-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-        {data.length > 0 ? (
-          data.map((item) => {
-            return (
-              <div 
-                key={item.itemId}
-                className=" border-2 p-2.5 bg-white dark:bg-gray-900  rounded-lg shadow-lg w-full lg:w-72 hover:scale-105 duration-200 transform transition cursor-pointer border-2 dark:border-gray-800"
-              >
-                <Link key={item.itemId} href={`/assets/${item.itemId}`}>
+       <div>
+      <div  className=" p-4 mt-10  h-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 ">
+              {data?.length > 0 ? (
+                data?.map((item) => {
+                  return (
+                    <div 
+                      key={item.itemId}
+                      className=" border-2 p-2.5 bg-white dark:bg-gray-900  rounded-lg shadow-lg w-full lg:w-72 hover:scale-105 duration-200 transform transition cursor-pointer border-2 dark:border-gray-800"
+                    >
+                      <Link key={item.itemId} href={`/assets/${item.tokenId}`}>
                   <div>
-                    <HomeComp uri={item ? item.metaDataURI : ""} />
+                    <HomeComp uri={item ? item.metadataURI : ""} />
                    
                     <div className=" flex items-center justify-between mb-2">
                       <div className="font-1 text-sm font-bold mt-3">Price : </div>
@@ -111,7 +112,7 @@ function NftboughtDashboard() {
                     </div>
                     <div>
                   <div className="font-bold mt-3">Wallet Address :</div>
-                  <div className="text-xs">{item.owner.slice(-6)}</div>
+                  <div className="text-xs">{item.buyer.slice(-6)}</div>
                 </div>
                   </div>
                 </Link>
@@ -124,15 +125,18 @@ function NftboughtDashboard() {
                     Sell now
                   </button>
                 </div>
-              </div>
-            );
-          })
-        ) : loading ? (
-          <Loader />
-        ) : (
-          <div className="text-2xl pb-10 font-bold text-center text-gray-500 dark:text-white">You Haven&apos;t Buy Any Asset.</div>
-        )}
-      </div>
+                     
+                    </div>
+                  );
+                })
+              ) : loading ? (
+                <Loader />
+              ) : (
+                <div className="text-2xl pb-10 text-center font-bold text-gray-500 dark:text-white">
+                  You Haven&apos;t Buy Any Asset.
+                </div>
+              )}
+            </div>
       <div className=" p-4 mt-10 h-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
         {auction.length > 0 ? (
           auction.map((item) => {
@@ -143,12 +147,12 @@ function NftboughtDashboard() {
               >
                 <Link key={item.itemId} href={`/assets/${item.id}`}>
                   <div>
-                    <HomeComp uri={item ? item.metaDataURI : ""} />
+                    <HomeComp uri={item ? item.metadataURI : ""} />
                    
                     
                     <div>
                   <div className="font-bold mt-3">Wallet Address :</div>
-                  <div className="text-xs">{item.highestBidder}</div>
+                  <div className="text-xs">{item.highestBidder.slice(-6)}</div>
                 </div>
                   </div>
                 </Link>
@@ -169,6 +173,7 @@ function NftboughtDashboard() {
         ) : (
           <div className="text-2xl pb-10 font-bold text-center text-gray-500 dark:text-white">You haven&apos;t Buy Any Auction.</div>
         )}
+      </div>
       </div>
     </div>
   );

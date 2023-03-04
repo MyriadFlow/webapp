@@ -11,6 +11,7 @@ import '../node_modules/primeicons/primeicons.css';
 import '../node_modules/primereact/resources/themes/lara-dark-indigo/theme.css';
 import '../node_modules/primereact/resources/primereact.css';
 import { InputNumber } from 'primereact/inputnumber';
+import Web3Modal from "web3modal";
 
 const YOUR_API_KEY =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkaWQ6ZXRocjoweDFFODE2RTA3RjBFYTg4MkI3Q0I0MDQ2QTg4NENDQ0Q0MjA4NEU3QTgiLCJpc3MiOiJuZnQtc3RvcmFnZSIsImlhdCI6MTY3MzI0NTEzNDc3MywibmFtZSI6Im5mdCJ9.vP9_nN3dQHIkN9cVQH5KvCLNHRk3M2ZO4x2G99smofw";
@@ -25,6 +26,7 @@ import { selectUser } from "../slices/userSlice";
 import { NFTStorage } from "nft.storage";
 import Image from "next/image";
 import etherContract from "../utils/web3Modal";
+import WalletConnectProvider from "@walletconnect/web3-provider";
 const style = {
   position: "absolute",
   top: "50%",
@@ -60,11 +62,12 @@ export default function CreateItem() {
   const [previewMedia, setpreviewMedia] = useState("");
   const [addImage, setAddImage] = useState(false);
   const [formInput, updateFormInput] = useState({
-    price: 10,
+    price: 0,
     name: "",
     description: "",
     alternettext: "",
-    royalties: 5
+    royalties: 5,
+    auctionTime:2
   });
 
   const router = useRouter();
@@ -129,10 +132,10 @@ export default function CreateItem() {
   function createMarket(e) { //store
     e.preventDefault();
     e.stopPropagation();
-    const { name, description, price, alternettext } = formInput;
+    const { name, description, price, alternettext,auctionTime } = formInput;
     let assetData = {};
     if (!name || !description || !price) {
-      // setAlertMsg("Please Fill All Fields");
+      setAlertMsg("Please Fill All Fields");
       setOpen(true);
       return;
     }
@@ -144,7 +147,10 @@ export default function CreateItem() {
       attributes,
       categories,
       tags,
+      auctionTime
+
     };
+
     if (!mediaHash?.image) {
       setAlertMsg("Image is required to create asset");
       setOpen(true);
@@ -156,7 +162,7 @@ export default function CreateItem() {
 
     const data = JSON.stringify({ ...assetData, ...mediaHash });
     console.log("Asset Data before create", data);
-
+     console.log("auction time",assetData,data,assetData.auctionTime)
     const blobData = new Blob([data]);
     try {
       client.storeBlob(blobData).then(async (metaHash) => {
@@ -173,10 +179,39 @@ export default function CreateItem() {
   }
 
   async function createItem(ipfsHash, url) {
-    console.log("ipfs://" + ipfsHash);
-    const contract = await etherContract(storeFrontAddress,StoreFront.abi)
-    try {
-    
+    const options = new WalletConnectProvider({
+      rpc: {
+        137: 'https://rpc-mumbai.maticvigil.com/v1/f336dfba703440ee198bf937d5c065b8fe04891c',
+      },
+      rpcUrl:'https://rpc-mumbai.maticvigil.com/v1/f336dfba703440ee198bf937d5c065b8fe04891c',
+      infuraId: process.env.INFURA_KEY,
+
+    });
+    const providerOptions = {
+      walletconnect: {
+        package: WalletConnectProvider, 
+        options: options,
+      },
+    };
+    /* next, create the item */
+    const web3Modal = new Web3Modal({
+      cacheProvider: true,
+      providerOptions,
+      network: "testnet",
+      version: "mumbai",
+    });
+    const connection = await web3Modal.connect();
+    const provider = new ethers.providers.Web3Provider(connection);
+    const signer = provider.getSigner();
+
+    /* next, create the item */
+    let contract = new ethers.Contract(
+      storeFrontAddress,
+      StoreFront.abi,
+      signer
+    );
+    console.log("ipfs://" + ipfsHash);    try {
+    console.log('assets crete ',url, formInput.royalties*100)
       let transaction = await contract.createAsset(url, formInput.royalties*100);//500 - royalites dynamic
       let tx = await transaction.wait();
       console.log("transaction", transaction);
@@ -185,8 +220,9 @@ export default function CreateItem() {
       let value = event.args[2];
       let tokenId = value.toNumber();
       const price = ethers.utils.parseUnits(formInput.price, "ether");
-      const forAuction='', endTime=0
-      await listItem(transaction, contract, tokenId, price,forAuction,endTime, signer);//Putting item to sale
+      const forAuction = false, endTime=0;
+      
+      await listItem(transaction, contract, tokenId, price, forAuction, signer, endTime);//Putting item to sale
     } catch (e) {
       console.log(e);
       setmodelmsg("Transaction 1 failed");
@@ -194,10 +230,9 @@ export default function CreateItem() {
     }
     /* then list the item for sale on the marketplace */
     router.push("/explore");
-    router.push("/wishlist");
 
   }
-  const listItem = async (transaction, contract, tokenId, price, forAuction,endTime, signer) => {
+  const listItem = async (transaction, contract, tokenId, price, forAuction, signer,endTime) => {
     try {
       setmodelmsg("Transaction 2 in progress");
       contract = new ethers.Contract(
@@ -209,8 +244,10 @@ export default function CreateItem() {
         storeFrontAddress,
         tokenId,
         price,
-        forAuction,//putting for sale/auction
-        endTime //number time in minutes always
+        forAuction,
+        endTime
+        //putting for sale/auction
+         //number time in minutes always
       );
 
       await transaction.wait();
@@ -388,15 +425,14 @@ export default function CreateItem() {
                    Creator Royalties
                   <span className="text-gray-400 text-gray-500 dark:text-white">*</span>
                 </div>
-                <InputNumber
+                <input type="number"
                   value={formInput.royalties} // value * 100
                   suffix="%"
-                  minFractionDigits={2} maxFractionDigits={5}
-                  inputId="percent"
+                  
                   mode="decimal"
                   className="mt-2 p-3 w-full text-sm input_background outline-none rounded-md dark:bg-gray-900  "
                   showButtons
-                  onValueChange={(e) =>{
+                  onChange={(e) =>{
                     updateFormInput({
                       ...formInput,
                       royalties: e.target.value,
@@ -652,9 +688,11 @@ export default function CreateItem() {
               {toggle && (
                 <div className="flex text-gray-500 dark:text-white justify-between">
                 <div className="flex mt-3 gap-6 border-[1px] border-[#d5d5d6] rounded-xl p-3"  onClick={() => {
+                  setAuctionToggle(false);
                   setToggleInput(!toggleinput);
                 }}> Direct Sale</div>
                  <div className="flex mt-3 gap-6 border-[1px] border-[#d5d5d6] rounded-xl p-3"  onClick={() => {
+                   setToggleInput(false);
                   setAuctionToggle(!auctionToggle);
                 }}>Auction</div>
                 </div>
@@ -664,11 +702,11 @@ export default function CreateItem() {
              {toggleinput && (
                 <div className="flex mt-3 gap-6 ">
                  
-              <InputNumber  placeholder="Asset Price in Matic"  onValueChange={(e) =>
+              <input type="number" className="w-full p-2"  placeholder="Asset Price in Matic"  onChange={(e) =>
                       updateFormInput({
                         ...formInput,
                         price: e.target.value,
-                      })} mode="decimal" showButtons/>
+                      })}/>
 
                   
                 </div>
@@ -676,16 +714,18 @@ export default function CreateItem() {
 
               {auctionToggle && (
                 <div className="flex mt-3 gap-6 ">
-                  <InputNumber placeholder="Asset Price in Matic"  onValueChange={(e) =>
+                 
+                   <input type="number" className="w-full p-2"  placeholder="Asset Price in Matic"  onChange={(e) =>
                       updateFormInput({
                         ...formInput,
                         price: e.target.value,
-                      })} mode="decimal" inputId="minmax-buttons" showButtons  />
+                      })}/>
+
                   
-                   <InputNumber placeholder="Auction Duration"  inputId="expiry" suffix=" days" onValueChange={(e) =>
+                   <InputNumber className="w-full p-2" placeholder="Auction Duration"  inputId="expiry" suffix=" minutes" onValueChange={(e) =>
                       updateFormInput({
                         ...formInput,
-                        forAuction: e.target.value,
+                        auctionTime: e.target.value,
                       })} mode="decimal" showButtons min={0} max={100} />
                 </div>
               )}

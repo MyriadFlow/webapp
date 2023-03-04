@@ -30,10 +30,14 @@ npm install
 
 ```
 NEXT_PUBLIC_RPC_PROVIDER="https://rpc-mumbai.maticvigil.com/v1/6b26aad1d887708c0004394c103f8b27c1141540"
-NEXT_PUBLIC_MARKETPLACE_ADDRESS="0x899dEf33857C491Ce61346f6e95b3a5Ee4acd24a"
-NEXT_PUBLIC_STOREFRONT_ADDRESS="0xA5024E93fbc9015fa60F0b72F531aD5f0e6d7e16"
-NEXT_PUBLIC_GRAPHQL_API="https://query.graph.lazarus.network/subgraphs/name/MyriadFlow"
-NEXT_PUBLIC_BASE_URL=https://marketplace-engine.lazarus.network
+NEXT_PUBLIC_MARKETPLACE_ADDRESS="0xc2d4d1E0103cfe42c35398Edce983f4c8999F429"
+NEXT_PUBLIC_STOREFRONT_ADDRESS="0xe5c5FDBde18F94a50C47BC7b7f8dBe484A476B78"
+NEXT_PUBLIC_MARKETPLACE_API=https://api.thegraph.com/subgraphs/name/myriadflow/marketplacev1
+NEXT_PUBLIC_STOREFRONT_API=https://api.thegraph.com/subgraphs/name/myriadflow/storefront-v1
+NEXT_PUBLIC_BASE_URL=https://testnet.gateway.myriadflow.com
+NEXT_PUBLIC_RPC_PROVIDER=https://rpc-mumbai.maticvigil.com/v1/f336dfba703440ee198bf937d5c065b8fe04891c
+NEXT_PUBLIC_IPFS_GATEWAY=https://cloudflare-ipfs.com/ipfs/
+
 ```
 
 6. Lastly, run the development server:
@@ -61,11 +65,7 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 ## Contributors
 
 - [Shachindra](https://github.com/Shachindra)
-- [Devsi Singh](https://github.com/emily876)
-- [Manish Kushwaha](https://github.com/manishgtx)
-- [Om More](https://github.com/thisisommore)
-- [Shruti Bansal](https://github.com/shrutibansal1802)
-
+- [Alka Rashinkar](https://github.com/alkadips)
 ## License
 
 The project is currently under MIT licensed.

@@ -154,13 +154,13 @@ export default function CreatorDashboard() {
                       key={item.itemId}
                       className=" border-2 p-2.5 bg-white dark:bg-gray-900  rounded-lg shadow-lg w-full lg:w-72 hover:scale-105 duration-200 transform transition cursor-pointer border-2 dark:border-gray-800"
                     >
-                      <Link key={item.itemId} href={`/assets/${item.itemId}`}>
+                      <Link key={item.itemId} href={`/assets/${item.tokenId}`}>
                         <div>
-                          <HomeComp uri={item ? item.metaDataURI : ""} />
+                          <HomeComp uri={item ? item.metadataURI : ""} />
 
                          
                           <div className=" flex items-center justify-between mb-2 mt-3">
-                            <div className="font-1 text-sm font-bold">
+                            <div className="font-1 text-sm font-bold text-gray-500 dark:text-white">
                               Sold at Price :
                             </div>
                             <div className="flex items-center">
@@ -197,7 +197,7 @@ export default function CreatorDashboard() {
                     >
                       <Link key={item.itemId} href={`/assets/${item.id}`}>
                         <div>
-                          <HomeComp uri={item ? item.metaDataURI : ""} />
+                          <HomeComp uri={item ? item.metadataURI : ""} />
 
                          
                           <div className=" flex items-center justify-between mb-2 mt-3">
@@ -224,7 +224,7 @@ export default function CreatorDashboard() {
                 <Loader />
               ) : (
                 <div className="text-2xl pb-10 text-center font-bold text-gray-500 dark:text-white">
-                  You Haven&apos;t Sold Any Asset.
+                  You Haven&apos;t Sold Any Auction.
                 </div>
               )}
             </div>

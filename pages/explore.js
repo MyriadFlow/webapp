@@ -77,7 +77,12 @@ const Home = () => {
       return;
     }
     let localData = [...shallowData];
-    localData = localData.filter((item) => item.categories.includes(cat));
+    localData = localData.filter((item) => {
+      if(item?.categories?.length && item?.categories?.includes(cat)){
+        return true
+      }
+      return false
+    });
     console.log("Filter by category", localData);
     setData(localData);
   };
@@ -116,7 +121,9 @@ useEffect(() => {
 
   useEffect(() => {
     market();
-  }, );
+  }, []);
+
+  console.log("Categories data",data);
   return (
     
     <Layout title="Explore" description="Used to show the created categories of the Nfts">

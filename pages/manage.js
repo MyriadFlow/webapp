@@ -1,16 +1,12 @@
 import Layout from "../Components/Layout";
-import Link from "next/link";
 import { useRouter } from "next/router";
 import { selectUser } from "../slices/userSlice";
 import axios from "axios";
-import Web3Modal from "web3modal";
-import { BsHeart } from "react-icons/bs";
 import { FaPlusSquare } from "react-icons/fa";
 import { request, gql } from "graphql-request";
 import { useEffect, React, useState } from "react";
 import { useSelector } from "react-redux";
 import Loader from "../Components/Loader";
-import { ethers } from "ethers";
 import StoreFront from "../artifacts/contracts/StoreFront.sol/StoreFront.json";
 import etherContract from "../utils/web3Modal";
 import BigCard from "../Components/Cards/BigCard";

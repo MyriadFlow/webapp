@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import Image from "next/image";
-
-const Homecomp = ({HomeProps, uri }) => {
+const Homecomp = ({ uri }) => {
   const [response, setResponse] = useState([]);
   const [image, setImage] = useState("");
   const removePrefix = (uri) => {
