@@ -6,15 +6,18 @@ import { selectUser } from "../slices/userSlice";
 import { useSelector } from "react-redux";
 import { FaUserCircle } from "react-icons/fa";
 import { FaBars } from "react-icons/fa";
-import { ConnectWallet } from "@thirdweb-dev/react";
+import { ConnectWallet, useAddress,useContract } from "@thirdweb-dev/react";
 import DarkTheme from "./DarkTheme";
 import { NavLink } from "reactstrap";
 import styles from "../styles/Home.module.css";
 import Image from "next/image";
 import etherContract from "../utils/web3Modal";
 import SimpleDropdown from "./SimpleDropdown";
+// import useAddress from '@thirdweb-dev/react';
 const storeFrontAddress = process.env.NEXT_PUBLIC_STOREFRONT_ADDRESS;
 function Header() {
+  const address = useAddress();
+  const { contract } = useContract(address);
   const [dropmenu, setDropMenu] = useState(false);
   const router = useRouter();
   // function to open the drop menu
@@ -29,6 +32,7 @@ function Header() {
   const [navOpen, setNavOpen] = useState(false);
   const [connectMenu, setConnectMenu] = useState(false);
   const toogle = () => {
+
     setConnectMenu((prev) => !prev);
   };
   const handleNav = () => {
@@ -87,8 +91,16 @@ function Header() {
                 Explore
               </NavLink>
             </Link>
-
-            { walletAddress && hasRole ? (
+            
+            <Link className="text-gray-500 dark:text-white"  href="/collection">
+              <NavLink
+                className={router.pathname == "/collection" ? "active " : ""}
+              >
+                Collections
+              </NavLink>
+            </Link>
+            
+            { walletAddress && address && hasRole ? (
               <Link className="text-gray-500 dark:text-white" href={hasRole? "/assets":"/authWallet"}>
                 <NavLink
                   className={router.pathname == "/assets" ? "active" : ""}
@@ -99,7 +111,7 @@ function Header() {
             ) : (
               ""
             )}
-            { walletAddress ? (
+            { walletAddress && address? (
               <Link className="text-gray-500 dark:text-white" href="/dashboard">
                 <NavLink
                   className={router.pathname == "/dashboard" ? "active" : ""}
@@ -108,7 +120,7 @@ function Header() {
                 </NavLink>
               </Link>
             ) : null}
-            { walletAddress ? (
+            { walletAddress && address? (
               <Link className="rewards-style" href="/drops">
                 <NavLink
                   className={router.pathname == "/drops" ? "active " : ""}
@@ -124,13 +136,13 @@ function Header() {
                     <DarkTheme />
 
                     <div>
-                      { walletAddress ? (
+                      { walletAddress  && address? (
                          <SimpleDropdown menu={[{route:'profile', validRole: true, label:'Profile'}, {route:'wishlist', validRole: true, label:'Wishlist'},{route:'manage', validRole: hasRoleOperator, label:'Manage'}]}/>
                       ) : (
                         <FaUserCircle className="text-3xl text-gray-500" />
                       )}
                     </div>
-                    <div className={styles.connect}>
+                   <div className={styles.connect}>
                       <ConnectWallet className="bg-gradient-to-r from-indigo-500 via-purple-500 to-gray-500 ..." />
                     </div>
                   </div>
