@@ -4,6 +4,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@100;200;300;400;500;600;700;800;900&display=swap');
+@import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css");
 
 
 @tailwind base;
@@ -43,6 +44,28 @@ text-fill-color: transparent;
     border-radius: 10px;
     font-weight: bold;
 
+}
+table {
+    border: 2px solid;
+    
+    width: 100%;
+  }
+  th {
+    border-bottom: 1px solid black;
+  }
+    .margin-table{
+        margin-top: 10px;
+    }
+  td {
+    text-align: center;
+  }
+.wish-image{
+    position: absolute;
+    top: 3%;
+    left: 80%;
+    background: #c58b8b;
+    border-radius: 50%;
+    padding: 10px;
 }
 .grow { transition: all .2s ease-in-out; }
 .grow:hover { transform: scale(1.1); }
@@ -93,6 +116,91 @@ background-clip: text;
 text-fill-color: transparent;
 
 }
+
+
+/* sort oldest and newest assets css */
+.dropdown {
+    width: 300px;
+    border-radius: 10px;
+    box-shadow: 0 10px 25px rgba(0,0,0,.1);
+  }
+  
+  .dropdown-header {
+    padding: 15px;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .dropdown-body {
+    padding: 5px;
+    border-top: 1px solid #E5E8EC;
+    display: none;
+  }
+  
+  .dropdown-body.open {
+    display: block;
+  }
+  
+  .dropdown-item {
+    padding: 10px;
+  }
+  
+  .dropdown-item:hover {
+    cursor: pointer;
+  }
+  
+  .dropdown-item-dot {
+    opacity: 0;
+    color: #91A5BE;
+    transition: all .2s ease-in-out;
+  }
+  
+  .dropdown-item-dot.selected {
+    opacity: 1;
+  }
+  
+  .icon {
+    font-size: 13px;
+    color: #91A5BE;
+    transform: rotate(0deg);
+    transition: all .2s ease-in-out;
+  }
+  
+  .hide {
+    font-size: 13px;
+    color: #91A5BE;
+    transform: rotate(0deg);
+    transition: all .2s ease-in-out;
+  }
+  .icon.open {
+    transform: rotate(90deg);
+  }
+  .hide.open{
+    transform: rotate(90deg);
+    position: absolute;
+    left: -40px;
+    top: 53%;
+    padding: 2px;
+
+
+  }
+
+/* media type css */
+.media-type{
+    border: 1px solid;
+    border-radius: 20px;
+    padding: 10px 25px 10px 25px;
+}
+.all-buy{
+    padding: 10px 40px 10px 40px;
+    background: white;
+    color: black;
+    border-radius: 20px;
+    margin-left: 10px
+}
+
 @import url('https://fonts.googleapis.com/css2?family=Didact+Gothic&display=swap'); 
     @layer base{
         body {
