@@ -40,7 +40,10 @@ const Home = () => {
     dispatch(close());
   };
 
-  const datasort = [{id: 0, label: "Listed :Newest"}, {id: 1, label: "Listed :Oldest"}];
+  const datasort = [
+    { id: 0, label: "Listed :Newest" },
+    { id: 1, label: "Listed :Oldest" },
+  ];
 
   const [isOpenSortOldNew, setOpenSortOldNew] = useState(false);
   const toggleDropdownSort = () => setOpenSortOldNew(!isOpenSortOldNew);
@@ -55,14 +58,12 @@ const Home = () => {
   const togglePriceDropdown = () => setOpenPrice(!isopenprice);
   const [items, setItem] = useState(datasort);
 
-
   const [hidefilter, setHideFilter] = useState(false);
 
   const [selectedItem, setSelectedItem] = useState(null);
   const [selectedMedia, setSelectMedia] = useState(null);
   const [selectedAvail, setSelectAvail] = useState(null);
   const [selectedPrice, setSelectPrice] = useState(null);
-
 
   const [filter, Setfilter] = useState(false);
   const [model, setmodel] = useState(false);
@@ -87,7 +88,7 @@ const Home = () => {
   const [loadingState, setLoadingState] = useState("not-loaded");
   useEffect(() => {
     loadNFTs();
-  }, );
+  });
 
   function getEthPrice(price) {
     return ethers.utils.formatEther(price);
@@ -103,10 +104,10 @@ const Home = () => {
     }
     let localData = [...shallowData];
     localData = localData.filter((item) => {
-      if(item?.categories?.length && item?.categories?.includes(cat)){
-        return true
+      if (item?.categories?.length && item?.categories?.includes(cat)) {
+        return true;
       }
-      return false
+      return false;
     });
     console.log("Filter by category", localData);
     setData(localData);
@@ -115,10 +116,9 @@ const Home = () => {
     setmodelmsg("Buying in Progress");
     await buyNFT(nft, setmodel, setmodelmsg);
   }
-useEffect(() => {
-  filterNFTs();
-
-}, [])
+  useEffect(() => {
+    filterNFTs();
+  }, []);
 
   const market = async () => {
     const result = await request(graphqlAPI, saleStartedQuery);
@@ -131,9 +131,9 @@ useEffect(() => {
           name,
           description,
           categories: categories,
-          image: nftData?.image? `${process.env.NEXT_PUBLIC_IPFS_GATEWAY}${removePrefix(
-            image
-          )}`:"",
+          image: nftData?.image
+            ? `${process.env.NEXT_PUBLIC_IPFS_GATEWAY}${removePrefix(image)}`
+            : "",
         };
       })
     );
@@ -148,13 +148,14 @@ useEffect(() => {
     market();
   }, []);
 
-
   const handleItemClick = (id) => {
     selectedItem == id ? setSelectedItem(null) : setSelectedItem(id);
-  }
+  };
   return (
-    
-    <Layout title="Explore" description="Used to show the created categories of the Nfts">
+    <Layout
+      title="Explore"
+      description="Used to show the created categories of the Nfts"
+    >
       {model && <BuyAsset open={model} setOpen={setmodel} message={modelmsg} />}
       {logoutmodel && (
         <div className="flex items-center  shadow-md justify-center w-full h-screen model-overlay fixed  top-0 z-50">
@@ -187,10 +188,9 @@ useEffect(() => {
           </div>
         </div>
       )}
-     
 
       <main className="body-back">
-      <div className="flex justify-between p-4 border-y-2">
+        <div className="flex justify-between p-4 border-y-2">
           <div className="flex justify-center mt-5 ml-5 ">
             <div>
               <div className="flex gap-6">
@@ -210,139 +210,186 @@ useEffect(() => {
             </div>
           </div>
           <div className="mt-5 mr-5">
-          
-
             <Link href="/explore">
               <NavLink
                 className={router.pathname == "/explore" ? "active " : ""}
               >
-                <button
-                  className="bg-white py-3 px-6  text-gray-500 dark:text-black font-semibold mb-8 lg:mb-0"
-                >
+                <button className="bg-white py-3 px-6  text-gray-500 dark:text-black font-semibold mb-8 lg:mb-0">
                   More Sale
                 </button>
               </NavLink>
             </Link>
           </div>
-          
+        </div>
+        <div>
+          <div
+            className={`fa fa-chevron-right hide ${hidefilter && "open"}`}
+            onClick={() => {
+              setHideFilter(!hidefilter);
+            }}
+          >
+            Hide Filter
           </div>
-          <div>
-          <div className={`fa fa-chevron-right hide ${hidefilter && "open"}`} onClick={() => {
-                    setHideFilter(!hidefilter);
-                  }}>Hide Filter</div>
-                  </div>
+        </div>
         <div className="flex">
-       
-       {hidefilter && <div className="p-4">
-    <div className='dropdown'>
-
-     <div className='dropdown-header' onClick={toggleDropdownSort}>
-        {selectedItem ? items.find(item => item.id == selectedItem).label : "Select Newest and Oldest"}
-        <i className={`fa fa-chevron-right icon ${isOpenSortOldNew && "open"}`} ></i>
-      </div>
-      <div className={`dropdown-body ${isOpenSortOldNew && 'open'}`}>
-        {items.map(item => (
-          <div className="dropdown-item" onClick={e => handleItemClick(e.target.id)} id={item.id}>
-            <span className={`dropdown-item-dot ${item.id == selectedItem && 'selected'}`}>• </span>
-            {item.label}
-          </div>
-        ))}
-
-      </div>
-      </div>
-      <div className='dropdown'>
-
-    <div className='dropdown-header' onClick={toggleDropdownMedia}>
-       {selectedMedia ? items.find(item => item.id == selectedMedia).label : "Media Type"}
-       <i className={`fa fa-chevron-right icon ${isOpenMedia && "open"}`} ></i>
-     </div>
-     <div className={`dropdown-body ${isOpenMedia && 'open'}`}>
-    <div className="flex justify-between">
-      <div className="media-type"> <input type="checkbox" ></input> <span className="ml-3">Music</span></div>
-      <div  className="media-type"> <input type="checkbox" ></input><span className="ml-3">Image</span></div>
-    </div>
-   
-    <div className="flex justify-between mt-5">
-      <div  className="media-type"> <input type="checkbox" ></input><span className="ml-3">Audio</span></div>
-      <div  className="media-type"> <input type="checkbox" ></input><span className="ml-3">Document</span></div>
-    </div>
-    </div>
-     </div>
-
-
-     <div className='dropdown'>
-
-<div className='dropdown-header' onClick={toggleDropAvail}>
-   {selectedAvail ? items.find(item => item.id == selectedAvail).label : "Availability"}
-   <i className={`fa fa-chevron-right icon ${isOpenAvail && "open"}`} ></i>
- </div>
- <div className={`dropdown-body ${isOpenAvail && 'open'}`}>
-
-<div className="flex justify-between">
-  <div className="all-buy">  All</div>
-  <div  className="media-type"> Buy Now</div>
-</div>
-</div>
- </div>
-
- <div className='dropdown'>
-
-<div className='dropdown-header' onClick={togglePriceDropdown}>
-   {selectedPrice ? items.find(item => item.id == selectedPrice).label : "price"}
-   <i className={`fa fa-chevron-right icon ${isopenprice && "open"}`} ></i>
- </div>
- <div className={`dropdown-body ${isopenprice && 'open'}`}>
-
-<div className="flex justify-between">
-  <div className="media-type">  Max</div>
-  <div  className="media-type">Min</div>
-</div>
-</div>
- </div>
- </div>
-}
- <div className="min-h-screen">
-        
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 md:grid-cols-3 gap-4 lg:gap-24 p-4">
-            {data?.length ? data?.map((item) => {
-              return (
-                <div
-                  key={item.itemId}
-                  className=" border-white mycard p-3 shadow-lg w-full cursor-pointer"
-                >
-                  <Link key={item.itemId} href={`/explore/${item.itemId}`}>
-                    <div>
-                      <MarketPlaceCard {...item} />
-                      <div className="flex items-center justify-between mb-2">
-                        <div className="text-sm font-bold text-gray-500 dark:text-white">Price </div>
-                        <div className="flex items-center">
-                          <FaEthereum className="w-4 text-gray-500 dark:text-white" />
-                          <div className="text-gray-500 dark:text-white font-semibold">
-                            {getEthPrice(item.price)} MATIC
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </Link>
-                  <button
-                    onClick={() => buyNft(item)}
-                    className="text-gray-500 dark:text-black bg-[#CAFC01] w-full rounded-md py-2 font-bold"
-                  >
-                    Buy Now
-                  </button>
+          {hidefilter && (
+            <div className="p-4">
+              <div className="dropdown">
+                <div className="dropdown-header" onClick={toggleDropdownSort}>
+                  {selectedItem
+                    ? items.find((item) => item.id == selectedItem).label
+                    : "Select Newest and Oldest"}
+                  <i
+                    className={`fa fa-chevron-right icon ${
+                      isOpenSortOldNew && "open"
+                    }`}
+                  ></i>
                 </div>
-              );
-            }):
-            null
-            }
-          </div>
-          {data?.length == 0 && <div className="font-bold text-2xl">No NFT Found For Selected Category</div>}
-        </div>
-       
+                <div className={`dropdown-body ${isOpenSortOldNew && "open"}`}>
+                  {items.map((item) => (
+                    <div
+                      className="dropdown-item"
+                      onClick={(e) => handleItemClick(e.target.id)}
+                      id={item.id}
+                      key={item.id}
+                    >
+                      <span
+                        className={`dropdown-item-dot ${
+                          item.id == selectedItem && "selected"
+                        }`}
+                      >
+                        •{" "}
+                      </span>
+                      {item.label}
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <div className="dropdown">
+                <div className="dropdown-header" onClick={toggleDropdownMedia}>
+                  {selectedMedia
+                    ? items.find((item) => item.id == selectedMedia).label
+                    : "Media Type"}
+                  <i
+                    className={`fa fa-chevron-right icon ${
+                      isOpenMedia && "open"
+                    }`}
+                  ></i>
+                </div>
+                <div className={`dropdown-body ${isOpenMedia && "open"}`}>
+                  <div className="flex justify-between">
+                    <div className="media-type">
+                      {" "}
+                      <input type="checkbox"></input>{" "}
+                      <span className="ml-3">Music</span>
+                    </div>
+                    <div className="media-type">
+                      {" "}
+                      <input type="checkbox"></input>
+                      <span className="ml-3">Image</span>
+                    </div>
+                  </div>
 
+                  <div className="flex justify-between mt-5">
+                    <div className="media-type">
+                      {" "}
+                      <input type="checkbox"></input>
+                      <span className="ml-3">Audio</span>
+                    </div>
+                    <div className="media-type">
+                      {" "}
+                      <input type="checkbox"></input>
+                      <span className="ml-3">Document</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="dropdown">
+                <div className="dropdown-header" onClick={toggleDropAvail}>
+                  {selectedAvail
+                    ? items.find((item) => item.id == selectedAvail).label
+                    : "Availability"}
+                  <i
+                    className={`fa fa-chevron-right icon ${
+                      isOpenAvail && "open"
+                    }`}
+                  ></i>
+                </div>
+                <div className={`dropdown-body ${isOpenAvail && "open"}`}>
+                  <div className="flex justify-between">
+                    <div className="all-buy"> All</div>
+                    <div className="media-type"> Buy Now</div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="dropdown">
+                <div className="dropdown-header" onClick={togglePriceDropdown}>
+                  {selectedPrice
+                    ? items.find((item) => item.id == selectedPrice).label
+                    : "price"}
+                  <i
+                    className={`fa fa-chevron-right icon ${
+                      isopenprice && "open"
+                    }`}
+                  ></i>
+                </div>
+                <div className={`dropdown-body ${isopenprice && "open"}`}>
+                  <div className="flex justify-between">
+                    <div className="media-type"> Max</div>
+                    <div className="media-type">Min</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+          <div className="min-h-screen">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 md:grid-cols-3 gap-4 lg:gap-24 p-4">
+              {data?.length
+                ? data?.map((item) => {
+                    return (
+                      <div
+                        key={item.itemId}
+                        className=" border-white mycard p-3 shadow-lg w-full cursor-pointer"
+                      >
+                        <Link
+                          key={item.itemId}
+                          href={`/explore/${item.itemId}`}
+                        >
+                          <div>
+                            <MarketPlaceCard {...item} />
+                            <div className="flex items-center justify-between mb-2">
+                              <div className="text-sm font-bold text-gray-500 dark:text-white">
+                                Price{" "}
+                              </div>
+                              <div className="flex items-center">
+                                <FaEthereum className="w-4 text-gray-500 dark:text-white" />
+                                <div className="text-gray-500 dark:text-white font-semibold">
+                                  {getEthPrice(item.price)} MATIC
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </Link>
+                        <button
+                          onClick={() => buyNft(item)}
+                          className="text-gray-500 dark:text-black bg-[#CAFC01] w-full rounded-md py-2 font-bold"
+                        >
+                          Buy Now
+                        </button>
+                      </div>
+                    );
+                  })
+                : null}
+            </div>
+            {data?.length == 0 && (
+              <div className="font-bold text-2xl">
+                No NFT Found For Selected Category
+              </div>
+            )}
+          </div>
         </div>
-      
-       
       </main>
     </Layout>
   );
