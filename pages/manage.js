@@ -48,8 +48,16 @@ export default function Manage() {
       }
     `;
     const result = await request(graphqlAPI, query);
+    const resul=result.roleGranteds
+    const finalresult = resul.reduce((finalArray, current) => {
+      let obj = finalArray.find((item) => item.account === current.account);
+      if (obj) {
+        return finalArray;
+      }
+      return finalArray.concat([current]);
+    }, []);
     setLoading(true);
-    setRole(result.roleGranteds);
+    setRole(finalresult);
     setLoading(false);
   };
   useEffect(() => {
