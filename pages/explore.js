@@ -17,11 +17,14 @@ import { MarketPlaceCard } from "../Components/Cards/MarketPlaceCard";
 import { NavLink } from "reactstrap";
 import { useRouter } from "next/router";
 import { saleStartedQuery } from "../utils/gqlUtil";
+import axios from "axios";
 
 const graphqlAPI = process.env.NEXT_PUBLIC_MARKETPLACE_API;
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
 const Home = () => {
   const router = useRouter();
+  const [loading, setLoading] = useState(false);
 
   const [data, setData] = useState([]);
   const [shallowData, setShallowData] = useState([]);
@@ -102,6 +105,7 @@ const Home = () => {
       setData(shallowData);
       return;
     }
+    console.log("show all", [...shallowData]);
     let localData = [...shallowData];
     localData = localData.filter((item) => {
       if (item?.categories?.length && item?.categories?.includes(cat)) {
@@ -144,13 +148,64 @@ const Home = () => {
     setShallowData(sortedNFts);
   };
 
-  useEffect(() => {
-    market();
-  }, []);
+  // useEffect(()=>{
+  //   const token = localStorage.getItem("platform_token");
+  //   if (token) {
+  //     getLikes();
+      
+  //   }
+  // },[])
+  useEffect(()=>{
+    
+  market();
+      
+    
+  },[])
+  
+
 
   const handleItemClick = (id) => {
     selectedItem == id ? setSelectedItem(null) : setSelectedItem(id);
   };
+  // const getLikes=(tokenid)=>{
+  //   const token = localStorage.getItem("platform_token");
+  //   const marketplaceAddress = process.env.NEXT_PUBLIC_MARKETPLACE_ADDRESS;
+
+  //   const config = {
+  //     headers: {
+  //       Accept: "application/json, text/plain, */*",
+  //       "Content-Type": "application/json",
+  //       Authorization: `Bearer ${token}`,
+  //     },
+  //   };
+  //   setLoading(true);
+  //   axios
+  //     .get(`${BASE_URL}/api/v1.0/marketplace/userLikes/:${marketplaceAddress}/:${tokenid}`, config)
+  //     .then((res) => {
+  //       const {
+  //         data: {
+  //           payload: {
+             
+  //           },
+  //         },
+  //       } = res;
+       
+  //       setProfileData({
+          
+  //       });
+  //       setupdateProfile({
+          
+  //       });
+  //       setLoading(true);
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //     })
+  //     .finally(() => {
+  //       setLoading(false);
+  //     });
+  // };
+  
   return (
     <Layout
       title="Explore"
@@ -191,24 +246,7 @@ const Home = () => {
 
       <main className="body-back">
         <div className="flex justify-between p-4 border-y-2">
-          <div className="flex justify-center mt-5 ml-5 ">
-            <div>
-              <div className="flex gap-6">
-                {categories.map((category, key) => {
-                  return (
-                    <div key={key}>
-                      <button
-                        onClick={() => filterNFTs(category)}
-                        className="bg-blue-100 text-blue-800 text-lg mr-3 px-5 py-2 rounded dark:bg-blue-900 dark:text-blue-300 font-bold "
-                      >
-                        {category}
-                      </button>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-          </div>
+         
           <div className="mt-5 mr-5">
             <Link href="/explore">
               <NavLink
@@ -277,31 +315,19 @@ const Home = () => {
                   ></i>
                 </div>
                 <div className={`dropdown-body ${isOpenMedia && "open"}`}>
-                  <div className="flex justify-between">
-                    <div className="media-type">
-                      {" "}
-                      <input type="checkbox"></input>{" "}
-                      <span className="ml-3">Music</span>
-                    </div>
-                    <div className="media-type">
-                      {" "}
-                      <input type="checkbox"></input>
-                      <span className="ml-3">Image</span>
-                    </div>
-                  </div>
-
-                  <div className="flex justify-between mt-5">
-                    <div className="media-type">
-                      {" "}
-                      <input type="checkbox"></input>
-                      <span className="ml-3">Audio</span>
-                    </div>
-                    <div className="media-type">
-                      {" "}
-                      <input type="checkbox"></input>
-                      <span className="ml-3">Document</span>
-                    </div>
-                  </div>
+                  {categories.map((category, key) => {
+                    return (
+                      <div className="flex mt-5 " key={key}>
+                        <button
+                          onClick={() => filterNFTs(category)}
+                          className="bg-blue-100 text-blue-800 text-lg mr-3 px-5 py-2 rounded dark:bg-blue-900 dark:text-blue-300 font-bold "
+                        >
+                          {/* <input type="checkbox"></input>  */}
+                          {category}
+                        </button>
+                      </div>
+                    );
+                  })}
                 </div>
               </div>
 

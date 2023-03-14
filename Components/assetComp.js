@@ -26,12 +26,15 @@ const Assetcomp = ({ uri }) => {
   let preuri = removePrefix(image);
 
   return (
-    <div>
+    <div className="relative ...">
       <img 
         src={`https://cloudflare-ipfs.com/ipfs/${preuri}`}
         alt="alt"
         className=" h-100  p-2 w-full object-fit grow"
       />
+       <div className='wish-image'>
+            <img style={{width:"20px",height:"20px"}} src="/wish.png"></img>
+          </div>
     </div>
   );
 };

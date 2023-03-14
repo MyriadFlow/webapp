@@ -30,7 +30,7 @@ const Homecomp = ({ uri }) => {
       <img
         src={`https://cloudflare-ipfs.com/ipfs/${removePrefix(preuri)}`}
         alt="home-img"
-        className=" w-full object-fit rounded-lg mb-3"
+        className=" w-full object-fit rounded-lg mb-3 h-60"
        
 
       />

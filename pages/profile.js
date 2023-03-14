@@ -269,13 +269,15 @@ function Profile() {
       }
 
       const storeFrontContract = await etherContract(storeFrontAddress, StoreFront.abi)
-
       setHasRole(
         await storeFrontContract.hasRole(await storeFrontContract.STOREFRONT_CREATOR_ROLE(), wallet)
       );
     };
     asyncFn();
   }, [hasRole]);
+
+
+
   const {
     name,
     country,
@@ -489,7 +491,7 @@ function Profile() {
               <div className=" pb-4 text-gray-500 dark:text-white">
                 Roles :{" "}
                 <span className=" text-gray-500 dark:text-white">
-                  User {hasRole && ", Creator"}{" "}
+                   {hasRole && " Creator"}{" "}
                 </span>{" "}
               </div>
             </div>
