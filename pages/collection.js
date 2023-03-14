@@ -10,8 +10,27 @@ import { request, gql } from "graphql-request";
 import Homecomp from "../Components/homeComp";
 import Loader from "../Components/Loader";
 import Layout from "../Components/Layout";
+import { removePrefix } from "../utils/ipfsUtil";
+import etherContract from "../utils/web3Modal";
+import Marketplace from "../artifacts/contracts/Marketplace.sol/Marketplace.json";
+import { saleStartedQuery } from "../utils/gqlUtil";
+
 const graphqlAPI = process.env.NEXT_PUBLIC_STOREFRONT_API;
+const marketplaceAddress = process.env.NEXT_PUBLIC_MARKETPLACE_ADDRESS;
+
 const Collection = () => {
+  const [info, setInfo] = useState([]);
+
+  const itemStatus = new Map(["NONEXISTANT", "SALE", "AUCTION", "SOLD","REMOVED"].map((v,index)=>[index,v]));
+
+const sortedCollection=async()=>{
+  const marketPlaceContarct = await etherContract(marketplaceAddress, Marketplace.abi);
+  const itemResult = await marketPlaceContarct.idToMarketItem(1)
+   const status=  itemStatus.get(parseInt(itemResult.status))
+  console.log("status",status)
+    // setInfo(finalResult)
+  
+}
   const walletAddr = useSelector(selectUser);
   var wallet = walletAddr ? walletAddr[0] : "";
   const [data, setData] = useState([]);
@@ -36,6 +55,7 @@ const Collection = () => {
     setLoading(false);
   };
   useEffect(() => {
+    sortedCollection();
     if (!localStorage.getItem("platform_wallet") && wallet !== undefined) {
       localStorage.setItem("platform_wallet", wallet);
     } else {
@@ -43,6 +63,8 @@ const Collection = () => {
     }
     fetchUserAssests(`${localStorage.getItem("platform_wallet")}`);
   }, []);
+
+ 
   return (
     <Layout>
     <div className="p-4 px-10 min-h-screen body-back">

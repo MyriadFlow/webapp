@@ -103,16 +103,7 @@ const MyAssets = () => {
                     <HomeComp uri={item ? item.metaDataURI : ""} />
                   </div>
                 </Link>
-                <div className="form-item w-full mt-3">
-                  <input
-                    type="number"
-                    placeholder="Asset Price in Matic"
-                    className="w-full input_background  rounded-md shadow-sm outline-none p-4"
-                    onChange={(e) =>
-                      updateFormInput({ ...formInput, price: e.target.value })
-                    }
-                  />
-                </div>
+              
                 <div className="flex justify-between mt-3 text-gray-500 dark:text-white">
                   <div className="font-bold">Wallet Address :</div>
                   <div className="text-xs">{item.seller.slice(-6)}</div>
