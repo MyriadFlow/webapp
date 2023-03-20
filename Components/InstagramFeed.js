@@ -7,13 +7,9 @@ export const InstagramFeed = (props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
   const [showImage, setShowImage] = useState(false);
-
-  const type = showImage ? "hidePlaceholder" : "placeholder";
-
   let url = `https://graph.instagram.com/me/media?fields=media_count,media_type,permalink,media_url,caption&&access_token=${token}`;
-
   useEffect(() => {
-    const fetchData = async () => {
+    const  fetchData =  () => {
       setIsLoading(true);
       fetch(url)
         .then((response) => response.json())
@@ -21,13 +17,10 @@ export const InstagramFeed = (props) => {
           setData(result.data);
         })
         .catch((error) => setIsError(true));
-      console.log("data", data);
-
       setIsLoading(false);
     };
 
     fetchData();
-
     const callback = (entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
