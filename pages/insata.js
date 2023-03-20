@@ -14,17 +14,17 @@ export default function Insata() {
   const [fields, setFields] = useState(allfields);
   const [scope, setScope] = useState(allscope);
   const [state, setState] = useState("");
-  useEffect(() => {
-    if (window && typeof window !== "undefined") {
-      const popupWindowURL = new URL(window.location.href);
-      const code = popupWindowURL.searchParams.get("code");
-      const state = popupWindowURL.searchParams.get("state");
-      if (state?.includes("_instagram") && code) {
-        localStorage.setItem("instagram", code);
-        window.close();
-      }
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (window && typeof window !== "undefined") {
+  //     const popupWindowURL = new URL(window.location.href);
+  //     const code = popupWindowURL.searchParams.get("code");
+  //     const state = popupWindowURL.searchParams.get("state");
+  //     if (state?.includes("_instagram") && code) {
+  //       localStorage.setItem("instagram", code);
+  //       window.close();
+  //     }
+  //   }
+  // }, []);
 
   const onLogoutSuccess = useCallback(() => {
     alert("logout success");
@@ -35,22 +35,22 @@ export default function Insata() {
     }&redirect_uri=${REDIRECT_URI}`;
     const width = 450;
     const height = 730;
-    if (window && typeof window !== "undefined") {
-      const left = window.screen.width / 2 - width / 2;
-      const top = window.screen.height / 2 - height / 2;
-      window.open(
-        oauthUrl,
-        "Instagram",
-        "menubar=no,location=no,resizable=no,scrollbars=no,status=no, width=" +
-          width +
-          ", height=" +
-          height +
-          ", top=" +
-          top +
-          ", left=" +
-          left
-      );
-    }
+    // if (window && typeof window !== "undefined") {
+    //   const left = window.screen.width / 2 - width / 2;
+    //   const top = window.screen.height / 2 - height / 2;
+    //   window.open(
+    //     oauthUrl,
+    //     "Instagram",
+    //     "menubar=no,location=no,resizable=no,scrollbars=no,status=no, width=" +
+    //       width +
+    //       ", height=" +
+    //       height +
+    //       ", top=" +
+    //       top +
+    //       ", left=" +
+    //       left
+    //   );
+    // }
   }, [scope, state, appId, REDIRECT_URI]);
 
   return (
