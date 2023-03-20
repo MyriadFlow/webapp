@@ -9,6 +9,9 @@ export const InstagramFeed = (props) => {
   const [showImage, setShowImage] = useState(false);
   let url = `https://graph.instagram.com/me/media?fields=media_count,media_type,permalink,media_url,caption&&access_token=${token}`;
   useEffect(() => {
+    if (typeof window !== 'undefined') {
+      // This will only run in the browser where window is defined, so add your event listeners here
+    
     const  fetchData =  () => {
       setIsLoading(true);
       fetch(url)
@@ -19,8 +22,9 @@ export const InstagramFeed = (props) => {
         .catch((error) => setIsError(true));
       setIsLoading(false);
     };
-
+  
     fetchData();
+}
     const callback = (entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
@@ -36,6 +40,7 @@ export const InstagramFeed = (props) => {
     const observer = new IntersectionObserver(callback, options);
     observer.observe(placeholder.current);
     return () => observer.disconnect();
+  
   }, [url]);
   return (
     <div>
