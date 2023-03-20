@@ -60,12 +60,13 @@ table {
     text-align: center;
   }
 .wish-image{
-    position: absolute;
-    top: 3%;
-    left: 80%;
-    background: #c58b8b;
-    border-radius: 50%;
-    padding: 10px;
+  position: absolute;
+  top: 74%;
+  left: 83%;
+  background: #c58b8b;
+  border-radius: 50%;
+  padding: 7px;
+
 }
 .grow { transition: all .2s ease-in-out; }
 .grow:hover { transform: scale(1.1); }
