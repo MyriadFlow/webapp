@@ -56,6 +56,7 @@ const Footer = () => {
                 All
               </NavLink>
             </Link>
+           
             </div>
            
            
@@ -79,6 +80,15 @@ const Footer = () => {
                 Wishlist
               </NavLink>
             </Link>
+            <div className="text-sm mt-3">
+              <Link  className="text-gray-500 dark:text-white" href="/instagram">
+              <NavLink
+                className={router.pathname == "/instagram" ? "active " : ""}
+              >
+                Instaembed
+              </NavLink>
+            </Link>
+              </div>
             </div>
            
            
