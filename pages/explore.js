@@ -11,22 +11,36 @@ import { close } from "../slices/modelSlice";
 import { request, gql } from "graphql-request";
 import BuyAsset from "../Components/buyAssetModal";
 import { buyNFT } from "./api/buyNFT";
+import Loader from "../Components/Loader";
+
 import Layout from "../Components/Layout";
 import { getMetaData, removePrefix } from "../utils/ipfsUtil";
 import { MarketPlaceCard } from "../Components/Cards/MarketPlaceCard";
 import { NavLink } from "reactstrap";
 import { useRouter } from "next/router";
+import HomeComp from "../Components/homeComp";
+
 import { saleStartedQuery } from "../utils/gqlUtil";
 import axios from "axios";
+import Marketplace from "../artifacts/contracts/Marketplace.sol/Marketplace.json";
+import etherContract from "../utils/web3Modal";
 
 const graphqlAPI = process.env.NEXT_PUBLIC_MARKETPLACE_API;
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
+const marketplaceAddress = process.env.NEXT_PUBLIC_MARKETPLACE_ADDRESS;
 
 const Home = () => {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
+  const itemStatus = new Map(
+    ["NONEXISTANT", "SALE", "AUCTION", "SOLD", "REMOVED"].map((v, index) => [
+      index,
+      v,
+    ])
+  );
 
   const [data, setData] = useState([]);
+  const [auction, setAuction] = useState([]);
   const [shallowData, setShallowData] = useState([]);
   const logoutmodel = useSelector(selectModel);
   const dispatch = useDispatch();
@@ -125,7 +139,10 @@ const Home = () => {
   }, []);
 
   const market = async () => {
+    const refineArray = [];
+
     const result = await request(graphqlAPI, saleStartedQuery);
+
     const fResult = await Promise.all(
       result.saleStarteds.map(async function (obj, index) {
         const nftData = await getMetaData(obj.metaDataURI);
@@ -139,11 +156,34 @@ const Home = () => {
             ? `${process.env.NEXT_PUBLIC_IPFS_GATEWAY}${removePrefix(image)}`
             : "",
         };
+      }),
+
+      Promise.all(
+        result.saleStarteds.map(async (item) => {
+          const marketPlaceContarct = await etherContract(
+            marketplaceAddress,
+            Marketplace.abi
+          );
+          const itemResult = await marketPlaceContarct.idToMarketItem(
+            item.tokenId
+          );
+          const status = itemStatus.get(parseInt(itemResult.status));
+          if (status == "SALE") {
+            refineArray.push(item.tokenId);
+          }
+        })
+      ).then(() => {
+        setData(
+          result.saleStarteds.filter((assetItem) =>
+            refineArray.some((item) => item === assetItem.tokenId)
+          )
+        );
       })
     );
     const sortedNFts = fResult.sort((a, b) => {
       if (a.itemId < b.itemId) return -1;
     });
+
     setData(sortedNFts);
     setShallowData(sortedNFts);
   };
@@ -152,17 +192,18 @@ const Home = () => {
   //   const token = localStorage.getItem("platform_token");
   //   if (token) {
   //     getLikes();
-      
+
   //   }
   // },[])
-  useEffect(()=>{
-    
-  market();
-      
-    
-  },[])
-  
-
+  useEffect(() => {
+    market();
+  }, []);
+  useEffect(() => {
+    if (!localStorage.getItem("platform_wallet") && wallet !== undefined) {
+      localStorage.setItem("platform_wallet", wallet);
+    }
+    fetchAuction(`${localStorage.getItem("platform_wallet")}`);
+  }, []);
 
   const handleItemClick = (id) => {
     selectedItem == id ? setSelectedItem(null) : setSelectedItem(id);
@@ -185,16 +226,16 @@ const Home = () => {
   //       const {
   //         data: {
   //           payload: {
-             
+
   //           },
   //         },
   //       } = res;
-       
+
   //       setProfileData({
-          
+
   //       });
   //       setupdateProfile({
-          
+
   //       });
   //       setLoading(true);
   //     })
@@ -205,7 +246,26 @@ const Home = () => {
   //       setLoading(false);
   //     });
   // };
-  
+
+  const fetchAuction = async () => {
+    const query = gql`
+    query Query($where: AuctionEnded_filter) {
+      auctionEndeds(first: 100) {
+        id
+        tokenId
+        nftContract
+        metadataURI
+        highestBidder   
+        blockTimestamp
+            }
+          }
+          `;
+    const result = await request(graphqlAPI, query);
+    setLoading(true);
+    setAuction(result.auctionEndeds);
+    setLoading(false);
+  };
+
   return (
     <Layout
       title="Explore"
@@ -246,7 +306,6 @@ const Home = () => {
 
       <main className="body-back">
         <div className="flex justify-between p-4 border-y-2">
-         
           <div className="mt-5 mr-5">
             <Link href="/explore">
               <NavLink
@@ -258,6 +317,8 @@ const Home = () => {
               </NavLink>
             </Link>
           </div>
+          <div className="mt-5 font-bold text-2xl">Sale</div>
+          <div className="mt-5 font-bold text-2xl">Auction</div>
         </div>
         <div>
           <div
@@ -269,7 +330,7 @@ const Home = () => {
             Hide Filter
           </div>
         </div>
-        <div className="flex">
+        <div className="flex justify-around">
           {hidefilter && (
             <div className="p-4">
               <div className="dropdown">
@@ -370,7 +431,7 @@ const Home = () => {
               </div>
             </div>
           )}
-          <div className="min-h-screen">
+          <div className="flex">
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 md:grid-cols-3 gap-4 lg:gap-24 p-4">
               {data?.length
                 ? data?.map((item) => {
@@ -411,9 +472,43 @@ const Home = () => {
             </div>
             {data?.length == 0 && (
               <div className="font-bold text-2xl">
-                No NFT Found For Selected Category
+                You have not created any NFT
               </div>
             )}
+
+            <div className="h-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+              {auction.length > 0 ? (
+                auction.map((item) => {
+                  return (
+                    <div
+                      key={item.id}
+                      className=" border-2 p-2.5 bg-white dark:bg-gray-900  rounded-lg shadow-lg w-full lg:w-72 hover:scale-105 duration-200 transform transition cursor-pointer border-2 dark:border-gray-800"
+                    >
+                      <Link key={item.itemId} href={`/assets/${item.id}`}>
+                        <div>
+                          <HomeComp uri={item ? item.metadataURI : ""} />
+
+                          <div>
+                            <div className="font-bold mt-3">
+                              Wallet Address :
+                            </div>
+                            <div className="text-xs">
+                              {item.highestBidder.slice(-6)}
+                            </div>
+                          </div>
+                        </div>
+                      </Link>
+                    </div>
+                  );
+                })
+              ) : loading ? (
+                <Loader />
+              ) : (
+                <div className="text-2xl pb-10 font-bold text-center text-gray-500 dark:text-white">
+                  You have not created Any Auction
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </main>
