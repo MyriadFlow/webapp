@@ -11,11 +11,15 @@ import { close } from "../slices/modelSlice";
 import { request, gql } from "graphql-request";
 import BuyAsset from "../Components/buyAssetModal";
 import { buyNFT } from "./api/buyNFT";
+import Loader from "../Components/Loader";
+
 import Layout from "../Components/Layout";
 import { getMetaData, removePrefix } from "../utils/ipfsUtil";
 import { MarketPlaceCard } from "../Components/Cards/MarketPlaceCard";
 import { NavLink } from "reactstrap";
 import { useRouter } from "next/router";
+import HomeComp from "../Components/homeComp";
+
 import { saleStartedQuery } from "../utils/gqlUtil";
 import axios from "axios";
 import Marketplace from "../artifacts/contracts/Marketplace.sol/Marketplace.json";
@@ -468,7 +472,7 @@ const Home = () => {
             </div>
             {data?.length == 0 && (
               <div className="font-bold text-2xl">
-                You have not created any NFT's
+                You have not created any NFT
               </div>
             )}
 
@@ -501,7 +505,7 @@ const Home = () => {
                 <Loader />
               ) : (
                 <div className="text-2xl pb-10 font-bold text-center text-gray-500 dark:text-white">
-                  You haven&apos;t created Any Auction.
+                  You have not created Any Auction.
                 </div>
               )}
             </div>
