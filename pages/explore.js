@@ -505,7 +505,7 @@ const Home = () => {
                 <Loader />
               ) : (
                 <div className="text-2xl pb-10 font-bold text-center text-gray-500 dark:text-white">
-                  You have not created Any Auction.
+                  You have not created Any Auction
                 </div>
               )}
             </div>
