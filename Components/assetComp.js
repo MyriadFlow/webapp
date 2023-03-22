@@ -32,9 +32,7 @@ const Assetcomp = ({ uri }) => {
         alt="alt"
         className=" h-100  p-2 w-full object-fit grow"
       />
-       <div className='wish-image'>
-            <img style={{width:"20px",height:"20px"}} src="/wish.png"></img>
-          </div>
+      
     </div>
   );
 };

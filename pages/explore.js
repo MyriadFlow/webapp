@@ -12,7 +12,6 @@ import { request, gql } from "graphql-request";
 import BuyAsset from "../Components/buyAssetModal";
 import { buyNFT } from "./api/buyNFT";
 import Loader from "../Components/Loader";
-
 import Layout from "../Components/Layout";
 import { getMetaData, removePrefix } from "../utils/ipfsUtil";
 import { MarketPlaceCard } from "../Components/Cards/MarketPlaceCard";
@@ -38,7 +37,6 @@ const Home = () => {
       v,
     ])
   );
-
   const [data, setData] = useState([]);
   const [auction, setAuction] = useState([]);
   const [shallowData, setShallowData] = useState([]);
@@ -137,18 +135,51 @@ const Home = () => {
   useEffect(() => {
     filterNFTs();
   }, []);
+  const AddLike = (itemId) => {
+    const token = localStorage.getItem("platform_token");
+    axios
+      .post(
+        `${BASE_URL}/api/v1.0/like/addUserLike/${itemId}`,
+        {},
+        {
+          headers: {
+            Accept: "application/json, text/plain, */*",
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
+      .then(async (response) => {
+        console.log("addlike data", response);
+        await axios.post(
+          `${BASE_URL}/api/v1.0/wishlist/addToUserWishlist/${itemId}`,
+          {},
+          {
+            headers: {
+              Accept: "application/json, text/plain, */*",
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+      })
 
+      .catch((error) => {
+        console.log("err", error);
+      });
+  };
   const market = async () => {
     const refineArray = [];
-
     const result = await request(graphqlAPI, saleStartedQuery);
 
     const fResult = await Promise.all(
       result.saleStarteds.map(async function (obj, index) {
         const nftData = await getMetaData(obj.metaDataURI);
         const { name, description, categories, image } = nftData;
+        const likeCount = await getLikes(obj.itemId);
         return {
           ...obj,
+          likeCount,
           name,
           description,
           categories: categories,
@@ -168,6 +199,7 @@ const Home = () => {
             item.tokenId
           );
           const status = itemStatus.get(parseInt(itemResult.status));
+          console.log("status", status);
           if (status == "SALE") {
             refineArray.push(item.tokenId);
           }
@@ -188,15 +220,11 @@ const Home = () => {
     setShallowData(sortedNFts);
   };
 
-  // useEffect(()=>{
-  //   const token = localStorage.getItem("platform_token");
-  //   if (token) {
-  //     getLikes();
-
-  //   }
-  // },[])
   useEffect(() => {
-    market();
+    const token = localStorage.getItem("platform_token");
+    if (token) {
+      market();
+    }
   }, []);
   useEffect(() => {
     if (!localStorage.getItem("platform_wallet") && wallet !== undefined) {
@@ -208,58 +236,42 @@ const Home = () => {
   const handleItemClick = (id) => {
     selectedItem == id ? setSelectedItem(null) : setSelectedItem(id);
   };
-  // const getLikes=(tokenid)=>{
-  //   const token = localStorage.getItem("platform_token");
-  //   const marketplaceAddress = process.env.NEXT_PUBLIC_MARKETPLACE_ADDRESS;
-
-  //   const config = {
-  //     headers: {
-  //       Accept: "application/json, text/plain, */*",
-  //       "Content-Type": "application/json",
-  //       Authorization: `Bearer ${token}`,
-  //     },
-  //   };
-  //   setLoading(true);
-  //   axios
-  //     .get(`${BASE_URL}/api/v1.0/marketplace/userLikes/:${marketplaceAddress}/:${tokenid}`, config)
-  //     .then((res) => {
-  //       const {
-  //         data: {
-  //           payload: {
-
-  //           },
-  //         },
-  //       } = res;
-
-  //       setProfileData({
-
-  //       });
-  //       setupdateProfile({
-
-  //       });
-  //       setLoading(true);
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //     })
-  //     .finally(() => {
-  //       setLoading(false);
-  //     });
-  // };
+  const getLikes = async (itemId) => {
+    try {
+      const token = localStorage.getItem("platform_token");
+      const config = {
+        headers: {
+          Accept: "application/json, text/plain, */*",
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      };
+      setLoading(true);
+      const { data } = await axios.get(
+        `${BASE_URL}/api/v1.0/like/allUsersLikesCount/${itemId}`,
+        config
+      );
+      return data.payload;
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const fetchAuction = async () => {
     const query = gql`
-    query Query($where: AuctionEnded_filter) {
-      auctionEndeds(first: 100) {
-        id
-        tokenId
-        nftContract
-        metadataURI
-        highestBidder   
-        blockTimestamp
-            }
-          }
-          `;
+      query Query($where: AuctionEnded_filter) {
+        auctionEndeds(first: 100) {
+          id
+          tokenId
+          nftContract
+          metadataURI
+          highestBidder
+          blockTimestamp
+        }
+      }
+    `;
     const result = await request(graphqlAPI, query);
     setLoading(true);
     setAuction(result.auctionEndeds);
@@ -432,7 +444,7 @@ const Home = () => {
             </div>
           )}
           <div className="flex">
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 md:grid-cols-3 gap-4 lg:gap-24 p-4">
+            <div className="grid p-4">
               {data?.length
                 ? data?.map((item) => {
                     return (
@@ -459,6 +471,10 @@ const Home = () => {
                             </div>
                           </div>
                         </Link>
+                        <button onClick={() => AddLike(item.itemId)}>
+                          like:{item.likeCount}
+                        </button>
+
                         <button
                           onClick={() => buyNft(item)}
                           className="text-gray-500 dark:text-black bg-[#CAFC01] w-full rounded-md py-2 font-bold"

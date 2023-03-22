@@ -36,7 +36,7 @@ function LandingPage() {
       },
     };
     setLoading(true);
-    axios.get(`https://testnet.gateway.myriadflow.com/api/v1.0/products/itemIds`,config)
+    axios.get(`https://testnet.gateway.myriadflow.com/api/v1.0/marketplace/itemIds`,config)
       .then(async(res) => {
         const marketPlaceContarct = await etherContract(marketplaceAddress, Marketplace.abi)
         const saleInput = res.data.payload.map(i=>parseInt(i))
