@@ -1,6 +1,6 @@
 import Layout from "../Components/Layout";
 import { selectUser } from "../slices/userSlice";
-import { FaMinusSquare, FaPlusSquare } from "react-icons/fa";
+import { FaMinusSquare } from "react-icons/fa";
 import { React, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import StoreFront from "../artifacts/contracts/StoreFront.sol/StoreFront.json";
@@ -86,7 +86,7 @@ export default function Manage() {
 
               {role?.length > 0 ? (
                role.map((item) => {
-              const date = new Date(parseInt(item.blockTimestamp+'000')).toDateString() 
+               const date = new Date(parseInt(item.blockTimestamp+'000')).toDateString() 
                 return (
 
                   <tr className="margin-table" key={item.id}>

@@ -29,7 +29,24 @@ const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 const marketplaceAddress = process.env.NEXT_PUBLIC_MARKETPLACE_ADDRESS;
 
 const Home = () => {
+  const allfilter = {
+    minPrice: 0.1,
+    maxPrice: 100,
+    allassets: "",
+    buynow: "",
+    availability:""
+  };
+
+  const onUpdatefilter = (e) => {
+    const { name, value } = e.target;
+    setfiltersection({ ...filterSection, [name]: value });
+   
+  };
+
   const router = useRouter();
+  const [sortOldNew,setsortOldNew]=useState("Newest");
+  const [filterSection,setfiltersection]=useState({...allfilter});
+  const [allnfts,setAllNFTs]=useState([]);
   const [loading, setLoading] = useState(false);
   const itemStatus = new Map(
     ["NONEXISTANT", "SALE", "AUCTION", "SOLD", "REMOVED"].map((v, index) => [
@@ -56,31 +73,23 @@ const Home = () => {
   };
 
   const datasort = [
-    { id: 0, label: "Listed :Newest" },
-    { id: 1, label: "Listed :Oldest" },
+    { id: 0, label: sortOldNew },
+    { id: 1, label:  sortOldNew},
   ];
 
   const [isOpenSortOldNew, setOpenSortOldNew] = useState(false);
   const toggleDropdownSort = () => setOpenSortOldNew(!isOpenSortOldNew);
-
   const [isOpenMedia, setOpenMedia] = useState(false);
   const toggleDropdownMedia = () => setOpenMedia(!isOpenMedia);
-
   const [isOpenAvail, setOpenAvail] = useState(false);
   const toggleDropAvail = () => setOpenAvail(!isOpenAvail);
-
   const [isopenprice, setOpenPrice] = useState(false);
   const togglePriceDropdown = () => setOpenPrice(!isopenprice);
   const [items, setItem] = useState(datasort);
-
   const [hidefilter, setHideFilter] = useState(false);
-
   const [selectedItem, setSelectedItem] = useState(null);
   const [selectedMedia, setSelectMedia] = useState(null);
-  const [selectedAvail, setSelectAvail] = useState(null);
   const [selectedPrice, setSelectPrice] = useState(null);
-
-  const [filter, Setfilter] = useState(false);
   const [model, setmodel] = useState(false);
   const [modelmsg, setmodelmsg] = useState("buying in progress!");
   const [categories, setCategory] = useState([
@@ -92,12 +101,7 @@ const Home = () => {
   ]);
 
   const HomeProps = (data) => {
-    console.log("explore data", data.categories);
     setCategory(data.categories);
-  };
-
-  const toogle = () => {
-    Setfilter(!filter);
   };
 
   const [loadingState, setLoadingState] = useState("not-loaded");
@@ -125,7 +129,6 @@ const Home = () => {
       }
       return false;
     });
-    console.log("Filter by category", localData);
     setData(localData);
   };
   async function buyNft(nft) {
@@ -168,17 +171,33 @@ const Home = () => {
         console.log("err", error);
       });
   };
+
+
+  const applyFilter=(type)=>{
+    let filterproducts=[...data];
+    switch(type){
+        case "price":
+          filterproducts=filterproducts.filter(item=>item.price>=filterSection.minPrice && item.price<=filterSection.maxPrice )
+          setData(filterproducts)
+        break
+      default:
+      setData(filterproducts);  
+    }
+  }
   const market = async () => {
     const refineArray = [];
     const result = await request(graphqlAPI, saleStartedQuery);
-
+    console.log("result", result);
     const fResult = await Promise.all(
       result.saleStarteds.map(async function (obj, index) {
         const nftData = await getMetaData(obj.metaDataURI);
         const { name, description, categories, image } = nftData;
         const likeCount = await getLikes(obj.itemId);
+       const date =new Date(parseInt(obj.blockTimestamp+'000')).toDateString();
+       console.log("date",date)
         return {
           ...obj,
+          date,
           likeCount,
           name,
           description,
@@ -187,50 +206,26 @@ const Home = () => {
             ? `${process.env.NEXT_PUBLIC_IPFS_GATEWAY}${removePrefix(image)}`
             : "",
         };
-      }),
-
-      Promise.all(
-        result.saleStarteds.map(async (item) => {
-          const marketPlaceContarct = await etherContract(
-            marketplaceAddress,
-            Marketplace.abi
-          );
-          const itemResult = await marketPlaceContarct.idToMarketItem(
-            item.tokenId
-          );
-          const status = itemStatus.get(parseInt(itemResult.status));
-          console.log("status", status);
-          if (status == "SALE") {
-            refineArray.push(item.tokenId);
-          }
-        })
-      ).then(() => {
-        setData(
-          result.saleStarteds.filter((assetItem) =>
-            refineArray.some((item) => item === assetItem.tokenId)
-          )
-        );
       })
+
+      
     );
     const sortedNFts = fResult.sort((a, b) => {
       if (a.itemId < b.itemId) return -1;
     });
 
     setData(sortedNFts);
+    setItem(sortedNFts);
+    setAllNFTs(sortedNFts);
+    setsortOldNew(sortOldNew);
     setShallowData(sortedNFts);
   };
 
   useEffect(() => {
-    const token = localStorage.getItem("platform_token");
-    if (token) {
       market();
-    }
   }, []);
   useEffect(() => {
-    if (!localStorage.getItem("platform_wallet") && wallet !== undefined) {
-      localStorage.setItem("platform_wallet", wallet);
-    }
-    fetchAuction(`${localStorage.getItem("platform_wallet")}`);
+    fetchAuction();
   }, []);
 
   const handleItemClick = (id) => {
@@ -258,7 +253,6 @@ const Home = () => {
       setLoading(false);
     }
   };
-
   const fetchAuction = async () => {
     const query = gql`
       query Query($where: AuctionEnded_filter) {
@@ -277,7 +271,6 @@ const Home = () => {
     setAuction(result.auctionEndeds);
     setLoading(false);
   };
-
   return (
     <Layout
       title="Explore"
@@ -357,23 +350,26 @@ const Home = () => {
                   ></i>
                 </div>
                 <div className={`dropdown-body ${isOpenSortOldNew && "open"}`}>
-                  {items.map((item) => (
+                  
+                  {items.map((item) => {
+                     return(
                     <div
                       className="dropdown-item"
-                      onClick={(e) => handleItemClick(e.target.id)}
-                      id={item.id}
-                      key={item.id}
+                      onClick={(e) => handleItemClick(e.target.itemId)}
+                      id={item.itemId}
+                      key={item.itemId}
                     >
                       <span
                         className={`dropdown-item-dot ${
-                          item.id == selectedItem && "selected"
+                          item.itemId == selectedItem && "selected"
                         }`}
                       >
                         •{" "}
                       </span>
-                      {item.label}
+                      {item.date}
                     </div>
-                  ))}
+                     );
+                    })}
                 </div>
               </div>
               <div className="dropdown">
@@ -387,7 +383,7 @@ const Home = () => {
                     }`}
                   ></i>
                 </div>
-                <div className={`dropdown-body ${isOpenMedia && "open"}`}>
+                <div className={`dropdown-body-media ${isOpenMedia && "open"}`}>
                   {categories.map((category, key) => {
                     return (
                       <div className="flex mt-5 " key={key}>
@@ -395,7 +391,6 @@ const Home = () => {
                           onClick={() => filterNFTs(category)}
                           className="bg-blue-100 text-blue-800 text-lg mr-3 px-5 py-2 rounded dark:bg-blue-900 dark:text-blue-300 font-bold "
                         >
-                          {/* <input type="checkbox"></input>  */}
                           {category}
                         </button>
                       </div>
@@ -404,7 +399,7 @@ const Home = () => {
                 </div>
               </div>
 
-              <div className="dropdown">
+              {/* <div className="dropdown">
                 <div className="dropdown-header" onClick={toggleDropAvail}>
                   {selectedAvail
                     ? items.find((item) => item.id == selectedAvail).label
@@ -416,12 +411,13 @@ const Home = () => {
                   ></i>
                 </div>
                 <div className={`dropdown-body ${isOpenAvail && "open"}`}>
-                  <div className="flex justify-between">
-                    <div className="all-buy"> All</div>
-                    <div className="media-type"> Buy Now</div>
+                  <div className="flex justify-between mt-5">
+                    <div onClick={()=>applyFilter("availibility","allassets")} value={filterSection.allassets} className="all-buy"> All</div>
+                    <div  onClick={()=>applyFilter("buyNow","allassets")} value={filterSection.buynow} className="media-type"> Buy Now</div>
                   </div>
+                  
                 </div>
-              </div>
+              </div> */}
 
               <div className="dropdown">
                 <div className="dropdown-header" onClick={togglePriceDropdown}>
@@ -436,63 +432,85 @@ const Home = () => {
                 </div>
                 <div className={`dropdown-body ${isopenprice && "open"}`}>
                   <div className="flex justify-between">
-                    <div className="media-type"> Max</div>
-                    <div className="media-type">Min</div>
+                    <div className="input-type">
+                      <input
+                        className="input-number"
+                        type="number"
+                        placeholder="Min"
+                        name='min'
+                        min={0.1}
+                        value={filterSection.minPrice}
+                        onChange={(e) => applyFilter("price",e.target.value)}
+                      ></input>
+                    </div>
+                    <div className="input-type ml-3">
+                      <input
+                        className="input-number "
+                        type="number"
+                        placeholder="Max"
+                        max={100}
+                        name="maxPrice"
+                        value={filterSection.maxPrice}
+                        onChange={(e) => {
+                          onUpdatefilter(e)
+                          applyFilter("price",e.target.value)}}
+                      ></input>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           )}
           <div className="flex">
-            <div className="grid p-4">
-              {data?.length
-                ? data?.map((item) => {
-                    return (
-                      <div
-                        key={item.itemId}
-                        className=" border-white mycard p-3 shadow-lg w-full cursor-pointer"
-                      >
-                        <Link
-                          key={item.itemId}
-                          href={`/explore/${item.itemId}`}
-                        >
-                          <div>
-                            <MarketPlaceCard {...item} />
-                            <div className="flex items-center justify-between mb-2">
-                              <div className="text-sm font-bold text-gray-500 dark:text-white">
-                                Price{" "}
-                              </div>
-                              <div className="flex items-center">
-                                <FaEthereum className="w-4 text-gray-500 dark:text-white" />
-                                <div className="text-gray-500 dark:text-white font-semibold">
-                                  {getEthPrice(item.price)} MATIC
-                                </div>
+            <div className=" p-4">
+              {data?.length ? (
+                data?.map((item) => {
+                  return (
+                    <div
+                      key={item.itemId}
+                      className=" border-white mycard p-3 shadow-lg w-full cursor-pointer"
+                    >
+                      <Link key={item.itemId} href={`/explore/${item.itemId}`}>
+                        <div>
+                          <MarketPlaceCard {...item} />
+                          <div className="flex items-center justify-between mb-2">
+                            <div className="text-sm font-bold text-gray-500 dark:text-white">
+                              Price{" "}
+                            </div>
+                            <div className="flex items-center">
+                              <FaEthereum className="w-4 text-gray-500 dark:text-white" />
+                              <div className="text-gray-500 dark:text-white font-semibold">
+                                {getEthPrice(item.price)} MATIC
                               </div>
                             </div>
                           </div>
-                        </Link>
-                        <button onClick={() => AddLike(item.itemId)}>
-                          like:{item.likeCount}
-                        </button>
+                        </div>
+                      </Link>
+                      <button onClick={() => AddLike(item.itemId)}>
+                        like:{item.likeCount}
+                      </button>
 
-                        <button
-                          onClick={() => buyNft(item)}
-                          className="text-gray-500 dark:text-black bg-[#CAFC01] w-full rounded-md py-2 font-bold"
-                        >
-                          Buy Now
-                        </button>
-                      </div>
-                    );
-                  })
-                : null}
+                      <button
+                        onClick={() => buyNft(item)}
+                        className="text-gray-500 dark:text-black bg-[#CAFC01] w-full rounded-md py-2 font-bold"
+                      >
+                        Buy Now
+                      </button>
+                    </div>
+                  );
+                })
+              ) : loading ? (
+                <Loader />
+              ) : (
+                <div className="flex"> 
+                <div className="text-2xl pb-10 font-bold text-center text-gray-500 dark:text-white">
+                  You have not created Any Assets
+                </div>
+                </div>
+              )}
             </div>
-            {data?.length == 0 && (
-              <div className="font-bold text-2xl">
-                You have not created any NFT
-              </div>
-            )}
 
-            <div className="h-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div className=" p-4">
               {auction.length > 0 ? (
                 auction.map((item) => {
                   return (
