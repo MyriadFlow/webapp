@@ -310,7 +310,7 @@ const Home = () => {
       )}
 
       <main className="body-back">
-        <div className="flex justify-between p-4 border-y-2">
+        <div className="flex justify-around p-4 border-y-2">
           <div className="mt-5 mr-5">
             <Link href="/explore">
               <NavLink
@@ -322,8 +322,8 @@ const Home = () => {
               </NavLink>
             </Link>
           </div>
-          <div className="mt-5 font-bold text-2xl">Sale</div>
-          <div className="mt-5 font-bold text-2xl">Auction</div>
+          <div className="mt-5 font-bold text-2xl text-center">Sale</div>
+
         </div>
         <div>
           <div
@@ -335,7 +335,7 @@ const Home = () => {
             Hide Filter
           </div>
         </div>
-        <div className="flex justify-around">
+        <div className="flex">
           {hidefilter && (
             <div className="p-4">
               <div className="dropdown">
@@ -461,8 +461,7 @@ const Home = () => {
               </div>
             </div>
           )}
-          <div className="flex">
-            <div className=" p-4">
+          <div className="mt-10 h-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 ">
               {data?.length ? (
                 data?.map((item) => {
                   return (
@@ -510,7 +509,7 @@ const Home = () => {
               )}
             </div>
 
-            <div className=" p-4">
+            {/* <div className=" p-4">
               {auction.length > 0 ? (
                 auction.map((item) => {
                   return (
@@ -542,9 +541,9 @@ const Home = () => {
                   You have not created Any Auction
                 </div>
               )}
-            </div>
+            </div> */}
           </div>
-        </div>
+      
       </main>
     </Layout>
   );
