@@ -311,7 +311,7 @@ const Home = () => {
 
       <main className="body-back">
         <div className="flex justify-around p-4 border-y-2">
-          <div className="mt-5 mr-5">
+          {/* <div className="mt-5 mr-5">
             <Link href="/explore">
               <NavLink
                 className={router.pathname == "/explore" ? "active " : ""}
@@ -321,7 +321,7 @@ const Home = () => {
                 </button>
               </NavLink>
             </Link>
-          </div>
+          </div> */}
           <div className="mt-5 font-bold text-2xl text-center">Sale</div>
 
         </div>
