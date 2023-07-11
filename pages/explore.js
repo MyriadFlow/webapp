@@ -10,7 +10,6 @@ import { logoutbalance } from "../slices/balanceSlice";
 import { close } from "../slices/modelSlice";
 import { request, gql } from "graphql-request";
 import BuyAsset from "../Components/buyAssetModal";
-import { buyNFT } from "./api/buyNFT";
 import Loader from "../Components/Loader";
 import Layout from "../Components/Layout";
 import { getMetaData, removePrefix } from "../utils/ipfsUtil";
@@ -18,7 +17,7 @@ import { MarketPlaceCard } from "../Components/Cards/MarketPlaceCard";
 import { NavLink } from "reactstrap";
 import { useRouter } from "next/router";
 import HomeComp from "../Components/homeComp";
-
+import  buyItem    from "../pages/api/buyItem";
 import { saleStartedQuery } from "../utils/gqlUtil";
 import axios from "axios";
 import Marketplace from "../artifacts/contracts/Marketplace.sol/Marketplace.json";
@@ -133,7 +132,7 @@ const Home = () => {
   };
   async function buyNft(nft) {
     setmodelmsg("Buying in Progress");
-    await buyNFT(nft, setmodel, setmodelmsg);
+    await buyItem(nft, setmodel, setmodelmsg);
   }
   useEffect(() => {
     filterNFTs();

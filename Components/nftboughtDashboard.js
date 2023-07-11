@@ -8,9 +8,9 @@ import { request, gql } from "graphql-request";
 import { ethers } from "ethers";
 import Loader from "../Components/Loader";
 import BuyAsset from "./buyAssetModal";
-import { buyNFT } from "../pages/api/buyNFT";
+// import { buyNFT } from "../pages/api/buyNFT";
 // import { buyNFT } from "./api/buyNFT";
-
+import  buyItem  from "../pages/api/buyItem";
 const graphqlAPI = process.env.NEXT_PUBLIC_MARKETPLACE_API;
 
 function NftboughtDashboard() {
@@ -71,7 +71,7 @@ function NftboughtDashboard() {
   }
   async function buyNft(nft) {
     setmodelmsg("Buying in Progress");
-    await buyNFT(nft, setmodel, setmodelmsg);
+    await buyItem(nft, setmodel, setmodelmsg);
   }
 
   useEffect(() => {

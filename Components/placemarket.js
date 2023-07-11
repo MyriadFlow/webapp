@@ -9,13 +9,13 @@ import HomeComp from "./homeComp";
 import { useRouter } from "next/router";
 import BuyAsset from "../Components/buyAssetModal";
 import { request } from "graphql-request";
-import StoreFront from "../artifacts/contracts/StoreFront.sol/StoreFront.json";
-import Marketplace from "../artifacts/contracts/Marketplace.sol/Marketplace.json";
+import Tradhub from '../artifacts/contracts/tradehub/TradeHub.sol/TradeHub.json'
 import Loader from "./Loader";
 import { saleStartedQuery } from "../utils/gqlUtil";
 import etherContract from "../utils/web3Modal";
-const marketplaceAddress = process.env.NEXT_PUBLIC_MARKETPLACE_ADDRESS;
-const storeFrontAddress = process.env.NEXT_PUBLIC_STOREFRONT_ADDRESS;
+const tradhubAddress=process.env.NEXT_PUBLIC_TRADEHUB_ADDRESS
+const accessmasterAddress = process.env.NEXT_PUBLIC_ACCESS_MASTER_ADDRESS;
+
 const graphqlAPI = process.env.NEXT_PUBLIC_MARKETPLACE_API;
 
 const MyAssets = () => {
@@ -53,8 +53,8 @@ const MyAssets = () => {
     console.table(price);
     try {
       setmodelmsg("Transaction 2 in progress");
-      const marketPlacecontract = await etherContract(marketplaceAddress,Marketplace.abi)
-      transaction = await marketPlacecontract.listItem(storeFrontAddress, tokenId, price, false,0);
+      const tradhubContarct = await etherContract(tradhubAddress,Tradhub.abi)
+      transaction = await tradhubContarct.listItem(accessmasterAddress, tokenId, price, false,0);
       await transaction.wait();
       setmodelmsg("Transaction 2 Complete !!");
     } catch (e) {

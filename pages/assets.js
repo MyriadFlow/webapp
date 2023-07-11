@@ -16,8 +16,9 @@ import Web3Modal from "web3modal";
 const YOUR_API_KEY =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkaWQ6ZXRocjoweDFFODE2RTA3RjBFYTg4MkI3Q0I0MDQ2QTg4NENDQ0Q0MjA4NEU3QTgiLCJpc3MiOiJuZnQtc3RvcmFnZSIsImlhdCI6MTY3MzI0NTEzNDc3MywibmFtZSI6Im5mdCJ9.vP9_nN3dQHIkN9cVQH5KvCLNHRk3M2ZO4x2G99smofw";
 const client = new NFTStorage({ token: YOUR_API_KEY });
-import Marketplace from "../artifacts/contracts/Marketplace.sol/Marketplace.json";
-import StoreFront from "../artifacts/contracts/StoreFront.sol/StoreFront.json";
+import Tradhub from '../artifacts/contracts/tradehub/TradeHub.sol/TradeHub.json';
+import FusionSeries from '../artifacts/contracts/fusionseries/FusionSeries.sol/FusionSeries.json';
+import AccessMaster from '../artifacts/contracts/accessmaster/AccessMaster.sol/AccessMaster.json';
 import BuyAsset from "../Components/buyAssetModal";
 import { Alert, Snackbar } from "@mui/material";
 import Layout from "../Components/Layout";
@@ -40,8 +41,10 @@ const style = {
   px: 4,
   pb: 3,
 };
-const marketplaceAddress = process.env.NEXT_PUBLIC_MARKETPLACE_ADDRESS;
-const storeFrontAddress = process.env.NEXT_PUBLIC_STOREFRONT_ADDRESS;
+const tradhubAddress = process.env.NEXT_PUBLIC_TRADEHUB_ADDRESS;
+const fusionseriesAddress =process.env.NEXT_PUBLIC_FUSIONSERIES_ADDRESS;
+const accessmasterAddress =process.env.NEXT_PUBLIC_ACCESS_MASTER_ADDRESS;
+
 export default function CreateItem() {
   const [toggle, setToggle] = useState(false);
   const [toggleinput, setToggleInput] = useState(false);
@@ -206,8 +209,8 @@ export default function CreateItem() {
 
     /* next, create the item */
     let contract = new ethers.Contract(
-      storeFrontAddress,
-      StoreFront.abi,
+      fusionseriesAddress,
+      FusionSeries.abi,
       signer
     );
     console.log("ipfs://" + ipfsHash);    try {
@@ -228,7 +231,7 @@ export default function CreateItem() {
       setmodelmsg("Transaction 1 failed");
       return;
     }
-    /* then list the item for sale on the marketplace */
+    /* then list the item for sale on the tradhub */
     router.push("/explore");
 
   }
@@ -236,12 +239,12 @@ export default function CreateItem() {
     try {
       setmodelmsg("Transaction 2 in progress");
       contract = new ethers.Contract(
-        marketplaceAddress,
-        Marketplace.abi,
+        tradhubAddress,
+        Tradhub.abi,
         signer
       );
       transaction = await contract.listItem(
-        storeFrontAddress,
+        tradhubAddress,
         tokenId,
         price,
         forAuction,
@@ -315,8 +318,8 @@ export default function CreateItem() {
 
   useEffect(() => {
     const asyncFn = async () => {
-      const contract = await etherContract(storeFrontAddress,StoreFront.abi)
-      const hasCreatorRole = await contract.hasRole(await contract.STOREFRONT_CREATOR_ROLE(), wallet)
+      const contract = await etherContract(accessmasterAddress,AccessMaster.abi)
+      const hasCreatorRole = await contract.hasRole(await contract.FLOW_CREATOR_ROLE(), wallet)
       setHasRole(hasCreatorRole)
       console.log("hasCreatorRole",hasCreatorRole);
         if (hasCreatorRole) {
@@ -673,7 +676,7 @@ export default function CreateItem() {
               />
               <div className="flex justify-between mt-5">
                 <div className="text-left">
-                  <div className="font-bold text-3xl text-gray-500 dark:text-white">Put on Marketplace</div>
+                  <div className="font-bold text-3xl text-gray-500 dark:text-white">Put on Tradhub</div>
                   <div className="text-gray-500 dark:text-white">Enter price to Allow Users Instantly Buy your NFT </div>
                 </div>
 

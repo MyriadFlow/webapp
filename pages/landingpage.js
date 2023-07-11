@@ -4,19 +4,21 @@ import BigCard from "../Components/Cards/BigCard";
 import Image from "next/image";
 import { useSelector } from "react-redux";
 import { selectUser } from "../slices/userSlice";
-import StoreFront from "../artifacts/contracts/StoreFront.sol/StoreFront.json";
+import AccessMater from '../artifacts/contracts/accessmaster/AccessMaster.sol/AccessMaster.json'
+
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import etherContract from "../utils/web3Modal";
 import { saleStartedQuery } from "../utils/gqlUtil";
 import { request, gql } from "graphql-request";
-import Marketplace from "../artifacts/contracts/Marketplace.sol/Marketplace.json";
+import Tradhub from '../artifacts/contracts/tradehub/TradeHub.sol/TradeHub.json';
 import { getMetaData, removePrefix } from "../utils/ipfsUtil";
 import Loader from "../Components/Loader";
 
-const marketplaceAddress = process.env.NEXT_PUBLIC_MARKETPLACE_ADDRESS;
-const storeFrontAddress = process.env.NEXT_PUBLIC_STOREFRONT_ADDRESS;
+const tradhubAddress = process.env.NEXT_PUBLIC_TRADEHUB_ADDRESS;
 const graphqlAPI = process.env.NEXT_PUBLIC_MARKETPLACE_API;
+const accessmasterAddress = process.env.NEXT_PUBLIC_ACCESS_MASTER_ADDRESS;
+
 function LandingPage() {
   const [info, setInfo] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -38,12 +40,12 @@ function LandingPage() {
     setLoading(true);
     axios.get(`https://testnet.gateway.myriadflow.com/api/v1.0/marketplace/itemIds`,config)
       .then(async(res) => {
-        const marketPlaceContarct = await etherContract(marketplaceAddress, Marketplace.abi)
+        const tradhubContarct = await etherContract(tradhubAddress, Tradhub.abi)
         const saleInput = res.data.payload.map(i=>parseInt(i))
         const {saleStarteds} = await request(graphqlAPI, saleStartedQuery, {where:{itemId_in: saleInput}}) //saleInput =>[1,2]
         const finalResult=[] 
         Promise.all(saleStarteds.map(async(item)=>{
-          const itemResult = await marketPlaceContarct.idToMarketItem(item.itemId)
+          const itemResult = await tradhubContarct.idToMarketItem(item.itemId)
           const nftData = await getMetaData(item.metaDataURI);
           finalResult.push({...item,...nftData,  
             image: nftData?.image? `${process.env.NEXT_PUBLIC_IPFS_GATEWAY}${removePrefix(nftData?.image)}`:"",
@@ -73,13 +75,13 @@ function LandingPage() {
       if (token) {
       }
 
-      const storeFrontContract = await etherContract(
-        storeFrontAddress,
-        StoreFront.abi
+      const accessmaterContarct = await etherContract(
+        accessmasterAddress,
+        AccessMater.abi
       );
       setHasRole(
-        await storeFrontContract.hasRole(
-          await storeFrontContract.STOREFRONT_CREATOR_ROLE(),
+        await accessmaterContarct.hasRole(
+          await accessmaterContarct.FLOW_CREATOR_ROLE(),
           wallet
         )
       );

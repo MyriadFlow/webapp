@@ -3,11 +3,11 @@ import { selectUser } from "../slices/userSlice";
 import { FaMinusSquare } from "react-icons/fa";
 import { React, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import StoreFront from "../artifacts/contracts/StoreFront.sol/StoreFront.json";
+import Accessmaster from '../artifacts/contracts/accessmaster/AccessMaster.sol/AccessMaster.json';
 import etherContract from "../utils/web3Modal";
 import { request, gql } from "graphql-request";
 import Loader from "../Components/Loader";
-const storeFrontAddress = process.env.NEXT_PUBLIC_STOREFRONT_ADDRESS;
+const accessmasterAddress = process.env.NEXT_PUBLIC_ACCESS_MASTER_ADDRESS;
 const graphqlAPI = process.env.NEXT_PUBLIC_STOREFRONT_API;
 export default function Manage() {
   const [loading, setLoading] = useState(true);
@@ -23,8 +23,8 @@ export default function Manage() {
     setRoleGranteds(null)
   }
   const initRole=async()=>{
-    const contract = await etherContract(storeFrontAddress,StoreFront.abi)
-    const creatorRoleId =  await contract.STOREFRONT_CREATOR_ROLE()
+    const contract = await etherContract(accessmasterAddress,Accessmaster.abi)
+    const creatorRoleId =  await contract.FLOW_CREATOR_ROLE()
     const hasCreatorRole = await contract.hasRole(creatorRoleId, wallet)
     setRoleGranteds(hasCreatorRole ? wallet : null)
     setUserData({contract, creatorRoleId})

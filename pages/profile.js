@@ -6,7 +6,7 @@ const Web3 = require("web3");
 import { NFTStorage } from "nft.storage";
 import { FaUserCircle } from "react-icons/fa";
 import { convertUtf8ToHex } from "@walletconnect/utils";
-import StoreFront from "../artifacts/contracts/StoreFront.sol/StoreFront.json";
+import AccessMaster from '../artifacts/contracts/accessmaster/AccessMaster.sol/AccessMaster.json';
 const YOUR_API_KEY =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkaWQ6ZXRocjoweDFFODE2RTA3RjBFYTg4MkI3Q0I0MDQ2QTg4NENDQ0Q0MjA4NEU3QTgiLCJpc3MiOiJuZnQtc3RvcmFnZSIsImlhdCI6MTY3MzI0NTEzNDc3MywibmFtZSI6Im5mdCJ9.vP9_nN3dQHIkN9cVQH5KvCLNHRk3M2ZO4x2G99smofw";
 import axios from "axios";
@@ -15,7 +15,8 @@ import Loader from "../Components/Loader";
 import etherContract from "../utils/web3Modal";
 const client = new NFTStorage({ token: YOUR_API_KEY });
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
-const storeFrontAddress = process.env.NEXT_PUBLIC_STOREFRONT_ADDRESS;
+const accessmasterAddress = process.env.NEXT_PUBLIC_ACCESS_MASTER_ADDRESS;
+
 function Profile() {
   const profile = {
     name: "",
@@ -246,11 +247,11 @@ function Profile() {
   };
 
   const connectweb = async () => {
-    const storeFrontContract = await etherContract(storeFrontAddress, StoreFront.abi)
+    const accessmaterContarct = await etherContract(accessmasterAddress, AccessMaster.abi)
     setHasRole(
-      await storeFrontContract.hasRole(await storeFrontContract.STOREFRONT_CREATOR_ROLE(), wallet)
+      await accessmaterContarct.hasRole(await accessmaterContarct.FLOW_CREATOR_ROLE(), wallet)
     );
-    const roleid = await storeFrontContract.STOREFRONT_CREATOR_ROLE();
+    const roleid = await accessmaterContarct.FLOW_CREATOR_ROLE();
     localStorage.setItem("platform_roleid", roleid);
   };
   const onUpdateProfile = (e) => {
@@ -268,9 +269,9 @@ function Profile() {
         getProfile();
       }
 
-      const storeFrontContract = await etherContract(storeFrontAddress, StoreFront.abi)
+      const accessmaterContarct = await etherContract(accessmasterAddress, AccessMaster.abi)
       setHasRole(
-        await storeFrontContract.hasRole(await storeFrontContract.STOREFRONT_CREATOR_ROLE(), wallet)
+        await accessmaterContarct.hasRole(await accessmaterContarct.FLOW_CREATOR_ROLE(), wallet)
       );
     };
     asyncFn();

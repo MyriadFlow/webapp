@@ -8,7 +8,7 @@ import { gql } from "@apollo/client";
 import client from "../../apollo-client";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { buyNFT } from "../api/buyNFT";
+import { buyItem } from "../api/buyItem";
 import BuyAsset from "../../Components/buyAssetModal";
 import Layout from "../../Components/Layout";
 import { ethers } from "ethers";
@@ -174,7 +174,7 @@ function Asset({ asset }) {
                     </div>
                     <button
                       onClick={() =>
-                        buyNFT(asset, setmodel, setmodelmsg)
+                        buyItem(asset, setmodel, setmodelmsg)
                       }
                       className="flex gap-x-2 items-center justify-center px-5 py-2 bg-blue-600 text-gray-500 dark:text-white text-sm font-small rounded-xl hover:bg-blue-500 focus:outline-none focus:bg-blue-500"
                     >

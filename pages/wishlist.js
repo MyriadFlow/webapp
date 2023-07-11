@@ -6,12 +6,12 @@ import { getMetaData, removePrefix } from "../utils/ipfsUtil";
 import Link from "next/link";
 import { MarketPlaceCardWish } from "../Components/Cards/MarketPlaceCardWish";
 import { ethers } from "ethers";
-import { buyNFT } from "./api/buyNFT";
 import { useSelector } from "react-redux";
 import { selectModel } from "../slices/modelSlice";
 import BuyAsset from "../Components/buyAssetModal";
 import { saleStartedQuery } from "../utils/gqlUtil";
 import axios from "axios";
+import { buyItem } from "./api/buyItem";
 
 const graphqlAPI = process.env.NEXT_PUBLIC_MARKETPLACE_API;
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
@@ -84,7 +84,7 @@ export default function Wishlist() {
   }
   async function buyNft(nft) {
     setmodelmsg("Buying in Progress");
-    await buyNFT(nft, setmodel, setmodelmsg);
+    await buyItem(nft, setmodel, setmodelmsg);
   }
 
   return (

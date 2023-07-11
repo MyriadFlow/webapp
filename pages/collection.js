@@ -9,8 +9,9 @@ import Loader from "../Components/Loader";
 import Layout from "../Components/Layout";
 import etherContract from "../utils/web3Modal";
 import Marketplace from "../artifacts/contracts/Marketplace.sol/Marketplace.json";
+import Tradhub from '../artifacts/contracts/tradehub/TradeHub.sol/TradeHub.json'
 const graphqlAPI = process.env.NEXT_PUBLIC_STOREFRONT_API;
-const marketplaceAddress = process.env.NEXT_PUBLIC_MARKETPLACE_ADDRESS;
+const tradhubAddress = process.env.NEXT_PUBLIC_TRADEHUB_ADDRESS;
 
 const Collection = () => {
   const [info, setInfo] = useState([]);
@@ -39,8 +40,8 @@ const Collection = () => {
     const result = await request(graphqlAPI, query);
     const refineArray = []
           Promise.all(result.assetCreateds.map(async item=>{
-            const marketPlaceContarct = await etherContract(marketplaceAddress, Marketplace.abi);
-            const itemResult = await marketPlaceContarct.idToMarketItem(item.tokenID)
+            const tradhubContarct = await etherContract(tradhubAddress, Tradhub.abi);
+            const itemResult = await tradhubContarct.idToMarketItem(item.tokenID)
             const status=  itemStatus.get(parseInt(itemResult.status))
             if(status=="SALE"){
               refineArray.push(item.tokenID)

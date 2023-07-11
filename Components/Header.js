@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
-import StoreFront from "../artifacts/contracts/StoreFront.sol/StoreFront.json";
+import Accessmater from '../artifacts/contracts/accessmaster/AccessMaster.sol/AccessMaster.json'
 import { selectUser } from "../slices/userSlice";
 import { useSelector } from "react-redux";
 import { FaUserCircle } from "react-icons/fa";
@@ -14,7 +14,7 @@ import Image from "next/image";
 import etherContract from "../utils/web3Modal";
 import SimpleDropdown from "./SimpleDropdown";
 // import useAddress from '@thirdweb-dev/react';
-const storeFrontAddress = process.env.NEXT_PUBLIC_STOREFRONT_ADDRESS;
+const accessmasterAddress = process.env.NEXT_PUBLIC_ACCESS_MASTER_ADDRESS;
 function Header() {
   const address = useAddress();
   const { contract } = useContract(address);
@@ -46,12 +46,12 @@ function Header() {
 
   useEffect(() => {
     const asyncFn = async () => {
-    const storeFrontContract = await etherContract(storeFrontAddress, StoreFront.abi)
+    const accessmaterContarct = await etherContract(accessmasterAddress, Accessmater.abi)
     setHasRole(
-      await storeFrontContract.hasRole(await storeFrontContract.STOREFRONT_CREATOR_ROLE(), walletAddress)
+      await accessmaterContarct.hasRole(await accessmaterContarct.FLOW_CREATOR_ROLE(), walletAddress)
     );
     setHasRoleOperator(
-      await storeFrontContract.hasRole( await storeFrontContract.STOREFRONT_OPERATOR_ROLE(), walletAddress))
+      await accessmaterContarct.hasRole( await accessmaterContarct.FLOW_CREATOR_ROLE(), walletAddress))
     }
     asyncFn();
   }, [])
