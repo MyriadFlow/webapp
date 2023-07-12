@@ -151,12 +151,12 @@ export default function CreatorDashboard() {
                 data?.map((item) => {
                   return (
                     <div 
-                      key={item.itemId}
+                      key={item?.itemId}
                       className=" border-2 p-2.5 bg-white dark:bg-gray-900  rounded-lg shadow-lg w-full lg:w-72 hover:scale-105 duration-200 transform transition cursor-pointer border-2 dark:border-gray-800"
                     >
-                      <Link key={item.itemId} href={`/assets/${item.tokenId}`}>
+                      <Link key={item?.itemId} href={`/assets/${item?.tokenId}`}>
                         <div>
-                          <HomeComp uri={item ? item.metadataURI : ""} />
+                          <HomeComp uri={item ? item?.metadataURI : ""} />
 
                          
                           <div className=" flex items-center justify-between mb-2 mt-3">
@@ -192,12 +192,12 @@ export default function CreatorDashboard() {
                 auction?.map((item) => {
                   return (
                     <div 
-                      key={item.id}
+                      key={item?.id}
                       className=" border-2 p-2.5 bg-white dark:bg-gray-900  rounded-lg shadow-lg w-full lg:w-72 hover:scale-105 duration-200 transform transition cursor-pointer border-2 dark:border-gray-800"
                     >
-                      <Link key={item.itemId} href={`/assets/${item.id}`}>
+                      <Link key={item.itemId} href={`/assets/${item?.id}`}>
                         <div>
-                          <HomeComp uri={item ? item.metadataURI : ""} />
+                          <HomeComp uri={item ? item?.metadataURI : ""} />
 
                          
                           <div className=" flex items-center justify-between mb-2 mt-3">
@@ -212,7 +212,7 @@ export default function CreatorDashboard() {
                           </div>
                           <div>
                   <div className="font-bold">Wallet Address :</div>
-                  <div className="text-xs">{item.owner.slice(-6)}</div>
+                  <div className="text-xs">{item?.owner?.slice(-6)}</div>
                 </div>
                         </div>
                       </Link>

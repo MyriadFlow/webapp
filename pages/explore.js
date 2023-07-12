@@ -463,10 +463,10 @@ const Home = () => {
                 data?.map((item) => {
                   return (
                     <div
-                      key={item.itemId}
+                      key={item?.itemId}
                       className=" border-white mycard p-3 shadow-lg w-full cursor-pointer"
                     >
-                      <Link key={item.itemId} href={`/explore/${item.itemId}`}>
+                      <Link key={item?.itemId} href={`/explore/${item?.itemId}`}>
                         <div>
                           <MarketPlaceCard {...item} />
                           <div className="flex items-center justify-between mb-2">
@@ -476,14 +476,14 @@ const Home = () => {
                             <div className="flex items-center">
                               <FaEthereum className="w-4 text-gray-500 dark:text-white" />
                               <div className="text-gray-500 dark:text-white font-semibold">
-                                {getEthPrice(item.price)} MATIC
+                                {getEthPrice(item?.price)} MATIC
                               </div>
                             </div>
                           </div>
                         </div>
                       </Link>
-                      <button onClick={() => AddLike(item.itemId)}>
-                        like:{item.likeCount}
+                      <button onClick={() => AddLike(item?.itemId)}>
+                        like:{item?.likeCount}
                       </button>
 
                       <button

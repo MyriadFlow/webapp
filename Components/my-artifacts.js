@@ -1,4 +1,3 @@
-// /* pages/my-artifacts.js */
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { selectUser } from "../slices/userSlice";
@@ -46,12 +45,12 @@ const MyAssets = () => {
           data.map((item) => {
             return (
               <div
-                key={item.tokenID}
+                key={item?.tokenID}
                 className=" border-2 p-2.5  dark:bg-[#1c1c24]  rounded-lg shadow-lg w-full lg:w-72 hover:scale-105 duration-200 transform transition cursor-pointer"
               >
-                <Link key={item.tokenID} href={`/assets/${item.tokenID}`}>
+                <Link key={item?.tokenID} href={`/assets/${item?.tokenID}`}>
                   <div>
-                    <HomeComp uri={item ? item.metaDataURI : ""} />
+                    <HomeComp uri={item ? item?.metaDataURI : ""} />
 
                     <div>
                       <div className="text-blue-600 text-gray-500 dark:text-white">
@@ -63,7 +62,7 @@ const MyAssets = () => {
                             Wallet Address :{" "}
                           </div>
                           <div className="text-xs text-gray-500 dark:text-white">
-                            {item.creator.slice(-6)}
+                            {item?.creator.slice(-6)}
                           </div>
                         </div>
                       </div>

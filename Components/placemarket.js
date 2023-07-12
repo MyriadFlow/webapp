@@ -98,19 +98,19 @@ const MyAssets = () => {
                 key={item.itemId}
                 className=" border-2 p-2.5 dark:bg-[#1c1c24]  rounded-lg shadow-lg w-full lg:w-72 hover:scale-105 duration-200 transform transition cursor-pointer border-2 dark:border-gray-800"
               >
-                <Link key={item.itemId} href={`/assets/${item.tokenId}`}>
+                <Link key={item?.itemId} href={`/assets/${item?.tokenId}`}>
                   <div>
-                    <HomeComp uri={item ? item.metaDataURI : ""} />
+                    <HomeComp uri={item ? item?.metaDataURI : ""} />
                   </div>
                 </Link>
               
                 <div className="flex justify-between mt-3 text-gray-500 dark:text-white">
                   <div className="font-bold">Wallet Address :</div>
-                  <div className="text-xs">{item.seller.slice(-6)}</div>
+                  <div className="text-xs">{item?.seller?.slice(-6)}</div>
                 </div>
                 <div className="px-4 py-4 bg-white  flex justify-center mt-3">
                   <button
-                    onClick={() => placeNft(item.tokenId)}
+                    onClick={() => placeNft(item?.tokenId)}
                     className="text-blue-500 hover:text-blue-400 font-bold"
                   >
                     Manage

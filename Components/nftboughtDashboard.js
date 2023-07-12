@@ -99,9 +99,9 @@ function NftboughtDashboard() {
                   key={item.itemId}
                   className=" border-2 p-2.5 bg-white dark:bg-gray-900  rounded-lg shadow-lg w-full lg:w-72 hover:scale-105 duration-200 transform transition cursor-pointer border-2 dark:border-gray-800"
                 >
-                  <Link key={item.itemId} href={`/assets/${item.tokenId}`}>
+                  <Link key={item?.itemId} href={`/assets/${item?.tokenId}`}>
                     <div>
-                      <HomeComp uri={item ? item.metadataURI : ""} />
+                      <HomeComp uri={item ? item?.metadataURI : ""} />
 
                       <div className=" flex items-center justify-between mb-2">
                         <div className="font-1 text-sm font-bold mt-3">
@@ -110,13 +110,13 @@ function NftboughtDashboard() {
                         <div className="flex items-center">
                           <FaEthereum className="h-4 w-4 text-blue-400" />
                           <div className="font-extralight dark:text-gray-400">
-                            {getEthPrice(item.price)} MATIC
+                            {getEthPrice(item?.price)} MATIC
                           </div>
                         </div>
                       </div>
                       <div>
                         <div className="font-bold mt-3">Wallet Address :</div>
-                        <div className="text-xs">{item.buyer.slice(-6)}</div>
+                        <div className="text-xs">{item?.buyer.slice(-6)}</div>
                       </div>
                     </div>
                   </Link>
@@ -145,17 +145,17 @@ function NftboughtDashboard() {
             auction.map((item) => {
               return (
                 <div
-                  key={item.id}
+                  key={item?.id}
                   className=" border-2 p-2.5 bg-white dark:bg-gray-900  rounded-lg shadow-lg w-full lg:w-72 hover:scale-105 duration-200 transform transition cursor-pointer border-2 dark:border-gray-800"
                 >
-                  <Link key={item.itemId} href={`/assets/${item.id}`}>
+                  <Link key={item?.itemId} href={`/assets/${item?.id}`}>
                     <div>
-                      <HomeComp uri={item ? item.metadataURI : ""} />
+                      <HomeComp uri={item ? item?.metadataURI : ""} />
 
                       <div>
                         <div className="font-bold mt-3">Wallet Address :</div>
                         <div className="text-xs">
-                          {item.highestBidder.slice(-6)}
+                          {item?.highestBidder?.slice(-6)}
                         </div>
                       </div>
                     </div>

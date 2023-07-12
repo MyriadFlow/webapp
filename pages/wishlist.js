@@ -147,18 +147,18 @@ export default function Wishlist() {
           ? wishlist?.map((item) => {
               return (
                 <div
-                  key={item.itemId}
+                  key={item?.itemId}
                   className="flex justify-around mt-5 items-center text-gray-500 dark:text-white "
                 >
-                  <Link key={item.itemId} href={`/explore/${item.itemId}`}>
+                  <Link key={item.itemId} href={`/explore/${item?.itemId}`}>
                     <div className="mycard p-3 border-white">
                       <MarketPlaceCardWish {...item} />
                     </div>
                   </Link>
-                  <div>{item.name}</div>
+                  <div>{item?.name}</div>
 
-                  <div>{item.description}</div>
-                  <div> {getEthPrice(item.price)} MATIC</div>
+                  <div>{item?.description}</div>
+                  <div> {getEthPrice(item?.price)} MATIC</div>
                   <div>
                     <button
                       onClick={() => buyNft(item)}

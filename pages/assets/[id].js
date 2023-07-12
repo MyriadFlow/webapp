@@ -217,7 +217,7 @@ function Asset({ asset }) {
     </Layout>
   );
 }
-export const  getStaticProps= async (context) => {
+export const  getServerSideProps= async (context) => {
   const { id } = context.query;
   const { saleStarteds } = await request(graphqlAPI, saleStartedQuery, {
     where: { tokenId: id },
