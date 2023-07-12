@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
-import Accessmater from '../artifacts/contracts/accessmaster/AccessMaster.sol/AccessMaster.json'
+import Accessmater from '../../flow-webapp/artifacts/contracts/accessmaster/AccessMaster.sol/AccessMaster.json'
 import { selectUser } from "../slices/userSlice";
 import { useSelector } from "react-redux";
 import { FaUserCircle } from "react-icons/fa";
