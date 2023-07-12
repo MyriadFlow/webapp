@@ -27,14 +27,14 @@ function Asset({ asset }) {
     return uri.substring(7, uri.length);
   };
   const nfturl = `https://cloudflare-ipfs.com/ipfs/${removePrefix(
-    asset.metaDataURI
+    asset?.metaDataURI
   )}`;
   const [response, setResponse] = useState([]);
   const [image, setImage] = useState("");
   const metadata = async () => {
     const { data } = await axios.get(
       `https://cloudflare-ipfs.com/ipfs/${removePrefix(
-        asset.metaDataURI
+        asset?.metaDataURI
       )}`
     );
     setResponse(data);
@@ -44,13 +44,13 @@ function Asset({ asset }) {
 
   useEffect(() => {
     metadata();
-  }, [asset.metaDataURI]);
+  }, [asset?.metaDataURI]);
 
   let preuri = removePrefix(image);
 
   const imgurl = `https://cloudflare-ipfs.com/ipfs/${preuri}`;
-  const transaction = `https://mumbai.polygonscan.com/token/${asset.nftContract}?a=${asset.id}`;
-  const copy = asset.nftContract;
+  const transaction = `https://mumbai.polygonscan.com/token/${asset?.nftContract}?a=${asset?.id}`;
+  const copy = asset?.nftContract;
 
   return (
     <Layout>
@@ -60,7 +60,7 @@ function Asset({ asset }) {
             <AssetComp
               uri={
                 asset
-                  ? asset.metaDataURI
+                  ? asset?.metaDataURI
                   : ""
               }
             />
@@ -71,7 +71,7 @@ function Asset({ asset }) {
                 <AssetHead
                   uri={
                     asset
-                      ? asset.metaDataURI
+                      ? asset?.metaDataURI
                       : ""
                   }
                 />
@@ -101,7 +101,7 @@ function Asset({ asset }) {
                         Token ID
                       </h3>
                       <span className="text-[#253262] font-bold text-sm dark:text-gray-400">
-                        {asset.tokenId}
+                        {asset?.tokenId}
                       </span>
                     </div>
                     <div className="flex items-center justify-between my-4">
@@ -169,7 +169,7 @@ function Asset({ asset }) {
                       </h4>
                     </div>
                     <div className="text-[#253262] text-4xl font-bold dark:text-gray-400 mb-2 overflow-x-auto">
-                      {getEthPrice(asset.price)}{" "}
+                      {getEthPrice(asset?.price)}{" "}
                       <span className="text-lg font-medium">MATIC</span>
                     </div>
                     <button
@@ -190,7 +190,7 @@ function Asset({ asset }) {
                   <AssetProps
                     uri={
                       asset
-                        ? asset.metaDataURI
+                        ? asset?.metaDataURI
                         : ""
                     }
                   />
@@ -200,7 +200,7 @@ function Asset({ asset }) {
                     <AssetCategories
                       uri={
                         asset
-                          ? asset.metaDataURI
+                          ? asset?.metaDataURI
                           : ""
                       }
                     />

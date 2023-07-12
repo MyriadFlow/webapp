@@ -22,14 +22,14 @@ function Token({ asset }) {
 
   const [model, setmodel] = useState(false);
   const [modelmsg, setmodelmsg] = useState("buying in progress!");
-  const nfturl = `https://cloudflare-ipfs.com/ipfs/${removePrefix(asset.metaDataURI)}`;
+  const nfturl = `https://cloudflare-ipfs.com/ipfs/${removePrefix(asset?.metaDataURI)}`;
 
   const [response, setResponse] = useState([]);
   const [image, setImage] = useState("");
   const metadata = async () => {
     const { data } = await axios.get(
       `https://cloudflare-ipfs.com/ipfs/${removePrefix(
-        asset.metaDataURI
+        asset?.metaDataURI
       )}`
     );
     setResponse(data);
@@ -39,12 +39,12 @@ function Token({ asset }) {
 
   useEffect(() => {
     metadata();
-  }, [asset.metaDataURI]);
+  }, [asset?.metaDataURI]);
   let preuri = removePrefix(image);
 
   const imgurl = `https://cloudflare-ipfs.com/ipfs/${preuri}`;
-  const transaction = `https://mumbai.polygonscan.com/token/${asset.nftContract}?a=${asset.id}`;
-  const copy = asset.nftContract;
+  const transaction = `https://mumbai.polygonscan.com/token/${asset?.nftContract}?a=${asset?.id}`;
+  const copy = asset?.nftContract;
 
   return (
     <Layout>
@@ -52,14 +52,14 @@ function Token({ asset }) {
         <div className="flex flex-col lg:flex-row gap-x-8">
           <div className="w-full lg:w-[50%]" onClick={() => isSetFull(true)}>
             <AssetComp
-              uri={asset ? asset.metaDataURI : ""}
+              uri={asset ? asset?.metaDataURI : ""}
             />
           </div>
           <div className="lg:w-[50%]">
             <div className="flex flex-col gap-y-4">
               <div className="text-gray-700 text-2xl font-medium">
                 <AssetHead
-                  uri={asset ? asset.metaDataURI : ""}
+                  uri={asset ? asset?.metaDataURI : ""}
                 />
               </div>
               <div className="body-back">
@@ -87,7 +87,7 @@ function Token({ asset }) {
                         Token ID
                       </h3>
                       <span className="text-[#253262] font-bold text-sm dark:text-gray-400">
-                        {asset.tokenId}
+                        {asset?.tokenId}
                       </span>
                     </div>
                     <div className="flex items-center justify-between my-4">
@@ -165,13 +165,13 @@ function Token({ asset }) {
               <div className="flex flex-col lg:flex-row my-8">
                 <div className="lg:w-1/2 bg-white rounded-lg">
                   <AssetProps
-                    uri={asset ? asset.metaDataURI : ""}
+                    uri={asset ? asset?.metaDataURI : ""}
                   />
                 </div>
                 <div className="mb-8 flex-shrink-0 lg:w-1/2 lg:mb-0 bg-white rounded-xl">
                   <div className="flex justify-center lg:justify-end">
                     <AssetCategories
-                      uri={asset ? asset.metaDataURI : ""}
+                      uri={asset ? asset?.metaDataURI : ""}
                     />
                   </div>
                 </div>
