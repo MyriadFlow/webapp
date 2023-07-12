@@ -217,19 +217,17 @@ function Asset({ asset }) {
     </Layout>
   );
 }
-
-export async function getServerSideProps(context) {
+export const getServerSideProps = async (context) => {
   const { id } = context.query;
 
-    const { saleStarteds } = await request(graphqlAPI, saleStartedQuery, {
-      where: { tokenId: id },
-    });
-    console.log("id>>>>>>>>>>",saleStarteds);
-    return {
-      props: {
-        asset: saleStarteds[0] ?? null,
-      },
-    };
- 
-}
+  const { saleStarteds } = await request(graphqlAPI, saleStartedQuery, {
+    where: { tokenId: id },
+  });
+  console.log("id>>>>>>>>>>",saleStarteds);
+  return {
+    props: {
+      asset: saleStarteds[0] ?? null,
+    },
+  };
+};
 export default Asset;
