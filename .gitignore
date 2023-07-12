@@ -46,6 +46,9 @@ typechain-types
 cache
 .next
 
+# Optional eslint cache
+.eslintcache
+
 
 node_modules
 .env
