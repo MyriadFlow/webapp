@@ -188,7 +188,7 @@ function Token({ asset }) {
 }
 
 
-export const getServerSideProps = async (context) => {
+export const getStaticProps = async (context) => {
   const { tokenid } = context.query;
   const { saleStarteds } = await request(graphqlAPI, saleStartedQuery, {
     where: { itemId: tokenid },
