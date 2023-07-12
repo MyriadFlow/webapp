@@ -10,7 +10,7 @@ import Loader from "../Components/Loader";
 import BuyAsset from "./buyAssetModal";
 // import { buyNFT } from "../pages/api/buyNFT";
 // import { buyNFT } from "./api/buyNFT";
-import  buyItem  from "../pages/api/buyItem";
+import { buyItem }   from "../pages/api/buyItem";
 const graphqlAPI = process.env.NEXT_PUBLIC_MARKETPLACE_API;
 
 function NftboughtDashboard() {

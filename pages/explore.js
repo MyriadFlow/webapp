@@ -17,7 +17,7 @@ import { MarketPlaceCard } from "../Components/Cards/MarketPlaceCard";
 import { NavLink } from "reactstrap";
 import { useRouter } from "next/router";
 import HomeComp from "../Components/homeComp";
-import  buyItem    from "../pages/api/buyItem";
+import { buyItem }     from "../pages/api/buyItem";
 import { saleStartedQuery } from "../utils/gqlUtil";
 import axios from "axios";
 import etherContract from "../utils/web3Modal";
