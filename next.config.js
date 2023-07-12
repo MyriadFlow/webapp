@@ -2,7 +2,7 @@
 const nextConfig = {
   reactStrictMode: true,
   staticPageGenerationTimeout:  100,
- output:"standalone",
+ output:"export",
   
 };
 module.exports = nextConfig
