@@ -358,7 +358,7 @@ export default function CreateItem() {
     <Layout title="Assets"description="This is used to create NFTs">
       <div className="body-back">
         <div className="dark:bg-gray-800 kumbh text-center">
-          <Snackbar
+          {/* <Snackbar
             anchorOrigin={{ vertical: "top", horizontal: "right" }}
             open={open}
             autoHideDuration={6000}
@@ -371,7 +371,7 @@ export default function CreateItem() {
             >
               {alertMsg}
             </Alert>
-          </Snackbar>
+          </Snackbar> */}
           {model && (
             <BuyAsset open={model} setOpen={setmodel} message={modelmsg} />
           )}
