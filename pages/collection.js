@@ -8,7 +8,6 @@ import Homecomp from "../Components/homeComp";
 import Loader from "../Components/Loader";
 import Layout from "../Components/Layout";
 import etherContract from "../utils/web3Modal";
-import Marketplace from "../artifacts/contracts/Marketplace.sol/Marketplace.json";
 import Tradhub from '../artifacts/contracts/tradehub/TradeHub.sol/TradeHub.json'
 const graphqlAPI = process.env.NEXT_PUBLIC_STOREFRONT_API;
 const tradhubAddress = process.env.NEXT_PUBLIC_TRADEHUB_ADDRESS;

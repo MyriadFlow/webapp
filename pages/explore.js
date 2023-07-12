@@ -20,12 +20,10 @@ import HomeComp from "../Components/homeComp";
 import  buyItem    from "../pages/api/buyItem";
 import { saleStartedQuery } from "../utils/gqlUtil";
 import axios from "axios";
-import Marketplace from "../artifacts/contracts/Marketplace.sol/Marketplace.json";
 import etherContract from "../utils/web3Modal";
 
 const graphqlAPI = process.env.NEXT_PUBLIC_MARKETPLACE_API;
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
-const marketplaceAddress = process.env.NEXT_PUBLIC_MARKETPLACE_ADDRESS;
 
 const Home = () => {
   const allfilter = {
