@@ -94,3 +94,4 @@ jobs:
             podman stop storefront-webapp
             podman rm storefront-webapp
             podman run --name="storefront-webapp" -p 9082:3000 -d ghcr.io/myriadflow/storefront-webapp:main
+ 

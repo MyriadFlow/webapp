@@ -189,9 +189,9 @@ function Token({ asset }) {
 
 
 export const getServerSideProps = async (context) => {
-  const { tokenid } = context.query;
+  // const { tokenid } = context.query;
   const { saleStarteds } = await request(graphqlAPI, saleStartedQuery, {
-    where: { itemId: tokenid },
+    where: { itemId: 1 },
   });
   return {
     props: {

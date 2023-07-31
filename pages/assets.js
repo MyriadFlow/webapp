@@ -17,7 +17,7 @@ import Tradhub from '../artifacts/contracts/tradehub/TradeHub.sol/TradeHub.json'
 import FusionSeries from '../artifacts/contracts/fusionseries/FusionSeries.sol/FusionSeries.json';
 import AccessMaster from '../artifacts/contracts/accessmaster/AccessMaster.sol/AccessMaster.json';
 import BuyAsset from "../Components/buyAssetModal";
-import { Box, Modal, Snackbar, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import Layout from "../Components/Layout";
 import { useSelector } from "react-redux";
 import { selectUser } from "../slices/userSlice";
@@ -25,6 +25,7 @@ import { NFTStorage } from "nft.storage";
 import Image from "next/image";
 import etherContract from "../utils/web3Modal";
 import WalletConnectProvider from "@walletconnect/web3-provider";
+import { Modal } from "react-bootstrap";
 const style = {
   position: "absolute",
   top: "50%",
