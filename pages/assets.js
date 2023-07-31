@@ -1,9 +1,6 @@
 import { useEffect, useState } from "react";
 import { ethers } from "ethers";
 import { useRouter } from "next/router";
-import Typography from "@mui/material/Typography";
-import Modal from "@mui/material/Modal";
-import Box from "@mui/material/Box";
 import { FaPlusSquare, FaMinusSquare } from "react-icons/fa";
 import { v4 as uuidv4 } from "uuid";
 import Multiselect from "multiselect-react-dropdown";
@@ -20,7 +17,7 @@ import Tradhub from '../artifacts/contracts/tradehub/TradeHub.sol/TradeHub.json'
 import FusionSeries from '../artifacts/contracts/fusionseries/FusionSeries.sol/FusionSeries.json';
 import AccessMaster from '../artifacts/contracts/accessmaster/AccessMaster.sol/AccessMaster.json';
 import BuyAsset from "../Components/buyAssetModal";
-import { Alert, Snackbar } from "@mui/material";
+import { Box, Modal, Snackbar, Typography } from "@mui/material";
 import Layout from "../Components/Layout";
 import { useSelector } from "react-redux";
 import { selectUser } from "../slices/userSlice";

@@ -2,11 +2,7 @@
 const nextConfig = {
   reactStrictMode: true,
   staticPageGenerationTimeout:  100,
- output:"standalone",
- images:{
-  loader:'akamai',
-  path:"",
- },
+ output:"standalone"
   
 };
 module.exports = nextConfig

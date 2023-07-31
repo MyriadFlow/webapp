@@ -1,8 +1,6 @@
+import { Box, Modal, Typography } from '@mui/material';
 import * as React from 'react';
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
-import Modal from '@mui/material/Modal';
+import { Button } from 'react-bootstrap';
 
 const style = {
   position: 'absolute',

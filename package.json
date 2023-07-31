@@ -24,8 +24,12 @@
   "license": "MIT",
   "dependencies": {
     "@apollo/client": "^3.7.4",
+    "@emotion/cache": "^11.11.0",
     "@emotion/react": "^11.10.5",
+    "@emotion/server": "^11.11.0",
+    "@emotion/styled": "^11.11.0",
     "@mui/icons-material": "^5.11.0",
+    "@mui/material": "^5.14.2",
     "@reduxjs/toolkit": "^1.9.1",
     "@tailwindcss/line-clamp": "^0.4.2",
     "@thirdweb-dev/react": "^3",

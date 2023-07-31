@@ -1,8 +1,7 @@
-import Button from "@mui/material/Button";
-import MenuItem from "@mui/material/MenuItem";
-import Menu from "@mui/material/Menu";
 import { useState } from "react";
 import { useRouter } from "next/router";
+import {  Menu, MenuItem } from "@mui/material";
+import { Button } from "react-bootstrap";
 function SimpleDropdown({ menu }) {
   const router = useRouter();
   const [selectedMenu, setSelectedMenu] = useState(() => {
