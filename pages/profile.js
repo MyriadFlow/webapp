@@ -299,18 +299,107 @@ function Profile() {
             {showModal ? (
                 <>
                     <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none body-back">
-                        <div className="relative w-auto my-6 mx-auto max-w-3xl">
-                            <div
-                                className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none p-3.5"
-                            >
-                                <div className="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
-                                    <div
-                                        className="text-3xl font-bold text-gray-500 dark:text-black m-auto"
-                                    >
-                                        Edit Profile Details
+
+
+                        <div class="py-12 transition duration-150 ease-in-out z-10 absolute top-0 right-0 bottom-0 left-0" id="modal">
+                            <div role="alert" class="container mx-auto w-11/12 md:w-2/3 max-w-lg">
+                                <div class="relative py-4 bg-white shadow-md rounded border border-gray-400">
+                                    <div class="w-full flex justify-start text-gray-600 mb-3">
+                                        <button onClick={() => setShowModal(false)}>
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-x mr-4 ml-4" width="20" height="20" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                                <path stroke="none" d="M0 0h24v24H0z" />
+                                                <line x1="18" y1="6" x2="6" y2="18" />
+                                                <line x1="6" y1="6" x2="18" y2="18" />
+                                            </svg>
+                                        </button>
+
+                                        <h3 className="text-2xl font-semibold text-gray-900">
+                                            Edit Profile
+                                        </h3>
                                     </div>
+
+                                    <div
+                                        className="w-full h-48 object-cover bg-gray-400" style={{ backgroundImage: 'url("")' }}>
+                                        {/* <input type="file" className="btn btn-primary btn-md ml-36" style={{ marginBottom: 20, marginTop: 20, width: "50%" }} onChange={(e) => { uploadImage(e) }} /> */}
+                                        <label for="upload" class="flex flex-col items-center gap-2 cursor-pointer pt-16">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 fill-white stroke-indigo-500" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M9 13h6m-3-3v6m5 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                                            </svg>
+                                        </label>
+                                        <input id="upload" type="file" class="hidden" />
+
+                                    </div>
+
+                                    <div className="flex items-center justify-start -mt-20 ml-10">
+                                        {/* {!user ?  */}
+                                        <div className="rounded-full h-36 w-36 ring-offset-2 ring-1 ring-black bg-gray-400" >
+                                            <label for="upload" class="flex flex-col items-center gap-2 cursor-pointer mt-14">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 fill-white stroke-indigo-500" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 13h6m-3-3v6m5 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                                                </svg>
+                                                {/* <span class="text-gray-600 font-medium">Upload file</span> */}
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <div className="px-10">
+                                        <div class="mb-2">
+                                            <label for="default-input" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Name</label>
+                                            <input type="text" id="default-input" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required />
+                                        </div>
+
+                                        <div class="mb-2">
+                                            <label for="default-input" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Bio</label>
+                                            <input type="text" id="default-input" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required />
+                                        </div>
+
+                                        <div class="mb-2">
+                                            <label for="default-input" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Location</label>
+                                            <input type="text" id="default-input" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required />
+                                        </div>
+
+                                        <div class="mb-2">
+                                            <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email</label>
+                                            <input type="email" id="email" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required />
+                                        </div>
+
+                                        <div class="mb-2">
+                                            <label for="default-input" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Facebook URL (Optional)</label>
+                                            <input type="text" id="default-input" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required />
+                                        </div>
+
+                                        <div class="mb-2">
+                                            <label for="default-input" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">instagram URL (Optional)</label>
+                                            <input type="text" id="default-input" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required />
+                                        </div>
+
+                                        <div class="mb-2">
+                                            <label for="default-input" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Telegram URL (Optional)</label>
+                                            <input type="text" id="default-input" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required />
+                                        </div>
+                                    </div>
+
+
+
+                                    <button
+                                        className="top-2 right-3 absolute text-white bg-blue-500 text-sm px-8 py-3 rounded-full border border-white shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                                        type="button"
+                                    >
+                                        Save
+                                    </button>
                                 </div>
+                            </div>
+                        </div>
+
+
+
+                        {/* <div className="relative w-auto my-6 mx-auto max-w-3xl">
+
+                            <div
+                                className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none"
+                            >
                                 <div className="relative p-6 flex-auto">
+
                                     <div className="update-page">
                                         <div>
                                             <section>
@@ -451,7 +540,7 @@ function Profile() {
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> */}
                     </div>
                     <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
                 </>
@@ -535,18 +624,6 @@ function Profile() {
                         <div>
                         </div>
                     </div>
-
-                    {!hasRole && (
-                        <div className="w-2/3">
-                            <h3 className="text-2xl text-center font-semibold pb-1 pt-8 pl-5 pr-5">You do not have the required Role to access create page for creating an asset. Please click on Get creator role button to proceed.</h3>
-                            <div className="flex justify-center">
-                                <button
-                                    onClick={authorize}
-                                    className="bg-blue-800 uppercase shadow-md transition duration-300  
-                                     ease-in text-white font-bold hover:bg-white hover:text-blue-800 px-6 rounded py-2 mt-2">Get creator role</button>
-                            </div>
-                        </div>
-                    )}
 
                 </div>
             </div>
