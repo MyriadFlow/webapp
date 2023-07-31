@@ -24,7 +24,7 @@ function Asset({ asset }) {
   const [model, setmodel] = useState(false);
   const [modelmsg, setmodelmsg] = useState("buying in progress!");
   const removePrefix = (uri) => {
-    return uri.substring(7, uri.length);
+    return uri?.substring(7, uri.length);
   };
   const nfturl = `https://cloudflare-ipfs.com/ipfs/${removePrefix(
     asset?.metaDataURI
@@ -217,10 +217,10 @@ function Asset({ asset }) {
     </Layout>
   );
 }
-export const  getServerSideProps= async (context) => {
-  // const { id } = context.query;
+export async function  getServerSideProps (context) {
+  const { id } = context.query;
   const { saleStarteds } = await request(graphqlAPI, saleStartedQuery, {
-    where: { tokenId: 1 },
+    where: { tokenId: id },
   });
   console.log("id>>>>>>>>>>",saleStarteds);
   return {
