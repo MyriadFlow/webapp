@@ -577,7 +577,7 @@ function Profile() {
 
                 )}
 
-                <div className="flex items-center md:justify-end lg:-my-16 lg:mx-8 md:-my-16 md:mx-8 mt-8 justify-center lg:justify-end">
+                {/* <div className="flex items-center md:justify-end lg:-my-16 lg:mx-8 md:-my-16 md:mx-8 mt-8 justify-center lg:justify-end">
                     <button
                         className=" text-white text-sm px-8 py-3 rounded-full border border-white shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                         type="button"
@@ -585,11 +585,11 @@ function Profile() {
                     >
                         Edit Profile
                     </button>
-                </div>
+                </div> */}
 
                 <div className=" m-2 flex flex-row items-center justify-start">
 
-                    <div className="lg:mt-24 md:mt-24 ml-16">
+                    <div className="lg:mt-10 md:mt-24 ml-16">
                         <div>
                             <p className="text-white text-2xl font-bold">Neque Porro</p>
                         </div>
