@@ -125,54 +125,55 @@ export default function Wishlist() {
         </div>
       )}
       <div className="body-back">
-        <div className="text-center mt-5">
+        <div className="text-center pt-5">
           <div>
             <img alt="alt" className="wish m-auto" src="wish.png"></img>
           </div>
-          <div className="font-bold mt-5 text-2xl text-gray-500 dark:text-white">
+          <div className="font-bold mt-5 text-2xl text-gray-500 dark:text-white border-b pb-6">
             My Wishlist
           </div>
         </div>
-        <div className="flex justify-center mt-5 ml-5 p-4 border-y-2"></div>
 
-        <div className="flex justify-around mt-5 text-gray-500 dark:text-white">
+        <div className="flex justify-around mt-5 text-gray-500 dark:text-white pt-10">
           <div>NFT Collection</div>
           <div>Name</div>
           <div>Description</div>
           <div>Price</div>
           <div></div>
+          <div>Remove</div>
         </div>
 
         {wishlist?.length
           ? wishlist?.map((item) => {
-              return (
-                <div
-                  key={item?.itemId}
-                  className="flex justify-around mt-5 items-center text-gray-500 dark:text-white "
-                >
-                  <Link key={item.itemId} href={`/explore/${item?.itemId}`}>
-                    <div className="mycard p-3 border-white">
-                      <MarketPlaceCardWish {...item} />
-                    </div>
-                  </Link>
-                  <div>{item?.name}</div>
-
-                  <div>{item?.description}</div>
-                  <div> {getEthPrice(item?.price)} MATIC</div>
-                  <div>
-                    <button
-                      onClick={() => buyNft(item)}
-                      className="text-gray-500 px-2 dark:text-black bg-white w-full rounded-md py-2 font-bold"
-                    >
-                      Buy Now
-                    </button>
+            return (
+              <div
+                key={item?.itemId}
+                className="flex justify-around mt-5 items-center text-gray-500 dark:text-white "
+              >
+                <Link key={item.itemId} href={`/explore/${item?.itemId}`}>
+                  <div className="mycard p-3 border-white">
+                    <MarketPlaceCardWish {...item} />
                   </div>
+                </Link>
+                <div>{item?.name}</div>
+
+                <div>{item?.description}</div>
+                <div> {getEthPrice(item?.price)} MATIC</div>
+                <div>
+                  <button
+                    onClick={() => buyNft(item)}
+                    className="text-gray-500 px-2 dark:text-black bg-white w-full rounded-md py-2 font-bold"
+                  >
+                    Buy Now
+                  </button>
                 </div>
-              );
-            })
+              </div>
+            );
+          })
           : null}
+
         {wishlist?.length == 0 && (
-          <div className="font-bold text-2xl">
+          <div className="font-bold text-2xl text-center p-12">
             No NFT Found For Selected Category
           </div>
         )}
