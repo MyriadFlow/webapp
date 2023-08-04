@@ -4,9 +4,10 @@ import { useRouter } from "next/router";
 import Accessmater from '../artifacts/contracts/accessmaster/AccessMaster.sol/AccessMaster.json'
 import { selectUser } from "../slices/userSlice";
 import { useSelector } from "react-redux";
-import { FaUserCircle } from "react-icons/fa";
+import { FaUserCircle,FaCog } from "react-icons/fa";
 import { FaBars } from "react-icons/fa";
-import { ConnectWallet, useAddress,useContract } from "@thirdweb-dev/react";
+import { BsHeart } from "react-icons/bs";
+import { ConnectWallet, useAddress, useContract } from "@thirdweb-dev/react";
 import DarkTheme from "./DarkTheme";
 import { NavLink } from "reactstrap";
 import styles from "../styles/Home.module.css";
@@ -19,6 +20,7 @@ function Header() {
   const address = useAddress();
   const { contract } = useContract(address);
   const [dropmenu, setDropMenu] = useState(false);
+  const [hidefilter, setHideFilter] = useState(false);
   const router = useRouter();
   // function to open the drop menu
   const opendropmenu = () => {
@@ -46,16 +48,16 @@ function Header() {
 
   useEffect(() => {
     const asyncFn = async () => {
-    const accessmaterContarct = await etherContract(accessmasterAddress, Accessmater.abi)
-    setHasRole(
-      await accessmaterContarct.hasRole(await accessmaterContarct.FLOW_CREATOR_ROLE(), walletAddress)
-    );
-    setHasRoleOperator(
-      await accessmaterContarct.hasRole( await accessmaterContarct.FLOW_CREATOR_ROLE(), walletAddress))
+      const accessmaterContarct = await etherContract(accessmasterAddress, Accessmater.abi)
+      setHasRole(
+        await accessmaterContarct.hasRole(await accessmaterContarct.FLOW_CREATOR_ROLE(), walletAddress)
+      );
+      setHasRoleOperator(
+        await accessmaterContarct.hasRole(await accessmaterContarct.FLOW_CREATOR_ROLE(), walletAddress))
     }
     asyncFn();
   }, [])
-  
+
   return (
     <header className="border-b-[1px] bg-white dark:bg-[#13131a] dark:border-[#bf2180] border-[#eff1f6] body-back">
       <div className="w-[90%] h-[81px] mx-auto flex items-center justify-between font-poppins">
@@ -83,7 +85,7 @@ function Header() {
 
         <div>
           <div className="lg:flex  hidden gap-x-6 text-lg tracking-wide font-medium text-black dark:text-[#0162ff] items-center">
-           
+
             <Link className="text-gray-500 dark:text-white" href="/explore">
               <NavLink
                 className={router.pathname == "/explore" ? "active " : ""}
@@ -91,17 +93,17 @@ function Header() {
                 Explore
               </NavLink>
             </Link>
-            
-            <Link className="text-gray-500 dark:text-white"  href="/collection">
+
+            <Link className="text-gray-500 dark:text-white" href="/collection">
               <NavLink
                 className={router.pathname == "/collection" ? "active " : ""}
               >
                 Collections
               </NavLink>
             </Link>
-            
-            { walletAddress && address && hasRole ? (
-              <Link className="text-gray-500 dark:text-white" href={hasRole? "/assets":"/authWallet"}>
+
+            {walletAddress && address && hasRole ? (
+              <Link className="text-gray-500 dark:text-white" href={hasRole ? "/assets" : "/authWallet"}>
                 <NavLink
                   className={router.pathname == "/assets" ? "active" : ""}
                 >
@@ -111,7 +113,7 @@ function Header() {
             ) : (
               ""
             )}
-            { walletAddress && address? (
+            {walletAddress && address ? (
               <Link className="text-gray-500 dark:text-white" href="/dashboard">
                 <NavLink
                   className={router.pathname == "/dashboard" ? "active" : ""}
@@ -120,7 +122,7 @@ function Header() {
                 </NavLink>
               </Link>
             ) : null}
-            { walletAddress && address? (
+            {walletAddress && address ? (
               <Link className="rewards-style" href="/drops">
                 <NavLink
                   className={router.pathname == "/drops" ? "active " : ""}
@@ -135,20 +137,63 @@ function Header() {
                   <div className="flex items-center gap-x-3">
                     <DarkTheme />
 
-                    <div>
-                      { walletAddress  && address? (
-                         <SimpleDropdown menu={[{route:'profile', validRole: true, label:'Profile'}, {route:'wishlist', validRole: true, label:'Wishlist'},{route:'manage', validRole: hasRoleOperator, label:'Manage'}]}/>
+                    {/* <div>
+                      {walletAddress && address ? (
+                        <SimpleDropdown menu={[{ route: 'profile', validRole: true, label: 'Profile' }, { route: 'wishlist', validRole: true, label: 'Wishlist' }, { route: 'manage', validRole: hasRoleOperator, label: 'Manage' }]} />
                       ) : (
                         <FaUserCircle className="text-3xl text-gray-500" />
                       )}
-                    </div>
-                   <div className={styles.connect}>
+                    </div> */}
+                    <div className={styles.connect}>
                       <ConnectWallet className="bg-gradient-to-r from-indigo-500 via-purple-500 to-gray-500 ..." />
                     </div>
                   </div>
                 </div>
               </NavLink>
             </Link>
+
+            <button
+              onClick={() => {
+                setHideFilter(!hidefilter);
+              }}
+              class="">
+              <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                <g transform="matrix(-1, 0, 0, 1, 20, 0)">
+                  <path clip-rule="evenodd" fill-rule="evenodd" d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z"></path>
+                </g>
+              </svg>
+            </button>
+            {
+              hidefilter && (
+                <>
+                  {/* Dropdown menu */}
+                  <div id="dropdown" class="z-10 bg-white w-36 divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-800 top-24 right-16 absolute">
+                    <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
+                      <li className="flex flex-row dark:hover:bg-gray-600">
+                      <FaUserCircle className="text-lg mt-2 ml-2"/>
+                        <a href="/profile" class="block px-2 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">My Profile</a>
+                      </li>
+                    </ul>
+
+                    <div class="py-2 ">
+                      <div className="dark:hover:bg-gray-600 flex flex-row">
+                      <BsHeart className="text-lg mt-2 ml-2 text-white"/>
+                      <a href="/wishlist" class="block px-2 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Wishlist</a>
+                      </div>
+                    
+                    </div>
+                    <div class="py-2">
+                    <div className="dark:hover:bg-gray-600 flex flex-row">
+                      <FaCog className="text-lg mt-2 ml-2 text-white"/>
+                      <a href="/manage" class="block px-2 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Manage</a>
+                    </div>
+                    </div>
+                  </div>
+
+                </>
+              )
+            }
+
           </div>
           {navOpen && (
             <div className="fixed top-0 right-0 w-72 h-screen lg:hidden font-bold shadow-lg pt-12 text-center bg-[#13131a] z-[1000] text-gray-500 dark:text-white">
@@ -157,7 +202,7 @@ function Header() {
                   Explore
                 </div>
               </Link>
-              <Link href={hasRole? "/assets":"/authWallet"}>
+              <Link href={hasRole ? "/assets" : "/authWallet"}>
                 <div className="block py-4 rounded-sm hover:bg-gray-300 transition duration-200 ease-in-out">
                   Create
                 </div>
@@ -167,7 +212,7 @@ function Header() {
                   Dashboard
                 </div>
               </Link>
-              
+
               <Link href="">
                 <div className="relative">
                   <div className="flex items-center gap-x-3">
