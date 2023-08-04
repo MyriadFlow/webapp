@@ -5,7 +5,7 @@ import Image from "next/image";
 import { useSelector } from "react-redux";
 import { selectUser } from "../slices/userSlice";
 import AccessMater from '../artifacts/contracts/accessmaster/AccessMaster.sol/AccessMaster.json'
-
+import { BsHeart } from "react-icons/bs";
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import etherContract from "../utils/web3Modal";
@@ -14,12 +14,23 @@ import { request, gql } from "graphql-request";
 import Tradhub from '../artifacts/contracts/tradehub/TradeHub.sol/TradeHub.json';
 import { getMetaData, removePrefix } from "../utils/ipfsUtil";
 import Loader from "../Components/Loader";
+import Slider from "react-slick";
+import SmallCard from "../Components/Cards/SmallCard"
 
 const tradhubAddress = process.env.NEXT_PUBLIC_TRADEHUB_ADDRESS;
 const graphqlAPI = process.env.NEXT_PUBLIC_MARKETPLACE_API;
 const accessmasterAddress = process.env.NEXT_PUBLIC_ACCESS_MASTER_ADDRESS;
 
 function LandingPage() {
+
+  const settings = {
+    dots: false,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 3,
+    slidesToScroll: 1,
+  };
+
   const [info, setInfo] = useState([]);
   const [loading, setLoading] = useState(false);
 
@@ -97,10 +108,10 @@ function LandingPage() {
       >
       {loading && <Loader />}
 
-        <div className="body-back">
+        <div className="">
           <div className="min-h-screen lg:flex justify-center items-center ">
             <div className="lg:flex xl:gap-8 lg:w-[1025px] x2:w-[1200px] xxl:w-[1400px] mx-auto lg:mt-12">
-              <div className="text-center lg:text-left lg:w-1/2 mt-16 lg:mt-0  p-2 sm:p-4 lg:px-8 lg:pt-0">
+              <div className="text-center lg:text-left lg:w-1/2 pt-16 lg:mt-0  p-2 sm:p-4 lg:px-8 lg:pt-0">
                 <h3 className=" font-poppins font-bold m48:w-[470px] l32:w-[450px] xxl:w-auto  text-3xl sm:text-4xl lg:text-6xl x2:text-7xl xxl:text-8xl capitalize mb-8 x2:mb-10 mx-auto lg:mx-0 text-gray-500 dark:text-white">
                   Collect and Trade the New Fresh Thing
                 </h3>
@@ -205,6 +216,73 @@ function LandingPage() {
             </div>
           </div>
             )}
+
+            {/* Trending Section */}
+        <section className="bg-[#161a1d]">
+          <h1 className=" text-4xl font-semibold pt-20 sm:ml-28 ml-10">Trending NFTS</h1>
+          <div className=" py-16 flex lg:flex-row flex-col justify-center items-center">
+            <div className="basis-1/3">
+            <BigCard 
+                  title="VR BOY #007"
+                  img="vr.png"
+                  price="100,000"
+                  name="John Sanders"
+                  like={76}
+                />
+            </div>
+            <div className="basis-1/3">
+                <BigCard 
+                  title="Monkey #AK007"
+                  img="monkey.png"
+                  price="100,000"
+                  name="Bernie Sanders"
+                  like={99}
+                />
+                </div>
+                <BigCard
+                  title="VR BOY #007"
+                  img="vr.png"
+                  price="100,000"
+                  name="John Sanders"
+                  like={76}
+                />
+          </div>
+        </section>
+        {/* End Of Trending Section */}
+
+
+        {/* highlights Section */}
+        <section className="bg-[#161a1d]">
+          <h1 className=" text-4xl font-semibold pt-20 sm:ml-28 ml-10">Top highlights of the week</h1>
+          <div className=" py-16 flex lg:flex-row flex-col justify-center items-center">
+            <div className="basis-1/3">
+            <BigCard 
+                  title="VR BOY #007"
+                  img="vr.png"
+                  price="100,000"
+                  name="John Sanders"
+                  like={76}
+                />
+            </div>
+            <div className="basis-1/3">
+                <BigCard 
+                  title="Monkey #AK007"
+                  img="monkey.png"
+                  price="100,000"
+                  name="Bernie Sanders"
+                  like={99}
+                />
+                </div>
+                <BigCard
+                  title="VR BOY #007"
+                  img="vr.png"
+                  price="100,000"
+                  name="John Sanders"
+                  like={76}
+                />
+          </div>
+        </section>
+        {/* End Of highlights Section */}
         </div>
       </Layout>
     </>
