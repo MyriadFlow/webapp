@@ -187,21 +187,21 @@ function Header() {
                     <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
                       <li className="flex flex-row dark:hover:bg-gray-600">
                         <FaUserCircle className="text-lg mt-2 ml-2" />
-                        <a href="/profile" class="block px-2 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">My Profile</a>
+                        <Link href="/profile" class="block px-2 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">My Profile</Link>
                       </li>
                     </ul>
 
                     <div class="py-2 ">
                       <div className="dark:hover:bg-gray-600 flex flex-row">
                         <BsHeart className="text-lg mt-2 ml-2 text-white" />
-                        <a href="/wishlist" class="block px-2 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Wishlist</a>
+                        <Link href="/wishlist" class="block px-2 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Wishlist</Link>
                       </div>
 
                     </div>
                     <div class="py-2">
                       <div className="dark:hover:bg-gray-600 flex flex-row">
                         <FaCog className="text-lg mt-2 ml-2 text-white" />
-                        <a href="/manage" class="block px-2 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Manage</a>
+                        <Link href="/manage" class="block px-2 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Manage</Link>
                       </div>
                     </div>
                   </div>
