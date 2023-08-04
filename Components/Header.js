@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import Accessmater from '../artifacts/contracts/accessmaster/AccessMaster.sol/AccessMaster.json'
 import { selectUser } from "../slices/userSlice";
 import { useSelector } from "react-redux";
-import { FaUserCircle,FaCog } from "react-icons/fa";
+import { FaUserCircle, FaCog } from "react-icons/fa";
 import { FaBars } from "react-icons/fa";
 import { BsHeart } from "react-icons/bs";
 import { ConnectWallet, useAddress, useContract } from "@thirdweb-dev/react";
@@ -64,7 +64,7 @@ function Header() {
         <div className="flex items-center">
           <FaBars
             onClick={handleNav}
-            className="lg:hidden cursor-pointer text-2xl text-gray-500 dark:text-white"
+            className="lg:hidden cursor-pointer md:text-2xl text-sm text-gray-500 dark:text-white md:mr-10 mr-2"
           />
           <Link href="/">
             <div className="pt-2 transition-all cursor-pointer">
@@ -77,14 +77,29 @@ function Header() {
             </div>
           </Link>
           <Link href="/">
-            <div className="text-3xl lg:block md:block font-semibold cursor-pointer pl-4 transition-all tracking-wide text-gray-500 dark:text-white">
+            <div className="lg:text-3xl text-2xl lg:block md:block font-semibold cursor-pointer lg:pl-4 md:pl-4 pl-2 transition-all tracking-wide text-gray-500 dark:text-white">
               MarketPlace
             </div>
           </Link>
+
+          <div className="lg:hidden right-4 absolute">
+            <DarkTheme />
+
+          </div>
+
         </div>
 
         <div>
-          <div className="lg:flex  hidden gap-x-6 text-lg tracking-wide font-medium text-black dark:text-[#0162ff] items-center">
+          <div className="lg:flex hidden gap-x-4 text-lg font-medium text-black dark:text-[#0162ff] items-center">
+
+            {/* <div class="relative w-full -ml-10">
+              <input type="search" id="search-dropdown" class="rounded-l-lg block p-2.5 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-r-lg border-l-gray-50 border-l-2 border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-l-gray-700  dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500" placeholder="Search..." required />
+              <button type="submit" class="absolute top-0 right-0 p-2.5 text-sm font-medium h-full text-white bg-blue-700 rounded-r-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
+                </svg>
+              </button>
+            </div> */}
 
             <Link className="text-gray-500 dark:text-white" href="/explore">
               <NavLink
@@ -135,6 +150,7 @@ function Header() {
               <NavLink>
                 <div className="relative">
                   <div className="flex items-center gap-x-3">
+
                     <DarkTheme />
 
                     {/* <div>
@@ -170,23 +186,23 @@ function Header() {
                   <div id="dropdown" class="z-10 bg-white w-36 divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-800 top-24 right-16 absolute">
                     <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
                       <li className="flex flex-row dark:hover:bg-gray-600">
-                      <FaUserCircle className="text-lg mt-2 ml-2"/>
+                        <FaUserCircle className="text-lg mt-2 ml-2" />
                         <a href="/profile" class="block px-2 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">My Profile</a>
                       </li>
                     </ul>
 
                     <div class="py-2 ">
                       <div className="dark:hover:bg-gray-600 flex flex-row">
-                      <BsHeart className="text-lg mt-2 ml-2 text-white"/>
-                      <a href="/wishlist" class="block px-2 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Wishlist</a>
+                        <BsHeart className="text-lg mt-2 ml-2 text-white" />
+                        <a href="/wishlist" class="block px-2 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Wishlist</a>
                       </div>
-                    
+
                     </div>
                     <div class="py-2">
-                    <div className="dark:hover:bg-gray-600 flex flex-row">
-                      <FaCog className="text-lg mt-2 ml-2 text-white"/>
-                      <a href="/manage" class="block px-2 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Manage</a>
-                    </div>
+                      <div className="dark:hover:bg-gray-600 flex flex-row">
+                        <FaCog className="text-lg mt-2 ml-2 text-white" />
+                        <a href="/manage" class="block px-2 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Manage</a>
+                      </div>
                     </div>
                   </div>
 
@@ -213,26 +229,62 @@ function Header() {
                 </div>
               </Link>
 
-              <Link href="">
-                <div className="relative">
-                  <div className="flex items-center gap-x-3">
-                    <DarkTheme />
-
-                    <div onMouseEnter={opendropmenu}>
-                      {!user ? (
-                        <FaUserCircle className="text-3xl text-gray-500" />
-                      ) : (
-                        <Link href="/profile">
-                          <div className="h-8 w-8 rounded-full connect-profile ring-offset-2 ring-2 ring-blue-400 cursor-pointer"></div>
-                        </Link>
-                      )}
-                    </div>
-                    <div className={styles.connect}>
-                      <ConnectWallet className="bg-gradient-to-r from-indigo-500 via-purple-500 to-gray-500 ..." />
-                    </div>
+              {walletAddress && address ? (
+                <Link className="" href="/profile">
+                  <div className="block py-4 rounded-sm hover:bg-gray-300 transition duration-200 ease-in-out">
+                    My Profile
                   </div>
+                </Link>
+              ) : null}
+
+              {walletAddress && address ? (
+                <Link className="" href="/wishlist">
+                  <NavLink
+                    className="block py-4 rounded-sm hover:bg-gray-300 transition duration-200 ease-in-out"
+                  >
+                    Wishlists
+                  </NavLink>
+                </Link>
+              ) : null}
+
+              {walletAddress && address ? (
+                <Link className="" href="/manage">
+                  <NavLink
+                    className="block py-4 rounded-sm hover:bg-gray-300 transition duration-200 ease-in-out"
+                  >
+                    Manage
+                  </NavLink>
+                </Link>
+              ) : null}
+
+              {walletAddress && address ? (
+                <div className="mb-8 mt-2">
+                  <Link className="rewards-style" href="/drops">
+                    <NavLink className="">
+                      Drops
+                    </NavLink>
+
+
+                  </Link>
                 </div>
-              </Link>
+
+              ) : null}
+
+              <div className="flex flex-col items-center">
+
+                <div className={styles.connect}>
+                  <ConnectWallet className="bg-gradient-to-r from-indigo-500 via-purple-500 to-gray-500 ..." />
+                </div>
+
+
+
+
+
+
+
+
+              </div>
+
             </div>
           )}
         </div>
