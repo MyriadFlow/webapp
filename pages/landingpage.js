@@ -34,11 +34,11 @@ function LandingPage() {
   const [info, setInfo] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  const itemStatus = new Map(["NONEXISTANT", "SALE", "AUCTION", "SOLD","REMOVED"].map((v,index)=>[index,v]))
+  const itemStatus = new Map(["NONEXISTANT", "SALE", "AUCTION", "SOLD", "REMOVED"].map((v, index) => [index, v]))
   const walletAddr = useSelector(selectUser);
   var wallet = walletAddr ? walletAddr[0] : "";
   const [hasRole, setHasRole] = useState(true);
-  
+
   const getLandingData = async () => {
     const token = localStorage.getItem("platform_token");
     const config = {
@@ -49,19 +49,21 @@ function LandingPage() {
       },
     };
     setLoading(true);
-    axios.get(`https://testnet.gateway.myriadflow.com/api/v1.0/marketplace/itemIds`,config)
-      .then(async(res) => {
+    axios.get(`https://testnet.gateway.myriadflow.com/api/v1.0/marketplace/itemIds`, config)
+      .then(async (res) => {
         const tradhubContarct = await etherContract(tradhubAddress, Tradhub.abi)
-        const saleInput = res.data.payload.map(i=>parseInt(i))
-        const {saleStarteds} = await request(graphqlAPI, saleStartedQuery, {where:{itemId_in: saleInput}}) //saleInput =>[1,2]
-        const finalResult=[] 
-        Promise.all(saleStarteds.map(async(item)=>{
+        const saleInput = res.data.payload.map(i => parseInt(i))
+        const { saleStarteds } = await request(graphqlAPI, saleStartedQuery, { where: { itemId_in: saleInput } }) //saleInput =>[1,2]
+        const finalResult = []
+        Promise.all(saleStarteds.map(async (item) => {
           const itemResult = await tradhubContarct.idToMarketItem(item.itemId)
           const nftData = await getMetaData(item.metaDataURI);
-          finalResult.push({...item,...nftData,  
-            image: nftData?.image? `${process.env.NEXT_PUBLIC_IPFS_GATEWAY}${removePrefix(nftData?.image)}`:"",
-          status: itemStatus.get(parseInt(itemResult.status))})
-        })).then(()=>{
+          finalResult.push({
+            ...item, ...nftData,
+            image: nftData?.image ? `${process.env.NEXT_PUBLIC_IPFS_GATEWAY}${removePrefix(nftData?.image)}` : "",
+            status: itemStatus.get(parseInt(itemResult.status))
+          })
+        })).then(() => {
           setInfo(finalResult)
         })
         setLoading(true);
@@ -73,12 +75,12 @@ function LandingPage() {
         setLoading(false);
       });
   };
-  useEffect(()=>{
+  useEffect(() => {
     const token = localStorage.getItem("platform_token");
     if (token) {
       getLandingData();
     }
-  },[])
+  }, [])
 
   useEffect(() => {
     const asyncFn = async () => {
@@ -96,7 +98,7 @@ function LandingPage() {
           wallet
         )
       );
-      
+
     };
     asyncFn();
   }, [hasRole]);
@@ -106,7 +108,7 @@ function LandingPage() {
         title="Marketplace"
         description="Used to show the Marketplace information "
       >
-      {loading && <Loader />}
+        {loading && <Loader />}
 
         <div className="">
           <div className="min-h-screen lg:flex justify-center items-center ">
@@ -194,17 +196,17 @@ function LandingPage() {
             </div>
           </div>
           {info.length > 0 && (
-          <div className="mb-20 ">
-            <h1 className="text-center text-3xl font-semibold mb-20 text-gray-500 dark:text-white">
-              Highlights
-            </h1>
-            <div className="max-w-[1280px] mx-auto rounded-3xl flex gap-7">
+            <div className="mb-20 ">
+              <h1 className="text-center text-3xl font-semibold mb-20 text-gray-500 dark:text-white">
+                Highlights
+              </h1>
+              <div className="max-w-[1280px] mx-auto rounded-3xl flex gap-7">
                 {info?.map(function (data, i) {
-                   
+
                   return (
-                   
+
                     <BigCard
-                    key={i}
+                      key={i}
                       title={data.product_name}
                       img={data.image}
                       price={data.price}
@@ -213,32 +215,15 @@ function LandingPage() {
                     />
                   );
                 })}
+              </div>
             </div>
-          </div>
-            )}
+          )}
 
-            {/* Trending Section */}
-        <section className="bg-[#161a1d]">
-          <h1 className=" text-4xl font-semibold pt-20 sm:ml-28 ml-10">Trending NFTS</h1>
-          <div className=" py-16 flex lg:flex-row flex-col justify-center items-center">
-            <div className="basis-1/3">
-            <BigCard 
-                  title="VR BOY #007"
-                  img="vr.png"
-                  price="100,000"
-                  name="John Sanders"
-                  like={76}
-                />
-            </div>
-            <div className="basis-1/3">
-                <BigCard 
-                  title="Monkey #AK007"
-                  img="monkey.png"
-                  price="100,000"
-                  name="Bernie Sanders"
-                  like={99}
-                />
-                </div>
+          {/* Trending Section */}
+          <section className="bg-[#161a1d]">
+            <h1 className=" text-4xl font-semibold pt-20 sm:ml-28 ml-10">Trending NFTS</h1>
+            <div className=" py-16 flex lg:flex-row flex-col justify-center items-center">
+              <div className="basis-1/3">
                 <BigCard
                   title="VR BOY #007"
                   img="vr.png"
@@ -246,33 +231,33 @@ function LandingPage() {
                   name="John Sanders"
                   like={76}
                 />
-          </div>
-        </section>
-        {/* End Of Trending Section */}
-
-
-        {/* highlights Section */}
-        <section className="bg-[#161a1d]">
-          <h1 className=" text-4xl font-semibold pt-20 sm:ml-28 ml-10">Top highlights of the week</h1>
-          <div className=" py-16 flex lg:flex-row flex-col justify-center items-center">
-            <div className="basis-1/3">
-            <BigCard 
-                  title="VR BOY #007"
-                  img="vr.png"
-                  price="100,000"
-                  name="John Sanders"
-                  like={76}
-                />
-            </div>
-            <div className="basis-1/3">
-                <BigCard 
+              </div>
+              <div className="basis-1/3">
+                <BigCard
                   title="Monkey #AK007"
                   img="monkey.png"
                   price="100,000"
                   name="Bernie Sanders"
                   like={99}
                 />
-                </div>
+              </div>
+              <BigCard
+                title="VR BOY #007"
+                img="vr.png"
+                price="100,000"
+                name="John Sanders"
+                like={76}
+              />
+            </div>
+          </section>
+          {/* End Of Trending Section */}
+
+
+          {/* highlights Section */}
+          <section className="bg-[#161a1d]">
+            <h1 className=" text-4xl font-semibold pt-20 sm:ml-28 ml-10">Top highlights of the week</h1>
+            <div className=" py-16 flex lg:flex-row flex-col justify-center items-center">
+              <div className="basis-1/3">
                 <BigCard
                   title="VR BOY #007"
                   img="vr.png"
@@ -280,9 +265,84 @@ function LandingPage() {
                   name="John Sanders"
                   like={76}
                 />
-          </div>
-        </section>
-        {/* End Of highlights Section */}
+              </div>
+              <div className="basis-1/3">
+                <BigCard
+                  title="Monkey #AK007"
+                  img="monkey.png"
+                  price="100,000"
+                  name="Bernie Sanders"
+                  like={99}
+                />
+              </div>
+              <BigCard
+                title="VR BOY #007"
+                img="vr.png"
+                price="100,000"
+                name="John Sanders"
+                like={76}
+              />
+            </div>
+          </section>
+          {/* End Of highlights Section */}
+
+          {/* highlights Section */}
+          <section className="body-back">
+            <div className=" py-16 flex lg:flex-row flex-col justify-center items-center">
+              <div className="basis-1/3">
+              <div className="text-center p-2">
+                <h3 className="text-3xl lg:w-1/2 font-poppins font-bold capitalize mb-8 mx-auto text-gray-500 dark:text-white">
+                  Create NFT marketplace for your community
+                </h3>
+                <div className="items-center lg:py-4 md:py-4">
+                  <div>
+                    <button className="py-3 px-6 text-gray-500 dark:text-white font-semibold mb-8 lg:mb-0 border rounded-full">
+                      <Link href="/create">
+                        <span className="font-raleway font-bold text-gray-500 dark:text-whit">
+                          Create NFT
+                        </span>
+                      </Link>
+                    </button>
+                  </div>
+                </div>
+                <div className="items-center ">
+                  <div>
+                    <button className="py-3 px-6 text-gray-500 dark:text-white font-semibold mb-8 lg:mb-0 explore-btn-border">
+                      <Link href="/explore">
+                        <span className="font-raleway font-bold text-gray-500 dark:text-whit">
+                          Explore More
+                        </span>
+                      </Link>
+                    </button>
+                  </div>
+                </div>
+              </div>
+              </div>
+              <div className="basis-1/4 mb-10 lg:mb-0">
+              <figure class="max-w-xs relative transition-all duration-300 cursor-pointer filter border-4 ">
+                  <a href="#">
+                    <img class="" src="vr.png" alt="image description" />
+                  </a>
+                </figure>
+              </div>
+              <div className="basis-1/4 mb-10 lg:mb-0">
+              <figure class="max-w-xs relative transition-all duration-300 cursor-pointer filter border-4">
+                  <a href="#">
+                    <img class="" src="vr.png" alt="image description" />
+                  </a>
+                </figure>
+              </div>
+              <div className="basis-1/4">
+                <figure class="max-w-xs relative transition-all duration-300 cursor-pointer filter border-4">
+                  <a href="#">
+                    <img class="" src="vr.png" alt="image description" />
+                  </a>
+                </figure>
+              </div>
+
+            </div>
+          </section>
+          {/* End Of highlights Section */}
         </div>
       </Layout>
     </>
