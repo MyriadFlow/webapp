@@ -48,7 +48,7 @@ function Token({ asset }) {
 
   return (
     <Layout>
-      <div className="max-w-[1400px] mx-auto bg-[#f8f7fc] p-8 dark:bg-[#131417] my-8 rounded-3xl body-back">
+      <div className="max-w-[1400px] mx-auto bg-[#f8f7fc] p-8 dark:bg-[#131417] lg:my-8 lg:rounded-3xl body-back">
         <div className="flex flex-col lg:flex-row gap-x-8">
           <div className="w-full lg:w-[50%]" onClick={() => isSetFull(true)}>
             <AssetComp
@@ -62,7 +62,7 @@ function Token({ asset }) {
                   uri={asset ? asset?.metaDataURI : ""}
                 />
               </div>
-              <div className="body-back">
+              <div className="">
                 <div className="">
                   <div className="rounded-3xl w-full px-4 py-3 bg-white dark:bg-[#1e1f26] myshadow text-[#253262]">
                     <h3 className="font-bold text-gray-500 dark:text-white uppercase">

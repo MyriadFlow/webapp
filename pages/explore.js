@@ -607,7 +607,7 @@ const Home = () => {
 
             </div>
           )}
-          <div className="mt-10 h-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 ">
+          <div className="my-10 lg:mx-6 md:mx-4 mx-2 h-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 w-full">
             {data?.length ? (
               data?.map((item) => {
                 return (
@@ -632,7 +632,7 @@ const Home = () => {
                       </div>
                     </Link>
                     <button onClick={() => AddLike(item?.itemId)}>
-                      like:{item?.likeCount}
+                      likes:{item?.likeCount}
                     </button>
 
                     <button
@@ -646,12 +646,12 @@ const Home = () => {
               })
             ) : loading ? (
               <Loader />
-            ) : (
+            ) : ( !loading && !data &&(
               <div className="flex">
                 <div className="text-2xl pb-10 font-bold text-center text-gray-500 dark:text-white">
                   You have not created Any Assets
                 </div>
-              </div>
+              </div>)
             )}
           </div>
 
