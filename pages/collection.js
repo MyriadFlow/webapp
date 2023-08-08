@@ -7,6 +7,9 @@ import { request, gql } from "graphql-request";
 import Homecomp from "../Components/homeComp";
 import Loader from "../Components/Loader";
 import Layout from "../Components/Layout";
+import { BsShop } from "react-icons/bs";
+import { IoCreate, IoEaselSharp } from "react-icons/io5";
+import { RiMoneyDollarCircleLine } from "react-icons/ri";
 import etherContract from "../utils/web3Modal";
 import Tradhub from '../artifacts/contracts/tradehub/TradeHub.sol/TradeHub.json'
 const graphqlAPI = process.env.NEXT_PUBLIC_STOREFRONT_API;
@@ -21,6 +24,7 @@ const Collection = () => {
   var wallet = walletAddr ? walletAddr[0] : "";
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [page, setPage] = useState("signature");
   const [wlt, setwlt] = useState();
   const fetchUserAssests = async () => {
     setLoading(true);
@@ -77,11 +81,62 @@ const Collection = () => {
  
   return (
     <Layout>
-    <div className="p-4 px-10 min-h-screen body-back">
-      <div className=" mt-10  h-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 ">
+    <div className="min-h-screen body-back">
+    <div className="text-2xl font-semibold mb-4 pt-10 text-center">Collections</div>
+    <div className="pb-4 px-10 grid grid-cols-2 gap-8 sm:gap-6 lg:grid-cols-5 md:grid-cols-3 w-full pt-6 border-t">
+      
+          <div
+            className={`rounded-full text-center text-gray-500 dark:text-gray dark:hover:bg-white  cursor-pointer p-3 border-b-2 border-transparent transition-all ${
+              page === "signature" ? "bg-white" : ""
+            }`}
+            onClick={() => setPage("signature")}
+           >
+              <div className="text-sm lg:text-xl md:text-lg font-semibold">SignatureSeries</div>
+          </div>
+
+          <div
+            className={`rounded-full text-center text-gray-500 dark:text-gray dark:hover:bg-white  cursor-pointer p-3 border-b-2 border-transparent transition-all ${
+              page === "fusion" ? "bg-white" : ""
+            }`}
+            onClick={() => setPage("fusion")}
+           >
+              <div className="text-sm lg:text-xl md:text-lg font-semibold">FusionSeries</div>
+          </div>
+
+          <div
+            className={`rounded-full text-center text-gray-500 dark:text-gray dark:hover:bg-white  cursor-pointer p-3 border-b-2 border-transparent transition-all ${
+              page === "instagen" ? "bg-white" : ""
+            }`}
+            onClick={() => setPage("instagen")}
+          >
+              <div className="text-sm lg:text-xl md:text-lg font-semibold">Instagen</div>
+          </div>
+
+          <div
+            className={`rounded-full text-center text-gray-500 dark:text-gray dark:hover:bg-white  cursor-pointer p-3 border-b-2 border-transparent transition-all ${
+              page === "eternum" ? "bg-white" : ""
+            }`}
+            onClick={() => setPage("eternum")}
+          >
+              <div className="text-sm lg:text-xl md:text-lg font-semibold">EternumPass</div>
+          </div>
+
+          <div
+            className={`rounded-full text-center text-gray-500 dark:text-gray dark:hover:bg-white  cursor-pointer p-3 border-b-2 border-transparent transition-all ${
+              page === "phygital" ? "bg-white" : ""
+            }`}
+            onClick={() => setPage("phygital")}
+          >
+              <div className="text-sm lg:text-xl md:text-lg font-semibold">Phygital NFTs</div>
+          </div>
+        </div>
+
+
+      
         {data?.length > 0 ? (
           data.map((item) => {
             return (
+              <div className="px-10 mt-10 h-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
               <div
                 key={item.tokenID}
                 className=" border-2 p-2.5  dark:bg-[#1c1c24]  rounded-lg shadow-lg w-full lg:w-72 hover:scale-105 duration-200 transform transition cursor-pointer"
@@ -108,16 +163,18 @@ const Collection = () => {
                   </div>
                 </Link>
               </div>
+              </div>
             );
           })
+          
         ) : loading ? (
           <Loader />
         ) : (
-          <div className="text-2xl pb-10 font-bold text-center">
+          <div className="text-2xl font-bold text-center py-10">
             You haven&apos;t created any asset.
           </div>
         )}
-      </div>
+      
     </div>
     </Layout>
   );

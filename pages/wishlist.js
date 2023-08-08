@@ -134,13 +134,13 @@ export default function Wishlist() {
           </div>
         </div>
 
-        <div className="flex justify-around mt-5 text-gray-500 dark:text-white pt-10">
-          <div>NFT Collection</div>
-          <div>Name</div>
-          <div>Description</div>
-          <div>Price</div>
-          <div></div>
-          <div>Remove</div>
+        <div className="flex justify-around mt-5 text-gray-500 dark:text-white pt-10 lg:flex-row flex-col lg:ml-0 ml-10 hidden lg:flex">
+          <div className="pb-32 lg:pb-0">NFT Collection</div>
+          <div className="pb-10 lg:pb-0">Name</div>
+          <div className="pb-10 lg:pb-0">Description</div>
+          <div className="pb-10 lg:pb-0">Price</div>
+          <div className="pb-10 lg:pb-0"></div>
+          <div className="pb-10 lg:pb-0">Remove</div>
         </div>
 
         {wishlist?.length
@@ -171,6 +171,58 @@ export default function Wishlist() {
             );
           })
           : null}
+
+        {/* <div className="flex flex-row justify-around pt-10 lg:-ml-40 items-center text-gray-500 dark:text-white">
+          <Link href={`/explore/123`}>
+            <div className="mycard border-white">
+              <MarketPlaceCardWish />
+            </div>
+          </Link>
+          <div className="lg:flex-row flex-col lg:flex">
+          <div className="m-10">name</div>
+          <div className="m-10">description  uweiofhjkf jsdkfhjkls irojgv jfdkjv</div>
+          <div className="m-10"> 10 MATIC</div>
+          <div className="">
+            <button
+              onClick={() => buyNft(item)}
+              className="text-gray-500 px-2 dark:text-black bg-white w-full rounded-md py-2 font-bold"
+            >
+              Buy Now
+            </button>
+          </div>
+          </div>
+        </div> */}
+
+
+
+      <div class="w-full lg:px-8 md:px-6 overflow-y-hidden overflow-x-hidden h-auto" id="scroll">
+        <div class="md:flex items-strech py-8 md:py-10 lg:py-8 px-4 border-gray-50">
+          <div class="md:w-4/12 2xl:w-1/4 w-full">
+            <img src="/vr.png" alt="Black Leather Bag" class="h-full object-center object-cover md:block hidden" />
+            <img src="/vr.png" alt="Black Leather Bag" class="md:hidden w-full h-full object-center object-cover" />
+          </div>
+          <div class="md:pl-4 md:w-8/12 2xl:w-3/4 flex flex-col justify-center">
+            <p class="text-xs leading-3 text-gray-800 dark:text-white md:pt-0 pb-4">NFT Collection</p>
+            <p class="text-xs leading-3 text-gray-800 dark:text-white md:pt-0 py-4">Name</p>
+            <div class="flex items-center justify-between w-full pt-1">
+              <p class="text-base font-black leading-none text-gray-800 dark:text-white">Description</p>
+               <p class="text-xs leading-3 underline text-red-500 pl-5 cursor-pointer">Remove</p>
+            </div>
+            {/* <p class="text-xs leading-3 text-gray-600 dark:text-white pt-2">Height: 10 inches</p>
+            <p class="text-xs leading-3 text-gray-600 dark:text-white py-4">Color: Black</p>
+            <p class="w-96 text-xs leading-3 text-gray-600 dark:text-white">Composition: 100% calf leather </p> */}
+            <div class="flex items-center justify-between pt-5">
+              <div class="flex itemms-center">
+                <p class="text-xs leading-3 underline text-gray-800 dark:text-white cursor-pointer">favorites</p>
+                <p class="text-xs leading-3 underline text-green-500 pl-5 cursor-pointer">Buy Now</p>
+              </div>
+              <p class="text-base font-black leading-none text-gray-800 dark:text-white">Price</p>
+            </div>
+          </div>
+        </div>
+        </div>
+
+       
 
         {wishlist?.length == 0 && (
           <div className="font-bold text-2xl text-center p-12">

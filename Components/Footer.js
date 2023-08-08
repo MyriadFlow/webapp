@@ -71,7 +71,7 @@ const Footer = () => {
                                 <li class="mb-4">
                                     <a href="#" class="hover:underline ">Created</a>
                                 </li>
-                                <li>
+                                <li class="mb-4">
                                     <a href="#" class="hover:underline">Wishlist</a>
                                 </li>
                                 <li>

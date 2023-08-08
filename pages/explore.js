@@ -317,7 +317,7 @@ const Home = () => {
       )}
 
       <main className="body-back">
-        <div className="flex justify-around p-4 border-y-2">
+        <div className="flex justify-around p-4 border-b">
           {/* <div className="mt-5 mr-5">
             <Link href="/explore">
               <NavLink
