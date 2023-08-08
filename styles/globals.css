@@ -150,6 +150,7 @@ text-fill-color: transparent;
 .dark .body-back{
     background: linear-gradient(90deg, rgba(1, 98, 255, 0.4) 1.81%, rgba(24, 19, 30, 0.4) 32.6%, rgba(19, 19, 26, 0.4) 65.42%, rgba(1, 98, 255, 0.4) 96.25%), #13131A;
 }
+
 .body-back-light{
   background: linear-gradient(62deg, #8EC5FC 0%, #E0C3FC 100%), #8EC5FC;
   ;

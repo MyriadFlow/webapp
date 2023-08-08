@@ -290,43 +290,43 @@ function LandingPage() {
           <section className="dark:body-back body-back-light">
             <div className=" py-16 flex lg:flex-row flex-col justify-center items-center">
               <div className="basis-1/3">
-              <div className="text-center p-2">
-                <h3 className="text-3xl lg:w-1/2 font-poppins font-bold capitalize mb-8 mx-auto text-gray-500 dark:text-white">
-                  Create NFT marketplace for your community
-                </h3>
-                <div className="items-center lg:py-4 md:py-4">
-                  <div>
-                    <button className="py-3 px-6 text-gray-500 dark:text-white font-semibold mb-8 lg:mb-0 border rounded-full">
-                      <Link href="/create">
-                        <span className="font-raleway font-bold text-gray-500 dark:text-whit">
-                          Create NFT
-                        </span>
-                      </Link>
-                    </button>
+                <div className="text-center p-2">
+                  <h3 className="text-3xl lg:w-1/2 font-poppins font-bold capitalize mb-8 mx-auto text-gray-500 dark:text-white">
+                    Create NFT marketplace for your community
+                  </h3>
+                  <div className="items-center lg:py-4 md:py-4">
+                    <div>
+                      <button className="py-3 px-6 text-gray-500 dark:text-white font-semibold mb-8 lg:mb-0 border rounded-full">
+                        <Link href="/create">
+                          <span className="font-raleway font-bold text-gray-500 dark:text-whit">
+                            Create NFT
+                          </span>
+                        </Link>
+                      </button>
+                    </div>
+                  </div>
+                  <div className="items-center ">
+                    <div>
+                      <button className="py-3 px-6 text-gray-500 dark:text-white font-semibold mb-8 lg:mb-0 explore-btn-border">
+                        <Link href="/explore">
+                          <span className="font-raleway font-bold text-gray-500 dark:text-whit">
+                            Explore More
+                          </span>
+                        </Link>
+                      </button>
+                    </div>
                   </div>
                 </div>
-                <div className="items-center ">
-                  <div>
-                    <button className="py-3 px-6 text-gray-500 dark:text-white font-semibold mb-8 lg:mb-0 explore-btn-border">
-                      <Link href="/explore">
-                        <span className="font-raleway font-bold text-gray-500 dark:text-whit">
-                          Explore More
-                        </span>
-                      </Link>
-                    </button>
-                  </div>
-                </div>
-              </div>
               </div>
               <div className="basis-1/4 mb-10 lg:mb-0">
-              <figure class="max-w-xs relative transition-all duration-300 cursor-pointer filter border-4 ">
+                <figure class="max-w-xs relative transition-all duration-300 cursor-pointer filter border-4 ">
                   <a href="#">
                     <img class="" src="vr.png" alt="image description" />
                   </a>
                 </figure>
               </div>
               <div className="basis-1/4 mb-10 lg:mb-0">
-              <figure class="max-w-xs relative transition-all duration-300 cursor-pointer filter border-4">
+                <figure class="max-w-xs relative transition-all duration-300 cursor-pointer filter border-4">
                   <a href="#">
                     <img class="" src="vr.png" alt="image description" />
                   </a>
