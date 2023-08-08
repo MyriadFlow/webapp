@@ -11,10 +11,10 @@ export default function About() {
       title="About"
       description="This is used to show the information of the marketplace application"
     >
-      <div className="flex body-back">
-        <div style={{ padding: "10px 10px 10px 106px" }}>
+      <div className="flex body-back mx-auto items-center justify-center lg:flex-row flex-col lg:px-32 px-10 pb-10">
+        <div className="lg:w-1/2">
           <div
-            className="text-3xl font-bold mt-10 text-gray-500 dark:text-white text-green-400"
+            className="text-3xl font-bold mt-10 text-gray-500 dark:text-green-400 text-green-400"
           >
             Experience the Power of NFTs:
           </div>
@@ -50,10 +50,12 @@ export default function About() {
             </Link>
           </div>
         </div>
-        <div className="w-full mt-28" style={{ padding: "0px 70px 0px 0px" }}>
-          <Image  width={7000} height={700}  src="/aboutIm.png"alt="Picture of the author"/>
+        <div className="lg:w-1/2 w-full mt-6">
+          <img src="/aboutIm.png"alt="Picture of the author"/>
         </div>
       </div>
+
+      
     </Layout>
   );
 }

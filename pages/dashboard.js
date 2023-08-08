@@ -92,54 +92,46 @@ export default function CreatorDashboard() {
     <Layout title="Dashboard"description="This is used to show the Create,Buy,Sell and Market the NFTs ">
            
             
-      <div className="p-4 body-back">
-        <div className="bg-[#1e1f26] flex items-center rounded-sm flex justify-center">
+      <div className="body-back">
+      <div className="text-2xl font-semibold mb-4 pt-10 text-center border-b pb-6">Dashboard</div>
+        <div className="pb-4 lg:px-32 md:px-10 px-4 grid grid-cols-2 gap-8 sm:gap-20 lg:grid-cols-4 md:grid-cols-4 w-full">
           <div
-            className={`text-gray-500 dark:text-white hover:text-gray-400 dark:hover:bg-[#131417]  cursor-pointer p-3 border-b-2 border-transparent hover:border-[#47cf73] transition-all ${
-              page === "created" ? "bg-[#131417] border-[#47cf73]" : ""
+            className={`rounded-full text-center text-gray-500 dark:text-gray dark:hover:bg-white  cursor-pointer p-3 border-b-2 border-transparent transition-all ${
+              page === "created" ? "bg-white" : ""
             }`}
             onClick={() => setPage("created")}
           >
-            <div className="flex items-center gap-x-2">
-              <IoCreate className="text-xl text-gray-500 dark:text-white" />
-              <div className="text-xl font-semibold">Created</div>
-            </div>
+              <div className="text-sm lg:text-xl md:text-lg font-semibold">Create</div>
           </div>
 
           <div
-            className={`text-gray-500 dark:text-white hover:text-gray-400 dark:hover:bg-[#131417]  cursor-pointer p-3 border-b-2 border-transparent hover:border-[#47cf73] transition-all ${
-              page === "sold" ? "bg-[#131417] border-[#47cf73]" : ""
-            }`}
-            onClick={() => setPage("sold")}
-          >
-            <div className="flex items-center gap-x-2">
-              <RiMoneyDollarCircleLine className="text-xl text-gray-500 dark:text-white" />
-              <div className="text-xl font-semibold">Sold</div>
-            </div>
-          </div>
-
-          <div
-            className={`text-gray-500 dark:text-white hover:text-gray-400 dark:hover:bg-[#131417]  cursor-pointer p-3 border-b-2 border-transparent hover:border-[#47cf73] transition-all ${
-              page === "bought" ? "bg-[#131417] border-[#47cf73]" : ""
+            className={`rounded-full text-center text-gray-500 dark:text-gray dark:hover:bg-white  cursor-pointer p-3 border-b-2 border-transparent transition-all ${
+              page === "bought" ? "bg-white" : ""
             }`}
             onClick={() => setPage("bought")}
           >
-            <div className="flex items-center gap-x-2">
-              <IoEaselSharp className="text-xl" />
-              <div className="text-xl font-semibold">Bought</div>
-            </div>
+              <div className="text-sm lg:text-xl md:text-lg font-semibold">Buy</div>
+
           </div>
 
           <div
-            className={`text-gray-500 dark:text-white hover:text-gray-400 dark:hover:bg-[#131417]  cursor-pointer p-3 border-b-2 border-transparent hover:border-[#47cf73] transition-all ${
-              page === "market" ? "bg-[#131417] border-[#47cf73]" : ""
+            className={`rounded-full text-center text-gray-500 dark:text-gray dark:hover:bg-white  cursor-pointer p-3 border-b-2 border-transparent transition-all ${
+              page === "sold" ? "bg-white" : ""
+            }`}
+            onClick={() => setPage("sold")}
+          >
+
+              <div className="text-sm lg:text-xl md:text-lg font-semibold">Sold</div>
+
+          </div>
+
+          <div
+            className={`rounded-full text-center text-gray-500 dark:text-gray dark:hover:bg-white  cursor-pointer p-3 border-b-2 border-transparent transition-all ${
+              page === "market" ? "bg-white" : ""
             }`}
             onClick={() => setPage("market")}
           >
-            <div className="flex items-center gap-x-2">
-              <BsShop className="text-xl" />
-              <div className="text-xl font-semibold">Market</div>
-            </div>
+              <div className="text-sm lg:text-xl md:text-lg font-semibold">Market</div>
           </div>
         </div>
 
@@ -180,7 +172,7 @@ export default function CreatorDashboard() {
               ) : loading ? (
                 <Loader />
               ) : (
-                <div className="text-2xl pb-10 text-center font-bold text-gray-500 dark:text-white">
+                <div className="text-2xl text-center font-bold text-gray-500 dark:text-white">
                   You Haven&apos;t Sold Any Asset.
                 </div>
               )}
@@ -223,7 +215,7 @@ export default function CreatorDashboard() {
               ) : loading ? (
                 <Loader />
               ) : (
-                <div className="text-2xl pb-10 text-center font-bold text-gray-500 dark:text-white">
+                <div className="text-2xl text-center font-bold text-gray-500 dark:text-white">
                   You Haven&apos;t Sold Any Auction.
                 </div>
               )}
