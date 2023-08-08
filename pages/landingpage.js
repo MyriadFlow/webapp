@@ -110,7 +110,7 @@ function LandingPage() {
       >
         {loading && <Loader />}
 
-        <div className="">
+        <div className="dark:body-back body-back-light">
           <div className="min-h-screen lg:flex justify-center items-center ">
             <div className="lg:flex xl:gap-8 lg:w-[1025px] x2:w-[1200px] xxl:w-[1400px] mx-auto lg:mt-12">
               <div className="text-center lg:text-left lg:w-1/2 pt-16 lg:mt-0  p-2 sm:p-4 lg:px-8 lg:pt-0">
@@ -287,7 +287,7 @@ function LandingPage() {
           {/* End Of highlights Section */}
 
           {/* highlights Section */}
-          <section className="body-back">
+          <section className="dark:body-back body-back-light">
             <div className=" py-16 flex lg:flex-row flex-col justify-center items-center">
               <div className="basis-1/3">
               <div className="text-center p-2">

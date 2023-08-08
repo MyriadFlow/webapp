@@ -10,7 +10,7 @@ const Footer = () => {
     const router = useRouter();
 
     return (
-        <footer class="bg-white dark:bg-gray-900 body-back border-t">
+        <footer class="bg-white dark:bg-gray-900 dark:body-back body-back-light border-t">
             <div class="mx-auto w-full max-w-screen-xl lg:p-0 py-6 lg:py-8 p-12">
                 <div class="md:flex md:justify-between">
                     <div class="mb-6 md:mb-0 lg:w-1/3 md:w-1/2 w-full md:mx-10">

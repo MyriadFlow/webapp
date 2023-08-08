@@ -10,7 +10,7 @@ export default function Rewards() {
 
   return (
    <Layout title="Drops"description="This is used to show the drops info">
-    <div className='flex body-back mx-auto items-center justify-center lg:flex-row flex-col'>
+    <div className='flex dark:body-back body-back-light mx-auto items-center justify-center lg:flex-row flex-col'>
 <div className='lg:mb-16'>
   <img alt="alt"  src="/imagere.png"/>
 </div>
