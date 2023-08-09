@@ -15,19 +15,22 @@ import { removePrefix } from "../utils/ipfsUtil";
 import Loader from "../Components/Loader";
 import etherContract from "../utils/web3Modal";
 const client = new NFTStorage({ token: YOUR_API_KEY });
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL_GATEWAY;
 const accessmasterAddress = process.env.NEXT_PUBLIC_ACCESS_MASTER_ADDRESS;
 
 function Profile() {
     const profile = {
         name: "",
-        country: "",
+        location: "",
+        bio: "",
+        email: "",
         profilePictureUrl: "",
-        instagram_id: "",
-        facebook_id: "",
-        twitter_id: "",
-        discord_id: "",
-        telegram_id: "",
+        walletAddress: ""
+        // instagram_id: "",
+        // facebook_id: "",
+        // twitter_id: "",
+        // discord_id: "",
+        // telegram_id: "",
     };
     const walletAddr = useSelector(selectUser);
     var wallet = walletAddr ? walletAddr[0] : "";
@@ -60,7 +63,7 @@ function Profile() {
         try {
             if (
                 !updateProfile.name.trim() ||
-                !updateProfile.country.trim()
+                !updateProfile.location.trim()
             )
                 alert("Do not leave any field empty!");
             else {
@@ -68,11 +71,11 @@ function Profile() {
                     name: "Alka Rashinkar",
                     country: "India",
                     profilePictureUrl: "https://unsplash.it/500",
-                    instagram_id: "CnjIQSEss-5/",
-                    facebook_id: "sasdsfhkkS",
-                    telegram_id: "sasdcbfvdj",
-                    twitter_id: "asxadcsfc",
-                    discord_id: "xnsacdbcv",
+                    // instagram_id: "CnjIQSEss-5/",
+                    // facebook_id: "sasdsfhkkS",
+                    // telegram_id: "sasdcbfvdj",
+                    // twitter_id: "asxadcsfc",
+                    // discord_id: "xnsacdbcv",
                 });
 
                 const config = {
@@ -84,14 +87,16 @@ function Profile() {
                     data: signroledata,
                 };
                 setLoading(true);
-                await axios.patch(
+                const data = await axios.patch(
                     "https://testnet.gateway.myriadflow.com/api/v1.0/profile",
                     { ...updateProfile },
                     config
                 );
-                alert("Updation successful!");
-                setShowModal(false);
-                getProfile();
+                if (data) {
+                    alert("Updation successful!");
+                    setShowModal(false);
+                    getProfile();
+                }
             }
         } catch (error) {
             console.log(error);
@@ -153,21 +158,22 @@ function Profile() {
     };
     //use to generate the hex msg and
     const authorize = async () => {
+        const mywallet = localStorage.getItem("platform_wallet")
         const { data } = await axios.get(
-            `${BASE_URL}/api/v1.0/flowid?walletAddress=${wallet}`
+            `${BASE_URL}api/v1.0/auth/web3?walletAddress=${mywallet}`
         );
 
         let web3 = new Web3(Web3.givenProvider);
         let completemsg = data.payload.eula + data.payload.flowId;
         const hexMsg = convertUtf8ToHex(completemsg);
-        const result = await web3.eth.personal.sign(hexMsg, wallet);
+        const result = await web3.eth.personal.sign(hexMsg, mywallet);
         var signdata = JSON.stringify({
             flowId: data.payload.flowId,
             signature: result,
         });
         //this is use to genarate the token /perceto
         const config = {
-            url: `${BASE_URL}/api/v1.0/authenticate`,
+            url: `${BASE_URL}api/v1.0/auth/web3`,
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -178,8 +184,9 @@ function Profile() {
             const response = await axios(config);
             const token = await response?.data?.payload?.token;
             localStorage.setItem("platform_token", token);
+            // console.log(token);
             getProfile();
-            getRole();
+            // getRole();
             return true;
         } catch (e) {
             console.log(e);
@@ -198,45 +205,45 @@ function Profile() {
         };
         setLoading(true);
         axios
-            .get(`${BASE_URL}/api/v1.0/profile`, config)
+            .get(`${BASE_URL}api/v1.0/profile`, config)
             .then((res) => {
                 const {
                     data: {
                         payload: {
                             name,
-                            country,
+                            location,
+                            bio,
+                            email,
                             profilePictureUrl,
-                            telegram_id,
-                            facebook_id,
-                            twitter_id,
-                            discord_id,
-                            instagram_id,
+                            walletAddress
                         },
                     },
                 } = res;
 
+                console.log(res.data);
+                
                 setProfileData({
                     ...profileData,
                     name,
-                    country,
+                    location,
+                    bio,
+                    email,
                     profilePictureUrl,
-                    instagram_id,
-                    telegram_id,
-                    facebook_id,
-                    twitter_id,
-                    discord_id,
+                    walletAddress
                 });
+
+                
+
                 setupdateProfile({
                     ...profileData,
                     name,
-                    country,
+                    location,
+                    bio,
+                    email,
                     profilePictureUrl,
-                    instagram_id,
-                    telegram_id,
-                    facebook_id,
-                    twitter_id,
-                    discord_id,
+                    walletAddress
                 });
+                console.log(updateProfile);
                 setLoading(true);
             })
             .catch((error) => {
@@ -262,33 +269,31 @@ function Profile() {
 
     useEffect(() => {
         const asyncFn = async () => {
-            const token = localStorage.getItem("platform_token");
-            connectweb();
-            if (!token) {
-                authorize();
-            } else {
-                getProfile();
-            }
+            // const token = localStorage.getItem("platform_token");
+            // connectweb();
+            // if (!token) {
+            authorize();
+            // } else {
+            //     getProfile();
+            // }
 
-            const accessmaterContarct = await etherContract(accessmasterAddress, AccessMaster.abi)
-            setHasRole(
-                await accessmaterContarct.hasRole(await accessmaterContarct.FLOW_CREATOR_ROLE(), wallet)
-            );
+            // const accessmaterContarct = await etherContract(accessmasterAddress, AccessMaster.abi)
+            // setHasRole(
+            //     await accessmaterContarct.hasRole(await accessmaterContarct.FLOW_CREATOR_ROLE(), wallet)
+            // );
         };
         asyncFn();
-    }, [hasRole]);
+    }, []);
 
 
 
     const {
         name,
-        country,
+        location,
+        bio,
+        email,
         profilePictureUrl,
-        instagram_id,
-        facebook_id,
-        telegram_id,
-        twitter_id,
-        discord_id,
+        walletAddress
     } = profileData;
     return (
         <Layout
@@ -556,9 +561,7 @@ function Profile() {
                     <div className="flex items-center justify-start -mt-24 ml-16">
                         <div className="rounded-full h-48 w-48 ring-offset-2 ring-1 ring-black bg-gray-200" >
                             <img
-                                width="200"
-                                height="200"
-                                className="w-full h-80 p-7 grow"
+                                className="text-3xl text-gray-500 w-48 h-48 rounded-full"
                                 alt=""
                                 src={`${process.env.NEXT_PUBLIC_IPFS_GATEWAY}/${removePrefix(
                                     profilePictureUrl
@@ -589,28 +592,28 @@ function Profile() {
 
                 <div className=" m-2 flex flex-row items-center justify-start">
 
-                    <div className="lg:mt-10 md:mt-24 ml-16">
+                    <div className="lg:mt-10 md:mt-10 mt-4 ml-16">
                         <div>
-                            <p className="text-white text-2xl font-bold">Neque Porro</p>
+                            <p className="text-white text-2xl font-bold">{updateProfile.name}</p>
                         </div>
                         <div>
-                            <p className="text-white mt-12 text-xl">Bio: Neque porro quisquam est qui dolorem ipsum quia dolor sit</p>
+                            <p className="text-white mt-12 text-xl">Bio: {updateProfile.bio}</p>
 
                             <div className="flex lg:flex-row md:flex-row flex-col mt-4">
                                 <div className="flex">
                                     <FaMapMarkerAlt style={{ color: 'grey', marginTop: 6 }} />
-                                    <p className="text-xl ml-2" style={{ color: 'grey' }}>Los angeles</p>
+                                    <p className="text-xl ml-2" style={{ color: 'grey' }}>{updateProfile.location}</p>
                                 </div>
                                 <div className="flex lg:ml-12 md:ml-12">
                                     <FaWallet style={{ color: 'white', marginTop: 6 }} />
-                                    <p className="text-xl ml-2" style={{ color: 'white' }}>1fdbceyguhjkd5346</p>
+                                    <p className="text-xl ml-2" style={{ color: 'white' }}>{updateProfile.walletAddress}</p>
                                 </div>
                             </div>
 
                             <div className="flex lg:flex-row md:flex-row flex-col mt-8">
                                 <div className="flex">
                                     <FaEnvelope style={{ color: 'white', marginTop: 6 }} />
-                                    <p className="text-xl ml-2" style={{ color: 'white' }}>firstname@gmail.com</p>
+                                    <p className="text-xl ml-2" style={{ color: 'white' }}>{updateProfile.email}</p>
                                 </div>
                                 <div className="flex lg:ml-12 md:ml-12 text-xl">
                                     <IoLogoInstagram style={{ color: 'white', marginTop: 6, marginRight: 8 }} />
@@ -627,6 +630,91 @@ function Profile() {
 
                 </div>
             </div>
+
+            {/* <form onSubmit={updateData}>
+                <div className="md-form mb-3">
+                    <input
+                        type="text"
+                        id="form1Example13"
+                        className="form-control form-control-lg px-2 py-2 pl-2 bg-black w-full text-gray-500 dark:text-white"
+                        value={updateProfile.name}
+                        name="name"
+                        onChange={(e) => onUpdateProfile(e)}
+                        placeholder="Name"
+                    />
+                </div>
+
+                <div className="md-form mb-3">
+                    <input
+                        type="text"
+                        id="form1Example15"
+                        className="form-control form-control-lg px-2 py-2 pl-2 bg-black w-full text-gray-500 dark:text-white"
+                        value={updateProfile.location}
+                        name="location"
+                        onChange={(e) => onUpdateProfile(e)}
+                        placeholder="Location"
+                    />
+                </div>
+
+                <div className="md-form mb-3">
+                    <input
+                        type="text"
+                        id="form1Example16"
+                        className="form-control form-control-lg px-2 py-2 pl-2 bg-black w-full text-gray-500 dark:text-white"
+                        value={updateProfile.bio}
+                        name="bio"
+                        onChange={(e) => onUpdateProfile(e)}
+                        placeholder="Bio"
+                    />
+                </div>
+
+                <div className="md-form mb-3">
+                    <input
+                        type="text"
+                        id="form1Example17"
+                        className="form-control form-control-lg px-2 py-2 pl-2 bg-black w-full text-gray-500 dark:text-white"
+                        value={updateProfile.email}
+                        name="email"
+                        onChange={(e) => onUpdateProfile(e)}
+                        placeholder="Email"
+                    />
+                </div>
+
+                <div className="col-md-8 col-lg-7 col-xl-6 text-center justify-center align-center flex-col">
+                    {updateProfile?.profilePictureUrl && (
+                        <img
+                            alt="alt"
+                            src={`${process.env.NEXT_PUBLIC_IPFS_GATEWAY
+                                }/${removePrefix(
+                                    updateProfile?.profilePictureUrl
+                                )}`}
+                            className="img-fluid w-6/12 grow"
+                            width="200"
+                            height="200"
+                        />
+                    )}
+                    <input
+                        type="file"
+                        accept="image/*"
+                        className="btn btn-primary btn-md  mb-5 mt-5"
+                        name="profilePic"
+                        onChange={(e) => uploadImage(e)}
+                    />
+                </div>
+                <div className="flex gap-6">
+                    <div>
+                        {" "}
+                        <button
+                            type="submit"
+                            className=" bg-blue-800 text-black-500 dark:text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                        >
+                            Update Profile
+                        </button>
+                    </div>
+
+
+                </div>
+            </form> */}
 
             {/* <div className="flex px-5 py-5 gap-5 justify-center body-back">
                 <div className=" flex shadow-2xl ... p-10 gap-6">
