@@ -138,10 +138,12 @@ const Collection = () => {
             return (
               <div className="px-10 mt-10 h-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
               <div
-                key={item.tokenID}
+                // key={item.tokenID}
                 className=" border-2 p-2.5  dark:bg-[#1c1c24]  rounded-lg shadow-lg w-full lg:w-72 hover:scale-105 duration-200 transform transition cursor-pointer"
               >
-                <Link key={item?.tokenID} href={`/assets/${item?.tokenID}`}>
+                <Link 
+                // key={item?.tokenID} 
+                href={`/assets/${item?.tokenID}`}>
                   <div>
                     <Homecomp uri={item ? item?.metaDataURI : ""} />
 
