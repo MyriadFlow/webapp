@@ -92,7 +92,7 @@ export default function CreatorDashboard() {
     <Layout title="Dashboard"description="This is used to show the Create,Buy,Sell and Market the NFTs ">
            
             
-      <div className="body-back">
+      <div className="dark:body-back body-back-light">
       <div className="text-2xl font-semibold mb-4 pt-10 text-center border-b pb-6">Dashboard</div>
         <div className="pb-4 lg:px-32 md:px-10 px-4 grid grid-cols-2 gap-8 sm:gap-20 lg:grid-cols-4 md:grid-cols-4 w-full">
           <div

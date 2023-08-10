@@ -311,7 +311,7 @@ function Profile() {
             {loading && <Loader />}
             {showModal ? (
                 <>
-                    <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none body-back">
+                    <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none dark:body-back body-back-light">
 
 
                         <div class="py-12 transition duration-150 ease-in-out z-10 absolute top-0 right-0 bottom-0 left-0" id="modal">
@@ -408,7 +408,7 @@ function Profile() {
                 </>
             ) : null}
 
-            <div className="body-back pb-32">
+            <div className="dark:body-back body-back-light pb-32">
                 <div
                     className="w-full h-64 object-cover bg-gray-200" style={{ backgroundImage: 'url("")' }}>
                 </div>
@@ -451,31 +451,31 @@ function Profile() {
 
                     <div className="lg:mt-10 md:mt-10 mt-4 ml-16">
                         <div>
-                            <p className="text-white text-2xl font-bold">{profileDetails?.name}</p>
+                            <p className="dark:text-white text-gray-800 text-2xl font-bold">{profileDetails?.name}</p>
                         </div>
                         <div>
-                            <p className="text-white mt-12 text-xl">Bio: {profileDetails?.bio}</p>
+                            <p className="dark:text-white text-gray-800 mt-12 text-xl">Bio: {profileDetails?.bio}</p>
 
                             <div className="flex lg:flex-row md:flex-row flex-col mt-4">
                                 <div className="flex">
                                     <FaMapMarkerAlt style={{ color: 'grey', marginTop: 6 }} />
                                     <p className="text-xl ml-2" style={{ color: 'grey' }}>{profileDetails?.location}</p>
                                 </div>
-                                <div className="flex lg:ml-12 md:ml-12">
-                                    <FaWallet style={{ color: 'white', marginTop: 6 }} />
-                                    <p className="text-xl ml-2" style={{ color: 'white' }}>{profileDetails?.walletAddress}</p>
+                                <div className="flex lg:ml-12 md:ml-12 dark:text-white text-gray-800">
+                                    <FaWallet style={{ marginTop: 6 }} className=""/>
+                                    <p className="text-xl ml-2">{profileDetails?.walletAddress}</p>
                                 </div>
                             </div>
 
                             <div className="flex lg:flex-row md:flex-row flex-col mt-8">
-                                <div className="flex">
-                                    <FaEnvelope style={{ color: 'white', marginTop: 6 }} />
-                                    <p className="text-xl ml-2" style={{ color: 'white' }}>{profileDetails?.email}</p>
+                                <div className="flex dark:text-white text-gray-800">
+                                    <FaEnvelope style={{ marginTop: 6 }} />
+                                    <p className="text-xl ml-2">{profileDetails?.email}</p>
                                 </div>
-                                <div className="flex lg:ml-12 md:ml-12 text-xl">
-                                    <IoLogoInstagram style={{ color: 'white', marginTop: 6, marginRight: 8 }} />
-                                    <IoLogoTwitter style={{ color: 'white', marginTop: 6, marginRight: 8 }} />
-                                    <IoLogoDiscord style={{ color: 'white', marginTop: 6 }} />
+                                <div className="flex lg:ml-12 md:ml-12 text-xl dark:text-white text-gray-800">
+                                    <IoLogoInstagram style={{ marginTop: 6, marginRight: 8 }} />
+                                    <IoLogoTwitter style={{ marginTop: 6, marginRight: 8 }} />
+                                    <IoLogoDiscord style={{ marginTop: 6 }} />
                                 </div>
                             </div>
 

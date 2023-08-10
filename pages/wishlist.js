@@ -124,12 +124,12 @@ export default function Wishlist() {
           </div>
         </div>
       )}
-      <div className="body-back">
+      <div className="dark:body-back body-back-light">
         <div className="text-center pt-5">
           <div>
             <img alt="alt" className="wish m-auto" src="wish.png"></img>
           </div>
-          <div className="font-bold mt-5 text-2xl text-gray-500 dark:text-white border-b pb-6">
+          <div className="font-bold mt-5 text-2xl text-gray-800 dark:text-white border-b pb-6">
             My Wishlist
           </div>
         </div>

@@ -48,7 +48,7 @@ function Token({ asset }) {
 
   return (
     <Layout>
-      <div className="max-w-[1400px] mx-auto bg-[#f8f7fc] p-8 dark:bg-[#131417] lg:my-8 lg:rounded-3xl body-back">
+      <div className="max-w-[1400px] mx-auto bg-[#f8f7fc] p-8 dark:bg-[#131417] lg:my-8 lg:rounded-3xl dark:body-back body-back-light">
         <div className="flex flex-col lg:flex-row gap-x-8">
           <div className="w-full lg:w-[50%]" onClick={() => isSetFull(true)}>
             <AssetComp
@@ -153,7 +153,7 @@ function Token({ asset }) {
                       onClick={() =>
                         buyItem(asset, setmodel, setmodelmsg)
                       }
-                      className="flex gap-x-2 items-center justify-center px-10 py-3 text-gray-500 dark:text-white text-sm font-medium rounded-xl hover:bg-blue-500 focus:outline-none focus:bg-blue-500"
+                      className="flex gap-x-2 items-center justify-center px-10 py-3 text-gray-500 dark:text-white text-sm font-medium rounded-xl hover:bg-blue-500 hover:text-white focus:outline-none focus:bg-blue-500"
                     >
                       <span className="text-lg font-bold">Buy NFT</span>
                       <BiWallet className="text-3xl" />

@@ -11,7 +11,7 @@ export default function About() {
       title="About"
       description="This is used to show the information of the marketplace application"
     >
-      <div className="flex body-back mx-auto items-center justify-center lg:flex-row flex-col lg:px-32 px-10 pb-10">
+      <div className="flex dark:body-back body-back-light mx-auto items-center justify-center lg:flex-row flex-col lg:px-32 px-10 pb-10">
         <div className="lg:w-1/2">
           <div
             className="text-3xl font-bold mt-10 text-gray-500 dark:text-green-400 text-green-400"

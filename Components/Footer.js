@@ -16,9 +16,9 @@ const Footer = () => {
                     <div class="mb-6 md:mb-0 lg:w-1/3 md:w-1/2 w-full md:mx-10">
                         <a href="https://myriadflow.com/" class="flex items-center">
                             <Image alt="dark" src="/dark.svg" width="60" height="60" className="mr-3" />
-                            <span class="self-center text-2xl font-semibold whitespace-nowrap text-white">Myriadflow</span>
+                            <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white text-gray-900">Myriadflow</span>
                         </a>
-                        <div className="mt-10">MyriadFlow is an innovative platform to
+                        <div className="mt-10 dark:text-white text-gray-900">MyriadFlow is an innovative platform to
                             explore & launch NFT Experiences. Dive into
                             the next generation of Utility NFTs through
                             our Revolutionary App Store Explore.</div>
@@ -119,7 +119,7 @@ const Footer = () => {
                 </div>
                 <hr class=" border-gray-200 sm:mx-auto dark:border-gray-700 my-4" />
                 <div class="sm:flex items-center justify-center">
-                    <span class="text-lg font-bold sm:text-center">MyriadFlow | Copyright © {year} Lazarus Network Inc. All Rights Reserved
+                    <span class="text-lg font-bold sm:text-center dark:text-white text-gray-500">MyriadFlow | Copyright © {year} Lazarus Network Inc. All Rights Reserved
                     </span>
                 </div>
             </div>

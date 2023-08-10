@@ -159,6 +159,18 @@ text-fill-color: transparent;
   background: linear-gradient(90deg, rgba(1, 98, 255, 0.4) 1.81%, rgba(24, 19, 30, 0.4) 32.6%, rgba(19, 19, 26, 0.4) 65.42%, rgba(1, 98, 255, 0.4) 96.25%), #13131A;
 }
 
+.body-back-hl{
+  background: white;
+}
+
+.dark .body-back-hl{
+  background:#161a1d;
+}
+
+.dark .body-back-light-hl {
+  background: #161a1d;
+}
+
 .add-t0-cart{
     background: #177dc7;
     padding: 10px;

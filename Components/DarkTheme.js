@@ -7,7 +7,7 @@ export default function Home() {
 
 
       {colorTheme === "light" ? (
-        <svg color="#c4afaf"
+        <svg color="white"
           onClick={() => setTheme("light")}
           xmlns="http://www.w3.org/2000/svg"
           className="h-5 w-5"
@@ -24,7 +24,7 @@ export default function Home() {
           />
         </svg>
       ) : (
-        <svg color="#c4afaf"
+        <svg color="black"
           onClick={() => setTheme("dark")}
           xmlns="http://www.w3.org/2000/svg"
           className="h-5 w-5"

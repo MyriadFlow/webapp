@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { BsHeart } from "react-icons/bs";
 import LandingMetaData from "../LandingMetaData";
-const BigCard = ({ name,description, price, title, img,like }) => {
+const BigCard = ({ name, description, price, title, img, like }) => {
   return (
     <article className="w-[320px] sm:w-auto flex-shrink-0 p-3 border-white">
       <img
@@ -13,17 +13,17 @@ const BigCard = ({ name,description, price, title, img,like }) => {
         height="200"
       />
 
-           
-      <div className="bg-white p-6 text-black rounded-b-xl max-w-[300px]">
+
+      <div className="bg-white p-6 text-black rounded-b-xl max-w-[300px] border border-black">
         <h1 className="text-2xl font-bold mb-2">{title}</h1>
         <div className="flex justify-between">
-        <div className="text-2xl font-bold mb-12">
-          <span className="text-xl">$</span>{(price)}
-        </div>
-        <div>{description}</div>
+          <div className="text-2xl font-bold mb-12">
+            <span className="text-xl">$</span>{(price)}
+          </div>
+          <div>{description}</div>
 
         </div>
-       
+
         <div className="flex justify-between items-center">
           <div className="flex items-center gap-2">
             <Image width="200" height="200" src="/vr.png" className="w-10 rounded-full" alt="big2" />

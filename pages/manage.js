@@ -71,7 +71,7 @@ export default function Manage() {
   return (
     <Layout title="Manage" description="This is used to Manage creator info">
      
-    {rolGranted &&  <div className="body-back">
+    {rolGranted &&  <div className="dark:body-back body-back-light">
               <div  className=" mt-10">
                 <div
                   className="flex justify-between p-2.5 border-y-2"

@@ -81,8 +81,8 @@ const Collection = () => {
  
   return (
     <Layout>
-    <div className="min-h-screen body-back">
-    <div className="text-2xl font-semibold mb-4 pt-10 text-center">Collections</div>
+    <div className="min-h-screen dark:body-back body-back-light">
+    <div className="text-2xl font-semibold mb-4 pt-10 text-center dark:text-white text-gray-800">Collections</div>
     <div className="pb-4 px-10 grid grid-cols-2 gap-8 sm:gap-6 lg:grid-cols-5 md:grid-cols-3 w-full pt-6 border-t">
       
           <div

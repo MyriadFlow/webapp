@@ -110,11 +110,11 @@ function LandingPage() {
       >
         {loading && <Loader />}
 
-        <div className="dark:body-back body-back-light">
+        <div className="dark:body-back">
           <div className="min-h-screen lg:flex justify-center items-center ">
             <div className="lg:flex xl:gap-8 lg:w-[1025px] x2:w-[1200px] xxl:w-[1400px] mx-auto lg:mt-12">
               <div className="text-center lg:text-left lg:w-1/2 pt-16 lg:mt-0  p-2 sm:p-4 lg:px-8 lg:pt-0">
-                <h3 className=" font-poppins font-bold m48:w-[470px] l32:w-[450px] xxl:w-auto  text-3xl sm:text-4xl lg:text-6xl x2:text-7xl xxl:text-8xl capitalize mb-8 x2:mb-10 mx-auto lg:mx-0 text-gray-500 dark:text-white">
+                <h3 className=" font-poppins font-bold m48:w-[470px] l32:w-[450px] xxl:w-auto  text-3xl sm:text-4xl lg:text-6xl x2:text-7xl xxl:text-8xl capitalize mb-8 x2:mb-10 mx-auto lg:mx-0 text-gray-800 dark:text-white">
                   Collect and Trade the New Fresh Thing
                 </h3>
                 <h6 className="text-lg x2:text-2xl  m48:max-w-[487px] mx-auto lg:mx-0 lg:w-[80%] font-opensans mb-8 text-gray-500 dark:text-white">
@@ -220,8 +220,8 @@ function LandingPage() {
           )}
 
           {/* Trending Section */}
-          <section className="bg-[#161a1d]">
-            <h1 className=" text-4xl font-semibold pt-20 sm:ml-28 ml-10">Trending NFTS</h1>
+          <section className="dark:body-back-hl body-back-hl">
+            <h1 className=" text-4xl font-semibold pt-20 sm:ml-28 ml-10 dark:text-white text-gray-900">Trending NFTS</h1>
             <div className=" py-16 flex lg:flex-row flex-col justify-center items-center">
               <div className="basis-1/3">
                 <BigCard
@@ -254,8 +254,8 @@ function LandingPage() {
 
 
           {/* highlights Section */}
-          <section className="bg-[#161a1d]">
-            <h1 className=" text-4xl font-semibold pt-20 sm:ml-28 ml-10">Top highlights of the week</h1>
+          <section className="dark:body-back-hl body-back-hl">
+            <h1 className=" text-4xl font-semibold pt-20 sm:ml-28 ml-10 dark:text-white text-gray-900">Top highlights of the week</h1>
             <div className=" py-16 flex lg:flex-row flex-col justify-center items-center">
               <div className="basis-1/3">
                 <BigCard

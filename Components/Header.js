@@ -59,7 +59,7 @@ function Header() {
   }, [])
 
   return (
-    <header className="border-b-[1px] bg-white dark:bg-[#13131a] dark:border-[#bf2180] border-[#eff1f6] body-back">
+    <header className="border-b-[1px] dark:body-back body-back-light dark:border-[#bf2180] border-[#eff1f6] body-back">
       <div className="w-[90%] h-[81px] mx-auto flex items-center justify-between font-poppins">
         <div className="flex items-center">
           <FaBars
@@ -77,7 +77,7 @@ function Header() {
             </div>
           </Link>
           <Link href="/">
-            <div className="lg:text-3xl text-2xl lg:block md:block font-semibold cursor-pointer lg:pl-4 md:pl-4 pl-2 transition-all tracking-wide text-gray-500 dark:text-white">
+            <div className="lg:text-3xl text-2xl lg:block md:block font-semibold cursor-pointer lg:pl-4 md:pl-4 pl-2 transition-all tracking-wide text-gray-800 dark:text-white">
               MarketPlace
             </div>
           </Link>
@@ -101,7 +101,7 @@ function Header() {
               </button>
             </div> */}
 
-            <Link className="text-gray-500 dark:text-white" href="/explore">
+            <Link className="text-gray-800 dark:text-white" href="/explore">
               <NavLink
                 className={router.pathname == "/explore" ? "active " : ""}
               >
@@ -109,7 +109,7 @@ function Header() {
               </NavLink>
             </Link>
 
-            <Link className="text-gray-500 dark:text-white" href="/collection">
+            <Link className="text-gray-800 dark:text-white" href="/collection">
               <NavLink
                 className={router.pathname == "/collection" ? "active " : ""}
               >
@@ -118,7 +118,7 @@ function Header() {
             </Link>
 
             {walletAddress && address && hasRole ? (
-              <Link className="text-gray-500 dark:text-white" href={hasRole ? "/assets" : "/authWallet"}>
+              <Link className="text-gray-800 dark:text-white" href={hasRole ? "/assets" : "/authWallet"}>
                 <NavLink
                   className={router.pathname == "/assets" ? "active" : ""}
                 >
@@ -129,7 +129,7 @@ function Header() {
               ""
             )}
             {walletAddress && address ? (
-              <Link className="text-gray-500 dark:text-white" href="/dashboard">
+              <Link className="text-gray-800 dark:text-white" href="/dashboard">
                 <NavLink
                   className={router.pathname == "/dashboard" ? "active" : ""}
                 >
@@ -172,7 +172,7 @@ function Header() {
               onClick={() => {
                 setHideFilter(!hidefilter);
               }}
-              class="">
+              class="text-black dark:text-white">
               <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                 <g transform="matrix(-1, 0, 0, 1, 20, 0)">
                   <path clip-rule="evenodd" fill-rule="evenodd" d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z"></path>
@@ -185,22 +185,22 @@ function Header() {
                   {/* Dropdown menu */}
                   <div id="dropdown" class="z-10 bg-white w-36 divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-800 top-24 right-16 absolute">
                     <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
-                      <li className="flex flex-row dark:hover:bg-gray-600">
+                      <li className="flex flex-row dark:hover:bg-gray-600 hover:bg-gray-100">
                         <FaUserCircle className="text-lg mt-2 ml-2" />
                         <Link href="/profile" class="block px-2 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">My Profile</Link>
                       </li>
                     </ul>
 
                     <div class="py-2 ">
-                      <div className="dark:hover:bg-gray-600 flex flex-row">
-                        <BsHeart className="text-lg mt-2 ml-2 text-white" />
+                      <div className="dark:hover:bg-gray-600 hover:bg-gray-100 flex flex-row">
+                        <BsHeart className="text-lg mt-2 ml-2 dark:text-white dark:text-black" />
                         <Link href="/wishlist" class="block px-2 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Wishlist</Link>
                       </div>
 
                     </div>
                     <div class="py-2">
-                      <div className="dark:hover:bg-gray-600 flex flex-row">
-                        <FaCog className="text-lg mt-2 ml-2 text-white" />
+                      <div className="dark:hover:bg-gray-600 hover:bg-gray-100 flex flex-row">
+                        <FaCog className="text-lg mt-2 ml-2 dark:text-white dark:text-black" />
                         <Link href="/manage" class="block px-2 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Manage</Link>
                       </div>
                     </div>
