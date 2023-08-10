@@ -38,6 +38,7 @@ function Profile() {
     const [showModal, setShowModal] = useState(false);
     const [profileData, setProfileData] = useState({ ...profile });
     const [updateProfile, setupdateProfile] = useState({ ...profile });
+    const [profileDetails, setprofileDetails] = useState(null);
     const [loading, setLoading] = useState(false);
 
     async function uploadImage(e) {
@@ -244,6 +245,8 @@ function Profile() {
                     walletAddress
                 });
                 console.log(updateProfile);
+                localStorage.setItem("profiledetails", JSON.stringify(res.data.payload));
+        setprofileDetails(res.data.payload);
                 setLoading(true);
             })
             .catch((error) => {
@@ -269,19 +272,24 @@ function Profile() {
 
     useEffect(() => {
         const asyncFn = async () => {
-            // const token = localStorage.getItem("platform_token");
-            // connectweb();
-            // if (!token) {
-            authorize();
-            // } else {
-            //     getProfile();
-            // }
-
-            // const accessmaterContarct = await etherContract(accessmasterAddress, AccessMaster.abi)
-            // setHasRole(
-            //     await accessmaterContarct.hasRole(await accessmaterContarct.FLOW_CREATOR_ROLE(), wallet)
-            // );
+            const token = localStorage.getItem("platform_token");
+      // connectweb();
+      if (token) {
+        const profiledt = localStorage.getItem("profiledetails");
+        const parsed = JSON.parse(profiledt);
+        setprofileDetails(parsed);
+// console.log(profiledt);
+        
+      } else {
+        authorize();
+      }
+      // authorize();
+      // const accessmaterContarct = await etherContract(accessmasterAddress, AccessMaster.abi)
+      // setHasRole(
+      //     await accessmaterContarct.hasRole(await accessmaterContarct.FLOW_CREATOR_ROLE(), wallet)
+      // );
         };
+        // authorize();
         asyncFn();
     }, []);
 
@@ -395,157 +403,6 @@ function Profile() {
                                 </div>
                             </div>
                         </div>
-
-
-
-                        {/* <div className="relative w-auto my-6 mx-auto max-w-3xl">
-
-                            <div
-                                className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none"
-                            >
-                                <div className="relative p-6 flex-auto">
-
-                                    <div className="update-page">
-                                        <div>
-                                            <section>
-                                                <div className="container py-5 h-100">
-                                                    <div className="row d-flex align-items-center justify-content-center h-100">
-                                                        <div
-                                                            className="col-md-7 col-lg-5 col-xl-5 offset-xl-1 text-center"
-                                                            style={{ zIndex: "1000" }}
-                                                        >
-                                                            <form onSubmit={updateData}>
-                                                                <div className="md-form mb-3">
-                                                                    <input
-                                                                        type="text"
-                                                                        id="form1Example13"
-                                                                        className="form-control form-control-lg px-2 py-2 pl-2 bg-black w-full text-gray-500 dark:text-white"
-                                                                        value={updateProfile.name}
-                                                                        name="name"
-                                                                        onChange={(e) => onUpdateProfile(e)}
-                                                                        placeholder="Name"
-                                                                    />
-                                                                </div>
-
-                                                                <div className="md-form mb-3">
-                                                                    <input
-                                                                        type="text"
-                                                                        id="form1Example13"
-                                                                        className="form-control form-control-lg px-2 py-2 pl-2 bg-black w-full text-gray-500 dark:text-white"
-                                                                        value={updateProfile.country}
-                                                                        name="country"
-                                                                        onChange={(e) => onUpdateProfile(e)}
-                                                                        placeholder="Country"
-                                                                    />
-                                                                </div>
-                                                                <div className="md-form mb-3">
-                                                                    <input
-                                                                        type="text"
-                                                                        id="form1Example13"
-                                                                        className="form-control form-control-lg px-2 py-2 pl-2 bg-black w-full text-gray-500 dark:text-white"
-                                                                        value={updateProfile.instagram_id}
-                                                                        name="instagram_id"
-                                                                        onChange={(e) => onUpdateProfile(e)}
-                                                                        placeholder="Instagram Id"
-                                                                    />
-                                                                </div>
-                                                                <div className="md-form mb-3">
-                                                                    <input
-                                                                        type="text"
-                                                                        id="form1Example13"
-                                                                        className="form-control form-control-lg px-2 py-2 pl-2 bg-black w-full text-gray-500 dark:text-white"
-                                                                        value={updateProfile.discord_id}
-                                                                        name="discord_id"
-                                                                        onChange={(e) => onUpdateProfile(e)}
-                                                                        placeholder="Discord Id"
-                                                                    />
-                                                                </div>
-                                                                <div className="md-form mb-3">
-                                                                    <input
-                                                                        type="text"
-                                                                        id="form1Example13"
-                                                                        className="form-control form-control-lg px-2 py-2 pl-2 bg-black w-full text-gray-500 dark:text-white"
-                                                                        value={updateProfile.twitter_id}
-                                                                        name="twitter_id"
-                                                                        onChange={(e) => onUpdateProfile(e)}
-                                                                        placeholder="Tweeter Id"
-                                                                    />
-                                                                </div>
-                                                                <div className="md-form mb-3">
-                                                                    <input
-                                                                        type="text"
-                                                                        id="form1Example13"
-                                                                        className="form-control form-control-lg px-2 py-2 pl-2 bg-black w-full text-gray-500 dark:text-white"
-                                                                        value={updateProfile.telegram_id}
-                                                                        name="telegram_id"
-                                                                        onChange={(e) => onUpdateProfile(e)}
-                                                                        placeholder="Teligram Id"
-                                                                    />
-                                                                </div>
-                                                                <div className="md-form mb-3">
-                                                                    <input
-                                                                        type="text"
-                                                                        id="form1Example13"
-                                                                        className="form-control form-control-lg px-2 py-2 pl-2 bg-black w-full text-gray-500 dark:text-white"
-                                                                        value={updateProfile.facebook_id}
-                                                                        name="facebook_id"
-                                                                        onChange={(e) => onUpdateProfile(e)}
-                                                                        placeholder="Facebook Id"
-                                                                    />
-                                                                </div>
-
-                                                                <div className="col-md-8 col-lg-7 col-xl-6 text-center justify-center align-center flex-col">
-                                                                    {updateProfile?.profilePictureUrl && (
-                                                                        <img
-                                                                            alt="alt"
-                                                                            src={`${process.env.NEXT_PUBLIC_IPFS_GATEWAY
-                                                                                }/${removePrefix(
-                                                                                    updateProfile?.profilePictureUrl
-                                                                                )}`}
-                                                                            className="img-fluid w-6/12 grow"
-                                                                            width="200"
-                                                                            height="200"
-                                                                        />
-                                                                    )}
-                                                                    <input
-                                                                        type="file"
-                                                                        accept="image/*"
-                                                                        className="btn btn-primary btn-md  mb-5 mt-5"
-                                                                        name="profilePic"
-                                                                        onChange={(e) => uploadImage(e)}
-                                                                    />
-                                                                </div>
-                                                                <div className="flex gap-6">
-                                                                    <div>
-                                                                        {" "}
-                                                                        <button
-                                                                            type="submit"
-                                                                            className=" bg-blue-800 text-black-500 dark:text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                                                                        >
-                                                                            Update Profile
-                                                                        </button>
-                                                                    </div>
-
-                                                                    <div className="flex items-center justify-end  border-t border-solid border-slate-200 rounded-b">
-                                                                        <button
-                                                                            className="text-black-500 dark:text-white rounded bg-red-500 font-bold uppercase px-6 py-3 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                                                                            type="button"
-                                                                            onClick={() => setShowModal(false)}
-                                                                        >
-                                                                            Close
-                                                                        </button>
-                                                                    </div>
-                                                                </div>
-                                                            </form>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </section>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div> */}
                     </div>
                     <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
                 </>
@@ -556,7 +413,7 @@ function Profile() {
                     className="w-full h-64 object-cover bg-gray-200" style={{ backgroundImage: 'url("")' }}>
                 </div>
 
-                {profilePictureUrl ? (
+                {profileDetails?.profilePictureUrl ? (
 
                     <div className="flex items-center justify-start -mt-24 ml-16">
                         <div className="rounded-full h-48 w-48 ring-offset-2 ring-1 ring-black bg-gray-200" >
@@ -564,7 +421,7 @@ function Profile() {
                                 className="text-3xl text-gray-500 w-48 h-48 rounded-full"
                                 alt=""
                                 src={`${process.env.NEXT_PUBLIC_IPFS_GATEWAY}/${removePrefix(
-                                    profilePictureUrl
+                                    profileDetails?.profilePictureUrl
                                 )}`}
                             />
                         </div>
@@ -594,26 +451,26 @@ function Profile() {
 
                     <div className="lg:mt-10 md:mt-10 mt-4 ml-16">
                         <div>
-                            <p className="text-white text-2xl font-bold">{updateProfile.name}</p>
+                            <p className="text-white text-2xl font-bold">{profileDetails?.name}</p>
                         </div>
                         <div>
-                            <p className="text-white mt-12 text-xl">Bio: {updateProfile.bio}</p>
+                            <p className="text-white mt-12 text-xl">Bio: {profileDetails?.bio}</p>
 
                             <div className="flex lg:flex-row md:flex-row flex-col mt-4">
                                 <div className="flex">
                                     <FaMapMarkerAlt style={{ color: 'grey', marginTop: 6 }} />
-                                    <p className="text-xl ml-2" style={{ color: 'grey' }}>{updateProfile.location}</p>
+                                    <p className="text-xl ml-2" style={{ color: 'grey' }}>{profileDetails?.location}</p>
                                 </div>
                                 <div className="flex lg:ml-12 md:ml-12">
                                     <FaWallet style={{ color: 'white', marginTop: 6 }} />
-                                    <p className="text-xl ml-2" style={{ color: 'white' }}>{updateProfile.walletAddress}</p>
+                                    <p className="text-xl ml-2" style={{ color: 'white' }}>{profileDetails?.walletAddress}</p>
                                 </div>
                             </div>
 
                             <div className="flex lg:flex-row md:flex-row flex-col mt-8">
                                 <div className="flex">
                                     <FaEnvelope style={{ color: 'white', marginTop: 6 }} />
-                                    <p className="text-xl ml-2" style={{ color: 'white' }}>{updateProfile.email}</p>
+                                    <p className="text-xl ml-2" style={{ color: 'white' }}>{profileDetails?.email}</p>
                                 </div>
                                 <div className="flex lg:ml-12 md:ml-12 text-xl">
                                     <IoLogoInstagram style={{ color: 'white', marginTop: 6, marginRight: 8 }} />
@@ -631,90 +488,7 @@ function Profile() {
                 </div>
             </div>
 
-            {/* <form onSubmit={updateData}>
-                <div className="md-form mb-3">
-                    <input
-                        type="text"
-                        id="form1Example13"
-                        className="form-control form-control-lg px-2 py-2 pl-2 bg-black w-full text-gray-500 dark:text-white"
-                        value={updateProfile.name}
-                        name="name"
-                        onChange={(e) => onUpdateProfile(e)}
-                        placeholder="Name"
-                    />
-                </div>
-
-                <div className="md-form mb-3">
-                    <input
-                        type="text"
-                        id="form1Example15"
-                        className="form-control form-control-lg px-2 py-2 pl-2 bg-black w-full text-gray-500 dark:text-white"
-                        value={updateProfile.location}
-                        name="location"
-                        onChange={(e) => onUpdateProfile(e)}
-                        placeholder="Location"
-                    />
-                </div>
-
-                <div className="md-form mb-3">
-                    <input
-                        type="text"
-                        id="form1Example16"
-                        className="form-control form-control-lg px-2 py-2 pl-2 bg-black w-full text-gray-500 dark:text-white"
-                        value={updateProfile.bio}
-                        name="bio"
-                        onChange={(e) => onUpdateProfile(e)}
-                        placeholder="Bio"
-                    />
-                </div>
-
-                <div className="md-form mb-3">
-                    <input
-                        type="text"
-                        id="form1Example17"
-                        className="form-control form-control-lg px-2 py-2 pl-2 bg-black w-full text-gray-500 dark:text-white"
-                        value={updateProfile.email}
-                        name="email"
-                        onChange={(e) => onUpdateProfile(e)}
-                        placeholder="Email"
-                    />
-                </div>
-
-                <div className="col-md-8 col-lg-7 col-xl-6 text-center justify-center align-center flex-col">
-                    {updateProfile?.profilePictureUrl && (
-                        <img
-                            alt="alt"
-                            src={`${process.env.NEXT_PUBLIC_IPFS_GATEWAY
-                                }/${removePrefix(
-                                    updateProfile?.profilePictureUrl
-                                )}`}
-                            className="img-fluid w-6/12 grow"
-                            width="200"
-                            height="200"
-                        />
-                    )}
-                    <input
-                        type="file"
-                        accept="image/*"
-                        className="btn btn-primary btn-md  mb-5 mt-5"
-                        name="profilePic"
-                        onChange={(e) => uploadImage(e)}
-                    />
-                </div>
-                <div className="flex gap-6">
-                    <div>
-                        {" "}
-                        <button
-                            type="submit"
-                            className=" bg-blue-800 text-black-500 dark:text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                        >
-                            Update Profile
-                        </button>
-                    </div>
-
-
-                </div>
-            </form> */}
+            
 
             {/* <div className="flex px-5 py-5 gap-5 justify-center body-back">
                 <div className=" flex shadow-2xl ... p-10 gap-6">
