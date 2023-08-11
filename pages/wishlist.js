@@ -136,11 +136,11 @@ export default function Wishlist() {
 
         <div className="flex justify-around mt-5 text-gray-500 dark:text-white pt-10 lg:flex-row flex-col lg:ml-0 ml-10 hidden lg:flex">
           <div className="pb-32 lg:pb-0">NFT Collection</div>
-          <div className="pb-10 lg:pb-0">Name</div>
+          <div className="pb-10 lg:pb-0 lg:-ml-20">Name</div>
           <div className="pb-10 lg:pb-0">Description</div>
-          <div className="pb-10 lg:pb-0">Price</div>
+          <div className="pb-10 lg:pb-0 lg:ml-10">Price</div>
           <div className="pb-10 lg:pb-0"></div>
-          <div className="pb-10 lg:pb-0">Remove</div>
+          <div className="pb-10 lg:pb-0 lg:-ml-32">Remove</div>
         </div>
 
         {wishlist?.length
@@ -195,28 +195,56 @@ export default function Wishlist() {
 
 
 
-      <div class="w-full lg:px-8 md:px-6 overflow-y-hidden overflow-x-hidden h-auto" id="scroll">
-        <div class="md:flex items-strech py-8 md:py-10 lg:py-8 px-4 border-gray-50">
-          <div class="md:w-4/12 2xl:w-1/4 w-full">
-            <img src="/vr.png" alt="Black Leather Bag" class="h-full object-center object-cover md:block hidden" />
-            <img src="/vr.png" alt="Black Leather Bag" class="md:hidden w-full h-full object-center object-cover" />
+      <div class="w-full lg:px-8 md:px-6 overflow-y-hidden overflow-x-hidden h-auto py-4" id="scroll">
+        <div class="flex items-strech py-8 md:py-10 lg:py-8 px-4 border-gray-50 flex-col md:flex-row lg:flex-row shadow-lg shadow-inner shadow-pink-500/50">
+          <div class="w-1/4 lg:w-48">
+            {/* <img src="/vr.png" alt="Black Leather Bag" class="h-full object-center object-cover md:block hidden" /> */}
+            <img src="/vr.png" alt="Black Leather Bag" class=" w-full h-full object-center object-cover" />
           </div>
-          <div class="md:pl-4 md:w-8/12 2xl:w-3/4 flex flex-col justify-center">
-            <p class="text-xs leading-3 text-gray-800 dark:text-white md:pt-0 pb-4">NFT Collection</p>
-            <p class="text-xs leading-3 text-gray-800 dark:text-white md:pt-0 py-4">Name</p>
-            <div class="flex items-center justify-between w-full pt-1">
-              <p class="text-base font-black leading-none text-gray-800 dark:text-white">Description</p>
-               <p class="text-xs leading-3 underline text-red-500 pl-5 cursor-pointer">Remove</p>
+          <div class="md:pl-4 md:w-8/12 2xl:w-3/4 flex flex-col justify-center lg:ml-16">
+            {/* <p class="text-xs leading-3 text-gray-800 dark:text-white md:pt-0 pb-4">NFT Collection</p>
+            <p class="text-xs leading-3 text-gray-800 dark:text-white md:pt-0 py-4">Name</p> */}
+            <div class="flex lg:items-center justify-between w-full pt-1 lg:flex-row flex-col">
+              <p class="text-base leading-none text-gray-800 dark:text-white lg:w-1/4 lg:mb-0 mb-2">Name</p>
+              <p class="text-base leading-none text-gray-800 dark:text-white lg:w-1/2 lg:mx-10 lg:mb-0 mb-2">
+              Descriptionkejdksjffffffffd fjkjd wijerfksjd wjrekef fjvk fffffffff
+              </p>
+              <p class="text-base leading-none text-gray-800 dark:text-white lg:w-1/4 lg:mb-0 mb-2">10 MATIC</p>
+              <p class="text-base leading-none text-gray-800 dark:text-white lg:mx-10 lg:mb-0 mb-2">Buy Now</p>
+              <p class="text-base leading-none text-gray-800 dark:text-white lg:ml-10">Bin</p>
             </div>
             {/* <p class="text-xs leading-3 text-gray-600 dark:text-white pt-2">Height: 10 inches</p>
             <p class="text-xs leading-3 text-gray-600 dark:text-white py-4">Color: Black</p>
             <p class="w-96 text-xs leading-3 text-gray-600 dark:text-white">Composition: 100% calf leather </p> */}
             <div class="flex items-center justify-between pt-5">
               <div class="flex itemms-center">
-                <p class="text-xs leading-3 underline text-gray-800 dark:text-white cursor-pointer">favorites</p>
-                <p class="text-xs leading-3 underline text-green-500 pl-5 cursor-pointer">Buy Now</p>
+                {/* <p class="text-xs leading-3 underline text-gray-800 dark:text-white cursor-pointer">favorites</p>
+                <p class="text-xs leading-3 underline text-green-500 pl-5 cursor-pointer">Buy Now</p> */}
               </div>
-              <p class="text-base font-black leading-none text-gray-800 dark:text-white">Price</p>
+              {/* <p class="text-base font-black leading-none text-gray-800 dark:text-white">Price</p> */}
+            </div>
+          </div>
+        </div>
+        </div>
+
+        <div class="w-full lg:px-8 md:px-6 overflow-y-hidden overflow-x-hidden h-auto py-4" id="scroll">
+        <div class="flex items-strech py-8 md:py-10 lg:py-8 px-4 border-gray-50 flex-col md:flex-row lg:flex-row shadow-lg shadow-inner shadow-pink-500/50">
+          <div class="w-1/4 lg:w-48">
+            <img src="/vr.png" alt="Black Leather Bag" class=" w-full h-full object-center object-cover" />
+          </div>
+          <div class="md:pl-4 md:w-8/12 2xl:w-3/4 flex flex-col justify-center lg:ml-16">
+            <div class="flex lg:items-center justify-between w-full pt-1 lg:flex-row flex-col">
+              <p class="text-base leading-none text-gray-800 dark:text-white lg:w-1/4 lg:mb-0 mb-2">Name</p>
+              <p class="text-base leading-none text-gray-800 dark:text-white lg:w-1/2 lg:mx-10 lg:mb-0 mb-2">
+              Descriptionkejdksjffffffffd fjkjd wijerfksjd wjrekef fjvk fffffffff
+              </p>
+              <p class="text-base leading-none text-gray-800 dark:text-white lg:w-1/4 lg:mb-0 mb-2">10 MATIC</p>
+              <p class="text-base leading-none text-gray-800 dark:text-white lg:mx-10 lg:mb-0 mb-2">Buy Now</p>
+              <p class="text-base leading-none text-gray-800 dark:text-white lg:ml-10">Bin</p>
+            </div>
+            <div class="flex items-center justify-between pt-5">
+              <div class="flex itemms-center">
+              </div>
             </div>
           </div>
         </div>

@@ -201,7 +201,7 @@ function Header() {
                     <div class="py-2">
                       <div className="dark:hover:bg-gray-600 hover:bg-gray-100 flex flex-row">
                         <FaCog className="text-lg mt-2 ml-2 dark:text-white dark:text-black" />
-                        <Link href="/manage" class="block px-2 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Manage</Link>
+                        <Link href="/logout" class="block px-2 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Logout</Link>
                       </div>
                     </div>
                   </div>

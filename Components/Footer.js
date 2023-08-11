@@ -119,7 +119,7 @@ const Footer = () => {
                 </div>
                 <hr class=" border-gray-200 sm:mx-auto dark:border-gray-700 my-4" />
                 <div class="sm:flex items-center justify-center">
-                    <span class="text-lg font-bold sm:text-center dark:text-white text-gray-500">MyriadFlow | Copyright © {year} Lazarus Network Inc. All Rights Reserved
+                    <span class="lg:text-base md:text-base text-xs font-bold sm:text-center dark:text-white text-gray-500">MyriadFlow | Copyright © {year} Lazarus Network Inc. All Rights Reserved
                     </span>
                 </div>
             </div>

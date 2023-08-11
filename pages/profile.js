@@ -449,7 +449,7 @@ function Profile() {
 
                 <div className=" m-2 flex flex-row items-center justify-start">
 
-                    <div className="lg:mt-10 md:mt-10 mt-4 ml-16">
+                    <div className="lg:mt-10 md:mt-10 mt-4 lg:ml-16 md:ml-16 ml-4">
                         <div>
                             <p className="dark:text-white text-gray-800 text-2xl font-bold">{profileDetails?.name}</p>
                         </div>
