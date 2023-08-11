@@ -275,7 +275,7 @@ function Profile() {
             const token = localStorage.getItem("platform_token");
       // connectweb();
       if (token) {
-        const profiledt = localStorage.getItem("profiledetails");
+        const profiledt = localStorage.getItem("profileuser");
         const parsed = JSON.parse(profiledt);
         setprofileDetails(parsed);
 // console.log(profiledt);
