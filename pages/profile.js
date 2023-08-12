@@ -417,7 +417,12 @@ function Profile() {
 
                 {profileDetails?.coverPictureUrl ? (
                     <div
-                        className="w-full h-64 object-cover bg-gray-200" style={{ backgroundImage: `url(${process.env.NEXT_PUBLIC_IPFS_GATEWAY}/${removePrefix(profileDetails?.coverPictureUrl)})` }}>
+                        className="w-full h-72 object-cover bg-gray-200" style={{
+                            backgroundImage: `url(${process.env.NEXT_PUBLIC_IPFS_GATEWAY}/${removePrefix(profileDetails?.coverPictureUrl)})`,
+                            backgroundPosition: 'center',
+                            backgroundSize: 'cover',
+                            backgroundRepeat: 'no-repeat',
+                        }}>
                     </div>
                 ) : (
                     <div
@@ -473,9 +478,10 @@ function Profile() {
                                     <FaMapMarkerAlt style={{ color: 'grey', marginTop: 6 }} />
                                     <p className="text-xl ml-2" style={{ color: 'grey' }}>{profileDetails?.location}</p>
                                 </div>
-                                <div className="flex lg:ml-12 md:ml-12 dark:text-white text-gray-800">
+                                <div className="flex lg:ml-12 md:ml-12 dark:text-white text-gray-800 cursor-pointer" onClick={() => { navigator.clipboard.writeText(profileDetails?.walletAddress) }}>
                                     <FaWallet style={{ marginTop: 6 }} className="" />
-                                    <p className="text-xl ml-2">{profileDetails?.walletAddress}</p>
+                                    <p className="text-xl ml-2 hidden lg:block md:block" >{profileDetails?.walletAddress}</p>
+                                    <p className="text-xl ml-2 block lg:hidden md:hidden" >Copy address</p>
                                 </div>
                             </div>
 
