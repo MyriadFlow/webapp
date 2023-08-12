@@ -25,7 +25,8 @@ function Profile() {
         bio: "",
         email: "",
         profilePictureUrl: "",
-        walletAddress: ""
+        walletAddress: "",
+        coverPictureUrl: "",
         // instagram_id: "",
         // facebook_id: "",
         // twitter_id: "",
@@ -216,13 +217,14 @@ function Profile() {
                             bio,
                             email,
                             profilePictureUrl,
-                            walletAddress
+                            walletAddress,
+                            coverPictureUrl
                         },
                     },
                 } = res;
 
                 console.log(res.data);
-                
+
                 setProfileData({
                     ...profileData,
                     name,
@@ -230,10 +232,11 @@ function Profile() {
                     bio,
                     email,
                     profilePictureUrl,
-                    walletAddress
+                    walletAddress,
+                    coverPictureUrl
                 });
 
-                
+
 
                 setupdateProfile({
                     ...profileData,
@@ -242,11 +245,12 @@ function Profile() {
                     bio,
                     email,
                     profilePictureUrl,
-                    walletAddress
+                    walletAddress,
+                    coverPictureUrl
                 });
                 console.log(updateProfile);
                 localStorage.setItem("profiledetails", JSON.stringify(res.data.payload));
-        setprofileDetails(res.data.payload);
+                setprofileDetails(res.data.payload);
                 setLoading(true);
             })
             .catch((error) => {
@@ -273,21 +277,21 @@ function Profile() {
     useEffect(() => {
         const asyncFn = async () => {
             const token = localStorage.getItem("platform_token");
-      // connectweb();
-      if (token) {
-        const profiledt = localStorage.getItem("profileuser");
-        const parsed = JSON.parse(profiledt);
-        setprofileDetails(parsed);
-// console.log(profiledt);
-        
-      } else {
-        authorize();
-      }
-      // authorize();
-      // const accessmaterContarct = await etherContract(accessmasterAddress, AccessMaster.abi)
-      // setHasRole(
-      //     await accessmaterContarct.hasRole(await accessmaterContarct.FLOW_CREATOR_ROLE(), wallet)
-      // );
+            // connectweb();
+            if (token) {
+                const profiledt = localStorage.getItem("profileuser");
+                const parsed = JSON.parse(profiledt);
+                setprofileDetails(parsed);
+                // console.log(profiledt);
+
+            } else {
+                authorize();
+            }
+            // authorize();
+            // const accessmaterContarct = await etherContract(accessmasterAddress, AccessMaster.abi)
+            // setHasRole(
+            //     await accessmaterContarct.hasRole(await accessmaterContarct.FLOW_CREATOR_ROLE(), wallet)
+            // );
         };
         // authorize();
         asyncFn();
@@ -301,7 +305,8 @@ function Profile() {
         bio,
         email,
         profilePictureUrl,
-        walletAddress
+        walletAddress,
+        coverPictureUrl
     } = profileData;
     return (
         <Layout
@@ -409,9 +414,16 @@ function Profile() {
             ) : null}
 
             <div className="dark:body-back body-back-light pb-32">
-                <div
-                    className="w-full h-64 object-cover bg-gray-200" style={{ backgroundImage: 'url("")' }}>
-                </div>
+
+                {profileDetails?.coverPictureUrl ? (
+                    <div
+                        className="w-full h-64 object-cover bg-gray-200" style={{ backgroundImage: `url(${process.env.NEXT_PUBLIC_IPFS_GATEWAY}/${removePrefix(profileDetails?.coverPictureUrl)})` }}>
+                    </div>
+                ) : (
+                    <div
+                        className="w-full h-64 object-cover bg-gray-200" style={{ backgroundImage: 'url("")' }}>
+                    </div>
+                )}
 
                 {profileDetails?.profilePictureUrl ? (
 
@@ -462,7 +474,7 @@ function Profile() {
                                     <p className="text-xl ml-2" style={{ color: 'grey' }}>{profileDetails?.location}</p>
                                 </div>
                                 <div className="flex lg:ml-12 md:ml-12 dark:text-white text-gray-800">
-                                    <FaWallet style={{ marginTop: 6 }} className=""/>
+                                    <FaWallet style={{ marginTop: 6 }} className="" />
                                     <p className="text-xl ml-2">{profileDetails?.walletAddress}</p>
                                 </div>
                             </div>
@@ -488,7 +500,7 @@ function Profile() {
                 </div>
             </div>
 
-            
+
 
             {/* <div className="flex px-5 py-5 gap-5 justify-center body-back">
                 <div className=" flex shadow-2xl ... p-10 gap-6">
