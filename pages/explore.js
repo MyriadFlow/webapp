@@ -74,6 +74,18 @@ const Home = () => {
     { id: 1, label: sortOldNew },
   ];
 
+  const handleButtonClick = () => {
+    market("new"); // Call the market function with 'new'
+    setbuttonstyle("new");
+  };
+
+  const handleoldButtonClick = () => {
+    market("old"); // Call the market function with 'new'
+    setbuttonstyle("old");
+  };
+
+  const [buttonstyle, setbuttonstyle] = useState(null);
+
   const [isOpenSortOldNew, setOpenSortOldNew] = useState(false);
   const toggleDropdownSort = () => setOpenSortOldNew(!isOpenSortOldNew);
   const [isOpenMedia, setOpenMedia] = useState(false);
@@ -191,7 +203,7 @@ const Home = () => {
         setData(filterproducts);
     }
   }
-  const market = async () => {
+  const market = async (sortType) => {
     const refineArray = [];
     const result = await request(graphqlAPI, saleStartedQuery);
     console.log("result", result);
@@ -217,9 +229,28 @@ const Home = () => {
 
 
     );
-    const sortedNFts = fResult.sort((a, b) => {
-      if (a.itemId < b.itemId) return -1;
-    });
+
+    let sortedNFts;
+
+    if (sortType === 'new') {
+      sortedNFts = [...fResult].filter((item => new Date(item.date).getMonth() === ((new Date().getMonth() - 1 + 12) % 12) || new Date(item.date).getMonth() === new Date().getMonth())).sort((a, b) => {
+        const dateComparison = new Date(a.date) - new Date(b.date);
+        if (dateComparison === 0) {
+          return a.itemId - b.itemId;
+        }
+        return dateComparison;
+      });
+    } else if (sortType === 'old') {
+      sortedNFts = [...fResult].sort((a, b) => {
+        const dateComparison = new Date(a.date) - new Date(b.date);
+        if (dateComparison === 0) {
+          return a.itemId - b.itemId;
+        }
+        return dateComparison;
+      });
+    } else {
+      sortedNFts = [...fResult].sort((a, b) => a.itemId - b.itemId);
+    }
 
     setData(sortedNFts);
     setItem(sortedNFts);
@@ -372,16 +403,18 @@ const Home = () => {
                 </div>
                 <div className={`dropdown-body ${isOpenSortOldNew && "open"}`}>
 
-                <div className="flex justify-between mt-5">
-                    <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-8 rounded-full">
+                  <div className="flex justify-between mt-5">
+                    <button class={`bg-blue-500 font-bold py-2 px-8 rounded-full ${buttonstyle === "new" ? "bg-white text-black" : "text-white hover:bg-white hover:text-black"
+                      }`} onClick={handleButtonClick}>
                       Newest
                     </button>
-                    <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-10 rounded-full">
+                    <button class={`bg-blue-500 font-bold py-2 px-10 rounded-full ${buttonstyle === "old" ? "bg-white text-black" : "text-white hover:bg-white hover:text-black"
+                      }`} onClick={handleoldButtonClick}>
                       Oldest
                     </button>
                   </div>
 
-                  {items.map((item) => {
+                  {items.sort((a, b) => new Date(b.date) - new Date(a.date)).map((item) => {
                     return (
                       <div
                         className="dropdown-item"
@@ -402,7 +435,7 @@ const Home = () => {
                 </div>
               </div>
 
-              
+
               <div className="dropdown">
                 <div className="dropdown-header" onClick={toggleDropdownMedia}>
                   {selectedMedia
@@ -646,7 +679,7 @@ const Home = () => {
               })
             ) : loading ? (
               <Loader />
-            ) : ( !loading && !data &&(
+            ) : (!loading && !data && (
               <div className="flex">
                 <div className="text-2xl pb-10 font-bold text-center text-gray-500 dark:text-white">
                   You have not created Any Assets
