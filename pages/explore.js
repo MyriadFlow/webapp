@@ -43,6 +43,20 @@ const Home = () => {
   const router = useRouter();
   const [sortOldNew, setsortOldNew] = useState("Newest");
   const [filterSection, setfiltersection] = useState({ ...allfilter });
+  const [inputValue, setInputValue] = useState(0); // Initial value can be set accordingly
+
+  const handleInputChange = (e) => {
+    const newValue = e.target.value; // Convert to float or integer as needed
+    setInputValue(newValue);
+  };
+
+  const [inputmaxValue, setInputmaxValue] = useState(100); // Initial value can be set accordingly
+
+  const handleInputmaxChange = (e) => {
+    const newValue = e.target.value; // Convert to float or integer as needed
+    setInputmaxValue(newValue);
+  };
+
   const [allnfts, setAllNFTs] = useState([]);
   const [loading, setLoading] = useState(false);
   const itemStatus = new Map(
@@ -127,6 +141,20 @@ const Home = () => {
   useEffect(() => {
     loadNFTs();
   });
+
+  const pricefilter = () => {
+    let filteredData = [...shallowData];
+    filteredData = filteredData.filter(item =>
+      getEthPrice(item.price) >= inputValue && getEthPrice(item.price) <= inputmaxValue
+    );
+
+    setData(filteredData);
+  }
+
+  useEffect(() => {
+    // Filter data based on min and max prices
+    pricefilter();
+  }, []);
 
   function getEthPrice(price) {
     return ethers.utils.formatEther(price);
@@ -518,27 +546,37 @@ const Home = () => {
                     <div className="input-type">
                       <input
                         className="input-number"
+                        id="mininput"
                         type="number"
                         placeholder="Min"
-                        name='min'
-                        min={0.1}
-                        value={filterSection.minPrice}
-                        onChange={(e) => applyFilter("price", e.target.value)}
+                        // name='min'
+                        // min={0.1}
+                        // value={filterSection.minPrice}
+                        // onChange={(e) => applyFilter("price", e.target.value)}
+
+                        value={inputValue}
+                        onChange={handleInputChange}
                       ></input>
                     </div>
                     <div className="input-type ml-3">
                       <input
-                        className="input-number "
+                        className="input-number"
+                        id="maxinput"
                         type="number"
                         placeholder="Max"
-                        max={100}
-                        name="maxPrice"
-                        value={filterSection.maxPrice}
-                        onChange={(e) => {
-                          onUpdatefilter(e)
-                          applyFilter("price", e.target.value)
-                        }}
+                        // max={100}
+                        // name="maxPrice"
+                        // value={filterSection.maxPrice}
+                        // onChange={(e) => {
+                        //   onUpdatefilter(e)
+                        //   applyFilter("price", e.target.value)
+                        // }}
+                        value={inputmaxValue}
+                        onChange={handleInputmaxChange}
                       ></input>
+                    </div>
+                    <div className="m-2 p-2 mt-4 rounded bg-blue-100 dark:bg-blue-900">
+                      <button className="text-blue-500 dark:text-blue-200" onClick={pricefilter}>Filter</button>
                     </div>
                   </div>
                 </div>
@@ -666,6 +704,8 @@ const Home = () => {
                     </Link>
                     <button onClick={() => AddLike(item?.itemId)}>
                       likes:{item?.likeCount}
+                      {item?.date}
+                      {item?.categories}
                     </button>
 
                     <button
