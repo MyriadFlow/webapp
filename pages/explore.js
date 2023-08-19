@@ -398,9 +398,9 @@ const Home = () => {
           onClick={() => {
             setHideFilter(!hidefilter);
           }}
-          class="inline-flex items-center p-2 mt-2 ml-6 text-xl text-gray-800 dark:text-white rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600">
+          className="inline-flex items-center p-2 mt-2 ml-6 text-xl text-gray-800 dark:text-white rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600">
           <span className="mr-36">Sort assets</span>
-          <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+          <svg className="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
             <path clip-rule="evenodd" fill-rule="evenodd" d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z"></path>
           </svg>
         </button>
@@ -432,11 +432,11 @@ const Home = () => {
                 <div className={`dropdown-body ${isOpenSortOldNew && "open"}`}>
 
                   <div className="flex justify-between mt-5">
-                    <button class={`bg-blue-500 font-bold py-2 px-8 rounded-full ${buttonstyle === "new" ? "bg-white text-black" : "text-white hover:bg-white hover:text-black"
+                    <button className={`bg-blue-500 font-bold py-2 px-8 rounded-full ${buttonstyle === "new" ? "bg-white text-black" : "text-white hover:bg-white hover:text-black"
                       }`} onClick={handleButtonClick}>
                       Newest
                     </button>
-                    <button class={`bg-blue-500 font-bold py-2 px-10 rounded-full ${buttonstyle === "old" ? "bg-white text-black" : "text-white hover:bg-white hover:text-black"
+                    <button className={`bg-blue-500 font-bold py-2 px-10 rounded-full ${buttonstyle === "old" ? "bg-white text-black" : "text-white hover:bg-white hover:text-black"
                       }`} onClick={handleoldButtonClick}>
                       Oldest
                     </button>
@@ -521,10 +521,10 @@ const Home = () => {
                 </div>
                 <div className={`dropdown-body ${isOpenCreator && "open"}`}>
                   <div className="flex justify-between mt-5">
-                    <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-10 rounded-full">
+                    <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-10 rounded-full">
                       All
                     </button>
-                    <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-10 rounded-full">
+                    <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-10 rounded-full">
                       Buy Now
                     </button>
                   </div>
@@ -594,29 +594,29 @@ const Home = () => {
                   ></i>
                 </div>
                 <div className={`dropdown-body ${isOpenChain && "open"}`}>
-                  <ul class="p-3 space-y-3 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownCheckboxButton">
+                  <ul className="p-3 space-y-3 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownCheckboxButton">
                     <li>
-                      <div class="flex items-center">
-                        <input id="checkbox-item-1" type="checkbox" value="" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500" />
-                        <label for="checkbox-item-1" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Ethereum</label>
+                      <div className="flex items-center">
+                        <input id="checkbox-item-1" type="checkbox" value="" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500" />
+                        <label for="checkbox-item-1" className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Ethereum</label>
                       </div>
                     </li>
                     <li>
-                      <div class="flex items-center">
-                        <input id="checkbox-item-2" type="checkbox" value="" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500" />
-                        <label for="checkbox-item-2" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Polygon</label>
+                      <div className="flex items-center">
+                        <input id="checkbox-item-2" type="checkbox" value="" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500" />
+                        <label for="checkbox-item-2" className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Polygon</label>
                       </div>
                     </li>
                     <li>
-                      <div class="flex items-center">
-                        <input id="checkbox-item-3" type="checkbox" value="" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500" />
-                        <label for="checkbox-item-3" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Optimism</label>
+                      <div className="flex items-center">
+                        <input id="checkbox-item-3" type="checkbox" value="" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500" />
+                        <label for="checkbox-item-3" className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Optimism</label>
                       </div>
                     </li>
                     <li>
-                      <div class="flex items-center">
-                        <input id="checkbox-item-4" type="checkbox" value="" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500" />
-                        <label for="checkbox-item-4" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Arbitrum</label>
+                      <div className="flex items-center">
+                        <input id="checkbox-item-4" type="checkbox" value="" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500" />
+                        <label for="checkbox-item-4" className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Arbitrum</label>
                       </div>
                     </li>
                   </ul>
@@ -635,41 +635,41 @@ const Home = () => {
                   ></i>
                 </div>
                 <div className={`dropdown-body ${isOpenContract && "open"}`}>
-                  <ul class="p-3 space-y-3 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownCheckboxButton">
+                  <ul className="p-3 space-y-3 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownCheckboxButton">
                     <li>
-                      <div class="flex items-center">
-                        <input id="checkbox-item-5" type="checkbox" value="" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500" />
-                        <label for="checkbox-item-5" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Edition</label>
+                      <div className="flex items-center">
+                        <input id="checkbox-item-5" type="checkbox" value="" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500" />
+                        <label for="checkbox-item-5" className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Edition</label>
                       </div>
                     </li>
                     <li>
-                      <div class="flex items-center">
-                        <input id="checkbox-item-6" type="checkbox" value="" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500" />
-                        <label for="checkbox-item-6" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Rentable</label>
+                      <div className="flex items-center">
+                        <input id="checkbox-item-6" type="checkbox" value="" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500" />
+                        <label for="checkbox-item-6" className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Rentable</label>
                       </div>
                     </li>
                     <li>
-                      <div class="flex items-center">
-                        <input id="checkbox-item-7" type="checkbox" value="" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500" />
-                        <label for="checkbox-item-7" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Crescendo</label>
+                      <div className="flex items-center">
+                        <input id="checkbox-item-7" type="checkbox" value="" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500" />
+                        <label for="checkbox-item-7" className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Crescendo</label>
                       </div>
                     </li>
                     <li>
-                      <div class="flex items-center">
-                        <input id="checkbox-item-8" type="checkbox" value="" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500" />
-                        <label for="checkbox-item-8" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">ZKEdition</label>
+                      <div className="flex items-center">
+                        <input id="checkbox-item-8" type="checkbox" value="" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500" />
+                        <label for="checkbox-item-8" className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">ZKEdition</label>
                       </div>
                     </li>
                     <li>
-                      <div class="flex items-center">
-                        <input id="checkbox-item-9" type="checkbox" value="" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500" />
-                        <label for="checkbox-item-9" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Staking</label>
+                      <div className="flex items-center">
+                        <input id="checkbox-item-9" type="checkbox" value="" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500" />
+                        <label for="checkbox-item-9" className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Staking</label>
                       </div>
                     </li>
                     <li>
-                      <div class="flex items-center">
-                        <input id="checkbox-item-10" type="checkbox" value="" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500" />
-                        <label for="checkbox-item-10" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Treasury</label>
+                      <div className="flex items-center">
+                        <input id="checkbox-item-10" type="checkbox" value="" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500" />
+                        <label for="checkbox-item-10" className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Treasury</label>
                       </div>
                     </li>
                   </ul>

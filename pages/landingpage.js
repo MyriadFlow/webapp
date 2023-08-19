@@ -319,24 +319,24 @@ function LandingPage() {
                 </div>
               </div>
               <div className="basis-1/4 mb-10 lg:mb-0">
-                <figure class="max-w-xs relative transition-all duration-300 cursor-pointer filter border-4 ">
-                  <a href="#">
-                    <img class="" src="vr.png" alt="image description" />
-                  </a>
+                <figure className="max-w-xs relative transition-all duration-300 cursor-pointer filter border-4 ">
+                  <Link href="#">
+                    <img className="" src="vr.png" alt="image description" />
+                  </Link>
                 </figure>
               </div>
               <div className="basis-1/4 mb-10 lg:mb-0">
-                <figure class="max-w-xs relative transition-all duration-300 cursor-pointer filter border-4">
-                  <a href="#">
-                    <img class="" src="vr.png" alt="image description" />
-                  </a>
+                <figure className="max-w-xs relative transition-all duration-300 cursor-pointer filter border-4">
+                  <Link href="#">
+                    <img className="" src="vr.png" alt="image description" />
+                  </Link>
                 </figure>
               </div>
               <div className="basis-1/4">
-                <figure class="max-w-xs relative transition-all duration-300 cursor-pointer filter border-4">
-                  <a href="#">
-                    <img class="" src="vr.png" alt="image description" />
-                  </a>
+                <figure className="max-w-xs relative transition-all duration-300 cursor-pointer filter border-4">
+                  <Link href="#">
+                    <img className="" src="vr.png" alt="image description" />
+                  </Link>
                 </figure>
               </div>
 
