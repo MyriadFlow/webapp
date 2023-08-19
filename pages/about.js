@@ -41,7 +41,7 @@ export default function About() {
           <div className="mt-10 text-gray-500 dark:text-white">Interested in Joining Us ?</div>
           <div className="mt-5 ">
             <Link href="/explore">
-              <NavLink
+              <div
                 className={router.pathname == "/explore" ? "active " : ""}
               >
                 <button
@@ -49,7 +49,7 @@ export default function About() {
                 >
                   Explore Now
                 </button>
-              </NavLink>
+              </div>
             </Link>
           </div>
         </div>

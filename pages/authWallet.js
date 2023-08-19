@@ -21,11 +21,11 @@ the Creator Role. To Gain Access, you Need to Complete
 the Wallet Authentication Process.</div>
 <div className='mt-10'>
     <Link className=" bg-white text-black px-4 py-2 rounded-full ... text-sm" href="/explore">
-              <NavLink
+              <div
                 className={router.pathname == "/explore" ? "active " : ""}
               >
                 Explore
-              </NavLink>
+              </div>
             </Link>
 </div>
     </div>

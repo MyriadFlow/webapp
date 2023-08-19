@@ -102,52 +102,52 @@ function Header() {
             </div> */}
 
             <Link className="text-gray-800 dark:text-white" href="/explore">
-              <NavLink
+              <div
                 className={router.pathname == "/explore" ? "active " : ""}
               >
                 Explore
-              </NavLink>
+              </div>
             </Link>
 
             <Link className="text-gray-800 dark:text-white" href="/collection">
-              <NavLink
+              <div
                 className={router.pathname == "/collection" ? "active " : ""}
               >
                 Collections
-              </NavLink>
+              </div>
             </Link>
 
             {walletAddress && address && hasRole ? (
               <Link className="text-gray-800 dark:text-white" href={hasRole ? "/assets" : "/authWallet"}>
-                <NavLink
+                <div
                   className={router.pathname == "/assets" ? "active" : ""}
                 >
                   Create
-                </NavLink>
+                </div>
               </Link>
             ) : (
               ""
             )}
             {walletAddress && address ? (
               <Link className="text-gray-800 dark:text-white" href="/dashboard">
-                <NavLink
+                <div
                   className={router.pathname == "/dashboard" ? "active" : ""}
                 >
                   Dashboard
-                </NavLink>
+                </div>
               </Link>
             ) : null}
             {walletAddress && address ? (
               <Link className="rewards-style" href="/drops">
-                <NavLink
+                <div
                   className={router.pathname == "/drops" ? "active " : ""}
                 >
                   Drops
-                </NavLink>
+                </div>
               </Link>
             ) : null}
             <Link href="">
-              <NavLink>
+              <div>
                 <div className="relative">
                   <div className="flex items-center gap-x-3">
 
@@ -165,7 +165,7 @@ function Header() {
                     </div>
                   </div>
                 </div>
-              </NavLink>
+              </div>
             </Link>
 
             <button
@@ -239,30 +239,30 @@ function Header() {
 
               {walletAddress && address ? (
                 <Link className="" href="/wishlist">
-                  <NavLink
+                  <div
                     className="block py-4 rounded-sm hover:bg-gray-300 transition duration-200 ease-in-out"
                   >
                     Wishlists
-                  </NavLink>
+                  </div>
                 </Link>
               ) : null}
 
               {walletAddress && address ? (
                 <Link className="" href="/manage">
-                  <NavLink
+                  <div
                     className="block py-4 rounded-sm hover:bg-gray-300 transition duration-200 ease-in-out"
                   >
                     Manage
-                  </NavLink>
+                  </div>
                 </Link>
               ) : null}
 
               {walletAddress && address ? (
                 <div className="mb-8 mt-2">
                   <Link className="rewards-style" href="/drops">
-                    <NavLink className="">
+                    <div className="">
                       Drops
-                    </NavLink>
+                    </div>
 
 
                   </Link>
