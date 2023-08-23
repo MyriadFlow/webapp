@@ -416,7 +416,7 @@ const Home = () => {
             Hide Filter
           </div>
         </div> */}
-        <div className="flex">
+        <div className="flex lg:flex-row md:flex-row flex-col">
           {hidefilter && (
             <div className="p-4">
               <div className="dropdown">
@@ -678,7 +678,7 @@ const Home = () => {
 
             </div>
           )}
-          <div className="my-10 lg:mx-6 md:mx-4 mx-2 h-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 w-full">
+          <div className="my-10 lg:mx-6 md:mx-4 mx-0 h-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 w-full">
             {data?.length ? (
               data?.map((item) => {
                 return (

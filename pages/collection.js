@@ -133,12 +133,11 @@ const Collection = () => {
 
 
       
-        {/* {data?.length > 0 ? (
+        {data?.length > 0 ? (
           data.map((item) => {
             return (
-              <div className="px-10 mt-10 h-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+              <div key={item?.tokenID} className="px-10 mt-10 h-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
               <div
-                key={item.tokenID}
                 className=" border-2 p-2.5  dark:bg-[#1c1c24]  rounded-lg shadow-lg w-full lg:w-72 hover:scale-105 duration-200 transform transition cursor-pointer"
               >
                 <Link 
@@ -175,7 +174,7 @@ const Collection = () => {
           <div className="text-2xl font-bold text-center py-10">
             You haven&apos;t created any asset.
           </div>
-        )} */}
+        )}
       
     </div>
     </Layout>
