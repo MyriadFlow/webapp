@@ -21,7 +21,21 @@ const tradhubAddress = process.env.NEXT_PUBLIC_TRADEHUB_ADDRESS;
 const graphqlAPI = process.env.NEXT_PUBLIC_MARKETPLACE_API;
 const accessmasterAddress = process.env.NEXT_PUBLIC_ACCESS_MASTER_ADDRESS;
 
-function LandingPage() {
+export default function LandingPage({injectdata}) {
+  console.log("injected Data:", injectdata);
+
+  // const [userData, setUserData] = useState(null);
+
+  // useEffect(() => {
+  //   // Fetch data from API using fetch or axios
+  //   fetch('/api/getData')
+  //     .then(response => response.json())
+  //     .then(data => setUserData(data))
+  //     .catch(error => console.error('Error fetching data:', error));
+  // }, []);
+
+  // console.log("Fetched Data:", userData);
+
 
   const settings = {
     dots: false,
@@ -348,5 +362,3 @@ function LandingPage() {
     </>
   );
 }
-
-export default LandingPage;

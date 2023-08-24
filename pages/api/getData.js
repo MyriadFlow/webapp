@@ -1,12 +1,45 @@
+import axios from 'axios';
+
 export default function handler(req, res) {
-  if (req.method === "POST") {
-    const obj = JSON.parse(req.body);
-    // if (id == undefined) {
-    //   res.status(400).send("request body invalid");
-    //   return;
-    // }
-    localStorage.setItem("storefrontID", obj.storefrontID);
-    console.log(obj.storefrontId);
-    res.status(200).send("recieved storefront id");
-  }
-}
+
+  const myVariableValue = {  
+    "employee": {  
+        "name":       "emp",   
+        "salary":      56000,    
+    }  
+}  ;
+res.status(200).json(myVariableValue);}
+
+//   if (req.method === "POST") {
+//     try {
+//       const obj = JSON.parse(req.body);
+
+//       if (!obj.storefrontId) {
+//         res.status(400).send("Storefront ID missing in request body");
+//         return;
+//       }
+
+//       const storefrontId = obj.storefrontId;
+
+//       const myVariableValue = 1234; // Get the actual value here
+//       const anotherVariableValue = "abc"; // Get the actual value here
+
+//       setVariables({ myVariable: myVariableValue, anotherVariable: anotherVariableValue });
+
+//       console.log(storefrontId);
+
+//       // Make a GET request to the external API using the storefrontId
+//       const apiURL = `https://testnet.gateway.myriadflow.com/api/v1.0/webapp/${storefrontId}`;
+//       const response = await axios.get(apiURL);
+//       const responseData = response.data;
+
+//       // You can use responseData for further processing or send it as a response
+//       res.status(200).json(responseData);
+//     } catch (error) {
+//       console.error("Error:", error);
+//       res.status(500).send("Internal Server Error");
+//     }
+//   } else {
+//     res.status(405).send("Method Not Allowed");
+//   }
+// }

@@ -9,7 +9,17 @@ import {
 } from "./api/setConnection";
 import NoSSR from "./NoSSR";
 
-export default function Home() {
+export async function getStaticProps() {
+  const response = await fetch(
+      'http://localhost:3000/api/getData');
+  const data = await response.json();
+
+  return {
+      props: { data: data },
+  };
+}
+
+export default function Home({ data }) {
   const dispatch = useDispatch();
   const [errorMessage, SeterrorMessage] = useState(null);
   const [defaultAccount, SetdefaultAccount] = useState();
@@ -26,10 +36,10 @@ export default function Home() {
 
   return (
     <div>
-      <NoSSR>
-      <Landingpage />
+      {/* <NoSSR> */}
+      <Landingpage injectdata={data}/>
       
-      </NoSSR>
+      {/* </NoSSR> */}
 
     </div>
   );
