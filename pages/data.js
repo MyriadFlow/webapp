@@ -6,7 +6,7 @@ export default function Home({ data }) {
     );
 }
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
     const response = await fetch(
         'http://localhost:3000/api/getData');
     const data = await response.json();
