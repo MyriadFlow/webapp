@@ -35,12 +35,27 @@ export default function Home({ data }) {
   }, []);
 
   return (
-    <div>
-      {/* <NoSSR> */}
+    <>
+    <Head>
+      <title>Marketplace</title>
+        <meta name="description" content="A NFT Marketplace to Explore the Digital Gold Mine, that Supports the Creators. A Place where you can Create, Collect and Sell Digital Assets."></meta>
+        <meta property="og:url" content="https://marketplace-myriadflow.netlify.app"></meta>
+        <meta name="keywords" content=" crypto, wallet, metamask, nft, asset, marketplace, collections"></meta>
+        <meta name="author" content="Myriadflow"></meta>
+        <meta charset="UTF-8"></meta>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
+        <meta property="og:image" content="/dark.svg"/>
+        <link rel="apple-touch-icon" sizes="180x180" href="/dark.svg"></link>
+        <link rel="icon" type="image/svg" sizes="32x32" href="/dark.svg"></link>
+        <link rel="icon" type="image/svg" sizes="16x16" href="/dark.svg"></link>
+      </Head>
+      <div>
+      <NoSSR>
       <Landingpage/>
       
-      {/* </NoSSR> */}
+      </NoSSR>
 
     </div>
+    </>
   );
 }
