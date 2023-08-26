@@ -9,15 +9,15 @@ import {
 } from "./api/setConnection";
 import NoSSR from "./NoSSR";
 
-export async function getServerSideProps() {
-  const response = await fetch(
-      'http://localhost:3000/api/getData');
-  const data = await response.json();
+// export async function getServerSideProps() {
+//   const response = await fetch(
+//       'http://localhost:3000/api/getData');
+//   const data = await response.json();
 
-  return {
-      props: { data: data },
-  };
-}
+//   return {
+//       props: { data: data },
+//   };
+// }
 
 export default function Home({ data }) {
   const dispatch = useDispatch();
@@ -37,7 +37,7 @@ export default function Home({ data }) {
   return (
     <div>
       {/* <NoSSR> */}
-      <Landingpage injectdata={data}/>
+      <Landingpage/>
       
       {/* </NoSSR> */}
 
