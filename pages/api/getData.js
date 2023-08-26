@@ -1,13 +1,14 @@
 import axios from 'axios';
+const fs = require('fs');
 
 export default function handler(req, res) {
 
   const myVariableValue = {  
-    "employee": {  
-        "name":       "emp",   
-        "salary":      56000,    
+    "storefrontID": {  
+        "id":12345,    
     }  
 }  ;
+fs.writeFileSync('./public/data.json', JSON.stringify(myVariableValue));
 res.status(200).json(myVariableValue);}
 
 //   if (req.method === "POST") {
