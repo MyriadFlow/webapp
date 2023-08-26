@@ -16,7 +16,6 @@ import { getMetaData, removePrefix } from "../utils/ipfsUtil";
 import Loader from "../Components/Loader";
 import Slider from "react-slick";
 import SmallCard from "../Components/Cards/SmallCard";
-import Head from 'next/head';
 
 const tradhubAddress = process.env.NEXT_PUBLIC_TRADEHUB_ADDRESS;
 const graphqlAPI = process.env.NEXT_PUBLIC_MARKETPLACE_API;
