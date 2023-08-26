@@ -45,10 +45,10 @@ export default function Home({ data }) {
         <meta name="author" content="Myriadflow"></meta>
         <meta charset="UTF-8"></meta>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
-        <meta property="og:image" content="/dark.svg"/>
-        <link rel="apple-touch-icon" sizes="180x180" href="/dark.svg"></link>
-        <link rel="icon" type="image/svg" sizes="32x32" href="/dark.svg"></link>
-        <link rel="icon" type="image/svg" sizes="16x16" href="/dark.svg"></link>
+        <meta property="og:image" content="dark.svg"/>
+        <link rel="apple-touch-icon" sizes="180x180" href="dark.svg"></link>
+        <link rel="icon" type="image/svg+xml" sizes="32x32" href="dark.svg"></link>
+        <link rel="icon" type="image/svg+xml" sizes="16x16" href="dark.svg"></link>
       </Head>
       <div>
       <NoSSR>
