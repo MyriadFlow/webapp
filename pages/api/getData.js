@@ -1,46 +1,43 @@
 import axios from 'axios';
 const fs = require('fs');
 
-export default function handler(req, res) {
+export default async function handler(req, res) {
 
-  const myVariableValue = {  
-    "storefrontID": {  
-        "id":12345,    
-    }  
-}  ;
-fs.writeFileSync('./public/data.json', JSON.stringify(myVariableValue));
-res.status(200).json(myVariableValue);}
+  //   const myVariableValue = {  
+  //     "storefrontID": {  
+  //         "id":12345,    
+  //     }  
+  // }  ;
+  // fs.writeFileSync('./public/data.json', JSON.stringify(myVariableValue));
+  // res.status(200).json(myVariableValue);}
 
-//   if (req.method === "POST") {
-//     try {
-//       const obj = JSON.parse(req.body);
+  if (req.method === "POST") {
+    try {
+      const obj = JSON.parse(req.body);
 
-//       if (!obj.storefrontId) {
-//         res.status(400).send("Storefront ID missing in request body");
-//         return;
-//       }
+      if (!obj.storefrontId) {
+        res.status(400).send("Storefront ID missing in request body");
+        return;
+      }
 
-//       const storefrontId = obj.storefrontId;
+      const storefrontId = obj.storefrontId;
 
-//       const myVariableValue = 1234; // Get the actual value here
-//       const anotherVariableValue = "abc"; // Get the actual value here
+      console.log(storefrontId);
 
-//       setVariables({ myVariable: myVariableValue, anotherVariable: anotherVariableValue });
+      fs.writeFileSync('./public/data.json', JSON.stringify(storefrontId));
 
-//       console.log(storefrontId);
+      // Make a GET request to the external API using the storefrontId
+      const apiURL = `https://testnet.gateway.myriadflow.com/api/v1.0/webapp/${storefrontId}`;
+    const response = await axios.get(apiURL);
+    const responseData = response.data;
 
-//       // Make a GET request to the external API using the storefrontId
-//       const apiURL = `https://testnet.gateway.myriadflow.com/api/v1.0/webapp/${storefrontId}`;
-//       const response = await axios.get(apiURL);
-//       const responseData = response.data;
-
-//       // You can use responseData for further processing or send it as a response
-//       res.status(200).json(responseData);
-//     } catch (error) {
-//       console.error("Error:", error);
-//       res.status(500).send("Internal Server Error");
-//     }
-//   } else {
-//     res.status(405).send("Method Not Allowed");
-//   }
-// }
+    // You can use responseData for further processing or send it as a response
+    res.status(200).json(responseData);
+  } catch (error) {
+    console.error("Error:", error);
+    res.status(500).send("Internal Server Error");
+  }
+} else {
+  res.status(405).send("Method Not Allowed");
+}
+}
