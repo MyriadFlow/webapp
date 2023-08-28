@@ -89,7 +89,7 @@ export default function CreatorDashboard() {
     const signer = provider.getSigner();
   }
   return (
-    <Layout title="Dashboard"description="This is used to show the Create,Buy,Sell and Market the NFTs ">
+    <Layout title="Dashboard" description="You will find all your created NFTs, assets you buy, sell and market here.">
            
             
       <div className="dark:body-back body-back-light">

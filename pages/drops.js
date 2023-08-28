@@ -9,7 +9,7 @@ export default function Rewards() {
   const router = useRouter();
 
   return (
-    <Layout title="Drops" description="This is used to show the drops info">
+    <Layout title="Drops" description="Airdrop Alert, Claim Your NFTs Now!">
       <div className='flex dark:body-back body-back-light mx-auto items-center justify-center lg:flex-row flex-col'>
         <div className='lg:mb-16'>
           <img alt="alt" src="/imagere.png" />

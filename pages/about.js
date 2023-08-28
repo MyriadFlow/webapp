@@ -9,7 +9,7 @@ export default function About() {
   return (
     <Layout
       title="About"
-      description="This is used to show the information of the marketplace application"
+      description="All the information you want to know about NFT and the company is here."
     >
       <div className="flex dark:body-back body-back-light mx-auto items-center justify-center lg:flex-row flex-col lg:px-32 px-10 pb-10">
       <div className="lg:w-1/2 w-full mt-6 lg:hidden block">

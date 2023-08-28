@@ -12,7 +12,6 @@ import BuyAsset from "../Components/buyAssetModal";
 import { saleStartedQuery } from "../utils/gqlUtil";
 import axios from "axios";
 import { buyItem } from "./api/buyItem";
-import Head from 'next/head';
 
 const graphqlAPI = process.env.NEXT_PUBLIC_MARKETPLACE_API;
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
@@ -89,23 +88,9 @@ export default function Wishlist() {
   }
 
   return (
-    <>
-    <Head>
-      <title>Marketplace</title>
-        <meta name="description" content="A NFT Marketplace to Explore the Digital Gold Mine, that Supports the Creators. A Place where you can Create, Collect and Sell Digital Assets."></meta>
-        <meta property="og:url" content="https://marketplace-myriadflow.netlify.app"></meta>
-        <meta name="keywords" content=" crypto, wallet, metamask, nft, asset, marketplace, collections"></meta>
-        <meta name="author" content="Myriadflow"></meta>
-        <meta charset="UTF-8"></meta>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
-        <meta property="og:image" content="dark.svg"/>
-        <link rel="apple-touch-icon" sizes="180x180" href="dark.svg"></link>
-        <link rel="icon" type="image/svg+xml" sizes="32x32" href="dark.svg"></link>
-        <link rel="icon" type="image/svg+xml" sizes="16x16" href="dark.svg"></link>
-      </Head>
     <Layout
       title="WishList"
-      description="This is used to show Wishlist/Add to cart info"
+      description="Add your favourite assets here to buy them later."
     >
       {model && <BuyAsset open={model} setOpen={setmodel} message={modelmsg} />}
       {logoutmodel && (
@@ -274,6 +259,5 @@ export default function Wishlist() {
         )}
       </div>
     </Layout>
-    </>
   );
 }

@@ -340,7 +340,7 @@ const Home = () => {
   return (
     <Layout
       title="Explore"
-      description="Used to show the created categories of the Nfts"
+      description="Shows the created categories of the Nfts"
     >
       {model && <BuyAsset open={model} setOpen={setmodel} message={modelmsg} />}
       {logoutmodel && (

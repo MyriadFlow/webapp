@@ -311,7 +311,7 @@ function Profile() {
     return (
         <Layout
             title="Profile"
-            description="Use to show metamask Profile details of the users"
+            description="Shows social account and metamask profile details of the users."
         >
             {loading && <Loader />}
             {showModal ? (
