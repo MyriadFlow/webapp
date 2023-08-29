@@ -23,7 +23,7 @@ export default async function handler(req, res) {
 
       console.log(storefrontId);
 
-      fs.writeFileSync("/tmp/data.json", JSON.stringify(storefrontId));
+      fs.writeFileSync("./public/data.json", JSON.stringify(storefrontId));
 
       // Make a GET request to the external API using the storefrontId
       const apiURL = `https://testnet.gateway.myriadflow.com/api/v1.0/webapp/${storefrontId}`;
