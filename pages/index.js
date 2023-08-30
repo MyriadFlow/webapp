@@ -46,6 +46,12 @@ export default function Home({ data }) {
         <meta charset="UTF-8"></meta>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
 
+
+        <meta property="og:image:alt" content="Myriadflow" />
+        <meta property="og:image:type" content="image/svg+xml" />
+        <meta property="og:image:width" content="500" />
+        <meta property="og:image:height" content="500" />
+
         {/* <!-- Open Graph / Facebook --> */}
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://marketplace-myriadflow.netlify.app/" />
