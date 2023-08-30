@@ -46,7 +46,7 @@ export default function Home({ data }) {
         <meta charset="UTF-8"></meta>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
 
-
+        <meta property="og:image" content="/dark.svg" />
         <meta property="og:image:alt" content="Myriadflow" />
         <meta property="og:image:type" content="image/svg+xml" />
         <meta property="og:image:width" content="500" />
