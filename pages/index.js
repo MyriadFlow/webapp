@@ -53,18 +53,18 @@ export default function Home({ data }) {
         <meta property="og:image:height" content="500"></meta>
 
         {/* <!-- Open Graph / Facebook --> */}
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://marketplace-myriadflow.netlify.app/" />
-        <meta property="og:title" content="Marketplace" />
-        <meta property="og:description" content="A NFT Marketplace to Explore the Digital Gold Mine, that Supports the Creators. A Place where you can Create, Collect and Sell Digital Assets." />
-        <meta property="og:image" content="/dark.svg" />
+        <meta property="og:type" content="website"></meta>
+        <meta property="og:url" content="https://marketplace-myriadflow.netlify.app/"></meta>
+        <meta property="og:title" content="Marketplace"></meta>
+        <meta property="og:description" content="A NFT Marketplace to Explore the Digital Gold Mine, that Supports the Creators. A Place where you can Create, Collect and Sell Digital Assets."></meta>
+        <meta property="og:image" content="/dark.svg"></meta>
 
         {/* <!-- Twitter --> */}
-        <meta property="twitter:card" content="summary_large_image" />
-        <meta property="twitter:url" content="https://marketplace-myriadflow.netlify.app/" />
-        <meta property="twitter:title" content="Marketplace" />
-        <meta property="twitter:description" content="A NFT Marketplace to Explore the Digital Gold Mine, that Supports the Creators. A Place where you can Create, Collect and Sell Digital Assets." />
-        <meta property="twitter:image" content="/dark.svg" />
+        <meta property="twitter:card" content="summary_large_image"></meta>
+        <meta property="twitter:url" content="https://marketplace-myriadflow.netlify.app/"></meta>
+        <meta property="twitter:title" content="Marketplace"></meta>
+        <meta property="twitter:description" content="A NFT Marketplace to Explore the Digital Gold Mine, that Supports the Creators. A Place where you can Create, Collect and Sell Digital Assets."></meta>
+        <meta property="twitter:image" content="/dark.svg"></meta>
 
         <link rel="apple-touch-icon" sizes="180x180" href="/dark.svg"></link>
         <link rel="icon" type="image/svg+xml" sizes="32x32" href="/dark.svg"></link>
