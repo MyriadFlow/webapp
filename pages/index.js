@@ -37,26 +37,30 @@ export default function Home({ data }) {
 
   return (
     <>
-    <Head>
-      <title>Marketplace</title>
+      <Head>
+        <title>Marketplace</title>
         <meta name="description" content="A NFT Marketplace to Explore the Digital Gold Mine, that Supports the Creators. A Place where you can Create, Collect and Sell Digital Assets."></meta>
         <meta property="og:url" content="https://marketplace-myriadflow.netlify.app"></meta>
         <meta name="keywords" content=" crypto, wallet, metamask, nft, asset, marketplace, collections"></meta>
         <meta name="author" content="Myriadflow"></meta>
         <meta charset="UTF-8"></meta>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
-        <meta property="og:image" content="dark.svg"/>
-        <link rel="apple-touch-icon" sizes="180x180" href="dark.svg"></link>
-        <link rel="icon" type="image/svg+xml" sizes="32x32" href="dark.svg"></link>
-        <link rel="icon" type="image/svg+xml" sizes="16x16" href="dark.svg"></link>
+        <meta property="og:image" content="/dark.svg" />
+        <meta property="og:image:alt" content="Myriadflow" />
+        <meta property="og:image:type" content="image/svg+xml" />
+        <meta property="og:image:width" content="500" />
+        <meta property="og:image:height" content="500" />
+        <link rel="apple-touch-icon" sizes="180x180" href="/dark.svg"></link>
+        <link rel="icon" type="image/svg+xml" sizes="32x32" href="/dark.svg"></link>
+        <link rel="icon" type="image/svg+xml" sizes="16x16" href="/dark.svg"></link>
       </Head>
       <div>
-      <NoSSR>
-      <Landingpage/>
-      
-      </NoSSR>
+        <NoSSR>
+          <Landingpage />
 
-    </div>
+        </NoSSR>
+
+      </div>
     </>
   );
 }
