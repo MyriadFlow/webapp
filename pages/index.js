@@ -46,11 +46,11 @@ export default function Home({ data }) {
         <meta charset="UTF-8"></meta>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
 
-        <meta property="og:image" content="/dark.svg" />
-        <meta property="og:image:alt" content="Myriadflow" />
-        <meta property="og:image:type" content="image/svg+xml" />
-        <meta property="og:image:width" content="500" />
-        <meta property="og:image:height" content="500" />
+        <meta property="og:image" content="/dark.svg"></meta>
+        <meta property="og:image:alt" content="Myriadflow"></meta>
+        <meta property="og:image:type" content="image/svg+xml"></meta>
+        <meta property="og:image:width" content="500"></meta>
+        <meta property="og:image:height" content="500"></meta>
 
         {/* <!-- Open Graph / Facebook --> */}
         <meta property="og:type" content="website" />
