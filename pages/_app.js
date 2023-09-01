@@ -7,7 +7,7 @@ import Router from "next/router";
 import { ThirdwebProvider, useAddress } from "@thirdweb-dev/react";
 import "../styles/globals.css";
 import Loader from "../Components/Loader";
-
+import { DataProvider } from "./DataContext";
 import { authorize } from '../utils/api';
 
 // Fixes: Hydration failed because the initial UI does not match what was rendered on the server.
@@ -40,7 +40,9 @@ function MyApp({ Component, pageProps }) {
       <ThemeProvider enableSystem={true} attribute="class">
         <ThirdwebProvider desiredChainId={desiredChainId}>
           <Provider store={store} >
+          <DataProvider>
           <Component {...pageProps} initialData={initialData}/>
+          </DataProvider>
           </Provider>
         </ThirdwebProvider>
       </ThemeProvider>

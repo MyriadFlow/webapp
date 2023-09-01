@@ -1,35 +1,20 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
+import { useData } from "./DataContext";
 
-export default function Home() {
-    const [resdata, setResdata] = useState(null);
+export default function SomeComponent() {
+  const { resdata } = useData();
 
-    useEffect(() => {
-      async function fetchData() {
-        try {
-          const response = await fetch('/data.json');
-          const data = await response.json();
-          setResdata(data);
-        } catch (error) {
-          console.error('Error fetching data:', error);
-        }
-      }
-  
-      fetchData();
-    }, []);
+  console.log(resdata);
 
-    console.log(resdata);
-    return (
-        <>
-        </>
-    );
+  return (
+    // Render your component using the resdata
+    <div>
+      {resdata && (
+        <div>
+          {/* Access properties from resdata here */}
+          <p>Response Data: {resdata.subgraphUrl}</p>
+        </div>
+      )}
+    </div>
+  );
 }
-
-// export async function getServerSideProps() {
-//     const response = await fetch(
-//         'http://localhost:3000/api/getData');
-//     const data = await response.json();
-
-//     return {
-//         props: { data: data },
-//     };
-// }
