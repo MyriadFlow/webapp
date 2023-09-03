@@ -17,7 +17,7 @@ export function DataProvider({ children }) {
         const data = await response.json();
         console.log("id", data);
 
-        const apiURL = `https://testnet.gateway.myriadflow.com/api/v1.0/webapp/f4ea55ca-c299-4fbf-aa7b-e507a897063e`;
+        const apiURL = `https://testnet.gateway.myriadflow.com/api/v1.0/webapp/${data.id}`;
         const resp = await axios.get(apiURL);
         const resData = resp.data;
 

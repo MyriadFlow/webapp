@@ -13,6 +13,9 @@ export default function SomeComponent() {
         <div>
           {/* Access properties from resdata here */}
           <p>Response Data: {resdata.subgraphUrl}</p>
+          <p>{resdata.webappUrl}</p>
+          <p>{resdata.headline}</p>
+          <p>{resdata.description}</p>
         </div>
       )}
     </div>
