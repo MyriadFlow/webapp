@@ -16,6 +16,7 @@ import { getMetaData, removePrefix } from "../utils/ipfsUtil";
 import Loader from "../Components/Loader";
 import Slider from "react-slick";
 import SmallCard from "../Components/Cards/SmallCard";
+import { useData } from "./DataContext";
 
 const tradhubAddress = process.env.NEXT_PUBLIC_TRADEHUB_ADDRESS;
 const graphqlAPI = process.env.NEXT_PUBLIC_MARKETPLACE_API;
@@ -23,18 +24,7 @@ const accessmasterAddress = process.env.NEXT_PUBLIC_ACCESS_MASTER_ADDRESS;
 
 export default function LandingPage() {
 
-  // const [userData, setUserData] = useState(null);
-
-  // useEffect(() => {
-  //   // Fetch data from API using fetch or axios
-  //   fetch('/api/getData')
-  //     .then(response => response.json())
-  //     .then(data => setUserData(data))
-  //     .catch(error => console.error('Error fetching data:', error));
-  // }, []);
-
-  // console.log("Fetched Data:", userData);
-
+  const { resdata } = useData();
 
   const settings = {
     dots: false,
@@ -128,12 +118,14 @@ export default function LandingPage() {
             <div className="lg:flex xl:gap-8 lg:w-[1025px] x2:w-[1200px] xxl:w-[1400px] mx-auto lg:mt-12">
               <div className="text-center lg:text-left lg:w-1/2 pt-16 lg:mt-0  p-2 sm:p-4 lg:px-8 lg:pt-0">
                 <h3 className=" font-poppins font-bold m48:w-[470px] l32:w-[450px] xxl:w-auto  text-3xl sm:text-4xl lg:text-6xl x2:text-7xl xxl:text-8xl capitalize mb-8 x2:mb-10 mx-auto lg:mx-0 text-gray-800 dark:text-white">
-                  Collect and Trade the New Fresh Thing
+                  {/* Collect and Trade the New Fresh Thing */}
+                  {resdata?.headline}
                 </h3>
                 <h6 className="text-lg x2:text-2xl  m48:max-w-[487px] mx-auto lg:mx-0 lg:w-[80%] font-opensans mb-8 text-gray-500 dark:text-white">
-                  A NFT Marketplace to Explore the Digital Gold Mine, that
+                  {/* A NFT Marketplace to Explore the Digital Gold Mine, that
                   Supports the Creators. A Place where you can Create, Collect
-                  and Sell Digital Assets.
+                  and Sell Digital Assets. */}
+                  {resdata?.description}
                 </h6>
                 <div className="lg:flex items-center lg:gap-x-4 x2:gap-x-6 xl:gap-x-10 mb-8 lg:mb-0">
                   <div>

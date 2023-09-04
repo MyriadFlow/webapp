@@ -15,8 +15,12 @@ import Image from "next/image";
 import etherContract from "../utils/web3Modal";
 import SimpleDropdown from "./SimpleDropdown";
 // import useAddress from '@thirdweb-dev/react';
+import { useData } from "../pages/DataContext";
 const accessmasterAddress = process.env.NEXT_PUBLIC_ACCESS_MASTER_ADDRESS;
 function Header() {
+
+  const { resdata } = useData();
+
   const address = useAddress();
   const { contract } = useContract(address);
   const [dropmenu, setDropMenu] = useState(false);
@@ -78,7 +82,8 @@ function Header() {
           </Link>
           <Link href="/">
             <div className="lg:text-3xl text-2xl lg:block md:block font-semibold cursor-pointer lg:pl-4 md:pl-4 pl-2 transition-all tracking-wide text-gray-800 dark:text-white">
-              MarketPlace
+              {/* MarketPlace */}
+              {resdata?.string}
             </div>
           </Link>
 
