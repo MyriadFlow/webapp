@@ -20,8 +20,8 @@ const Footer = () => {
                         <Link href="https://myriadflow.com/" className="flex items-center">
                             <Image alt="dark" src="/dark.svg" width="60" height="60" className="mr-3" />
                             <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white text-gray-900">
-                                {/* Myriadflow */}
-                                {resdata?.string}
+                                Myriadflow
+                                {/* {resdata?.string} */}
                                 </span>
                         </Link>
                         <div className="mt-10 dark:text-white text-gray-900">
@@ -116,13 +116,15 @@ const Footer = () => {
                                         <path d="M349.33,69.33a93.62,93.62,0,0,1,93.34,93.34V349.33a93.62,93.62,0,0,1-93.34,93.34H162.67a93.62,93.62,0,0,1-93.34-93.34V162.67a93.62,93.62,0,0,1,93.34-93.34H349.33m0-37.33H162.67C90.8,32,32,90.8,32,162.67V349.33C32,421.2,90.8,480,162.67,480H349.33C421.2,480,480,421.2,480,349.33V162.67C480,90.8,421.2,32,349.33,32Z"/><path d="M377.33,162.67a28,28,0,1,1,28-28A27.94,27.94,0,0,1,377.33,162.67Z"/><path d="M256,181.33A74.67,74.67,0,1,1,181.33,256,74.75,74.75,0,0,1,256,181.33M256,144A112,112,0,1,0,368,256,112,112,0,0,0,256,144Z"/></svg>
                                         <span className="sr-only">Instagram page</span>
                                     </Link>
+                                </div>
+                                )}
+                                { resdata && (<div className="flex mt-4 space-x-5">
                                     <Link href={`mailto:${resdata?.mailId}`} className="text-gray-500 hover:text-gray-900 dark:hover:text-white">
                                     <svg className="w-4 h-4" aria-hidden="true" viewBox="0 0 48 48" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M44 24V9H24H4V24V39H24" stroke="#333" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
                                         <path d="M31 36L36 40L44 30" stroke="#333" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/><path d="M4 9L24 24L44 9" stroke="#333" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg>
                                         <span className="sr-only">Mail ID</span>
-                                    </Link>
-                                    
+                                    </Link> 
                                 </div>
                                 )}
                             </ul>

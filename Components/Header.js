@@ -82,8 +82,8 @@ function Header() {
           </Link>
           <Link href="/">
             <div className="lg:text-3xl text-2xl lg:block md:block font-semibold cursor-pointer lg:pl-4 md:pl-4 pl-2 transition-all tracking-wide text-gray-800 dark:text-white">
-              {/* MarketPlace */}
-              {resdata?.string}
+              MYRIADFLOW
+              {/* {resdata?.string} */}
             </div>
           </Link>
 
@@ -200,6 +200,13 @@ function Header() {
                       <div className="dark:hover:bg-gray-600 hover:bg-gray-100 flex flex-row">
                         <BsHeart className="text-lg mt-2 ml-2 dark:text-white dark:text-black" />
                         <Link href="/wishlist" className="block px-2 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Wishlist</Link>
+                      </div>
+
+                    </div>
+                    <div className="py-2 ">
+                      <div className="dark:hover:bg-gray-600 hover:bg-gray-100 flex flex-row">
+                        <BsHeart className="text-lg mt-2 ml-2 dark:text-white dark:text-black" />
+                        <Link href="/marketplace" className="block px-2 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Marketplaces</Link>
                       </div>
 
                     </div>
