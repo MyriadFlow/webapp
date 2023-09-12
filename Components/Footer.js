@@ -3,7 +3,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { NavLink } from "reactstrap";
 import Image from "next/image";
-import { useData } from "../pages/DataContext";
+import { useData } from "../context/data";
 
 const Footer = () => {
     let date = new Date();

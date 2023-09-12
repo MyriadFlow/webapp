@@ -7,7 +7,7 @@ import Router from "next/router";
 import { ThirdwebProvider, useAddress } from "@thirdweb-dev/react";
 import "../styles/globals.css";
 import Loader from "../Components/Loader";
-import { DataProvider } from "./DataContext";
+import { DataProvider } from "../context/data";
 import { authorize } from '../utils/api';
 
 // Fixes: Hydration failed because the initial UI does not match what was rendered on the server.

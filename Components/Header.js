@@ -15,7 +15,7 @@ import Image from "next/image";
 import etherContract from "../utils/web3Modal";
 import SimpleDropdown from "./SimpleDropdown";
 // import useAddress from '@thirdweb-dev/react';
-import { useData } from "../pages/DataContext";
+import { useData } from "../context/data";
 const accessmasterAddress = process.env.NEXT_PUBLIC_ACCESS_MASTER_ADDRESS;
 function Header() {
 

@@ -1,5 +1,5 @@
 import React from "react";
-import { useData } from "./DataContext";
+import { useData } from "../context/data";
 
 export default function SomeComponent() {
   const { resdata } = useData();
@@ -11,7 +11,6 @@ export default function SomeComponent() {
     <div>
       {resdata && (
         <div>
-          {/* Access properties from resdata here */}
           <p>Response Data: {resdata.subgraphUrl}</p>
           <p>{resdata.webappUrl}</p>
           <p>{resdata.headline}</p>

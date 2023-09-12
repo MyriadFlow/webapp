@@ -4,7 +4,7 @@ import { NavLink } from "reactstrap";
 import Layout from "../Components/Layout";
 import { useRouter } from "next/router";
 import Image from 'next/image';
-import { useData } from "./DataContext";
+import { useData } from "../context/data";
 
 export default function About() {
   const router = useRouter();

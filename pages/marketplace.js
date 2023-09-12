@@ -16,7 +16,7 @@ import { getMetaData, removePrefix } from "../utils/ipfsUtil";
 import Loader from "../Components/Loader";
 import Slider from "react-slick";
 import SmallCard from "../Components/Cards/SmallCard";
-import { useData } from "./DataContext";
+import { useData } from "../context/data";
 import { FaUserCircle, FaMapMarkerAlt, FaWallet, FaEnvelope } from "react-icons/fa";
 
 const tradhubAddress = process.env.NEXT_PUBLIC_TRADEHUB_ADDRESS;
