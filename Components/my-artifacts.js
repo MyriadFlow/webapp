@@ -25,7 +25,8 @@ const MyAssets = () => {
       }
           }
           `;
-    const result = await request(graphqlAPI, query);
+          const response = await fetch("/api/graphql");
+          const result = await response.json();
     setLoading(true);
     setData(result.assetCreateds);
     setLoading(false);
