@@ -233,7 +233,8 @@ const Home = () => {
   }
   const market = async (sortType) => {
     const refineArray = [];
-    const result = await request(graphqlAPI, saleStartedQuery);
+    const response = await fetch("/api/salegraph");
+    const result = await response.json();
     console.log("result", result);
     const fResult = await Promise.all(
       result.saleStarteds.map(async function (obj, index) {
