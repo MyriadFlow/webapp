@@ -21,6 +21,7 @@ import { buyItem } from "../pages/api/buyItem";
 import { saleStartedQuery } from "../utils/gqlUtil";
 import axios from "axios";
 import etherContract from "../utils/web3Modal";
+import Tradhub from '../artifacts/contracts/tradehub/TradeHub.sol/TradeHub.json';
 
 const graphqlAPI = process.env.NEXT_PUBLIC_MARKETPLACE_API;
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
@@ -180,7 +181,7 @@ const Home = () => {
   };
   async function buyNft(nft) {
     setmodelmsg("Buying in Progress");
-    await buyItem(nft, setmodel, setmodelmsg);
+    await buyItem(nft,1, setmodel, setmodelmsg);
   }
   useEffect(() => {
     filterNFTs();
@@ -236,6 +237,19 @@ const Home = () => {
     const response = await fetch("/api/salegraph");
     const result = await response.json();
     console.log("result", result);
+
+    
+    const status = async () => { result?.saleStartedQuery?.map(obj,index)
+      {
+        const tradhubAddress = process.env.NEXT_PUBLIC_TRADEHUB_ADDRESS;
+        const tradhubContarct = await etherContract(tradhubAddress, Tradhub.abi)
+        const transaction = await tradhubContarct.idToMarketItem(1);
+        console.log("transaction",transaction);
+      }};
+
+      status();
+  
+
     const fResult = await Promise.all(
       result.saleStarteds.map(async function (obj, index) {
         const nftData = await getMetaData(obj.metaDataURI);
@@ -703,7 +717,7 @@ const Home = () => {
                         </div>
                       </div>
                     </Link>
-                    <button onClick={() => AddLike(item?.itemId)}>
+                    {/* <button onClick={() => AddLike(item?.itemId)}>
                       likes:{item?.likeCount}
                       {item?.date}
                       {item?.categories}
@@ -714,7 +728,7 @@ const Home = () => {
                       className="text-gray-500 dark:text-black bg-[#CAFC01] w-full rounded-md py-2 font-bold"
                     >
                       Buy Now
-                    </button>
+                    </button> */}
                   </div>
                 );
               })

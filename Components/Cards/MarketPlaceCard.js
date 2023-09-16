@@ -11,9 +11,9 @@ export const MarketPlaceCard = (props) => {
             className=" w-full object-fit rounded-lg mb-3 grow h-60"
           />
          
-          <div className="flex justify-between">
-            <div className='text-gray-500 dark:text-white'>{name}</div>
-            <div className='text-gray-500 dark:text-white'>{description}</div>
+          <div className="justify-between">
+            <div className='text-gray-500 dark:text-white'>Asset Name: {name}</div>
+            <div className='text-gray-500 dark:text-white'>Asset Description: {description}</div>
           </div>
         </div>
       );

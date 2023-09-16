@@ -151,7 +151,7 @@ function Token({ asset }) {
                   <div className="rounded-3xl w-full px-4 py-3 bg-white dark:bg-[#1e1f26] myshadow text-[#253262]">
                     <button
                       onClick={() =>
-                        buyItem(asset, setmodel, setmodelmsg)
+                        buyItem(asset,1, setmodel, setmodelmsg)
                       }
                       className="flex gap-x-2 items-center justify-center px-10 py-3 text-gray-500 dark:text-white text-sm font-medium rounded-xl hover:bg-blue-500 hover:text-white focus:outline-none focus:bg-blue-500"
                     >
