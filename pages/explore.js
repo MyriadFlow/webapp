@@ -181,7 +181,7 @@ const Home = () => {
   };
   async function buyNft(nft) {
     setmodelmsg("Buying in Progress");
-    await buyItem(nft,1, setmodel, setmodelmsg);
+    await buyItem(nft, 1, setmodel, setmodelmsg);
   }
   useEffect(() => {
     filterNFTs();
@@ -239,8 +239,10 @@ const Home = () => {
     const result = await response.json();
     console.log("result", result);
 
-    
     const status = async () => {
+
+      const tokenTimestampMap = {};
+
       for (const obj of result.saleStarteds) {
         const tradhubAddress = process.env.NEXT_PUBLIC_TRADEHUB_ADDRESS;
         const tradhubContarct = await etherContract(
@@ -252,42 +254,57 @@ const Home = () => {
         console.log("transaction", transaction);
         console.log("transaction", transaction.status == 1);
 
+        if (transaction.status == 1) {
+          // Check if tokenId exists in tokenTimestampMap
+          if (!tokenTimestampMap[obj.itemId]) {
+            // If tokenId doesn't exist, add it with the current obj
+            tokenTimestampMap[obj.itemId] = obj;
+          } else {
+            // If tokenId exists, compare timestamps and update if current obj has a more recent timestamp
+            const currentTimestamp = obj.blockTimestamp;
+            const existingTimestamp = tokenTimestampMap[obj.itemId].blockTimestamp;
+            if (currentTimestamp > existingTimestamp) {
+              tokenTimestampMap[obj.itemId] = obj;
+            }
+          }
+        }
+
+        console.log("tokenTimestampMap", tokenTimestampMap);
         // Only add items with transaction.status equal to 1 to the filtered array
-    if (transaction.status == 1) {
-      // refineArray[obj.itemId] = obj;
-      refineArray.saleStarteds.push(obj);
-    }
+        // Iterate over tokenTimestampMap and push each object to refineArray.saleStarteds
+        refineArray.saleStarteds = Object.values(tokenTimestampMap);
+
       }
     };
 
-      await status();
-      console.log(refineArray);
-console.log("sale assets count",refineArray.saleStarteds.length);
-      
-let fResult = [];
+    await status();
+    console.log(refineArray);
+    console.log("sale assets count", refineArray.saleStarteds.length);
 
-if (refineArray.saleStarteds.length > 0) {
-    fResult = await Promise.all(
-      refineArray.saleStarteds.map(async function (obj, index) {
-        const nftData = await getMetaData(obj.metaDataURI);
-        const { name, description, categories, image } = nftData;
-        const likeCount = await getLikes(obj.itemId);
-        const date = new Date(parseInt(obj.blockTimestamp + '000')).toDateString();
-        console.log("date", date)
-        return {
-          ...obj,
-          date,
-          likeCount,
-          name,
-          description,
-          categories: categories,
-          image: nftData?.image
-            ? `${process.env.NEXT_PUBLIC_IPFS_GATEWAY}${removePrefix(image)}`
-            : "",
-        };
-      })
-    );
-}
+    let fResult = [];
+
+    if (refineArray.saleStarteds.length > 0) {
+      fResult = await Promise.all(
+        refineArray.saleStarteds.map(async function (obj, index) {
+          const nftData = await getMetaData(obj.metaDataURI);
+          const { name, description, categories, image } = nftData;
+          const likeCount = await getLikes(obj.itemId);
+          const date = new Date(parseInt(obj.blockTimestamp + '000')).toDateString();
+          console.log("date", date)
+          return {
+            ...obj,
+            date,
+            likeCount,
+            name,
+            description,
+            categories: categories,
+            image: nftData?.image
+              ? `${process.env.NEXT_PUBLIC_IPFS_GATEWAY}${removePrefix(image)}`
+              : "",
+          };
+        })
+      );
+    }
 
     let sortedNFts;
 
