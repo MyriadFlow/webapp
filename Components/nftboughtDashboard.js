@@ -10,7 +10,7 @@ import Loader from "../Components/Loader";
 import BuyAsset from "./buyAssetModal";
 // import { buyNFT } from "../pages/api/buyNFT";
 // import { buyNFT } from "./api/buyNFT";
-import { buyItem }   from "../pages/api/buyItem";
+import { sellItem }   from "../pages/api/sellItem";
 const graphqlAPI = process.env.NEXT_PUBLIC_MARKETPLACE_API;
 
 function NftboughtDashboard() {
@@ -70,9 +70,9 @@ function NftboughtDashboard() {
   async function loadNFTs() {
     setLoadingState("loaded");
   }
-  async function buyNft(nft) {
+  async function sellNft(nft) {
     setmodelmsg("Buying in Progress");
-    await buyItem(nft, setmodel, setmodelmsg);
+    await sellItem(nft,1, setmodel, setmodelmsg);
   }
 
   useEffect(() => {
@@ -98,7 +98,7 @@ function NftboughtDashboard() {
               return (
                 <div
                   key={item.itemId}
-                  className=" border-2 p-2.5 bg-white dark:bg-gray-900  rounded-lg shadow-lg w-full lg:w-72 hover:scale-105 duration-200 transform transition cursor-pointer border-2 dark:border-gray-800"
+                  className=" border-2 p-2.5 rounded-lg shadow-lg w-full lg:w-72 hover:scale-105 duration-200 transform transition cursor-pointer border-2 dark:border-gray-500"
                 >
                   <Link key={item?.itemId} href={`/assets/${item?.tokenId}`}>
                     <div>
@@ -124,10 +124,10 @@ function NftboughtDashboard() {
 
                   <div className="px-4 py-4 bg-white  flex justify-center mt-5">
                     <button
-                      onClick={() => buyNft(item)}
-                      className="text-blue-500 hover:text-blue-400 font-bold"
+                      onClick={() => sellNft(item)}
+                      className="text-black font-bold"
                     >
-                      Sell now
+                      Put to Marketplace
                     </button>
                   </div>
                 </div>
