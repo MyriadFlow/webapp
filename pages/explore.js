@@ -239,30 +239,32 @@ const Home = () => {
     console.log("result", result);
 
     
-    const status = async () => { 
-      result?.saleStartedQuery?.map(obj,index)
-      {
+    const status = async () => {
+      for (const obj of result.saleStarteds) {
         const tradhubAddress = process.env.NEXT_PUBLIC_TRADEHUB_ADDRESS;
-        const tradhubContarct = await etherContract(tradhubAddress, Tradhub.abi)
-        const transaction = await tradhubContarct.idToMarketItem(1);
-        console.log("transaction",transaction.status==3);
-      }};
+        const tradhubContarct = await etherContract(
+          tradhubAddress,
+          Tradhub.abi
+        );
+        const transaction = await tradhubContarct.idToMarketItem(obj.itemId);
+        console.log("id" + obj.itemId);
+        console.log("transaction", transaction.status == 3);
 
-      // const status = async () => { 
-      //   result?.saleStartedQuery?.map(async (obj, index) => {
-      //     const tradhubAddress = process.env.NEXT_PUBLIC_TRADEHUB_ADDRESS;
-      //     const tradhubContarct = await etherContract(tradhubAddress, Tradhub.abi)
-      //     const transaction = await tradhubContarct.idToMarketItem(obj.itemId);
-      //     console.log("transaction",transaction.status==3);
-      //   })};
+        // Only add items with transaction.status equal to 1 to the filtered array
+    if (transaction.status === 1) {
+      refineArray.push(obj);
+    }
+      }
+    };
 
       status();
-
+console.log("sale assets count",refineArray.length);
       
-  
+let fResult = [];
 
-    const fResult = await Promise.all(
-      result.saleStarteds.map(async function (obj, index) {
+if (refineArray.length > 0) {
+    fResult = await Promise.all(
+      refineArray.saleStarteds.map(async function (obj, index) {
         const nftData = await getMetaData(obj.metaDataURI);
         const { name, description, categories, image } = nftData;
         const likeCount = await getLikes(obj.itemId);
@@ -280,9 +282,8 @@ const Home = () => {
             : "",
         };
       })
-
-
     );
+}
 
     let sortedNFts;
 
@@ -401,7 +402,7 @@ const Home = () => {
         </div>
       )}
 
-      <main className="dark:body-back body-back-light">
+      <main className="dark:body-back body-back-light min-h-screen">
         <div className="flex justify-around p-4 border-b">
           {/* <div className="mt-5 mr-5">
             <Link href="/explore">
