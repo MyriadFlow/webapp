@@ -233,7 +233,8 @@ const Home = () => {
     }
   }
   const market = async (sortType) => {
-    const refineArray = [];
+    const refineArray = {};
+    refineArray.saleStarteds = [];
     const response = await fetch("/api/salegraph");
     const result = await response.json();
     console.log("result", result);
@@ -248,21 +249,24 @@ const Home = () => {
         );
         const transaction = await tradhubContarct.idToMarketItem(obj.itemId);
         console.log("id" + obj.itemId);
-        console.log("transaction", transaction.status == 3);
+        console.log("transaction", transaction);
+        console.log("transaction", transaction.status == 1);
 
         // Only add items with transaction.status equal to 1 to the filtered array
-    if (transaction.status === 1) {
-      refineArray.push(obj);
+    if (transaction.status == 1) {
+      // refineArray[obj.itemId] = obj;
+      refineArray.saleStarteds.push(obj);
     }
       }
     };
 
-      status();
-console.log("sale assets count",refineArray.length);
+      await status();
+      console.log(refineArray);
+console.log("sale assets count",refineArray.saleStarteds.length);
       
 let fResult = [];
 
-if (refineArray.length > 0) {
+if (refineArray.saleStarteds.length > 0) {
     fResult = await Promise.all(
       refineArray.saleStarteds.map(async function (obj, index) {
         const nftData = await getMetaData(obj.metaDataURI);
