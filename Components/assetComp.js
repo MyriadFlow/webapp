@@ -4,7 +4,7 @@ import Image from "next/image";
 
 const Assetcomp = ({ uri }) => {
   const removePrefix = (uri) => {
-    return uri.substring(7, uri.length);
+    return uri?.substring(7, uri.length);
   };
   const [response, setResponse] = useState([]);
   const [image, setImage] = useState("");
