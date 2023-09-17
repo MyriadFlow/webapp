@@ -8,6 +8,8 @@ import { request, gql } from "graphql-request";
 import { ethers } from "ethers";
 import Loader from "../Components/Loader";
 import BuyAsset from "./buyAssetModal";
+import etherContract from "../utils/web3Modal";
+import Tradhub from '../artifacts/contracts/tradehub/TradeHub.sol/TradeHub.json';
 // import { buyNFT } from "../pages/api/buyNFT";
 // import { buyNFT } from "./api/buyNFT";
 import { sellItem }   from "../pages/api/sellItem";
@@ -41,10 +43,38 @@ function NftboughtDashboard() {
             }
           }
           `;
+          const refineArray = {};
+          refineArray.itemSolds = [];
+
           const response = await fetch(`/api/soldgraph?walletAddress=${walletAddr}`);
           const result = await response.json();
+
+          const status = async () => {
+            for (const obj of result.itemSolds) {
+              const tradhubAddress = process.env.NEXT_PUBLIC_TRADEHUB_ADDRESS;
+              const tradhubContarct = await etherContract(
+                tradhubAddress,
+                Tradhub.abi
+              );
+              const transaction = await tradhubContarct.idToMarketItem(obj.itemId);
+              console.log("id" + obj.itemId);
+              console.log("transaction", transaction);
+              console.log("transaction", transaction.status == 3);
+      
+              // Only add items with transaction.status equal to 1 to the filtered array
+          if (transaction.status == 3) {
+            // refineArray[obj.itemId] = obj;
+            refineArray.itemSolds.push(obj);
+          }
+            }
+          };
+      
+            await status();
+            console.log(refineArray);
+console.log("sale assets count",refineArray.itemSolds.length);
+
     setLoading(true);
-    setData(result.itemSolds);
+    setData(refineArray.itemSolds);
     setLoading(false);
   };
 
