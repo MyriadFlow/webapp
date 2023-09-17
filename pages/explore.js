@@ -239,15 +239,26 @@ const Home = () => {
     console.log("result", result);
 
     
-    const status = async () => { result?.saleStartedQuery?.map(obj,index)
+    const status = async () => { 
+      result?.saleStartedQuery?.map(obj,index)
       {
         const tradhubAddress = process.env.NEXT_PUBLIC_TRADEHUB_ADDRESS;
         const tradhubContarct = await etherContract(tradhubAddress, Tradhub.abi)
         const transaction = await tradhubContarct.idToMarketItem(1);
-        console.log("transaction",transaction);
+        console.log("transaction",transaction.status==3);
       }};
 
+      // const status = async () => { 
+      //   result?.saleStartedQuery?.map(async (obj, index) => {
+      //     const tradhubAddress = process.env.NEXT_PUBLIC_TRADEHUB_ADDRESS;
+      //     const tradhubContarct = await etherContract(tradhubAddress, Tradhub.abi)
+      //     const transaction = await tradhubContarct.idToMarketItem(obj.itemId);
+      //     console.log("transaction",transaction.status==3);
+      //   })};
+
       status();
+
+      
   
 
     const fResult = await Promise.all(

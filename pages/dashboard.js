@@ -26,7 +26,7 @@ export default function CreatorDashboard() {
   const [auction, setAuction] = useState([]);
 
   const [loading, setLoading] = useState(true);
-  const [page, setPage] = useState("created");
+  const [page, setPage] = useState("bought");
 
   const fetchUserAssests = async (walletAddr) => {
     const query = gql`
@@ -95,14 +95,14 @@ export default function CreatorDashboard() {
       <div className="dark:body-back body-back-light">
       <div className="text-2xl font-semibold mb-4 pt-10 text-center border-b pb-6">Dashboard</div>
         <div className="pb-4 lg:px-32 md:px-10 px-4 grid grid-cols-2 gap-8 sm:gap-20 lg:grid-cols-4 md:grid-cols-4 w-full">
-          <div
+          {/* <div
             className={`rounded-full text-center text-gray-500 dark:text-gray dark:hover:bg-white  cursor-pointer p-3 border-b-2 border-transparent transition-all ${
               page === "created" ? "bg-white" : ""
             }`}
             onClick={() => setPage("created")}
           >
               <div className="text-sm lg:text-xl md:text-lg font-semibold">Create</div>
-          </div>
+          </div> */}
 
           <div
             className={`rounded-full text-center text-gray-500 dark:text-gray dark:hover:bg-white  cursor-pointer p-3 border-b-2 border-transparent transition-all ${
@@ -114,7 +114,7 @@ export default function CreatorDashboard() {
 
           </div>
 
-          <div
+          {/* <div
             className={`rounded-full text-center text-gray-500 dark:text-gray dark:hover:bg-white  cursor-pointer p-3 border-b-2 border-transparent transition-all ${
               page === "sold" ? "bg-white" : ""
             }`}
@@ -123,7 +123,7 @@ export default function CreatorDashboard() {
 
               <div className="text-sm lg:text-xl md:text-lg font-semibold">Sold</div>
 
-          </div>
+          </div> */}
 
           <div
             className={`rounded-full text-center text-gray-500 dark:text-gray dark:hover:bg-white  cursor-pointer p-3 border-b-2 border-transparent transition-all ${
