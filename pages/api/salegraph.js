@@ -1,8 +1,10 @@
 // pages/api/graphql.js
 import axios from "axios";
+import { useData } from "../../context/data";
 
 export default async function handler(req, res) {
-  const endPoint = "http://18.119.142.140:8000/subgraphs/name/yu";
+  const { resdata } = useData();
+  const endPoint = `${resdata.Storefront.subgraphUrl}`;
   const headers = {
     "Content-Type": "application/json",
   };

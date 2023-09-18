@@ -12,9 +12,15 @@ import { sellItem } from "../pages/api/sellItem";
 import Web3Modal from "web3modal";
 const graphqlAPI = process.env.NEXT_PUBLIC_MARKETPLACE_API;
 
-const apiUrl = 'https://testnet.gateway.myriadflow.com/api/v1.0/webapp/contracts/9b1f7f3d-9d78-4953-8165-5cbc8fa19068';
+import { useData } from "../context/data";
+
 
 function Sigseries() {
+
+    const { resdata } = useData();
+const apiUrl = `https://testnet.gateway.myriadflow.com/api/v1.0/webapp/contracts/${resdata.Storefront.id}`;
+
+
     function getEthPrice(price) {
         return ethers.utils.formatEther(price);
     }
@@ -76,7 +82,8 @@ function Sigseries() {
                                 >
                                     <Link key={item?.contractName} href={`/contractassets/${item?.contractAddress}`}>
                                         <div>
-                                            <div className=" flex items-center justify-between mb-2">
+                                            <img src="https://academy-public.coinmarketcap.com/optimized-uploads/3af589d0fd72412ab24cf6c5ea7a4287.png"/>
+                                            <div className=" flex items-center justify-between my-4">
                                                 <div className="font-1 text-sm font-bold">
                                                     Contract name:{" "}
                                                 </div>
