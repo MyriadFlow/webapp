@@ -10,7 +10,7 @@ import Layout from "../Components/Layout";
 import { BsShop } from "react-icons/bs";
 import { IoCreate, IoEaselSharp } from "react-icons/io5";
 import { RiMoneyDollarCircleLine } from "react-icons/ri";
-// import Instagen from "../Components/instagen";
+import SignatureSeries from "../Components/sigseries";
 import etherContract from "../utils/web3Modal";
 import Tradhub from '../artifacts/contracts/tradehub/TradeHub.sol/TradeHub.json'
 const graphqlAPI = process.env.NEXT_PUBLIC_STOREFRONT_API;
@@ -133,53 +133,10 @@ const Collection = () => {
         </div>
 
 
-      
-        {data?.length > 0 ? (
-          data.map((item) => {
-            return (
-              <div key={item?.tokenID} className="px-10 mt-10 h-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-              <div
-                className=" border-2 p-2.5  dark:bg-[#1c1c24]  rounded-lg shadow-lg w-full lg:w-72 hover:scale-105 duration-200 transform transition cursor-pointer"
-              >
-                <Link 
-                key={item?.tokenID} 
-                href={`/assets/${item?.tokenID}`}>
-                  <div>
-                    <Homecomp uri={item ? item?.metaDataURI : ""} />
 
-                    <div>
-                      <div className="text-blue-600 text-gray-500 dark:text-white">
-                        Place a bid
-                      </div>
-                      <div>
-                        <div className="flex justify-between mt-3">
-                          <div className="font-bold text-gray-500 dark:text-white">
-                            Wallet Address :{" "}
-                          </div>
-                          <div className="text-xs text-gray-500 dark:text-white">
-                            {item?.creator?.slice(-6)}
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </Link>
-              </div>
-              </div>
-            );
-          })
-          
-        ) : loading ? (
-          <Loader />
-        ) : (
-          <div className="text-2xl font-bold text-center py-10">
-            You haven&apos;t created any asset.
-          </div>
-        )}
-
-{page == "instagen" && (
+{page == "signature" && (
           <div className="p-4 px-10">
-            {/* <Instagen /> */}
+            <SignatureSeries />
           </div>
         )}
       

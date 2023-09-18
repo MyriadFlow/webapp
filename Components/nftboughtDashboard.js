@@ -46,8 +46,12 @@ function NftboughtDashboard() {
           const refineArray = {};
           refineArray.itemSolds = [];
 
+          
+
           const response = await fetch(`/api/soldgraph?walletAddress=${walletAddr}`);
           const result = await response.json();
+
+          setLoading(true);
 
           const status = async () => {
             for (const obj of result.itemSolds) {
@@ -71,9 +75,9 @@ function NftboughtDashboard() {
       
             await status();
             console.log(refineArray);
-console.log("sale assets count",refineArray.itemSolds.length);
+console.log("buy assets count",refineArray.itemSolds.length);
 
-    setLoading(true);
+    
     setData(refineArray.itemSolds);
     setLoading(false);
   };
@@ -92,9 +96,9 @@ console.log("sale assets count",refineArray.itemSolds.length);
           }
           `;
     const result = [];
-    setLoading(true);
+    // setLoading(true);
     setAuction(result.auctionEndeds);
-    setLoading(false);
+    // setLoading(false);
   };
 
   async function loadNFTs() {
