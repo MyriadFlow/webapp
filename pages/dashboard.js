@@ -110,7 +110,7 @@ export default function CreatorDashboard() {
             }`}
             onClick={() => setPage("bought")}
           >
-              <div className="text-sm lg:text-xl md:text-lg font-semibold">Buy</div>
+              <div className="text-sm lg:text-xl md:text-lg font-semibold">Owned</div>
 
           </div>
 

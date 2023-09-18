@@ -54,6 +54,8 @@ function NftboughtDashboard() {
           setLoading(true);
 
           const status = async () => {
+            const tokenTimestampMap = {};
+
             for (const obj of result.itemSolds) {
               const tradhubAddress = process.env.NEXT_PUBLIC_TRADEHUB_ADDRESS;
               const tradhubContarct = await etherContract(
@@ -64,12 +66,26 @@ function NftboughtDashboard() {
               console.log("id" + obj.itemId);
               console.log("transaction", transaction);
               console.log("transaction", transaction.status == 3);
+
+              if (transaction.status == 3) {
+                // Check if tokenId exists in tokenTimestampMap
+                if (!tokenTimestampMap[obj.itemId]) {
+                  // If tokenId doesn't exist, add it with the current obj
+                  tokenTimestampMap[obj.itemId] = obj;
+                } else {
+                  // If tokenId exists, compare timestamps and update if current obj has a more recent timestamp
+                  const currentTimestamp = obj.blockTimestamp;
+                  const existingTimestamp = tokenTimestampMap[obj.itemId].blockTimestamp;
+                  if (currentTimestamp > existingTimestamp) {
+                    tokenTimestampMap[obj.itemId] = obj;
+                  }
+                }
+              }
       
+              console.log("tokenTimestampMap", tokenTimestampMap);
               // Only add items with transaction.status equal to 1 to the filtered array
-          if (transaction.status == 3) {
-            // refineArray[obj.itemId] = obj;
-            refineArray.itemSolds.push(obj);
-          }
+              // Iterate over tokenTimestampMap and push each object to refineArray.saleStarteds
+              refineArray.itemSolds = Object.values(tokenTimestampMap);
             }
           };
       
