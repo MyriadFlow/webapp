@@ -58,7 +58,7 @@ export default function Marketplace() {
             .then(async (res) => {
                 const tradhubContarct = await etherContract(tradhubAddress, Tradhub.abi)
                 const saleInput = res.data.payload.map(i => parseInt(i))
-                const { saleStarteds } = await request(graphqlAPI, saleStartedQuery, { where: { itemId_in: saleInput } }) //saleInput =>[1,2]
+                const { saleStarteds } = []
                 const finalResult = []
                 Promise.all(saleStarteds.map(async (item) => {
                     const itemResult = await tradhubContarct.idToMarketItem(item.itemId)

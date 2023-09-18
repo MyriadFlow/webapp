@@ -10,6 +10,7 @@ import Layout from "../Components/Layout";
 import { BsShop } from "react-icons/bs";
 import { IoCreate, IoEaselSharp } from "react-icons/io5";
 import { RiMoneyDollarCircleLine } from "react-icons/ri";
+import Instagen from "../Components/instagen";
 import etherContract from "../utils/web3Modal";
 import Tradhub from '../artifacts/contracts/tradehub/TradeHub.sol/TradeHub.json'
 const graphqlAPI = process.env.NEXT_PUBLIC_STOREFRONT_API;
@@ -40,18 +41,18 @@ const Collection = () => {
       }
           }
           `;
-    const result = await request(graphqlAPI, query);
+    const result = [];
     const refineArray = []
-          Promise.all(result.assetCreateds.map(async item=>{
-            const tradhubContarct = await etherContract(tradhubAddress, Tradhub.abi);
-            const itemResult = await tradhubContarct.idToMarketItem(item.tokenID)
-            const status=  itemStatus.get(parseInt(itemResult.status))
-            if(status=="SALE"){
-              refineArray.push(item.tokenID)
-            }
-          })).then(()=>{
-            setData(result.assetCreateds.filter(assetItem=>refineArray.some(item=>item ===assetItem.tokenID)));
-          })
+          // Promise.all(result.assetCreateds.map(async item=>{
+          //   const tradhubContarct = await etherContract(tradhubAddress, Tradhub.abi);
+          //   const itemResult = await tradhubContarct.idToMarketItem(item.tokenID)
+          //   const status=  itemStatus.get(parseInt(itemResult.status))
+          //   if(status=="SALE"){
+          //     refineArray.push(item.tokenID)
+          //   }
+          // })).then(()=>{
+          //   setData(result.assetCreateds.filter(assetItem=>refineArray.some(item=>item ===assetItem.tokenID)));
+          // })
     setLoading(false);
   };
 
@@ -173,6 +174,12 @@ const Collection = () => {
         ) : (
           <div className="text-2xl font-bold text-center py-10">
             You haven&apos;t created any asset.
+          </div>
+        )}
+
+{page == "instagen" && (
+          <div className="p-4 px-10">
+            {/* <Instagen /> */}
           </div>
         )}
       

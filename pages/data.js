@@ -6,7 +6,7 @@ export default function SomeComponent() {
 
   console.log(resdata);
 
-  const graphql = resdata?.subgraphUrl;
+  const graphql = resdata?.Storefront.subgraphUrl;
   console.log(graphql);
 
   const regex = /^(.*?)(?=\/graphql)/;
@@ -24,9 +24,9 @@ export default function SomeComponent() {
       {resdata && (
         <div>
           <p>Response Data: {graphqlAPI}</p>
-          <p>{resdata.webappUrl}</p>
-          <p>{resdata.headline}</p>
-          <p>{resdata.description}</p>
+          <p>{resdata.Storefront.webappUrl}</p>
+          <p>{resdata.Storefront.headline}</p>
+          <p>{resdata.Storefront.description}</p>
         </div>
       )}
     </div>

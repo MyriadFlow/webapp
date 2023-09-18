@@ -380,7 +380,7 @@ const Home = () => {
         }
       }
     `;
-    const result = await request(graphqlAPI, query);
+    const result = [];
     setLoading(true);
     setAuction(result.auctionEndeds);
     setLoading(false);

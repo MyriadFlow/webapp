@@ -52,9 +52,7 @@ export default function Wishlist() {
       });
   };
   const buildWishlist = async (itemIds) => {
-    const { saleStarteds } = await request(graphqlAPI, saleStartedQuery, {
-      where: { itemId_in: itemIds },
-    });
+    const { saleStarteds } = []
     const fResult = await Promise.all(
       saleStarteds.map(async function (obj, index) {
         const nftData = await getMetaData(obj.metaDataURI);

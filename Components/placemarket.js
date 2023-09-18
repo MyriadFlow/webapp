@@ -34,7 +34,7 @@ const MyAssets = () => {
   const [alertMsg, setAlertMsg] = useState("Something went wrong");
 
   const fetchUserAssests = async (walletAddr) => {
-    const result = await request(graphqlAPI, saleStartedQuery,{where:{seller:walletAddr }});
+    const result = [];
     setLoading(true);
     setData(result.saleStarteds);
     setLoading(false);
@@ -90,7 +90,7 @@ const MyAssets = () => {
   return (
     <div className="p-4 px-10 min-h-screen body-back">
       {model && <BuyAsset open={model} setOpen={setmodel} message={modelmsg} />}
-      <div className=" p-4 mt-20  h-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+      {/* <div className=" p-4 mt-20  h-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
         {data.length > 0 ? (
           data?.map((item) => {
             return (
@@ -126,7 +126,7 @@ const MyAssets = () => {
             You haven&apos;t Place any item on market.
           </div>
         )}
-      </div>
+      </div> */}
     </div>
   );
 };

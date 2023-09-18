@@ -91,7 +91,7 @@ console.log("sale assets count",refineArray.itemSolds.length);
             }
           }
           `;
-    const result = await request(graphqlAPI, query);
+    const result = [];
     setLoading(true);
     setAuction(result.auctionEndeds);
     setLoading(false);
@@ -171,7 +171,7 @@ console.log("sale assets count",refineArray.itemSolds.length);
             </div>
           )}
         </div>
-        <div className=" p-4 mt-10 h-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        {/* <div className=" p-4 mt-10 h-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {auction.length > 0 ? (
             auction.map((item) => {
               return (
@@ -203,7 +203,7 @@ console.log("sale assets count",refineArray.itemSolds.length);
               You haven&apos;t Buy Any Auction.
             </div>
           )}
-        </div>
+        </div> */}
       </div>
     </div>
   );

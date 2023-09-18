@@ -41,7 +41,7 @@ export default function CreatorDashboard() {
         }
       }
     `;
-    const result = await request(graphqlAPI, query);
+    const result = [];
     setLoading(true);
     setData(result.itemSolds);
     setLoading(false);
@@ -59,7 +59,7 @@ export default function CreatorDashboard() {
         }
       }
     `;
-    const result = await request(graphqlAPI, query);
+    const result = [];
     setLoading(true);
     setAuction(result.auctionEndeds);
     setLoading(false);
