@@ -22,11 +22,26 @@ import { saleStartedQuery } from "../utils/gqlUtil";
 import axios from "axios";
 import etherContract from "../utils/web3Modal";
 import Tradhub from '../artifacts/contracts/tradehub/TradeHub.sol/TradeHub.json';
+import { useData } from "../context/data";
 
 const graphqlAPI = process.env.NEXT_PUBLIC_MARKETPLACE_API;
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
 const Home = () => {
+  const { resdata } = useData();
+
+  const graphql = resdata?.Storefront.subgraphUrl;
+  console.log(graphql);
+
+  const regex = /^(.*?)(?=\/graphql)/;
+  
+  // Use the regular expression to extract the URL
+  const match = graphql?.match(regex);
+
+  // Extract the matched URL or set it to null if no match was found
+  const graphqlAPI = match ? match[0] : null;
+  console.log(graphqlAPI);
+  
   const allfilter = {
     minPrice: 0.1,
     maxPrice: 100,
@@ -235,7 +250,7 @@ const Home = () => {
   const market = async (sortType) => {
     const refineArray = {};
     refineArray.saleStarteds = [];
-    const response = await fetch("/api/salegraph");
+    const response = await fetch(`/api/salegraph?subgraphUrl=${graphqlAPI}`);
     const result = await response.json();
     console.log("result", result);
 

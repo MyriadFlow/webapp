@@ -17,14 +17,29 @@ import Link from "next/link";
 import { saleStartedQuery } from "../../utils/gqlUtil";
 import request from "graphql-request";
 const graphqlAPI = process.env.NEXT_PUBLIC_MARKETPLACE_API;
+import { useData } from "../../context/data";
 
 function Token({token}) {
 
   const [data, setData] = useState([]);
   const [nftDatas, setNftDatas] = useState([]);
 
+  const { resdata } = useData();
+
+  const graphql = resdata?.Storefront.subgraphUrl;
+  console.log(graphql);
+
+  const regex = /^(.*?)(?=\/graphql)/;
+  
+  // Use the regular expression to extract the URL
+  const match = graphql?.match(regex);
+
+  // Extract the matched URL or set it to null if no match was found
+  const graphqlAPI = match ? match[0] : null;
+  console.log(graphqlAPI);
+
   const fetchAsset = async (walletAddr) => {
-  const response = await fetch(`/api/onesaleasset?tokenid=${token}`);
+  const response = await fetch(`/api/onesaleasset?tokenid=${token}?subgraphUrl=${graphqlAPI}`);
     const result = await response.json();
     setData(result.saleStarteds[0])
     console.log(data);

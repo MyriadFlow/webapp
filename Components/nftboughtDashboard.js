@@ -14,11 +14,26 @@ import Tradhub from '../artifacts/contracts/tradehub/TradeHub.sol/TradeHub.json'
 // import { buyNFT } from "./api/buyNFT";
 import { sellItem }   from "../pages/api/sellItem";
 const graphqlAPI = process.env.NEXT_PUBLIC_MARKETPLACE_API;
+import { useData } from "../context/data";
 
 function NftboughtDashboard() {
   function getEthPrice(price) {
     return ethers.utils.formatEther(price);
   }
+
+  const { resdata } = useData();
+
+  const graphql = resdata?.Storefront.subgraphUrl;
+  console.log(graphql);
+
+  const regex = /^(.*?)(?=\/graphql)/;
+  
+  // Use the regular expression to extract the URL
+  const match = graphql?.match(regex);
+
+  // Extract the matched URL or set it to null if no match was found
+  const graphqlAPI = match ? match[0] : null;
+  console.log(graphqlAPI);
 
   const walletAddr = useSelector(selectUser);
   var wallet = walletAddr ? walletAddr[0] : "";
@@ -29,6 +44,7 @@ function NftboughtDashboard() {
   const [modelmsg, setmodelmsg] = useState("buying in progress!");
 
   const fetchUserAssests = async (walletAddr) => {
+    
     const query = gql`
     query Query($where: ItemSold_filter) {
       itemSolds(first: 100, where: {buyer: "${walletAddr}"}) {
@@ -48,7 +64,7 @@ function NftboughtDashboard() {
 
           
 
-          const response = await fetch(`/api/soldgraph?walletAddress=${walletAddr}`);
+          const response = await fetch(`/api/soldgraph?walletAddress=${walletAddr}?subgraphUrl=${graphqlAPI}`);
           const result = await response.json();
 
           setLoading(true);

@@ -136,7 +136,7 @@ const Collection = () => {
 
 {page == "signature" && (
           <div className="p-4 px-10">
-            <SignatureSeries />
+            {/* <SignatureSeries /> */}
           </div>
         )}
       

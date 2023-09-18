@@ -6,7 +6,24 @@ import HomeComp from "./homeComp";
 import Loader from "./Loader";
 import { request, gql } from "graphql-request";
 const graphqlAPI = process.env.NEXT_PUBLIC_STOREFRONT_API;
+import { useData } from "../context/data";
+
 const MyAssets = () => {
+
+  const { resdata } = useData();
+
+  const graphql = resdata?.Storefront.subgraphUrl;
+  console.log(graphql);
+
+  const regex = /^(.*?)(?=\/graphql)/;
+  
+  // Use the regular expression to extract the URL
+  const match = graphql?.match(regex);
+
+  // Extract the matched URL or set it to null if no match was found
+  const graphqlAPI = match ? match[0] : null;
+  console.log(graphqlAPI);
+
   const walletAddr = useSelector(selectUser);
   var wallet = walletAddr ? walletAddr[0] : "";
   const [data, setData] = useState([]);
@@ -25,7 +42,7 @@ const MyAssets = () => {
       }
           }
           `;
-          const response = await fetch("/api/graphql");
+          const response = await fetch(`/api/graphql?subgraphUrl=${graphqlAPI}`);
           const result = await response.json();
     setLoading(true);
     setData(result.assetCreateds);

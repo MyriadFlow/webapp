@@ -1,12 +1,11 @@
 // pages/api/graphql.js
 import axios from "axios";
-import { useData } from "../../context/data";
 
 export default async function handler(req, res) {
     const { walletAddress } = req.query; 
 
-    const { resdata } = useData();
-    const endPoint = `${resdata.Storefront.subgraphUrl}`;
+    const { subgraphUrl } = req.query;
+    const endPoint = `${subgraphUrl}`;
   const headers = {
     "Content-Type": "application/json",
   };
