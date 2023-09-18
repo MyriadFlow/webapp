@@ -10,7 +10,7 @@ import Layout from "../Components/Layout";
 import { BsShop } from "react-icons/bs";
 import { IoCreate, IoEaselSharp } from "react-icons/io5";
 import { RiMoneyDollarCircleLine } from "react-icons/ri";
-import Instagen from "../Components/instagen";
+// import Instagen from "../Components/instagen";
 import etherContract from "../utils/web3Modal";
 import Tradhub from '../artifacts/contracts/tradehub/TradeHub.sol/TradeHub.json'
 const graphqlAPI = process.env.NEXT_PUBLIC_STOREFRONT_API;
