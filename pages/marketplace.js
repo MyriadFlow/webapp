@@ -118,7 +118,7 @@ export default function Marketplace() {
                 <div className="dark:body-back-hl body-back-hl">
                 <div
                         className="w-full h-72 object-cover bg-gray-200" style={{
-                            backgroundImage: `url(${resdata?.coverImage})`,
+                            backgroundImage: `url(${resdata?.Storefront.coverImage})`,
                             backgroundPosition: 'center',
                             backgroundSize: 'cover',
                             backgroundRepeat: 'no-repeat',
@@ -130,16 +130,16 @@ export default function Marketplace() {
                         <img
                                 className="text-3xl text-gray-500 w-48 h-48 rounded-xl"
                                 alt=""
-                                src={resdata?.Profileimage}
+                                src={resdata?.Storefront.Profileimage}
                             />
                         </div>
                         <div className="lg:ml-10 md:ml-10 lg:mt-52 md:mt-52 mt-10 w-3/4">
-                        <p className="font-bold text-4xl">{resdata?.string}</p>
-                        <p className="mt-10">{resdata?.description}</p>
+                        <p className="font-bold text-4xl">{resdata?.Storefront.string}</p>
+                        <p className="mt-10">{resdata?.Storefront.description}</p>
 </div>
                     </div>
                     <section className="dark:body-back-hl body-back-hl">
-                        <h1 className=" text-4xl font-semibold pt-20 sm:ml-28 ml-10 dark:text-white text-gray-900">{resdata?.headline}</h1>
+                        <h1 className=" text-4xl font-semibold pt-20 sm:ml-28 ml-10 dark:text-white text-gray-900">{resdata?.Storefront.headline}</h1>
                         </section>
 
                     {/* Trending Section */}

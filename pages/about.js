@@ -18,17 +18,17 @@ export default function About() {
     >
       <div className="flex dark:body-back body-back-light mx-auto items-center justify-center lg:flex-row flex-col lg:px-32 px-10 pb-10">
       <div className="lg:w-1/2 w-full mt-6 lg:hidden block">
-          <img src={resdata?.relevantImage} alt="Picture of the author"/>
+          <img src={resdata?.Storefront.relevantImage} alt="Picture of the author"/>
         </div>
         <div className="lg:w-1/2">
           <div
             className="text-3xl font-bold mt-10 text-gray-500 dark:text-green-400 text-green-400"
           >
-            Owner: {resdata?.owner}
+            Owner: {resdata?.Storefront.owner}
           </div>
-          <div className="mt-10 text-2xl text-gray-500 dark:text-white">{resdata?.personalTagline}</div>
+          <div className="mt-10 text-2xl text-gray-500 dark:text-white">{resdata?.Storefront.personalTagline}</div>
           <div className="mt-10 text-sm text-gray-500 dark:text-white">
-          Description: {resdata?.personalDescription}
+          Description: {resdata?.Storefront.personalDescription}
           </div>
           <div className="mt-10 text-sm text-gray-500 dark:text-white">
             {/* MyriadFlow is an Innovative Platform to Explore and Launch NFT
@@ -53,7 +53,7 @@ export default function About() {
           </div>
         </div>
         <div className="lg:w-1/2 w-full mt-6 lg:block hidden">
-          <img src={resdata?.relevantImage} alt="Picture of the author"/>
+          <img src={resdata?.Storefront.relevantImage} alt="Picture of the owner"/>
         </div>
       </div>
 
