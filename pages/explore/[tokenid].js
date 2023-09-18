@@ -69,7 +69,7 @@ function Token({token}) {
                             <div className="flex">
                                 <button
                                 onClick={() =>
-                                  buyItem(asset,1, setmodel, setmodelmsg)
+                                  buyItem(data,1)
                                 }
                                     className="flex gap-x-2 items-center justify-center px-10 py-3 my-4 text-sm font-medium rounded-lg bg-white text-black"
                                 >

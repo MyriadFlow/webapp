@@ -13,7 +13,7 @@ export const buyItem = async (nft, quantity, setmodel, setmodelmsg) => {
     const transaction = await tradhubContarct.buyItem(nft.itemId, quantity, options);
     console.log(transaction);
     await transaction.wait();
-    setmodel(false);
+    // setmodel(false);
   } catch (e) {
     console.log(e?.data?.message);
     console.error(e);
