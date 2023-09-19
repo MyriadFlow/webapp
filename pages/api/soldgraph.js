@@ -4,7 +4,7 @@ import axios from "axios";
 export default async function handler(req, res) {
     const { walletAddress } = req.query; 
 
-  const endPoint = "http://18.119.142.140:8000/subgraphs/name/yu";
+  const endPoint = "http://3.15.54.199:8000/subgraphs/name/yu";
   const headers = {
     "Content-Type": "application/json",
   };

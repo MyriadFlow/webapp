@@ -14,8 +14,12 @@ import Tradhub from '../artifacts/contracts/tradehub/TradeHub.sol/TradeHub.json'
 // import { buyNFT } from "./api/buyNFT";
 import { sellItem }   from "../pages/api/sellItem";
 const graphqlAPI = process.env.NEXT_PUBLIC_MARKETPLACE_API;
+import { useRouter } from 'next/router';
 
 function NftboughtDashboard() {
+
+  const router = useRouter();
+
   function getEthPrice(price) {
     return ethers.utils.formatEther(price);
   }
@@ -122,7 +126,10 @@ console.log("buy assets count",refineArray.itemSolds.length);
   }
   async function sellNft(nft) {
     setmodelmsg("Buying in Progress");
+    setLoading(true);
     await sellItem(nft,1, setmodel, setmodelmsg);
+    router.push("/explore");
+    setLoading(false);
   }
 
   useEffect(() => {

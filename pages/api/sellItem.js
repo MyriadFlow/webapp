@@ -1,5 +1,5 @@
 import { ethers } from "ethers";
-import {SignatureSeries} from './sig';
+import SignatureSeries from '../../artifacts/contracts/signatureseries/SignatureSeries.sol/SignatureSeries.json';
 import Tradehub from '../../artifacts/contracts/tradehub/TradeHub.sol/TradeHub.json';
 import etherContract from "../../utils/web3Modal";
 
@@ -8,7 +8,7 @@ const signatureaddress = "0xaD4296C0e35Eef8b8b9b7AC27D204f798B7A7FD2";
 
 export const sellItem = async (nft, quantity, setmodel, setmodelmsg) => {
   const tradhubContarct = await etherContract(tradhubAddress, Tradehub.abi)
-  const signatureContarct = await etherContract(signatureaddress, SignatureSeries)
+  const signatureContarct = await etherContract(signatureaddress, SignatureSeries.abi)
   // setmodel(true);
   try {
     const options = {

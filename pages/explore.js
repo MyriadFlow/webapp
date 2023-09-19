@@ -181,7 +181,10 @@ const Home = () => {
   };
   async function buyNft(nft) {
     setmodelmsg("Buying in Progress");
+    setLoading(true);
     await buyItem(nft, 1, setmodel, setmodelmsg);
+    router.push("/dashboard");
+    setLoading(false);
   }
   useEffect(() => {
     filterNFTs();
@@ -754,14 +757,14 @@ const Home = () => {
                       likes:{item?.likeCount}
                       {item?.date}
                       {item?.categories}
-                    </button>
+                    </button> */}
 
                     <button
                       onClick={() => buyNft(item)}
                       className="text-gray-500 dark:text-black bg-[#CAFC01] w-full rounded-md py-2 font-bold"
                     >
                       Buy Now
-                    </button> */}
+                    </button>
                   </div>
                 );
               })

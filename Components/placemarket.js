@@ -34,9 +34,55 @@ const MyAssets = () => {
   const [alertMsg, setAlertMsg] = useState("Something went wrong");
 
   const fetchUserAssests = async (walletAddr) => {
-    const result = [];
+    const refineArray = {};
+          refineArray.saleStarteds = [];
+
+          const response = await fetch(`/api/selfsalegraph?walletAddress=${walletAddr}`);
+          const result = await response.json();
+
+          setLoading(true);
+
+          const status = async () => {
+            const tokenTimestampMap = {};
+
+            for (const obj of result.saleStarteds) {
+              const tradhubAddress = process.env.NEXT_PUBLIC_TRADEHUB_ADDRESS;
+              const tradhubContarct = await etherContract(
+                tradhubAddress,
+                Tradhub.abi
+              );
+              const transaction = await tradhubContarct.idToMarketItem(obj.itemId);
+              console.log("id" + obj.itemId);
+              console.log("transaction", transaction);
+              console.log("transaction", transaction.status == 1);
+
+              if (transaction.status == 1) {
+                // Check if tokenId exists in tokenTimestampMap
+                if (!tokenTimestampMap[obj.itemId]) {
+                  // If tokenId doesn't exist, add it with the current obj
+                  tokenTimestampMap[obj.itemId] = obj;
+                } else {
+                  // If tokenId exists, compare timestamps and update if current obj has a more recent timestamp
+                  const currentTimestamp = obj.blockTimestamp;
+                  const existingTimestamp = tokenTimestampMap[obj.itemId].blockTimestamp;
+                  if (currentTimestamp > existingTimestamp) {
+                    tokenTimestampMap[obj.itemId] = obj;
+                  }
+                }
+              }
+      
+              console.log("tokenTimestampMap", tokenTimestampMap);
+              // Only add items with transaction.status equal to 1 to the filtered array
+              // Iterate over tokenTimestampMap and push each object to refineArray.saleStarteds
+              refineArray.saleStarteds = Object.values(tokenTimestampMap);
+            }
+          };
+      
+            await status();
+            console.log(refineArray);
+console.log("self sale assets count",refineArray.saleStarteds.length);
     setLoading(true);
-    setData(result.saleStarteds);
+    setData(refineArray.saleStarteds);
     setLoading(false);
   };
   useEffect(() => {
@@ -90,7 +136,7 @@ const MyAssets = () => {
   return (
     <div className="p-4 px-10 min-h-screen body-back">
       {model && <BuyAsset open={model} setOpen={setmodel} message={modelmsg} />}
-      {/* <div className=" p-4 mt-20  h-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+      <div className=" p-4 mt-20  h-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
         {data.length > 0 ? (
           data?.map((item) => {
             return (
@@ -126,7 +172,7 @@ const MyAssets = () => {
             You haven&apos;t Place any item on market.
           </div>
         )}
-      </div> */}
+      </div>
     </div>
   );
 };
