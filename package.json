@@ -30,6 +30,7 @@
     "@emotion/styled": "^11.11.0",
     "@mui/icons-material": "^5.11.0",
     "@mui/material": "^5.14.2",
+    "@rainbow-me/rainbowkit": "^1.0.11",
     "@reduxjs/toolkit": "^1.9.1",
     "@tailwindcss/line-clamp": "^0.4.2",
     "@thirdweb-dev/react": "^3",
@@ -55,6 +56,8 @@
     "react-slick": "^0.29.0",
     "reactstrap": "^9.1.5",
     "tw-elements": "^1.0.0-alpha13",
+    "viem": "^1.10.14",
+    "wagmi": "^1.4.2",
     "web3": "^1.7.1",
     "web3modal": "^1.9.11"
   },

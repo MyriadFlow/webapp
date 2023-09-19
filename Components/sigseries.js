@@ -11,6 +11,7 @@ import BuyAsset from "./buyAssetModal";
 import { sellItem } from "../pages/api/sellItem";
 import Web3Modal from "web3modal";
 const graphqlAPI = process.env.NEXT_PUBLIC_MARKETPLACE_API;
+import { useAccount } from "wagmi";
 
 const apiUrl = 'https://testnet.gateway.myriadflow.com/api/v1.0/webapp/contracts/9b1f7f3d-9d78-4953-8165-5cbc8fa19068';
 
@@ -19,7 +20,7 @@ function Sigseries() {
         return ethers.utils.formatEther(price);
     }
 
-    const walletAddr = useSelector(selectUser);
+    const walletAddr = useAccount();
     var wallet = walletAddr ? walletAddr[0] : "";
     const [data, setData] = useState([]);
     const [auction, setAuction] = useState([]);

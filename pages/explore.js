@@ -69,20 +69,9 @@ const Home = () => {
   const [data, setData] = useState([]);
   const [auction, setAuction] = useState([]);
   const [shallowData, setShallowData] = useState([]);
-  const logoutmodel = useSelector(selectModel);
-  const dispatch = useDispatch();
 
-  // function for logout
-  const logoutmetamask = () => {
-    dispatch(logout());
-    dispatch(logoutbalance());
-    dispatch(close());
-  };
 
-  // function for closing logout model
-  const closelogoutmodel = () => {
-    dispatch(close());
-  };
+
 
   const datasort = [
     { id: 0, label: sortOldNew },
@@ -394,37 +383,7 @@ const Home = () => {
       description="Shows the created categories of the Nfts"
     >
       {model && <BuyAsset open={model} setOpen={setmodel} message={modelmsg} />}
-      {logoutmodel && (
-        <div className="flex items-center  shadow-md justify-center w-full h-screen model-overlay fixed  top-0 z-50">
-          <div className="h-56 w-80 bg-white  dark:bg-gray-800 shadow-lg rounded-md fixed z-50 flex items-center justify-center  ring-offset-2 ring-2 ring-blue-400">
-            <div className="flex flex-col justify-center items-center">
-              <div className="text-lg font-semibold dark:text-gray-200">
-                {" "}
-                Are You Sure Wanna Logout ?
-              </div>
-              <div className="flex items-center space-x-8 mt-10 ">
-                <div>
-                  <button
-                    onClick={logoutmetamask}
-                    className="font-semibold bg-blue-500 hover:bg-blue-700 shadow-md p-1 px-4 rounded-md"
-                  >
-                    Ok
-                  </button>
-                </div>
-                <div>
-                  {" "}
-                  <button
-                    onClick={closelogoutmodel}
-                    className="font-semibold bg-gray-200 hover:bg-gray-300  dark:text-gray-400 flex items-center p-1 px-4 rounded-md shadow-md"
-                  >
-                    Cancel
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
+      
 
       <main className="dark:body-back body-back-light min-h-screen">
         <div className="flex justify-around p-4 border-b">

@@ -17,6 +17,7 @@ import Loader from "../Components/Loader";
 import Slider from "react-slick";
 import SmallCard from "../Components/Cards/SmallCard";
 import { useData } from "../context/data";
+import { useAccount } from "wagmi";
 
 const tradhubAddress = process.env.NEXT_PUBLIC_TRADEHUB_ADDRESS;
 const graphqlAPI = process.env.NEXT_PUBLIC_MARKETPLACE_API;
@@ -38,7 +39,7 @@ export default function LandingPage() {
   const [loading, setLoading] = useState(false);
 
   const itemStatus = new Map(["NONEXISTANT", "SALE", "AUCTION", "SOLD", "REMOVED"].map((v, index) => [index, v]))
-  const walletAddr = useSelector(selectUser);
+  const walletAddr = useAccount();
   var wallet = walletAddr ? walletAddr[0] : "";
   const [hasRole, setHasRole] = useState(true);
 

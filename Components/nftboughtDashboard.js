@@ -15,6 +15,7 @@ import Tradhub from '../artifacts/contracts/tradehub/TradeHub.sol/TradeHub.json'
 import { sellItem }   from "../pages/api/sellItem";
 const graphqlAPI = process.env.NEXT_PUBLIC_MARKETPLACE_API;
 import { useRouter } from 'next/router';
+import { useAccount } from "wagmi";
 
 function NftboughtDashboard() {
 
@@ -24,7 +25,7 @@ function NftboughtDashboard() {
     return ethers.utils.formatEther(price);
   }
 
-  const walletAddr = useSelector(selectUser);
+  const walletAddr = useAccount();
   var wallet = walletAddr ? walletAddr[0] : "";
   const [data, setData] = useState([]);
   const [auction, setAuction] = useState([]);

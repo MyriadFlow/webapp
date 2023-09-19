@@ -21,19 +21,19 @@ import NoSSR from "./NoSSR";
 // }
 
 export default function Home({ data }) {
-  const dispatch = useDispatch();
-  const [errorMessage, SeterrorMessage] = useState(null);
-  const [defaultAccount, SetdefaultAccount] = useState();
-  const [UserBalance, SetUserBalance] = useState();
+  // const dispatch = useDispatch();
+  // const [errorMessage, SeterrorMessage] = useState(null);
+  // const [defaultAccount, SetdefaultAccount] = useState();
+  // const [UserBalance, SetUserBalance] = useState();
 
-  useEffect(() => {
-    connectwallethandler(
-      SeterrorMessage,
-      SetdefaultAccount,
-      SetUserBalance,
-      dispatch
-    );
-  }, []);
+  // useEffect(() => {
+  //   connectwallethandler(
+  //     SeterrorMessage,
+  //     SetdefaultAccount,
+  //     SetUserBalance,
+  //     dispatch
+  //   );
+  // }, []);
 
   return (
     <>

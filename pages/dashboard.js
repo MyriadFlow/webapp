@@ -17,9 +17,10 @@ import { IoCreate, IoEaselSharp } from "react-icons/io5";
 import { RiMoneyDollarCircleLine } from "react-icons/ri";
 import { request, gql } from "graphql-request";
 const graphqlAPI = process.env.NEXT_PUBLIC_MARKETPLACE_API;
+import { useAccount } from "wagmi";
 
 export default function CreatorDashboard() {
-  const walletAddr = useSelector(selectUser);
+  const walletAddr = useAccount();
   var wallet = walletAddr ? walletAddr[0] : "";
 
   const [data, setData] = useState([]);

@@ -15,13 +15,14 @@ import etherContract from "../utils/web3Modal";
 import Tradhub from '../artifacts/contracts/tradehub/TradeHub.sol/TradeHub.json'
 const graphqlAPI = process.env.NEXT_PUBLIC_STOREFRONT_API;
 const tradhubAddress = process.env.NEXT_PUBLIC_TRADEHUB_ADDRESS;
+import { useAccount } from "wagmi";
 
 const Collection = () => {
   const [info, setInfo] = useState([]);
   const itemStatus = new Map(["NONEXISTANT", "SALE", "AUCTION", "SOLD","REMOVED"].map((v,index)=>[index,v]));
   const sortedCollection=async()=>{
 }
-  const walletAddr = useSelector(selectUser);
+  const walletAddr = useAccount();
   var wallet = walletAddr ? walletAddr[0] : "";
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);

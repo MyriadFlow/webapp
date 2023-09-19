@@ -17,6 +17,7 @@ import etherContract from "../utils/web3Modal";
 const client = new NFTStorage({ token: YOUR_API_KEY });
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL_GATEWAY;
 const accessmasterAddress = process.env.NEXT_PUBLIC_ACCESS_MASTER_ADDRESS;
+import { useAccount } from "wagmi";
 
 function Profile() {
     const profile = {
@@ -33,7 +34,7 @@ function Profile() {
         // discord_id: "",
         // telegram_id: "",
     };
-    const walletAddr = useSelector(selectUser);
+    const walletAddr = useAccount();
     var wallet = walletAddr ? walletAddr[0] : "";
     const [hasRole, setHasRole] = useState(true);
     const [showModal, setShowModal] = useState(false);
@@ -109,7 +110,6 @@ function Profile() {
         }
     };
 
-    const user = useSelector(selectUser);
     const getRole = async () => {
         const token = localStorage.getItem("platform_token");
         const role_id = localStorage.getItem("platform_roleid");

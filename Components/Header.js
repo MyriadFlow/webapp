@@ -16,13 +16,15 @@ import etherContract from "../utils/web3Modal";
 import SimpleDropdown from "./SimpleDropdown";
 // import useAddress from '@thirdweb-dev/react';
 import { useData } from "../context/data";
+import { useAccount } from "wagmi";
+import { ConnectButton } from '@rainbow-me/rainbowkit';
+
 const accessmasterAddress = process.env.NEXT_PUBLIC_ACCESS_MASTER_ADDRESS;
 function Header() {
 
   const { resdata } = useData();
 
-  const address = useAddress();
-  const { contract } = useContract(address);
+  const address = useAccount();
   const [dropmenu, setDropMenu] = useState(false);
   const [hidefilter, setHideFilter] = useState(false);
   const router = useRouter();
@@ -44,8 +46,8 @@ function Header() {
   const handleNav = () => {
     setNavOpen((prev) => !prev);
   };
-  const user = useSelector(selectUser);
-  const walletAddress = user ? user[0] : "";
+  const user = useAccount();
+  const walletAddress = useAccount();
 
   const [hasRole, setHasRole] = useState(false);
   const [hasRoleOperator, setHasRoleOperator] = useState(false);
@@ -166,7 +168,8 @@ function Header() {
                       )}
                     </div> */}
                     <div className={styles.connect}>
-                      <ConnectWallet className="bg-gradient-to-r from-indigo-500 via-purple-500 to-gray-500 ..." />
+                    <ConnectButton chainStatus="icon"/>
+                      {/* <ConnectWallet className="bg-gradient-to-r from-indigo-500 via-purple-500 to-gray-500 ..." /> */}
                     </div>
                   </div>
                 </div>
@@ -285,7 +288,8 @@ function Header() {
               <div className="flex flex-col items-center">
 
                 <div className={styles.connect}>
-                  <ConnectWallet className="bg-gradient-to-r from-indigo-500 via-purple-500 to-gray-500 ..." />
+                <ConnectButton chainStatus="icon"/>
+                  {/* <ConnectWallet className="bg-gradient-to-r from-indigo-500 via-purple-500 to-gray-500 ..." /> */}
                 </div>
 
 
