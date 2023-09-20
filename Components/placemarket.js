@@ -20,8 +20,7 @@ const graphqlAPI = process.env.NEXT_PUBLIC_MARKETPLACE_API;
 import { useAccount } from "wagmi";
 
 const MyAssets = () => {
-  const walletAddr = useAccount();
-  var wallet = walletAddr ? walletAddr[0] : "";
+  const walletAddr = useAccount().address;
 
   const router = useRouter();
   const [data, setData] = useState([]);
@@ -34,7 +33,7 @@ const MyAssets = () => {
   const [modelmsg, setmodelmsg] = useState("Transaction in progress!");
   const [alertMsg, setAlertMsg] = useState("Something went wrong");
 
-  const fetchUserAssests = async (walletAddr) => {
+  const fetchUserAssests = async () => {
     const refineArray = {};
           refineArray.saleStarteds = [];
 
@@ -87,12 +86,7 @@ console.log("self sale assets count",refineArray.saleStarteds.length);
     setLoading(false);
   };
   useEffect(() => {
-    if (!localStorage.getItem("platform_wallet") && wallet !== undefined) {
-      localStorage.setItem("platform_wallet", wallet);
-    } else {
-      setwlt(localStorage.getItem("platform_wallet"));
-    }
-    fetchUserAssests(`${localStorage.getItem("platform_wallet")}`);
+    fetchUserAssests();
   }, []);
 
   const listItem = async (tokenId, price) => {

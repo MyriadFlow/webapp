@@ -22,7 +22,7 @@ const Collection = () => {
   const itemStatus = new Map(["NONEXISTANT", "SALE", "AUCTION", "SOLD","REMOVED"].map((v,index)=>[index,v]));
   const sortedCollection=async()=>{
 }
-  const walletAddr = useAccount();
+  const walletAddr = useAccount().address;
   var wallet = walletAddr ? walletAddr[0] : "";
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -77,7 +77,7 @@ const Collection = () => {
     } else {
       setwlt(localStorage.getItem("platform_wallet"));
     }
-    fetchUserAssests(`${localStorage.getItem("platform_wallet")}`);
+    fetchUserAssests();
   }, []);
 
  

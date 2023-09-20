@@ -41,7 +41,7 @@ export default function Marketplace() {
     const [loading, setLoading] = useState(false);
 
     const itemStatus = new Map(["NONEXISTANT", "SALE", "AUCTION", "SOLD", "REMOVED"].map((v, index) => [index, v]))
-    const walletAddr = useAccount();
+    const walletAddr = useAccount().address;
     var wallet = walletAddr ? walletAddr[0] : "";
     const [hasRole, setHasRole] = useState(true);
 
@@ -88,26 +88,26 @@ export default function Marketplace() {
         }
     }, [])
 
-    useEffect(() => {
-        const asyncFn = async () => {
-            const token = localStorage.getItem("platform_token");
-            if (token) {
-            }
+    // useEffect(() => {
+    //     const asyncFn = async () => {
+    //         const token = localStorage.getItem("platform_token");
+    //         if (token) {
+    //         }
 
-            const accessmaterContarct = await etherContract(
-                accessmasterAddress,
-                AccessMater.abi
-            );
-            setHasRole(
-                await accessmaterContarct.hasRole(
-                    await accessmaterContarct.FLOW_CREATOR_ROLE(),
-                    wallet
-                )
-            );
+    //         const accessmaterContarct = await etherContract(
+    //             accessmasterAddress,
+    //             AccessMater.abi
+    //         );
+    //         setHasRole(
+    //             await accessmaterContarct.hasRole(
+    //                 await accessmaterContarct.FLOW_CREATOR_ROLE(),
+    //                 wallet
+    //             )
+    //         );
 
-        };
-        asyncFn();
-    }, [hasRole]);
+    //     };
+    //     asyncFn();
+    // }, [hasRole]);
     return (
         <>
             <Layout

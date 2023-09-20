@@ -39,73 +39,76 @@ export default function LandingPage() {
   const [loading, setLoading] = useState(false);
 
   const itemStatus = new Map(["NONEXISTANT", "SALE", "AUCTION", "SOLD", "REMOVED"].map((v, index) => [index, v]))
-  const walletAddr = useAccount();
+  const walletAddr = useAccount().address;
+  localStorage.setItem("platform_token",walletAddr);
+  localStorage.setItem("platform_wallet",walletAddr);
+  console.log("platform_token",walletAddr);
   var wallet = walletAddr ? walletAddr[0] : "";
   const [hasRole, setHasRole] = useState(true);
 
-  const getLandingData = async () => {
-    const token = localStorage.getItem("platform_token");
-    const config = {
-      headers: {
-        Accept: "application/json, text/plain, */*",
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    };
-    setLoading(true);
-    axios.get(`https://testnet.gateway.myriadflow.com/api/v1.0/marketplace/itemIds`, config)
-      .then(async (res) => {
-        const tradhubContarct = await etherContract(tradhubAddress, Tradhub.abi)
-        const saleInput = res.data.payload.map(i => parseInt(i))
-        const { saleStarteds } =  []
-        const finalResult = []
-        Promise.all(saleStarteds.map(async (item) => {
-          const itemResult = await tradhubContarct.idToMarketItem(item.itemId)
-          const nftData = await getMetaData(item.metaDataURI);
-          finalResult.push({
-            ...item, ...nftData,
-            image: nftData?.image ? `${process.env.NEXT_PUBLIC_IPFS_GATEWAY}${removePrefix(nftData?.image)}` : "",
-            status: itemStatus.get(parseInt(itemResult.status))
-          })
-        })).then(() => {
-          setInfo(finalResult)
-        })
-        setLoading(true);
-      })
-      .catch((error) => {
-        console.log(error);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
-  };
-  useEffect(() => {
-    const token = localStorage.getItem("platform_token");
-    if (token) {
-      getLandingData();
-    }
-  }, [])
+  // const getLandingData = async () => {
+  //   const token = localStorage.getItem("platform_token");
+  //   const config = {
+  //     headers: {
+  //       Accept: "application/json, text/plain, */*",
+  //       "Content-Type": "application/json",
+  //       Authorization: `Bearer ${token}`,
+  //     },
+  //   };
+  //   setLoading(true);
+  //   axios.get(`https://testnet.gateway.myriadflow.com/api/v1.0/marketplace/itemIds`, config)
+  //     .then(async (res) => {
+  //       const tradhubContarct = await etherContract(tradhubAddress, Tradhub.abi)
+  //       const saleInput = res.data.payload.map(i => parseInt(i))
+  //       const { saleStarteds } =  []
+  //       const finalResult = []
+  //       Promise.all(saleStarteds.map(async (item) => {
+  //         const itemResult = await tradhubContarct.idToMarketItem(item.itemId)
+  //         const nftData = await getMetaData(item.metaDataURI);
+  //         finalResult.push({
+  //           ...item, ...nftData,
+  //           image: nftData?.image ? `${process.env.NEXT_PUBLIC_IPFS_GATEWAY}${removePrefix(nftData?.image)}` : "",
+  //           status: itemStatus.get(parseInt(itemResult.status))
+  //         })
+  //       })).then(() => {
+  //         setInfo(finalResult)
+  //       })
+  //       setLoading(true);
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //     })
+  //     .finally(() => {
+  //       setLoading(false);
+  //     });
+  // };
+  // useEffect(() => {
+  //   const token = localStorage.getItem("platform_token");
+  //   if (token) {
+  //     getLandingData();
+  //   }
+  // }, [])
 
-  useEffect(() => {
-    const asyncFn = async () => {
-      const token = localStorage.getItem("platform_token");
-      if (token) {
-      }
+  // useEffect(() => {
+  //   const asyncFn = async () => {
+  //     const token = localStorage.getItem("platform_token");
+  //     if (token) {
+  //     }
 
-      const accessmaterContarct = await etherContract(
-        accessmasterAddress,
-        AccessMater.abi
-      );
-      setHasRole(
-        await accessmaterContarct.hasRole(
-          await accessmaterContarct.FLOW_CREATOR_ROLE(),
-          wallet
-        )
-      );
+  //     const accessmaterContarct = await etherContract(
+  //       accessmasterAddress,
+  //       AccessMater.abi
+  //     );
+  //     setHasRole(
+  //       await accessmaterContarct.hasRole(
+  //         await accessmaterContarct.FLOW_CREATOR_ROLE(),
+  //         wallet
+  //       )
+  //     );
 
-    };
-    asyncFn();
-  }, [hasRole]);
+  //   };
+  //   asyncFn();
+  // }, [hasRole]);
   return (
     <>
       <Layout

@@ -48,7 +48,6 @@ const wagmiConfig = createConfig({
 // Fixes: Hydration failed because the initial UI does not match what was rendered on the server.
 
 function MyApp({ Component, pageProps }) {
-  const desiredChainId = 80001;
 
   const [isLoading, isSetLoading] = useState(false);
   const [initialData, setInitialData] = useState(null);

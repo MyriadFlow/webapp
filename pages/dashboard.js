@@ -20,7 +20,7 @@ const graphqlAPI = process.env.NEXT_PUBLIC_MARKETPLACE_API;
 import { useAccount } from "wagmi";
 
 export default function CreatorDashboard() {
-  const walletAddr = useAccount();
+  const walletAddr = useAccount().address;
   var wallet = walletAddr ? walletAddr[0] : "";
 
   const [data, setData] = useState([]);

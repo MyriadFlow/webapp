@@ -34,7 +34,7 @@ function Profile() {
         // discord_id: "",
         // telegram_id: "",
     };
-    const walletAddr = useAccount();
+    const walletAddr = useAccount().address;
     var wallet = walletAddr ? walletAddr[0] : "";
     const [hasRole, setHasRole] = useState(true);
     const [showModal, setShowModal] = useState(false);
@@ -131,7 +131,7 @@ function Profile() {
         let web3 = new Web3(Web3.givenProvider);
         let completemsg = roledata.data.payload.eula + roledata.data.payload.flowId;
         const hexMsg = convertUtf8ToHex(completemsg);
-        const result = await web3.eth.personal.sign(hexMsg, wallet);
+        const result = await web3.eth.personal.sign(hexMsg, walletAddr);
 
         var signroledata = JSON.stringify({
             flowId: roledata.data.payload.flowId,
@@ -264,7 +264,7 @@ function Profile() {
     const connectweb = async () => {
         const accessmaterContarct = await etherContract(accessmasterAddress, AccessMaster.abi)
         setHasRole(
-            await accessmaterContarct.hasRole(await accessmaterContarct.FLOW_CREATOR_ROLE(), wallet)
+            await accessmaterContarct.hasRole(await accessmaterContarct.FLOW_CREATOR_ROLE(), walletAddr)
         );
         const roleid = await accessmaterContarct.FLOW_CREATOR_ROLE();
         localStorage.setItem("platform_roleid", roleid);

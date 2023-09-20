@@ -20,7 +20,7 @@ function Sigseries() {
         return ethers.utils.formatEther(price);
     }
 
-    const walletAddr = useAccount();
+    const walletAddr = useAccount().address;
     var wallet = walletAddr ? walletAddr[0] : "";
     const [data, setData] = useState([]);
     const [auction, setAuction] = useState([]);

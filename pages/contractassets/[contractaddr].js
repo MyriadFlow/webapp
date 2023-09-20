@@ -8,6 +8,7 @@ import { ethers } from "ethers";
 import Loader from "../../Components/Loader";
 import Web3Modal from "web3modal";
 import Layout from "../../Components/Layout";
+import { useAccount } from "wagmi";
 
 const Asset = ({ address }) => {
 
@@ -15,7 +16,7 @@ const Asset = ({ address }) => {
     return ethers.utils.formatEther(price);
   }
 
-  const walletAddr = useSelector(selectUser);
+  const walletAddr = useAccount().address;
   var wallet = walletAddr ? walletAddr[0] : "";
   const [data, setData] = useState([]);
   const [auction, setAuction] = useState([]);
@@ -59,7 +60,7 @@ const Asset = ({ address }) => {
       localStorage.setItem("platform_wallet", wallet);
     } else {
     }
-    fetchUserAssests(`${localStorage.getItem("platform_wallet")}`);
+    fetchUserAssests();
   }, []);
   const [loadingState, setLoadingState] = useState("not-loaded");
 

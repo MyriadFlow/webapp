@@ -24,7 +24,7 @@ function Header() {
 
   const { resdata } = useData();
 
-  const address = useAccount();
+  const address = useAccount().address;
   const [dropmenu, setDropMenu] = useState(false);
   const [hidefilter, setHideFilter] = useState(false);
   const router = useRouter();
@@ -46,23 +46,23 @@ function Header() {
   const handleNav = () => {
     setNavOpen((prev) => !prev);
   };
-  const user = useAccount();
-  const walletAddress = useAccount();
+  const user = useAccount().address;
+  const walletAddress = useAccount().address;
 
   const [hasRole, setHasRole] = useState(false);
   const [hasRoleOperator, setHasRoleOperator] = useState(false);
 
-  useEffect(() => {
-    const asyncFn = async () => {
-      const accessmaterContarct = await etherContract(accessmasterAddress, Accessmater.abi)
-      setHasRole(
-        await accessmaterContarct.hasRole(await accessmaterContarct.FLOW_CREATOR_ROLE(), walletAddress)
-      );
-      setHasRoleOperator(
-        await accessmaterContarct.hasRole(await accessmaterContarct.FLOW_CREATOR_ROLE(), walletAddress))
-    }
-    asyncFn();
-  }, [])
+  // useEffect(() => {
+  //   const asyncFn = async () => {
+  //     const accessmaterContarct = await etherContract(accessmasterAddress, Accessmater.abi)
+  //     setHasRole(
+  //       await accessmaterContarct.hasRole(await accessmaterContarct.FLOW_CREATOR_ROLE(), walletAddress)
+  //     );
+  //     setHasRoleOperator(
+  //       await accessmaterContarct.hasRole(await accessmaterContarct.FLOW_CREATOR_ROLE(), walletAddress))
+  //   }
+  //   asyncFn();
+  // }, [])
 
   return (
     <header className="border-b-[1px] dark:body-back body-back-light dark:border-[#bf2180] border-[#eff1f6] body-back">
