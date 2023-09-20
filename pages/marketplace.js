@@ -19,6 +19,8 @@ import SmallCard from "../Components/Cards/SmallCard";
 import { useData } from "../context/data";
 import { FaUserCircle, FaMapMarkerAlt, FaWallet, FaEnvelope } from "react-icons/fa";
 import { useAccount } from "wagmi";
+import styles from '../styles/Typewritter.module.css';
+import Typewriter from '../Components/Typewriter';
 
 const tradhubAddress = process.env.NEXT_PUBLIC_TRADEHUB_ADDRESS;
 const graphqlAPI = process.env.NEXT_PUBLIC_MARKETPLACE_API;
@@ -212,60 +214,70 @@ export default function Marketplace() {
 
                     {/* highlights Section */}
                     <section className="dark:body-back body-back-light">
-                        <div className=" py-16 flex lg:flex-row flex-col justify-center items-center">
-                            <div className="basis-1/3">
-                                <div className="text-center p-2">
-                                    <h3 className="text-3xl lg:w-1/2 font-poppins font-bold capitalize mb-8 mx-auto text-gray-500 dark:text-white">
-                                        Create NFT marketplace for your community
-                                    </h3>
-                                    <div className="items-center lg:py-4 md:py-4">
-                                        <div>
-                                            <button className="py-3 px-6 text-gray-500 dark:text-white font-semibold mb-8 lg:mb-0 border rounded-full">
-                                                <Link href="/create">
-                                                    <span className="font-raleway font-bold text-gray-500 dark:text-whit">
-                                                        Create NFT
-                                                    </span>
-                                                </Link>
-                                            </button>
-                                        </div>
-                                    </div>
-                                    <div className="items-center ">
-                                        <div>
-                                            <button className="py-3 px-6 text-gray-500 dark:text-white font-semibold mb-8 lg:mb-0 explore-btn-border">
-                                                <Link href="/explore">
-                                                    <span className="font-raleway font-bold text-gray-500 dark:text-whit">
-                                                        Explore More
-                                                    </span>
-                                                </Link>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="basis-1/4 mb-10 lg:mb-0">
-                                <figure className="max-w-xs relative transition-all duration-300 cursor-pointer filter border-4 ">
-                                    <Link href="#">
-                                        <img className="" src="vr.png" alt="image description" />
-                                    </Link>
-                                </figure>
-                            </div>
-                            <div className="basis-1/4 mb-10 lg:mb-0">
-                                <figure className="max-w-xs relative transition-all duration-300 cursor-pointer filter border-4">
-                                    <Link href="#">
-                                        <img className="" src="vr.png" alt="image description" />
-                                    </Link>
-                                </figure>
-                            </div>
-                            <div className="basis-1/4">
-                                <figure className="max-w-xs relative transition-all duration-300 cursor-pointer filter border-4">
-                                    <Link href="#">
-                                        <img className="" src="vr.png" alt="image description" />
-                                    </Link>
-                                </figure>
-                            </div>
+            <div className=" py-16 flex lg:flex-row flex-col justify-center items-center">
+              <div className="basis-1/3">
+                <div className="text-center p-2">
+                  <h3 className="text-3xl lg:w-1/2 font-poppins font-bold capitalize mx-auto text-gray-500 dark:text-white">
+                    Create NFT marketplace for your
+                  </h3>
+                  <Typewriter
+            strings={[
+              'Community',
+              'Organiser',
+              'Businesses',
+              'Audience'
+            ]}
+            wrapperClassName={styles.typewriterWrapper}
+            cursorClassName={styles.typewriterCursor}
+          />
+                  <div className="items-center lg:py-4 md:py-4">
+                    <div>
+                      <button className="py-3 px-10 text-gray-500 dark:text-white font-semibold mb-8 lg:mb-0 border rounded-full">
+                        <Link href="/create">
+                          <span className="font-raleway font-bold text-gray-500 dark:text-white">
+                          Explore More
+                          </span>
+                        </Link>
+                      </button>
+                    </div>
+                  </div>
+                  {/* <div className="items-center ">
+                    <div>
+                      <button className="py-3 px-6 text-gray-500 dark:text-white font-semibold mb-8 lg:mb-0 explore-btn-border">
+                        <Link href="/explore">
+                          <span className="font-raleway font-bold text-gray-500 dark:text-whit">
+                            Explore More
+                          </span>
+                        </Link>
+                      </button>
+                    </div>
+                  </div> */}
+                </div>
+              </div>
+              <div className="basis-1/4 mb-10 lg:mb-0">
+                <figure className="max-w-xs relative transition-all duration-300 cursor-pointer filter border-4 ">
+                  <Link href="#">
+                    <img className="" src="vr.png" alt="image description" />
+                  </Link>
+                </figure>
+              </div>
+              <div className="basis-1/4 mb-10 lg:mb-0">
+                <figure className="max-w-xs relative transition-all duration-300 cursor-pointer filter border-4">
+                  <Link href="#">
+                    <img className="" src="vr.png" alt="image description" />
+                  </Link>
+                </figure>
+              </div>
+              <div className="basis-1/4">
+                <figure className="max-w-xs relative transition-all duration-300 cursor-pointer filter border-4">
+                  <Link href="#">
+                    <img className="" src="vr.png" alt="image description" />
+                  </Link>
+                </figure>
+              </div>
 
-                        </div>
-                    </section>
+            </div>
+          </section>
                     {/* End Of highlights Section */}
                 </div>
             </Layout>

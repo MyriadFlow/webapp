@@ -56,6 +56,7 @@
     "react-slick": "^0.29.0",
     "reactstrap": "^9.1.5",
     "tw-elements": "^1.0.0-alpha13",
+    "typewriter-effect": "^2.21.0",
     "viem": "^1.10.14",
     "wagmi": "^1.4.2",
     "web3": "^1.7.1",
