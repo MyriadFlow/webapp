@@ -2,13 +2,13 @@
 import axios from "axios";
 
 export default async function handler(req, res) {
-  const endPoint = "http://3.15.54.199:8000/subgraphs/name/yu";
+  const endPoint = "http://3.15.54.199:8000/subgraphs/name/fnl";
   const headers = {
     "Content-Type": "application/json",
   };
 
   const AllBuildingQuery = `{
-    saleStarteds(orderBy: id) {
+    saleStarteds(orderBy: id, skip: 1) {
         itemId
         metaDataURI
         nftContract
