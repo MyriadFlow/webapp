@@ -77,6 +77,7 @@ function Sigseries() {
                                 >
                                     <Link key={item?.contractAddress} href={`/collections/${item?.contractName}/${item?.contractAddress}`}>
                                         <div>
+                                        <img src="https://makeanapplike.com/wp-content/uploads/2021/12/white-label-nft-marketplace-development-firms.png"/>
                                             <div className=" flex items-center justify-between mb-2">
                                                 <div className="font-1 text-sm font-bold">
                                                     Contract name:{" "}

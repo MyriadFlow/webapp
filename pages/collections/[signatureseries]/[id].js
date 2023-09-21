@@ -121,13 +121,6 @@ export default function CollectionItem() {
 
   return (
     <Layout>
-      <div>
-        <h1>Collection Item Page</h1>
-        <p>Signature Series: {signatureseries}</p>
-        <p>contract address: {id}</p>
-        {/* <p>Tx convertion: {ca}</p> */}
-        {/* Display data for the specific collection item here */}
-      </div>
       <div className="min-h-screen body-back">
         <div>
           <div className=" p-4 h-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
