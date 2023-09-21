@@ -69,7 +69,7 @@ const Home = () => {
   const [data, setData] = useState([]);
   const [auction, setAuction] = useState([]);
   const [shallowData, setShallowData] = useState([]);
-
+  const [page, setPage] = useState("sale");
 
 
 
@@ -269,6 +269,7 @@ const Home = () => {
       }
     };
 
+    
     await status();
     console.log(refineArray);
     console.log("sale assets count", refineArray.saleStarteds.length);
@@ -386,20 +387,24 @@ const Home = () => {
       
 
       <main className="dark:body-back body-back-light min-h-screen">
-        <div className="flex justify-around p-4 border-b">
-          {/* <div className="mt-5 mr-5">
-            <Link href="/explore">
-              <div
-                className={router.pathname == "/explore" ? "active " : ""}
-              >
-                <button className="bg-white py-3 px-6  text-gray-500 dark:text-black font-semibold mb-8 lg:mb-0">
-                  More Sale
-                </button>
-              </div>
-            </Link>
-          </div> */}
-          <div className="mt-5 font-bold text-2xl text-center dark:text-white text-gray-800">Sale</div>
+        <div className="border-b py-4 w-full flex justify-evenly">
+          <div
+            className={`rounded-full text-center text-gray-500 dark:text-gray dark:hover:bg-white  cursor-pointer px-20 py-3 border-b-2 border-transparent transition-all ${
+              page === "sale" ? "bg-white" : ""
+            }`}
+            onClick={() => setPage("sale")}
+          >
+              <div className="text-sm lg:text-xl md:text-lg font-semibold">Sale</div>
 
+          </div>
+          <div
+            className={`rounded-full text-center text-gray-500 dark:text-gray dark:hover:bg-white  cursor-pointer px-16 py-3 border-b-2 border-transparent transition-all ${
+              page === "auction" ? "bg-white" : ""
+            }`}
+            onClick={() => setPage("auction")}
+          >
+              <div className="text-sm lg:text-xl md:text-lg font-semibold">Auction</div>
+          </div>
         </div>
 
 
@@ -698,7 +703,7 @@ const Home = () => {
                   >
                     <Link key={item?.itemId} href={`/explore/${item?.itemId}`}>
                       <div>
-                        <MarketPlaceCard {...item} />
+                      <HomeComp uri={item ? item?.metaDataURI : ""} />
                         <div className="flex items-center justify-between mb-2">
                           <div className="text-sm font-bold text-gray-500 dark:text-white">
                             Price{" "}
