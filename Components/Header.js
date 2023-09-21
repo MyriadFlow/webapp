@@ -116,9 +116,9 @@ function Header() {
               </div>
             </Link>
 
-            <Link className="text-gray-800 dark:text-white" href="/collection">
+            <Link className="text-gray-800 dark:text-white" href="/collections">
               <div
-                className={router.pathname == "/collection" ? "active " : ""}
+                className={router.pathname == "/collections" ? "active " : ""}
               >
                 Collections
               </div>

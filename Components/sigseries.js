@@ -13,7 +13,7 @@ import Web3Modal from "web3modal";
 const graphqlAPI = process.env.NEXT_PUBLIC_MARKETPLACE_API;
 import { useAccount } from "wagmi";
 
-const apiUrl = 'https://testnet.gateway.myriadflow.com/api/v1.0/webapp/contracts/9b1f7f3d-9d78-4953-8165-5cbc8fa19068';
+const apiUrl = 'https://testnet.gateway.myriadflow.com/api/v1.0/webapp/contracts/7aa9e5d1-a31f-4962-88f4-3d970c609844';
 
 function Sigseries() {
     function getEthPrice(price) {
@@ -75,7 +75,7 @@ function Sigseries() {
                                     key={item.contractAddress}
                                     className=" border-2 p-2.5 rounded-lg shadow-lg w-full lg:w-72 hover:scale-105 duration-200 transform transition cursor-pointer border-2 dark:border-gray-500"
                                 >
-                                    <Link key={item?.contractName} href={`/contractassets/${item?.contractAddress}`}>
+                                    <Link key={item?.contractAddress} href={`/collections/${item?.contractName}/${item?.contractAddress}`}>
                                         <div>
                                             <div className=" flex items-center justify-between mb-2">
                                                 <div className="font-1 text-sm font-bold">

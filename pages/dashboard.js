@@ -95,8 +95,7 @@ export default function CreatorDashboard() {
            
             
       <div className="dark:body-back body-back-light">
-      <div className="text-2xl font-semibold mb-4 pt-10 text-center border-b pb-6">Dashboard</div>
-        <div className="pb-4 lg:px-32 md:px-10 px-4 grid grid-cols-2 gap-8 sm:gap-20 lg:grid-cols-4 md:grid-cols-4 w-full">
+        <div className="border-b py-4 w-full flex justify-evenly">
           {/* <div
             className={`rounded-full text-center text-gray-500 dark:text-gray dark:hover:bg-white  cursor-pointer p-3 border-b-2 border-transparent transition-all ${
               page === "created" ? "bg-white" : ""
@@ -107,7 +106,7 @@ export default function CreatorDashboard() {
           </div> */}
 
           <div
-            className={`rounded-full text-center text-gray-500 dark:text-gray dark:hover:bg-white  cursor-pointer p-3 border-b-2 border-transparent transition-all ${
+            className={`rounded-full text-center text-gray-500 dark:text-gray dark:hover:bg-white  cursor-pointer px-20 py-3 border-b-2 border-transparent transition-all ${
               page === "bought" ? "bg-white" : ""
             }`}
             onClick={() => setPage("bought")}
@@ -128,7 +127,7 @@ export default function CreatorDashboard() {
           </div> */}
 
           <div
-            className={`rounded-full text-center text-gray-500 dark:text-gray dark:hover:bg-white  cursor-pointer p-3 border-b-2 border-transparent transition-all ${
+            className={`rounded-full text-center text-gray-500 dark:text-gray dark:hover:bg-white  cursor-pointer px-20 py-3 border-b-2 border-transparent transition-all ${
               page === "market" ? "bg-white" : ""
             }`}
             onClick={() => setPage("market")}
@@ -148,7 +147,7 @@ export default function CreatorDashboard() {
                       key={item?.itemId}
                       className=" border-2 p-2.5 bg-white dark:bg-gray-900  rounded-lg shadow-lg w-full lg:w-72 hover:scale-105 duration-200 transform transition cursor-pointer border-2 dark:border-gray-800"
                     >
-                      <Link key={item?.itemId} href={`/assets/${item?.tokenId}`}>
+                      <Link key={item?.itemId} href={`/assets/${item?.itemId}`}>
                         <div>
                           <HomeComp uri={item ? item?.metadataURI : ""} />
 
