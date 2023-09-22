@@ -86,7 +86,7 @@ const Collection = () => {
     <Layout title="Collections" description="Collection of assets you launched in various categories.">
     <div className="min-h-screen dark:body-back body-back-light">
     <div className="text-2xl font-semibold mb-4 pt-10 text-center dark:text-white text-gray-800">Collections</div>
-    <div className="pb-4 px-10 grid grid-cols-2 gap-8 sm:gap-6 lg:grid-cols-5 md:grid-cols-3 w-full pt-6 border-t">
+    <div className="pb-4 px-10 grid grid-cols-2 gap-8 sm:gap-6 lg:grid-cols-6 md:grid-cols-3 w-full pt-6 border-t">
       
           <div
             className={`rounded-full text-center text-gray-500 dark:text-gray dark:hover:bg-white  cursor-pointer p-3 border-b-2 border-transparent transition-all ${
@@ -122,6 +122,15 @@ const Collection = () => {
             onClick={() => setPage("eternum")}
           >
               <div className="text-sm lg:text-xl md:text-lg font-semibold">EternumPass</div>
+          </div>
+
+          <div
+            className={`rounded-full text-center text-gray-500 dark:text-gray dark:hover:bg-white  cursor-pointer p-3 border-b-2 border-transparent transition-all ${
+              page === "eternal" ? "bg-white" : ""
+            }`}
+            onClick={() => setPage("eternal")}
+          >
+              <div className="text-sm lg:text-xl md:text-lg font-semibold">EternalSoul</div>
           </div>
 
           <div
