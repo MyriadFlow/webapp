@@ -8,7 +8,7 @@ export default async function handler(req, res) {
   };
 
   const AllBuildingQuery = `{
-    saleStarteds(orderBy: id, skip: 1) {
+    saleStarteds(orderBy: id, skip: 2) {
         itemId
         metaDataURI
         nftContract

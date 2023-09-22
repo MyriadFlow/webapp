@@ -12,7 +12,7 @@ import etherContract from "../utils/web3Modal";
 import Tradhub from '../artifacts/contracts/tradehub/TradeHub.sol/TradeHub.json';
 // import { buyNFT } from "../pages/api/buyNFT";
 // import { buyNFT } from "./api/buyNFT";
-import { sellItem }   from "../pages/api/sellItem";
+import { sellItem } from "../pages/api/sellItem";
 const graphqlAPI = process.env.NEXT_PUBLIC_MARKETPLACE_API;
 import { useRouter } from 'next/router';
 import { useAccount } from "wagmi";
@@ -34,6 +34,8 @@ function NftboughtDashboard() {
   const [modelmsg, setmodelmsg] = useState("buying in progress!");
   const [isPriceInputVisible, setIsPriceInputVisible] = useState(false);
   const [price, setPrice] = useState(0);
+  const [showModal, setShowModal] = useState(false);
+  const [selectedNFT, setSelectedNFT] = useState(null);
 
   const fetchUserAssests = async (walletAddr) => {
     const query = gql`
@@ -50,57 +52,57 @@ function NftboughtDashboard() {
             }
           }
           `;
-          const refineArray = {};
-          refineArray.itemSolds = [];
+    const refineArray = {};
+    refineArray.itemSolds = [];
 
-          
 
-          const response = await fetch(`/api/soldgraph?walletAddress=${walletAddr}`);
-          const result = await response.json();
 
-          setLoading(true);
+    const response = await fetch(`/api/soldgraph?walletAddress=${walletAddr}`);
+    const result = await response.json();
 
-          const status = async () => {
-            const tokenTimestampMap = {};
+    setLoading(true);
 
-            for (const obj of result.itemSolds) {
-              const tradhubAddress = process.env.NEXT_PUBLIC_TRADEHUB_ADDRESS;
-              const tradhubContarct = await etherContract(
-                tradhubAddress,
-                Tradhub.abi
-              );
-              const transaction = await tradhubContarct.idToMarketItem(obj.itemId);
-              console.log("id" + obj.itemId);
-              console.log("transaction", transaction);
-              console.log("transaction", transaction.status == 3);
+    const status = async () => {
+      const tokenTimestampMap = {};
 
-              if (transaction.status == 3) {
-                // Check if tokenId exists in tokenTimestampMap
-                if (!tokenTimestampMap[obj.itemId]) {
-                  // If tokenId doesn't exist, add it with the current obj
-                  tokenTimestampMap[obj.itemId] = obj;
-                } else {
-                  // If tokenId exists, compare timestamps and update if current obj has a more recent timestamp
-                  const currentTimestamp = obj.blockTimestamp;
-                  const existingTimestamp = tokenTimestampMap[obj.itemId].blockTimestamp;
-                  if (currentTimestamp > existingTimestamp) {
-                    tokenTimestampMap[obj.itemId] = obj;
-                  }
-                }
-              }
-      
-              console.log("tokenTimestampMap", tokenTimestampMap);
-              // Only add items with transaction.status equal to 1 to the filtered array
-              // Iterate over tokenTimestampMap and push each object to refineArray.saleStarteds
-              refineArray.itemSolds = Object.values(tokenTimestampMap);
+      for (const obj of result.itemSolds) {
+        const tradhubAddress = process.env.NEXT_PUBLIC_TRADEHUB_ADDRESS;
+        const tradhubContarct = await etherContract(
+          tradhubAddress,
+          Tradhub.abi
+        );
+        const transaction = await tradhubContarct.idToMarketItem(obj.itemId);
+        console.log("id" + obj.itemId);
+        console.log("transaction", transaction);
+        console.log("transaction", transaction.status == 3);
+
+        if (transaction.status == 3) {
+          // Check if tokenId exists in tokenTimestampMap
+          if (!tokenTimestampMap[obj.itemId]) {
+            // If tokenId doesn't exist, add it with the current obj
+            tokenTimestampMap[obj.itemId] = obj;
+          } else {
+            // If tokenId exists, compare timestamps and update if current obj has a more recent timestamp
+            const currentTimestamp = obj.blockTimestamp;
+            const existingTimestamp = tokenTimestampMap[obj.itemId].blockTimestamp;
+            if (currentTimestamp > existingTimestamp) {
+              tokenTimestampMap[obj.itemId] = obj;
             }
-          };
-      
-            await status();
-            console.log(refineArray);
-console.log("buy assets count",refineArray.itemSolds.length);
+          }
+        }
 
-    
+        console.log("tokenTimestampMap", tokenTimestampMap);
+        // Only add items with transaction.status equal to 1 to the filtered array
+        // Iterate over tokenTimestampMap and push each object to refineArray.saleStarteds
+        refineArray.itemSolds = Object.values(tokenTimestampMap);
+      }
+    };
+
+    await status();
+    console.log(refineArray);
+    console.log("buy assets count", refineArray.itemSolds.length);
+
+
     setData(refineArray.itemSolds);
     setLoading(false);
   };
@@ -127,20 +129,22 @@ console.log("buy assets count",refineArray.itemSolds.length);
   async function loadNFTs() {
     setLoadingState("loaded");
   }
-  async function sellNft(nft,price) {
+  async function sellNft(nft, price) {
     setmodelmsg("Buying in Progress");
     setIsPriceInputVisible(false);
     setLoading(true);
     const newprice = ethers.utils.parseEther(price.toString());
-    await sellItem(nft,1, newprice, setmodel, setmodelmsg);
+    await sellItem(nft, 1, newprice, setmodel, setmodelmsg);
     router.push("/explore");
     setLoading(false);
   }
 
-  const submitNft = () => {
+  const submitNft = (nft) => {
     // Implement your logic for selling the NFT here
     // You can set isPriceInputVisible to true when you want to show the input field.
-    setIsPriceInputVisible(true);
+    // setIsPriceInputVisible(true);
+    setSelectedNFT(nft);
+    setShowModal(true);
   };
 
   const handlePriceChange = (event) => {
@@ -165,6 +169,93 @@ console.log("buy assets count",refineArray.itemSolds.length);
     <div className="min-h-screen body-back">
       {model && <BuyAsset open={model} setOpen={setmodel} message={modelmsg} />}
       <div>
+        {showModal && selectedNFT ? (
+          <>
+            <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none dark:body-back body-back-light">
+
+
+              <div className="py-12 transition duration-150 ease-in-out z-10 absolute top-0 right-0 bottom-0 left-0" id="modal">
+                <div role="alert" className="container mx-auto w-2/3 rounded-lg">
+                  <div className="relative py-4 bg-white shadow-md rounded border border-gray-400 rounded-2xl">
+                    <div className="w-full flex justify-start text-gray-600 mb-3">
+                      <button onClick={() => setShowModal(false)}>
+                        <svg xmlns="http://www.w3.org/2000/svg" className="icon icon-tabler icon-tabler-x mr-4 ml-4" width="20" height="20" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                          <path stroke="none" d="M0 0h24v24H0z" />
+                          <line x1="18" y1="6" x2="6" y2="18" />
+                          <line x1="6" y1="6" x2="18" y2="18" />
+                        </svg>
+                      </button>
+
+                      <h3 className="text-2xl font-semibold text-gray-900 ml-6">
+                        Choose a type of Sale
+                      </h3>
+                    </div>
+
+                    <div class="flex p-10 ml-10">
+                      {/* <input type="file" className="btn btn-primary btn-md ml-36" style={{ marginBottom: 20, marginTop: 20, width: "50%" }} onChange={(e) => { uploadImage(e) }} /> */}
+                      <div className="w-1/2">
+
+                        <div class="flex items-center mb-4 justify-between">
+                          <div>
+                            <h3 className="text-2xl font-semibold text-gray-900">
+                              Fixed Price
+                            </h3>
+                            <p className="font-semibold text-gray-900">
+                              The item is listed at the price you set.
+                            </p>
+                          </div>
+                          <input id="default-radio-1" type="radio" value="" name="default-radio" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
+                        </div>
+                        <div class="flex items-center justify-between">
+                          <div>
+                            <h3 className="text-2xl font-semibold text-gray-900">
+                              Sell to higher bidder
+                            </h3>
+                            <p className="font-semibold text-gray-900">
+                              The item is listed for auction.
+                            </p>
+                          </div>
+
+                          <input checked id="default-radio-2" type="radio" value="" name="default-radio" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
+                        </div>
+
+
+
+                        <h3 className="text-2xl font-semibold text-gray-900 mt-10">
+                          Set a price
+                        </h3>
+                        <p className="font-semibold text-gray-900 mt-4 mb-2">Starting Price</p>
+                        <div className="mb-2">
+                          <input type="number" id="default-input" 
+                          placeholder="Enter Price"
+                          value={price}
+                          onChange={handlePriceChange}
+                          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required />
+                        </div>
+                        {/* <p className="font-semibold text-gray-900 mt-4 mb-2">Duration</p>
+                        <div className="mb-2">
+                          <input type="text" id="default-input" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required />
+                        </div> */}
+                        <button
+                          className="text-white bg-blue-500 text-sm px-20 py-3 mt-4 rounded-full border border-white shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                          type="button"
+                          onClick={() => sellNft(selectedNFT, price)}
+                        >
+                          Set
+                        </button>
+                      </div>
+                      <div class="w-1/3 ml-10">
+                        <img src="/vr.png" className="rounded-lg" />
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
+          </>
+        ) : null}
         <div className=" p-4 mt-10  h-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 ">
           {data?.length > 0 ? (
             data?.map((item) => {
@@ -195,31 +286,40 @@ console.log("buy assets count",refineArray.itemSolds.length);
                     </div>
                   </Link>
 
+                  {/* <div className="flex items-center md:justify-end lg:-my-16 lg:mx-8 md:-my-16 md:mx-8 mt-8 justify-center lg:justify-end">
+                    <button
+                        className=" text-black text-sm px-8 py-3 rounded-full border border-white shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                        type="button"
+                        onClick={() => setShowModal(true)}
+                    >
+                        Put to Marketplace
+                    </button>
+                </div> */}
                   <div className="px-4 py-4 bg-white  flex justify-center mt-5">
                     <button
-                      onClick={() => submitNft()}
+                      // onClick={() => submitNft()}
+                      onClick={() => submitNft(item)}
                       className="text-black font-bold"
                     >
-                    Put to marketplace
-                      
+                      Put to marketplace
+
                     </button>
 
                     {isPriceInputVisible && (
-        <div>
-          {/* Price input field */}
-          <input
-            type="number"
-            placeholder="Enter Price"
-            value={price}
-            onChange={handlePriceChange}
-            className="border border-gray-300 p-2 mt-2"
-          />
+                      <div>
+                        {/* Price input field */}
+                        <input
+                          type="number"
+                          placeholder="Enter Price"
+                          value={price}
+                          onChange={handlePriceChange}
+                          className="border border-gray-300 p-2 mt-2"
+                        />
 
-          {/* Add a button to submit the price */}
-        
-          <button onClick={()=> sellNft(item,price)} className="bg-blue-500 text-white px-4 py-2 mt-2">Put {price} to Marketplace</button>
-        </div>
-      )}
+                        {/* Add a button to submit the price */}
+                        <button onClick={() => sellNft(item, price)} className="bg-blue-500 text-white px-4 py-2 mt-2">Put {price} to Marketplace</button>
+                      </div>
+                    )}
                   </div>
                 </div>
               );
