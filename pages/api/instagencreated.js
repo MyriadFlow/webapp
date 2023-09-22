@@ -8,20 +8,20 @@ export default async function handler(req, res) {
   };
 
   const AllBuildingQuery = `{
-    instaGenAssetCreated(orderBy: id) {
-        blockNumber
-        blockTimestamp
-        creator
-        currentIndex
-        id
-        quantity
-        transactionHash
+    instaGenAssetCreateds(orderBy: id){
+      creator
+      blockNumber
+      blockTimestamp
+      currentIndex
+      id
+      quantity
+      transactionHash
       }
     }`;
 
   const graphqlQuery = {
-    operationName: "instaGenAssetCreated",
-    query: `query instaGenAssetCreated ${AllBuildingQuery}`,
+    operationName: "instaGenAssetCreateds",
+    query: `query instaGenAssetCreateds ${AllBuildingQuery}`,
     variables: {},
   };
 
