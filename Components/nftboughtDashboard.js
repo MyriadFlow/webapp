@@ -32,6 +32,8 @@ function NftboughtDashboard() {
   const [loading, setLoading] = useState(true);
   const [model, setmodel] = useState(false);
   const [modelmsg, setmodelmsg] = useState("buying in progress!");
+  const [isPriceInputVisible, setIsPriceInputVisible] = useState(false);
+  const [price, setPrice] = useState(0);
 
   const fetchUserAssests = async (walletAddr) => {
     const query = gql`
@@ -125,13 +127,26 @@ console.log("buy assets count",refineArray.itemSolds.length);
   async function loadNFTs() {
     setLoadingState("loaded");
   }
-  async function sellNft(nft) {
+  async function sellNft(nft,price) {
     setmodelmsg("Buying in Progress");
+    setIsPriceInputVisible(false);
     setLoading(true);
-    await sellItem(nft,1, setmodel, setmodelmsg);
+    const newprice = ethers.utils.parseEther(price.toString());
+    await sellItem(nft,1, newprice, setmodel, setmodelmsg);
     router.push("/explore");
     setLoading(false);
   }
+
+  const submitNft = () => {
+    // Implement your logic for selling the NFT here
+    // You can set isPriceInputVisible to true when you want to show the input field.
+    setIsPriceInputVisible(true);
+  };
+
+  const handlePriceChange = (event) => {
+    const newPrice = event.target.valueAsNumber; // Parse the input value as a number
+    setPrice(newPrice);
+  };
 
   useEffect(() => {
     if (!localStorage.getItem("platform_wallet") && wallet !== undefined) {
@@ -158,7 +173,7 @@ console.log("buy assets count",refineArray.itemSolds.length);
                   key={item.itemId}
                   className=" border-2 p-2.5 rounded-lg shadow-lg w-full lg:w-72 hover:scale-105 duration-200 transform transition cursor-pointer border-2 dark:border-gray-500"
                 >
-                  <Link key={item?.itemId} href={`/assets/${item?.tokenId}`}>
+                  <Link key={item?.itemId} href={`/assets/${item?.itemId}`}>
                     <div>
                       <HomeComp uri={item ? item?.metadataURI : ""} />
 
@@ -182,11 +197,29 @@ console.log("buy assets count",refineArray.itemSolds.length);
 
                   <div className="px-4 py-4 bg-white  flex justify-center mt-5">
                     <button
-                      onClick={() => sellNft(item)}
+                      onClick={() => submitNft()}
                       className="text-black font-bold"
                     >
-                      Put to Marketplace
+                    Put to marketplace
+                      
                     </button>
+
+                    {isPriceInputVisible && (
+        <div>
+          {/* Price input field */}
+          <input
+            type="number"
+            placeholder="Enter Price"
+            value={price}
+            onChange={handlePriceChange}
+            className="border border-gray-300 p-2 mt-2"
+          />
+
+          {/* Add a button to submit the price */}
+        
+          <button onClick={()=> sellNft(item,price)} className="bg-blue-500 text-white px-4 py-2 mt-2">Put {price} to Marketplace</button>
+        </div>
+      )}
                   </div>
                 </div>
               );
