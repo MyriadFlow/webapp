@@ -16,7 +16,6 @@ import Layout from "../../Components/Layout";
 import Link from "next/link";
 import { saleStartedQuery } from "../../utils/gqlUtil";
 import request from "graphql-request";
-const graphqlAPI = process.env.NEXT_PUBLIC_MARKETPLACE_API;
 
 function Token({token}) {
 

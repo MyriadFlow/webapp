@@ -21,10 +21,6 @@ import { useAccount } from "wagmi";
 import Typewriter from '../Components/Typewriter';
 import styles from '../styles/Typewritter.module.css';
 
-const tradhubAddress = process.env.NEXT_PUBLIC_TRADEHUB_ADDRESS;
-const graphqlAPI = process.env.NEXT_PUBLIC_MARKETPLACE_API;
-const accessmasterAddress = process.env.NEXT_PUBLIC_ACCESS_MASTER_ADDRESS;
-
 export default function LandingPage() {
 
   const { resdata } = useData();

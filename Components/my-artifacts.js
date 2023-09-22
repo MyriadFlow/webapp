@@ -5,7 +5,6 @@ import { useSelector } from "react-redux";
 import HomeComp from "./homeComp";
 import Loader from "./Loader";
 import { request, gql } from "graphql-request";
-const graphqlAPI = process.env.NEXT_PUBLIC_STOREFRONT_API;
 const MyAssets = () => {
   const walletAddr = useSelector(selectUser);
   var wallet = walletAddr ? walletAddr[0] : "";

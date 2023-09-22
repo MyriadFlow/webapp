@@ -10,7 +10,6 @@ import Loader from "../Components/Loader";
 import BuyAsset from "./buyAssetModal";
 import { sellItem } from "../pages/api/sellItem";
 import Web3Modal from "web3modal";
-const graphqlAPI = process.env.NEXT_PUBLIC_MARKETPLACE_API;
 import { useAccount } from "wagmi";
 
 const apiUrl = 'https://testnet.gateway.myriadflow.com/api/v1.0/webapp/contracts/7aa9e5d1-a31f-4962-88f4-3d970c609844';

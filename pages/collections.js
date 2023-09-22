@@ -16,8 +16,6 @@ import Instagen from "../Components/instagen";
 import Eternum from "../Components/eternumpass";
 import etherContract from "../utils/web3Modal";
 import Tradhub from '../artifacts/contracts/tradehub/TradeHub.sol/TradeHub.json'
-const graphqlAPI = process.env.NEXT_PUBLIC_STOREFRONT_API;
-const tradhubAddress = process.env.NEXT_PUBLIC_TRADEHUB_ADDRESS;
 import { useAccount } from "wagmi";
 
 const Collection = () => {

@@ -16,7 +16,6 @@ import etherContract from "../utils/web3Modal";
 const tradhubAddress=process.env.NEXT_PUBLIC_TRADEHUB_ADDRESS
 const accessmasterAddress = process.env.NEXT_PUBLIC_ACCESS_MASTER_ADDRESS;
 
-const graphqlAPI = process.env.NEXT_PUBLIC_MARKETPLACE_API;
 import { useAccount } from "wagmi";
 
 const MyAssets = () => {

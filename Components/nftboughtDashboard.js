@@ -13,7 +13,6 @@ import Tradhub from '../artifacts/contracts/tradehub/TradeHub.sol/TradeHub.json'
 // import { buyNFT } from "../pages/api/buyNFT";
 // import { buyNFT } from "./api/buyNFT";
 import { sellItem } from "../pages/api/sellItem";
-const graphqlAPI = process.env.NEXT_PUBLIC_MARKETPLACE_API;
 import { useRouter } from 'next/router';
 import { useAccount } from "wagmi";
 

@@ -23,8 +23,6 @@ import styles from '../styles/Typewritter.module.css';
 import Typewriter from '../Components/Typewriter';
 
 const tradhubAddress = process.env.NEXT_PUBLIC_TRADEHUB_ADDRESS;
-const graphqlAPI = process.env.NEXT_PUBLIC_MARKETPLACE_API;
-const accessmasterAddress = process.env.NEXT_PUBLIC_ACCESS_MASTER_ADDRESS;
 
 export default function Marketplace() {
 
