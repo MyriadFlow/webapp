@@ -8,18 +8,18 @@ export default async function handler(req, res) {
   };
 
   const AllBuildingQuery = `{
-    auctionStarteds(orderBy: id) {
+    auctionStarteds() {
+        auctioneer
+        basePrice
+        blockNumber
+        blockTimestamp
+        endTime
+        id
         itemId
         metaDataURI
         nftContract
         tokenId
-        id
         transactionHash
-        blockTimestamp
-        blockNumber
-        endTime
-        basePrice
-        auctioneer
       }
     }`;
 

@@ -373,9 +373,13 @@ const Home = () => {
         }
       }
     `;
-    const result = [];
+    const refineArray = {};
+    refineArray.auctionStarteds = [];
+    const response = await fetch("/api/auctionput");
+    const result = await response.json();
+    console.log("result", response);
     setLoading(true);
-    setAuction(result.auctionEndeds);
+    // setAuction(result.auctionStarteds);
     setLoading(false);
   };
   return (
@@ -693,7 +697,9 @@ const Home = () => {
 
             </div>
           )}
-          <div className="my-10 lg:mx-6 md:mx-4 mx-0 h-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 w-full">
+          {
+            page== "sale" && (
+<div className="my-10 lg:mx-6 md:mx-4 mx-0 h-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 w-full">
             {data?.length ? (
               data?.map((item) => {
                 return (
@@ -742,6 +748,15 @@ const Home = () => {
               </div>)
             )}
           </div>
+            )
+          }
+          
+
+          {page == "auction" && (
+          <div className="p-4 px-10">
+            auction data
+          </div>
+        )}
 
           {/* <div className=" p-4">
               {auction.length > 0 ? (
