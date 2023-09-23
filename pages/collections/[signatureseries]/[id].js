@@ -7,6 +7,8 @@ import { ethers } from "ethers";
 import Loader from "../../../Components/Loader";
 import Layout from "../../../Components/Layout";
 import { useAccount } from "wagmi";
+import FusionSeries from '../../../artifacts/contracts/fusionseries/FusionSeries.sol/FusionSeries.json';
+import etherContract from "../../../utils/web3Modal";
 
 export default function CollectionItem() {
 
@@ -58,7 +60,7 @@ export default function CollectionItem() {
       const provider = new ethers.providers.Web3Provider(window.ethereum);
       const tx = await provider.getTransaction(transactionHash);
       console.log("transactionHash", transactionHash, "tx.to", tx.to);
-      console.log("here", id , " ", tx.to)
+      console.log("here", id, " ", tx.to)
       if (tx.to === id) {
         return true;
       }
@@ -72,7 +74,7 @@ export default function CollectionItem() {
 
       const getSignetureSeriesAssets = async () => {
         const response = await fetch(`/api/sigseriescreated`);
-      result = await response.json();
+        result = await response.json();
 
         const provider = new ethers.providers.Web3Provider(window.ethereum);
         let tranasactionHashArray = result.signatureSeriesAssetCreateds?.map(
@@ -104,14 +106,21 @@ export default function CollectionItem() {
     }
     else if (signatureseries == "FusionSeries") {
       const { id } = router.query;
+      const fusionAddress = "0x0670458D26EE25E5dac8BdEA574dfb67a2042438"
+      const fusioncontract = await etherContract(fusionAddress, FusionSeries.abi)
+      //       const meta = await fusioncontract.uri(1);
+      //       console.log("meta",meta)
 
       const getSignetureSeriesAssets = async () => {
         const response = await fetch(`/api/fusioncreated`);
-      result = await response.json();
+        result = await response.json();
 
         const provider = new ethers.providers.Web3Provider(window.ethereum);
         let tranasactionHashArray = result.fusionSeriesAssetCreateds?.map(
           (asset) => asset.transactionHash
+        );
+        let fusionaddrArray = result.fusionSeriesAssetCreateds?.map(
+          (asset) => asset.nftContract
         );
         const innerContractAddress = [];
         await Promise?.all(
@@ -124,9 +133,20 @@ export default function CollectionItem() {
                 contractAddress.to,
                 id
               );
-              innerContractAddress.push(
-                result.fusionSeriesAssetCreateds.find((asset) => asset.transactionHash === hash)
+              // Find the asset with the matching transaction hash
+              const asset = result.fusionSeriesAssetCreateds.find(
+                (asset) => asset.transactionHash === hash
               );
+              if (asset) {
+                // Fetch metadata for the item using values from the asset
+                const tokenId = asset.tokenID; // Replace with the actual property name in your asset object
+                const meta = await fusioncontract.uri(tokenId);
+                console.log("meta data fusion", meta);
+                // Create an object containing both the asset and its meta data
+                asset.metaDataURI = meta;
+
+                innerContractAddress.push(asset);
+              }
             }
             setAsseetsData(innerContractAddress);
           })
@@ -137,12 +157,12 @@ export default function CollectionItem() {
 
       await getSignetureSeriesAssets();
     }
-    else if (signatureseries == "InstaGen" && result!=null) {
+    else if (signatureseries == "InstaGen" && result != null) {
       const { id } = router.query;
 
       const getSignetureSeriesAssets = async () => {
         const response = await fetch(`/api/instagencreated`);
-      result = await response.json();
+        result = await response.json();
 
         const provider = new ethers.providers.Web3Provider(window.ethereum);
         let tranasactionHashArray = result.instaGenAssetCreateds?.map(
@@ -177,7 +197,7 @@ export default function CollectionItem() {
 
       const getSignetureSeriesAssets = async () => {
         const response = await fetch(`/api/eternumcreated`);
-      result = await response.json();
+        result = await response.json();
 
         const provider = new ethers.providers.Web3Provider(window.ethereum);
         let tranasactionHashArray = result.signatureSeriesAssetCreateds?.map(
@@ -235,28 +255,28 @@ export default function CollectionItem() {
     <Layout>
       {/* <div>{id}</div> */}
       <div className="min-h-screen body-back">
-                        <div
-                        className="w-full h-72 object-cover bg-gray-200" style={{
-                            backgroundImage: `url("")`,
-                            backgroundPosition: 'center',
-                            backgroundSize: 'cover',
-                            backgroundRepeat: 'no-repeat',
-                        }}>
-                    </div>
+        <div
+          className="w-full h-72 object-cover bg-gray-200" style={{
+            backgroundImage: `url("")`,
+            backgroundPosition: 'center',
+            backgroundSize: 'cover',
+            backgroundRepeat: 'no-repeat',
+          }}>
+        </div>
 
-                    <div className="flex lg:flex-row md:flex-row flex-col items-center justify-start lg:-mt-24 md:-mt-24 -mt-16 lg:ml-16 md:ml-16">
-                        <div className="rounded-xl h-48 w-48 ring-offset-2 ring-1 ring-black bg-gray-200" >
-                        {/* <img
+        <div className="flex lg:flex-row md:flex-row flex-col items-center justify-start lg:-mt-24 md:-mt-24 -mt-16 lg:ml-16 md:ml-16">
+          <div className="rounded-xl h-48 w-48 ring-offset-2 ring-1 ring-black bg-gray-200" >
+            {/* <img
                                 className="text-3xl text-gray-500 w-48 h-48 rounded-xl"
                                 alt=""
                                 src={resdata?.Storefront.Profileimage}
                             /> */}
-                        </div>
-</div>
-<div className='ml-16 mt-10 text-2xl font-bold'>
-  {signatureseries
-  }
-</div>
+          </div>
+        </div>
+        <div className='ml-16 mt-10 text-2xl font-bold'>
+          {signatureseries
+          }
+        </div>
         <div>
           <div className=" p-4 h-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {assetsData?.length > 0 ? (
@@ -277,7 +297,9 @@ export default function CollectionItem() {
                           <div className="flex items-center ml-4">
                             <FaEthereum className="h-4 w-4 text-blue-400" />
                             <div className="font-extralight dark:text-gray-400 ml-4">
-                              item id: {item?.tokenId} {/* {getEthPrice(item?.price)} MATIC */}
+                              token id: {item?.tokenID} {/* {getEthPrice(item?.price)} MATIC */}
+
+                              {/* meta: {uri(item?.tokenId)} */}
                             </div>
                           </div>
                         </div>
