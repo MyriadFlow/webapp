@@ -100,7 +100,31 @@ function Token() {
           <div className="w-2/3">
 
             <div className="pl-10 border border-gray-600 p-4 mb-4">
-              <div>SignatureSeries</div>
+              {
+                signatureseries == "SignatureSeries" && (
+              <div>Signature Series</div>
+                )
+              }
+              {
+                signatureseries == "FusionSeries" && (
+              <div>Fusion Series</div>
+                )
+              }
+              {
+                signatureseries == "EternumPass" && (
+              <div>Eternum Pass</div>
+                )
+              }
+              {
+                signatureseries == "EternalSoul" && (
+              <div>Eternal Soul</div>
+                )
+              }
+              {
+                signatureseries == "InstaGen" && (
+              <div>InstaGen</div>
+                )
+              }
               <div className="pt-10 pb-4 font-bold text-xl">{nftDatas?.name}</div>
               <div className="pb-10">Owned by</div>
               <div>Current price</div>
