@@ -106,11 +106,7 @@ export default function CollectionItem() {
     }
     else if (signatureseries == "FusionSeries") {
       const { id } = router.query;
-      const fusionAddress = "0x0670458D26EE25E5dac8BdEA574dfb67a2042438"
-      const fusioncontract = await etherContract(fusionAddress, FusionSeries.abi)
-      //       const meta = await fusioncontract.uri(1);
-      //       console.log("meta",meta)
-
+      
       const getSignetureSeriesAssets = async () => {
         const response = await fetch(`/api/fusioncreated`);
         result = await response.json();
@@ -119,9 +115,7 @@ export default function CollectionItem() {
         let tranasactionHashArray = result.fusionSeriesAssetCreateds?.map(
           (asset) => asset.transactionHash
         );
-        let fusionaddrArray = result.fusionSeriesAssetCreateds?.map(
-          (asset) => asset.nftContract
-        );
+
         const innerContractAddress = [];
         await Promise?.all(
           tranasactionHashArray?.map(async (hash) => {
@@ -138,6 +132,8 @@ export default function CollectionItem() {
                 (asset) => asset.transactionHash === hash
               );
               if (asset) {
+                const fusionAddress = id;
+                const fusioncontract = await etherContract(fusionAddress, FusionSeries.abi)
                 // Fetch metadata for the item using values from the asset
                 const tokenId = asset.tokenID; // Replace with the actual property name in your asset object
                 const meta = await fusioncontract.uri(tokenId);
