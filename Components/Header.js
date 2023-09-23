@@ -19,7 +19,6 @@ import { useData } from "../context/data";
 import { useAccount } from "wagmi";
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 
-const accessmasterAddress = process.env.NEXT_PUBLIC_ACCESS_MASTER_ADDRESS;
 function Header() {
 
   const { resdata } = useData();

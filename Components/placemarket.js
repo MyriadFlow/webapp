@@ -13,8 +13,8 @@ import Tradhub from '../artifacts/contracts/tradehub/TradeHub.sol/TradeHub.json'
 import Loader from "./Loader";
 import { saleStartedQuery } from "../utils/gqlUtil";
 import etherContract from "../utils/web3Modal";
-const tradhubAddress=process.env.NEXT_PUBLIC_TRADEHUB_ADDRESS
-const accessmasterAddress = process.env.NEXT_PUBLIC_ACCESS_MASTER_ADDRESS;
+const tradhubAddress="0x1509f86D76A683B3DD9199dd286e26eb7d136519";
+const accessmasterAddress = "0xb4f7ba8C7d818a208Cd89B127a126DD2aa45aDae";
 
 import { useAccount } from "wagmi";
 
@@ -45,7 +45,7 @@ const MyAssets = () => {
             const tokenTimestampMap = {};
 
             for (const obj of result.saleStarteds) {
-              const tradhubAddress = process.env.NEXT_PUBLIC_TRADEHUB_ADDRESS;
+              const tradhubAddress = "0x1509f86D76A683B3DD9199dd286e26eb7d136519";
               const tradhubContarct = await etherContract(
                 tradhubAddress,
                 Tradhub.abi

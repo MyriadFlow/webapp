@@ -22,7 +22,7 @@ import { useAccount } from "wagmi";
 import styles from '../styles/Typewritter.module.css';
 import Typewriter from '../Components/Typewriter';
 
-const tradhubAddress = process.env.NEXT_PUBLIC_TRADEHUB_ADDRESS;
+const tradhubAddress = "0x1509f86D76A683B3DD9199dd286e26eb7d136519";
 
 export default function Marketplace() {
 
@@ -66,7 +66,7 @@ export default function Marketplace() {
                     const nftData = await getMetaData(item.metaDataURI);
                     finalResult.push({
                         ...item, ...nftData,
-                        image: nftData?.image ? `${process.env.NEXT_PUBLIC_IPFS_GATEWAY}${removePrefix(nftData?.image)}` : "",
+                        image: nftData?.image ? `https://cloudflare-ipfs.com/ipfs/${removePrefix(nftData?.image)}` : "",
                         status: itemStatus.get(parseInt(itemResult.status))
                     })
                 })).then(() => {

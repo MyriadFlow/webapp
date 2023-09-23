@@ -15,8 +15,8 @@ import { removePrefix } from "../utils/ipfsUtil";
 import Loader from "../Components/Loader";
 import etherContract from "../utils/web3Modal";
 const client = new NFTStorage({ token: YOUR_API_KEY });
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL_GATEWAY;
-const accessmasterAddress = process.env.NEXT_PUBLIC_ACCESS_MASTER_ADDRESS;
+const BASE_URL = "https://testnet.gateway.myriadflow.com/";
+const accessmasterAddress = "0xb4f7ba8C7d818a208Cd89B127a126DD2aa45aDae";
 import { useAccount } from "wagmi";
 
 function Profile() {
@@ -418,7 +418,7 @@ function Profile() {
                 {profileDetails?.coverPictureUrl ? (
                     <div
                         className="w-full h-72 object-cover bg-gray-200" style={{
-                            backgroundImage: `url(${process.env.NEXT_PUBLIC_IPFS_GATEWAY}/${removePrefix(profileDetails?.coverPictureUrl)})`,
+                            backgroundImage: `url(https://cloudflare-ipfs.com/ipfs/${removePrefix(profileDetails?.coverPictureUrl)})`,
                             backgroundPosition: 'center',
                             backgroundSize: 'cover',
                             backgroundRepeat: 'no-repeat',
@@ -437,7 +437,7 @@ function Profile() {
                             <img
                                 className="text-3xl text-gray-500 w-48 h-48 rounded-full"
                                 alt=""
-                                src={`${process.env.NEXT_PUBLIC_IPFS_GATEWAY}/${removePrefix(
+                                src={`https://cloudflare-ipfs.com/ipfs/${removePrefix(
                                     profileDetails?.profilePictureUrl
                                 )}`}
                             />

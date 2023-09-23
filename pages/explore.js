@@ -23,7 +23,7 @@ import axios from "axios";
 import etherContract from "../utils/web3Modal";
 import Tradhub from '../artifacts/contracts/tradehub/TradeHub.sol/TradeHub.json';
 
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
+const BASE_URL = "https://testnet.launch.myriadflow.com/";
 
 const Home = () => {
   const allfilter = {
@@ -235,7 +235,7 @@ const Home = () => {
       const tokenTimestampMap = {};
 
       for (const obj of result.saleStarteds) {
-        const tradhubAddress = process.env.NEXT_PUBLIC_TRADEHUB_ADDRESS;
+        const tradhubAddress = "0x1509f86D76A683B3DD9199dd286e26eb7d136519";
         const tradhubContarct = await etherContract(
           tradhubAddress,
           Tradhub.abi
@@ -291,7 +291,7 @@ const Home = () => {
             description,
             categories: categories,
             image: nftData?.image
-              ? `${process.env.NEXT_PUBLIC_IPFS_GATEWAY}${removePrefix(image)}`
+              ? `https://cloudflare-ipfs.com/ipfs/${removePrefix(image)}`
               : "",
           };
         })

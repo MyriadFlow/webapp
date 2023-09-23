@@ -13,7 +13,7 @@ import { saleStartedQuery } from "../utils/gqlUtil";
 import axios from "axios";
 import { buyItem } from "./api/buyItem";
 
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
+const BASE_URL = "https://testnet.launch.myriadflow.com/";
 
 export default function Wishlist() {
   const [wishlist, setWishlist] = useState([]);
@@ -61,7 +61,7 @@ export default function Wishlist() {
           description,
           categories: categories,
           image: nftData?.image
-            ? `${process.env.NEXT_PUBLIC_IPFS_GATEWAY}${removePrefix(image)}`
+            ? `https://cloudflare-ipfs.com/ipfs/${removePrefix(image)}`
             : "",
         };
       })

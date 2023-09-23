@@ -1,7 +1,7 @@
 import axios from 'axios';
 import Loader from "../Components/Loader";
 
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL_GATEWAY;
+const BASE_URL = "https://testnet.gateway.myriadflow.com/";
 import { convertUtf8ToHex } from "@walletconnect/utils";
 const Web3 = require("web3");
 import { useEffect, useState } from "react";

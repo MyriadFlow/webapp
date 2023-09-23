@@ -65,7 +65,7 @@ function NftboughtDashboard() {
       const tokenTimestampMap = {};
 
       for (const obj of result.itemSolds) {
-        const tradhubAddress = process.env.NEXT_PUBLIC_TRADEHUB_ADDRESS;
+        const tradhubAddress = "0x1509f86D76A683B3DD9199dd286e26eb7d136519";
         const tradhubContarct = await etherContract(
           tradhubAddress,
           Tradhub.abi
