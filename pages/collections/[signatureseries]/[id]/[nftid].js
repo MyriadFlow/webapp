@@ -21,16 +21,18 @@ import { useRouter } from 'next/router';
 function Token() {
 
     const router = useRouter();
-    const { signatureseries, id, tokenid } = router.query;
+    const { signatureseries, id, nftid } = router.query;
+    console.log("nftid", nftid);
 
   const [data, setData] = useState([]);
   const [nftDatas, setNftDatas] = useState([]);
 
-  const fetchAsset = async (walletAddr) => {
-  const response = await fetch(`/api/onesaleasset?tokenid=${tokenid}`);
+  const fetchAsset = async () => {
+  const response = await fetch(`/api/onesigseries?nftid=${nftid}`);
     const result = await response.json();
-    setData(result.saleStarteds[0])
-    console.log(data);
+
+    setData(result.signatureSeriesAssetCreated)
+    console.log("data", data, "result",result);
 
     const nftData = await getMetaData(data.metaDataURI);
     console.log("nftData", nftData);
@@ -41,7 +43,7 @@ function Token() {
 
   useEffect(() => {
     fetchAsset();
-  });
+  },[]);
 
   function getEthPrice(price) {
     return ethers.utils.formatEther(price);
