@@ -1,14 +1,14 @@
 import { useRouter } from 'next/router';
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import HomeComp from "../../../Components/homeComp";
+import HomeComp from "../../../../Components/homeComp";
 import { FaEthereum } from "react-icons/fa";
 import { ethers } from "ethers";
-import Loader from "../../../Components/Loader";
-import Layout from "../../../Components/Layout";
+import Loader from "../../../../Components/Loader";
+import Layout from "../../../../Components/Layout";
 import { useAccount } from "wagmi";
-import FusionSeries from '../../../artifacts/contracts/fusionseries/FusionSeries.sol/FusionSeries.json';
-import etherContract from "../../../utils/web3Modal";
+import FusionSeries from '../../../../artifacts/contracts/fusionseries/FusionSeries.sol/FusionSeries.json';
+import etherContract from "../../../../utils/web3Modal";
 
 export default function CollectionItem() {
 
@@ -279,10 +279,10 @@ export default function CollectionItem() {
               assetsData?.map((item) => {
                 return (
                   <div
-                    key={item.itemId}
+                    key={item.tokenID}
                     className=" border-2 p-2.5 rounded-lg shadow-lg w-full lg:w-72 hover:scale-105 duration-200 transform transition cursor-pointer border-2 dark:border-gray-500"
                   >
-                    <Link key={item?.itemId} href={`/assets/${item?.itemId}`}>
+                    <Link key={item?.tokenID} href={`/collections/${signatureseries}/${id}/${item?.tokenID}`}>
                       <div>
                         <HomeComp uri={item ? item?.metaDataURI : ""} />
 
