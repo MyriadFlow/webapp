@@ -9,8 +9,23 @@ import Layout from "../../../../Components/Layout";
 import { useAccount } from "wagmi";
 import FusionSeries from '../../../../artifacts/contracts/fusionseries/FusionSeries.sol/FusionSeries.json';
 import etherContract from "../../../../utils/web3Modal";
+import { useData } from "../../../../context/data";
 
 export default function CollectionItem() {
+
+  const { resdata } = useData();
+
+  const graphql = resdata?.Storefront.subgraphUrl;
+  console.log(graphql);
+
+  const regex = /^(.*?)(?=\/graphql)/;
+
+  // Use the regular expression to extract the URL
+  const match = graphql?.match(regex);
+
+  // Extract the matched URL or set it to null if no match was found
+  const graphqlAPI = match ? match[0] : null;
+  console.log(graphqlAPI);
 
   const router = useRouter();
   const { signatureseries, id } = router.query;
@@ -36,19 +51,19 @@ export default function CollectionItem() {
 
     let result = [];
     if (signatureseries == "SignatureSeries") {
-      const response = await fetch(`/api/sigseriescreated`);
+      const response = await fetch(`/api/sigseriescreated?subgraphUrl=${graphqlAPI}`);
       result = await response.json();
     }
     else if (signatureseries == "FusionSeries") {
-      const response = await fetch(`/api/fusioncreated`);
+      const response = await fetch(`/api/fusioncreated?subgraphUrl=${graphqlAPI}`);
       result = await response.json();
     }
     else if (signatureseries == "InstaGen") {
-      const response = await fetch(`/api/instagencreated`);
+      const response = await fetch(`/api/instagencreated?subgraphUrl=${graphqlAPI}`);
       result = await response.json();
     }
     else if (signatureseries == "EternumPass") {
-      const response = await fetch(`/api/eternumcreated`);
+      const response = await fetch(`/api/eternumcreated?subgraphUrl=${graphqlAPI}`);
       result = await response.json();
     }
     console.log("graphql data", result);
@@ -73,7 +88,7 @@ export default function CollectionItem() {
       const { id } = router.query;
 
       const getSignetureSeriesAssets = async () => {
-        const response = await fetch(`/api/sigseriescreated`);
+        const response = await fetch(`/api/sigseriescreated?subgraphUrl=${graphqlAPI}`);
         result = await response.json();
 
         const provider = new ethers.providers.Web3Provider(window.ethereum);
@@ -108,7 +123,7 @@ export default function CollectionItem() {
       const { id } = router.query;
       
       const getSignetureSeriesAssets = async () => {
-        const response = await fetch(`/api/fusioncreated`);
+        const response = await fetch(`/api/fusioncreated?subgraphUrl=${graphqlAPI}`);
         result = await response.json();
 
         const provider = new ethers.providers.Web3Provider(window.ethereum);
@@ -157,7 +172,7 @@ export default function CollectionItem() {
       const { id } = router.query;
 
       const getSignetureSeriesAssets = async () => {
-        const response = await fetch(`/api/instagencreated`);
+        const response = await fetch(`/api/instagencreated?subgraphUrl=${graphqlAPI}`);
         result = await response.json();
 
         const provider = new ethers.providers.Web3Provider(window.ethereum);
@@ -192,7 +207,7 @@ export default function CollectionItem() {
       const { id } = router.query;
 
       const getSignetureSeriesAssets = async () => {
-        const response = await fetch(`/api/eternumcreated`);
+        const response = await fetch(`/api/eternumcreated?subgraphUrl=${graphqlAPI}`);
         result = await response.json();
 
         const provider = new ethers.providers.Web3Provider(window.ethereum);

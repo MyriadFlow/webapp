@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 import HomeComp from "./homeComp";
 import Loader from "./Loader";
 import { request, gql } from "graphql-request";
+import { useData } from "../context/data";
 
 const MyAssets = () => {
   const { resdata } = useData();

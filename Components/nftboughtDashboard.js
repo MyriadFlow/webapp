@@ -15,9 +15,24 @@ import Tradhub from "../artifacts/contracts/tradehub/TradeHub.sol/TradeHub.json"
 import { sellItem } from "../pages/api/sellItem";
 import { useRouter } from "next/router";
 import { useAccount } from "wagmi";
+import { useData } from "../context/data";
 
 function NftboughtDashboard() {
   const router = useRouter();
+
+  const { resdata } = useData();
+
+  const graphql = resdata?.Storefront.subgraphUrl;
+  console.log(graphql);
+
+  const regex = /^(.*?)(?=\/graphql)/;
+
+  // Use the regular expression to extract the URL
+  const match = graphql?.match(regex);
+
+  // Extract the matched URL or set it to null if no match was found
+  const graphqlAPI = match ? match[0] : null;
+  console.log(graphqlAPI);
 
   function getEthPrice(price) {
     return ethers.utils.formatEther(price);
@@ -53,7 +68,7 @@ function NftboughtDashboard() {
     const refineArray = {};
     refineArray.itemSolds = [];
 
-    const response = await fetch(`/api/soldgraph?walletAddress=${walletAddr}`);
+    const response = await fetch(`/api/soldgraph?walletAddress=${walletAddr}?subgraphUrl=${graphqlAPI}`);
     const result = await response.json();
 
     setLoading(true);

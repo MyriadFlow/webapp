@@ -23,11 +23,26 @@ import axios from "axios";
 import etherContract from "../utils/web3Modal";
 import Tradhub from "../artifacts/contracts/tradehub/TradeHub.sol/TradeHub.json";
 import { useAccount } from "wagmi";
+import { useData } from "../context/data";
 
 const BASE_URL = "https://testnet.launch.myriadflow.com/";
 
 const Home = () => {
   const walletaddr = useAccount().address;
+
+  const { resdata } = useData();
+
+  const graphql = resdata?.Storefront.subgraphUrl;
+  console.log(graphql);
+
+  const regex = /^(.*?)(?=\/graphql)/;
+
+  // Use the regular expression to extract the URL
+  const match = graphql?.match(regex);
+
+  // Extract the matched URL or set it to null if no match was found
+  const graphqlAPI = match ? match[0] : null;
+  console.log(graphqlAPI);
 
   const allfilter = {
     minPrice: 0.1,
@@ -231,7 +246,7 @@ const Home = () => {
   const market = async (sortType) => {
     const refineArray = {};
     refineArray.saleStarteds = [];
-    const response = await fetch(`/api/salegraph?subgraphUrl=${graphqlAPI}`);
+    const response = await fetch(`/api/salegraph?subgraphUrl=${graphqlAPI}?subgraphUrl=${graphqlAPI}`);
     const result = await response.json();
     console.log("result", result);
 

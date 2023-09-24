@@ -15,11 +15,27 @@ import { saleStartedQuery } from "../utils/gqlUtil";
 import etherContract from "../utils/web3Modal";
 const tradhubAddress="0x1509f86D76A683B3DD9199dd286e26eb7d136519";
 const accessmasterAddress = "0xb4f7ba8C7d818a208Cd89B127a126DD2aa45aDae";
+import { useData } from "../context/data";
 
 import { useAccount } from "wagmi";
 
 const MyAssets = () => {
+
   const walletAddr = useAccount().address;
+
+  const { resdata } = useData();
+
+  const graphql = resdata?.Storefront.subgraphUrl;
+  console.log(graphql);
+
+  const regex = /^(.*?)(?=\/graphql)/;
+
+  // Use the regular expression to extract the URL
+  const match = graphql?.match(regex);
+
+  // Extract the matched URL or set it to null if no match was found
+  const graphqlAPI = match ? match[0] : null;
+  console.log(graphqlAPI);
 
   const router = useRouter();
   const [data, setData] = useState([]);
@@ -36,7 +52,7 @@ const MyAssets = () => {
     const refineArray = {};
           refineArray.saleStarteds = [];
 
-          const response = await fetch(`/api/selfsalegraph?walletAddress=${walletAddr}`);
+          const response = await fetch(`/api/selfsalegraph?walletAddress=${walletAddr}?subgraphUrl=${graphqlAPI}`);
           const result = await response.json();
 
           setLoading(true);

@@ -21,7 +21,7 @@ export default function Home() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(`/api/graphql?subgraphUrl=${graphqlAPI}`);
+        const response = await fetch(`/api/graphql?subgraphUrl=${graphqlAPI}?subgraphUrl=${graphqlAPI}`);
         const responseData = await response.json();
         console.log(responseData);
         setData(responseData);

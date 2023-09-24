@@ -19,8 +19,23 @@ import request from "graphql-request";
 import { useRouter } from 'next/router';
 import FusionSeries from '../../../../artifacts/contracts/fusionseries/FusionSeries.sol/FusionSeries.json';
 import etherContract from "../../../../utils/web3Modal";
+import { useData } from "../../../../context/data";
 
 function Token() {
+
+  const { resdata } = useData();
+
+  const graphql = resdata?.Storefront.subgraphUrl;
+  console.log(graphql);
+
+  const regex = /^(.*?)(?=\/graphql)/;
+
+  // Use the regular expression to extract the URL
+  const match = graphql?.match(regex);
+
+  // Extract the matched URL or set it to null if no match was found
+  const graphqlAPI = match ? match[0] : null;
+  console.log(graphqlAPI);
 
   const router = useRouter();
   const { signatureseries, id, nftid } = router.query;
@@ -32,7 +47,7 @@ function Token() {
   const fetchAsset = async () => {
 
     if (signatureseries == "SignatureSeries") {
-      const response = await fetch(`/api/onesigseries?nftid=${nftid}`);
+      const response = await fetch(`/api/onesigseries?nftid=${nftid}?subgraphUrl=${graphqlAPI}`);
       const result = await response.json();
 
       setData(result.signatureSeriesAssetCreated)

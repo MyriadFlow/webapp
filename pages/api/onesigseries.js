@@ -4,7 +4,9 @@ import axios from "axios";
 export default async function handler(req, res) {
     const { nftid } = req.query;
 
-  const endPoint = "http://3.15.54.199:8000/subgraphs/name/fnl";
+    const { subgraphUrl } = req.query;
+    const endPoint = `${subgraphUrl}`;
+    
   const headers = {
     "Content-Type": "application/json",
   };
