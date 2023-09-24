@@ -13,14 +13,13 @@ import Tradhub from '../artifacts/contracts/tradehub/TradeHub.sol/TradeHub.json'
 import Loader from "./Loader";
 import { saleStartedQuery } from "../utils/gqlUtil";
 import etherContract from "../utils/web3Modal";
-const tradhubAddress=process.env.NEXT_PUBLIC_TRADEHUB_ADDRESS
-const accessmasterAddress = process.env.NEXT_PUBLIC_ACCESS_MASTER_ADDRESS;
+const tradhubAddress="0x1509f86D76A683B3DD9199dd286e26eb7d136519";
+const accessmasterAddress = "0xb4f7ba8C7d818a208Cd89B127a126DD2aa45aDae";
 
-const graphqlAPI = process.env.NEXT_PUBLIC_MARKETPLACE_API;
+import { useAccount } from "wagmi";
 
 const MyAssets = () => {
-  const walletAddr = useSelector(selectUser);
-  var wallet = walletAddr ? walletAddr[0] : "";
+  const walletAddr = useAccount().address;
 
   const router = useRouter();
   const [data, setData] = useState([]);
@@ -33,19 +32,60 @@ const MyAssets = () => {
   const [modelmsg, setmodelmsg] = useState("Transaction in progress!");
   const [alertMsg, setAlertMsg] = useState("Something went wrong");
 
-  const fetchUserAssests = async (walletAddr) => {
-    const result = [];
+  const fetchUserAssests = async () => {
+    const refineArray = {};
+          refineArray.saleStarteds = [];
+
+          const response = await fetch(`/api/selfsalegraph?walletAddress=${walletAddr}`);
+          const result = await response.json();
+
+          setLoading(true);
+
+          const status = async () => {
+            const tokenTimestampMap = {};
+
+            for (const obj of result.saleStarteds) {
+              const tradhubAddress = "0x1509f86D76A683B3DD9199dd286e26eb7d136519";
+              const tradhubContarct = await etherContract(
+                tradhubAddress,
+                Tradhub.abi
+              );
+              const transaction = await tradhubContarct.idToMarketItem(obj.itemId);
+              console.log("id" + obj.itemId);
+              console.log("transaction", transaction);
+              console.log("transaction", transaction.status == 1);
+
+              if (transaction.status == 1) {
+                // Check if tokenId exists in tokenTimestampMap
+                if (!tokenTimestampMap[obj.itemId]) {
+                  // If tokenId doesn't exist, add it with the current obj
+                  tokenTimestampMap[obj.itemId] = obj;
+                } else {
+                  // If tokenId exists, compare timestamps and update if current obj has a more recent timestamp
+                  const currentTimestamp = obj.blockTimestamp;
+                  const existingTimestamp = tokenTimestampMap[obj.itemId].blockTimestamp;
+                  if (currentTimestamp > existingTimestamp) {
+                    tokenTimestampMap[obj.itemId] = obj;
+                  }
+                }
+              }
+      
+              console.log("tokenTimestampMap", tokenTimestampMap);
+              // Only add items with transaction.status equal to 1 to the filtered array
+              // Iterate over tokenTimestampMap and push each object to refineArray.saleStarteds
+              refineArray.saleStarteds = Object.values(tokenTimestampMap);
+            }
+          };
+      
+            await status();
+            console.log(refineArray);
+console.log("self sale assets count",refineArray.saleStarteds.length);
     setLoading(true);
-    setData(result.saleStarteds);
+    setData(refineArray.saleStarteds);
     setLoading(false);
   };
   useEffect(() => {
-    if (!localStorage.getItem("platform_wallet") && wallet !== undefined) {
-      localStorage.setItem("platform_wallet", wallet);
-    } else {
-      setwlt(localStorage.getItem("platform_wallet"));
-    }
-    fetchUserAssests(`${localStorage.getItem("platform_wallet")}`);
+    fetchUserAssests();
   }, []);
 
   const listItem = async (tokenId, price) => {
@@ -90,7 +130,7 @@ const MyAssets = () => {
   return (
     <div className="p-4 px-10 min-h-screen body-back">
       {model && <BuyAsset open={model} setOpen={setmodel} message={modelmsg} />}
-      {/* <div className=" p-4 mt-20  h-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+      <div className=" p-4 mt-20  h-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
         {data.length > 0 ? (
           data?.map((item) => {
             return (
@@ -126,7 +166,7 @@ const MyAssets = () => {
             You haven&apos;t Place any item on market.
           </div>
         )}
-      </div> */}
+      </div>
     </div>
   );
 };

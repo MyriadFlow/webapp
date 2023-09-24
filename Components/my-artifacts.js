@@ -5,18 +5,15 @@ import { useSelector } from "react-redux";
 import HomeComp from "./homeComp";
 import Loader from "./Loader";
 import { request, gql } from "graphql-request";
-const graphqlAPI = process.env.NEXT_PUBLIC_STOREFRONT_API;
-import { useData } from "../context/data";
 
 const MyAssets = () => {
-
   const { resdata } = useData();
 
   const graphql = resdata?.Storefront.subgraphUrl;
   console.log(graphql);
 
   const regex = /^(.*?)(?=\/graphql)/;
-  
+
   // Use the regular expression to extract the URL
   const match = graphql?.match(regex);
 
@@ -42,8 +39,8 @@ const MyAssets = () => {
       }
           }
           `;
-          const response = await fetch(`/api/graphql?subgraphUrl=${graphqlAPI}`);
-          const result = await response.json();
+    const response = await fetch(`/api/graphql?subgraphUrl=${graphqlAPI}`);
+    const result = await response.json();
     setLoading(true);
     setData(result.assetCreateds);
     setLoading(false);

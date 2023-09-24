@@ -2,35 +2,30 @@
 import axios from "axios";
 
 export default async function handler(req, res) {
-  const { walletAddress } = req.query;
-
-  const endPoint = "http://3.15.54.199:8000/subgraphs/name/fnl";
+  const endPoint = "http://3.15.54.199:8000/subgraphs/name/sg";
   const headers = {
     "Content-Type": "application/json",
   };
 
   const AllBuildingQuery = `{
-    itemSolds(
-        where: {buyer: "${walletAddress}"}
-        orderBy: id
-      ) {
-        id
-        itemId
-        metadataURI
-        nftContract
-        price
-        seller
-        tokenId
-        transactionHash
-        buyer
+    auctionStarteds() {
+        auctioneer
+        basePrice
         blockNumber
         blockTimestamp
+        endTime
+        id
+        itemId
+        metaDataURI
+        nftContract
+        tokenId
+        transactionHash
       }
     }`;
 
   const graphqlQuery = {
-    operationName: "itemSolds",
-    query: `query itemSolds ${AllBuildingQuery}`,
+    operationName: "auctionStarteds",
+    query: `query auctionStarteds ${AllBuildingQuery}`,
     variables: {},
   };
 

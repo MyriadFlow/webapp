@@ -1,48 +1,47 @@
 import axios from 'axios';
 import Loader from "../Components/Loader";
 
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL_GATEWAY;
+const BASE_URL = "https://testnet.gateway.myriadflow.com/";
 import { convertUtf8ToHex } from "@walletconnect/utils";
 const Web3 = require("web3");
 import { useEffect, useState } from "react";
 
+// const getProfile = async () => {
+//     const token = walletaddr;
+//     const config = {
+//         headers: {
+//             Accept: "application/json, text/plain, */*",
+//             "Content-Type": "application/json",
+//             Authorization: `Bearer ${token}`,
+//         },
+//     };
+//     // setLoading(true);
+//     axios
+//         .get(`${BASE_URL}api/v1.0/profile`, config)
+//         .then((res) => {
+//             const {
+//                 data: {
+//                     payload: {
+//                         name,
+//                         location,
+//                         bio,
+//                         email,
+//                         profilePictureUrl,
+//                         walletAddress
+//                     },
+//                 },
+//             } = res;
 
-const getProfile = async () => {
-    const token = localStorage.getItem("platform_token");
-    const config = {
-        headers: {
-            Accept: "application/json, text/plain, */*",
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-        },
-    };
-    // setLoading(true);
-    axios
-        .get(`${BASE_URL}api/v1.0/profile`, config)
-        .then((res) => {
-            const {
-                data: {
-                    payload: {
-                        name,
-                        location,
-                        bio,
-                        email,
-                        profilePictureUrl,
-                        walletAddress
-                    },
-                },
-            } = res;
+//             console.log(res.data);
 
-            console.log(res.data);
-
-            localStorage.setItem("profileuser", JSON.stringify(res.data.payload));
-    // setprofileDetails(res.data.payload);
-            // setLoading(true);
-        })
-        .catch((error) => {
-            console.log(error);
-        })
-}
+//             localStorage.setItem("profileuser", JSON.stringify(res.data.payload));
+//     // setprofileDetails(res.data.payload);
+//             // setLoading(true);
+//         })
+//         .catch((error) => {
+//             console.log(error);
+//         })
+// }
 
 export const authorize = async () => {
 

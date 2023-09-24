@@ -1,5 +1,7 @@
+import { useAccount } from "wagmi";
+
 export const getHeader=()=>{
-    const token = localStorage.getItem("platform_token");
+    const token = useAccount().address;
     return {
       headers: {
         Accept: "application/json, text/plain, */*",

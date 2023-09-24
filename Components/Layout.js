@@ -6,19 +6,19 @@ import { connectwallethandler } from "../pages/api/setConnection";
 import Head from "next/head";
 
 const Layout = ({ children, title ,description}) => {
-  const dispatch = useDispatch();
-  const [errorMessage, SeterrorMessage] = useState(null);
-  const [defaultAccount, SetdefaultAccount] = useState();
-  const [UserBalance, SetUserBalance] = useState();
+  // const dispatch = useDispatch();
+  // const [errorMessage, SeterrorMessage] = useState(null);
+  // const [defaultAccount, SetdefaultAccount] = useState();
+  // const [UserBalance, SetUserBalance] = useState();
 
-  useEffect(() => {
-    connectwallethandler(
-      SeterrorMessage,
-      SetdefaultAccount,
-      SetUserBalance,
-      dispatch
-    );
-  }, []);
+  // useEffect(() => {
+  //   connectwallethandler(
+  //     SeterrorMessage,
+  //     SetdefaultAccount,
+  //     SetUserBalance,
+  //     dispatch
+  //   );
+  // }, []);
 
   return (
     <>

@@ -2,17 +2,17 @@
 import axios from "axios";
 
 export default async function handler(req, res) {
-  const { tokenid } = req.query; 
+  const { tokenid } = req.query;
   const { subgraphUrl } = req.query;
 
-  const endPoint = `${subgraphUrl}`;
+  const endPoint = "http://3.15.54.199:8000/subgraphs/name/fnl";
   const headers = {
     "Content-Type": "application/json",
   };
 
   const AllBuildingQuery = `{
     saleStarteds(orderBy: id, 
-      where: {tokenId: "${tokenid}"}
+      where: {itemId: "${tokenid}"}
       ) {
         itemId
         metaDataURI

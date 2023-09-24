@@ -11,17 +11,19 @@ import { BsShop } from "react-icons/bs";
 import { IoCreate, IoEaselSharp } from "react-icons/io5";
 import { RiMoneyDollarCircleLine } from "react-icons/ri";
 import SignatureSeries from "../Components/sigseries";
+import FusionSeries from "../Components/fusionseries";
+import Instagen from "../Components/instagen";
+import Eternum from "../Components/eternumpass";
 import etherContract from "../utils/web3Modal";
 import Tradhub from '../artifacts/contracts/tradehub/TradeHub.sol/TradeHub.json'
-const graphqlAPI = process.env.NEXT_PUBLIC_STOREFRONT_API;
-const tradhubAddress = process.env.NEXT_PUBLIC_TRADEHUB_ADDRESS;
+import { useAccount } from "wagmi";
 
 const Collection = () => {
   const [info, setInfo] = useState([]);
   const itemStatus = new Map(["NONEXISTANT", "SALE", "AUCTION", "SOLD","REMOVED"].map((v,index)=>[index,v]));
   const sortedCollection=async()=>{
 }
-  const walletAddr = useSelector(selectUser);
+  const walletAddr = useAccount().address;
   var wallet = walletAddr ? walletAddr[0] : "";
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -76,7 +78,7 @@ const Collection = () => {
     } else {
       setwlt(localStorage.getItem("platform_wallet"));
     }
-    fetchUserAssests(`${localStorage.getItem("platform_wallet")}`);
+    fetchUserAssests();
   }, []);
 
  
@@ -84,7 +86,7 @@ const Collection = () => {
     <Layout title="Collections" description="Collection of assets you launched in various categories.">
     <div className="min-h-screen dark:body-back body-back-light">
     <div className="text-2xl font-semibold mb-4 pt-10 text-center dark:text-white text-gray-800">Collections</div>
-    <div className="pb-4 px-10 grid grid-cols-2 gap-8 sm:gap-6 lg:grid-cols-5 md:grid-cols-3 w-full pt-6 border-t">
+    <div className="pb-4 px-10 grid grid-cols-2 gap-8 sm:gap-6 lg:grid-cols-6 md:grid-cols-3 w-full pt-6 border-t">
       
           <div
             className={`rounded-full text-center text-gray-500 dark:text-gray dark:hover:bg-white  cursor-pointer p-3 border-b-2 border-transparent transition-all ${
@@ -124,6 +126,15 @@ const Collection = () => {
 
           <div
             className={`rounded-full text-center text-gray-500 dark:text-gray dark:hover:bg-white  cursor-pointer p-3 border-b-2 border-transparent transition-all ${
+              page === "eternal" ? "bg-white" : ""
+            }`}
+            onClick={() => setPage("eternal")}
+          >
+              <div className="text-sm lg:text-xl md:text-lg font-semibold">EternalSoul</div>
+          </div>
+
+          <div
+            className={`rounded-full text-center text-gray-500 dark:text-gray dark:hover:bg-white  cursor-pointer p-3 border-b-2 border-transparent transition-all ${
               page === "phygital" ? "bg-white" : ""
             }`}
             onClick={() => setPage("phygital")}
@@ -137,6 +148,24 @@ const Collection = () => {
 {page == "signature" && (
           <div className="p-4 px-10">
             {/* <SignatureSeries /> */}
+          </div>
+        )}
+
+{page == "fusion" && (
+          <div className="p-4 px-10">
+            <FusionSeries />
+          </div>
+        )}
+
+{page == "instagen" && (
+          <div className="p-4 px-10">
+            <Instagen />
+          </div>
+        )}
+
+{page == "eternum" && (
+          <div className="p-4 px-10">
+            <Eternum />
           </div>
         )}
       

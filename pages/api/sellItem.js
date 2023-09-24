@@ -1,22 +1,23 @@
 import { ethers } from "ethers";
-import {SignatureSeries} from './sig';
+import SignatureSeries from '../../artifacts/contracts/signatureseries/SignatureSeries.sol/SignatureSeries.json';
 import Tradehub from '../../artifacts/contracts/tradehub/TradeHub.sol/TradeHub.json';
 import etherContract from "../../utils/web3Modal";
 
-const tradhubAddress = process.env.NEXT_PUBLIC_TRADEHUB_ADDRESS;
-const signatureaddress = "0xaD4296C0e35Eef8b8b9b7AC27D204f798B7A7FD2";
+const tradhubAddress = "0x1509f86D76A683B3DD9199dd286e26eb7d136519";
 
-export const sellItem = async (nft, quantity, setmodel, setmodelmsg) => {
+
+export const sellItem = async (nft, quantity,price, setmodel, setmodelmsg) => {
+  const signatureaddress = nft.nftContract;
   const tradhubContarct = await etherContract(tradhubAddress, Tradehub.abi)
-  const signatureContarct = await etherContract(signatureaddress, SignatureSeries)
+  const signatureContarct = await etherContract(signatureaddress, SignatureSeries.abi)
   // setmodel(true);
   try {
     const options = {
-      value: ethers.BigNumber.from(nft.price).mul(quantity),
+      value: ethers.BigNumber.from(price).mul(quantity),
     };
     
     const signature = await signatureContarct.approve(tradhubAddress,nft.tokenId);
-    const transaction = await tradhubContarct.listItem(nft.nftContract, nft.tokenId,nft.price, quantity,false,0);
+    const transaction = await tradhubContarct.listItem(nft.nftContract, nft.tokenId,price, quantity,false,0);
     console.log(transaction);
     await transaction.wait();
     // setmodel(false);

@@ -12,9 +12,9 @@ import BuyAsset from "../Components/buyAssetModal";
 import { saleStartedQuery } from "../utils/gqlUtil";
 import axios from "axios";
 import { buyItem } from "./api/buyItem";
+import { useAccount } from "wagmi";
 
-const graphqlAPI = process.env.NEXT_PUBLIC_MARKETPLACE_API;
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
+const BASE_URL = "https://testnet.launch.myriadflow.com/";
 
 export default function Wishlist() {
   const [wishlist, setWishlist] = useState([]);
@@ -22,12 +22,13 @@ export default function Wishlist() {
 
   const [modelmsg, setmodelmsg] = useState("buying in progress!");
   const [model, setmodel] = useState(false);
-  const logoutmodel = useSelector(selectModel);
 
   const [shallowData, setShallowData] = useState([]);
 
+  const walletaddr = useAccount().address;
+
   const getWishlist = () => {
-    const token = localStorage.getItem("platform_token");
+    const token = walletaddr;
     const config = {
       headers: {
         Accept: "application/json, text/plain, */*",
@@ -63,7 +64,7 @@ export default function Wishlist() {
           description,
           categories: categories,
           image: nftData?.image
-            ? `${process.env.NEXT_PUBLIC_IPFS_GATEWAY}${removePrefix(image)}`
+            ? `https://cloudflare-ipfs.com/ipfs/${removePrefix(image)}`
             : "",
         };
       })
@@ -91,37 +92,7 @@ export default function Wishlist() {
       description="Add your favourite assets here to buy them later."
     >
       {model && <BuyAsset open={model} setOpen={setmodel} message={modelmsg} />}
-      {logoutmodel && (
-        <div className="flex items-center  shadow-md justify-center w-full h-screen model-overlay fixed  top-0 z-50">
-          <div className="h-56 w-80 bg-white  dark:bg-gray-800 shadow-lg rounded-md fixed z-50 flex items-center justify-center  ring-offset-2 ring-2 ring-blue-400">
-            <div className="flex flex-col justify-center items-center">
-              <div className="text-lg font-semibold dark:text-gray-200">
-                {" "}
-                Are You Sure Wanna Logout ?
-              </div>
-              <div className="flex items-center space-x-8 mt-10 ">
-                <div>
-                  <button
-                    onClick={logoutmetamask}
-                    className="font-semibold bg-blue-500 hover:bg-blue-700 shadow-md p-1 px-4 rounded-md"
-                  >
-                    Ok
-                  </button>
-                </div>
-                <div>
-                  {" "}
-                  <button
-                    onClick={closelogoutmodel}
-                    className="font-semibold bg-gray-200 hover:bg-gray-300  dark:text-gray-400 flex items-center p-1 px-4 rounded-md shadow-md"
-                  >
-                    Cancel
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
+      
       <div className="dark:body-back body-back-light">
         <div className="text-center pt-5">
           <div>

@@ -2,7 +2,7 @@
 import axios from "axios";
 
 export default async function handler(req, res) {
-  const { walletAddress } = req.query;
+    const { nftid } = req.query;
 
   const endPoint = "http://3.15.54.199:8000/subgraphs/name/fnl";
   const headers = {
@@ -10,27 +10,20 @@ export default async function handler(req, res) {
   };
 
   const AllBuildingQuery = `{
-    itemSolds(
-        where: {buyer: "${walletAddress}"}
-        orderBy: id
-      ) {
+    signatureSeriesAssetCreated(id: "${nftid}") {
         id
-        itemId
-        metadataURI
-        nftContract
-        price
-        seller
-        tokenId
-        transactionHash
-        buyer
-        blockNumber
-        blockTimestamp
+          tokenID
+          creator
+          metaDataURI
+          blockNumber
+          blockTimestamp
+          transactionHash
       }
     }`;
 
   const graphqlQuery = {
-    operationName: "itemSolds",
-    query: `query itemSolds ${AllBuildingQuery}`,
+    operationName: "signatureSeriesAssetCreated",
+    query: `query signatureSeriesAssetCreated ${AllBuildingQuery}`,
     variables: {},
   };
 

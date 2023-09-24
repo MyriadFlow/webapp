@@ -15,8 +15,9 @@ import { removePrefix } from "../utils/ipfsUtil";
 import Loader from "../Components/Loader";
 import etherContract from "../utils/web3Modal";
 const client = new NFTStorage({ token: YOUR_API_KEY });
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL_GATEWAY;
-const accessmasterAddress = process.env.NEXT_PUBLIC_ACCESS_MASTER_ADDRESS;
+const BASE_URL = "https://testnet.gateway.myriadflow.com/";
+const accessmasterAddress = "0xb4f7ba8C7d818a208Cd89B127a126DD2aa45aDae";
+import { useAccount } from "wagmi";
 
 function Profile() {
     const profile = {
@@ -33,7 +34,7 @@ function Profile() {
         // discord_id: "",
         // telegram_id: "",
     };
-    const walletAddr = useSelector(selectUser);
+    const walletAddr = useAccount().address;
     var wallet = walletAddr ? walletAddr[0] : "";
     const [hasRole, setHasRole] = useState(true);
     const [showModal, setShowModal] = useState(false);
@@ -61,7 +62,7 @@ function Profile() {
 
     const updateData = async (e) => {
         e.preventDefault();
-        const token = localStorage.getItem("platform_token");
+        const token = walletAddr;
         try {
             if (
                 !updateProfile.name.trim() ||
@@ -109,9 +110,8 @@ function Profile() {
         }
     };
 
-    const user = useSelector(selectUser);
     const getRole = async () => {
-        const token = localStorage.getItem("platform_token");
+        const token = walletAddr;
         const role_id = localStorage.getItem("platform_roleid");
 
         const config1 = {
@@ -131,7 +131,7 @@ function Profile() {
         let web3 = new Web3(Web3.givenProvider);
         let completemsg = roledata.data.payload.eula + roledata.data.payload.flowId;
         const hexMsg = convertUtf8ToHex(completemsg);
-        const result = await web3.eth.personal.sign(hexMsg, wallet);
+        const result = await web3.eth.personal.sign(hexMsg, walletAddr);
 
         var signroledata = JSON.stringify({
             flowId: roledata.data.payload.flowId,
@@ -197,7 +197,7 @@ function Profile() {
     };
 
     const getProfile = async () => {
-        const token = localStorage.getItem("platform_token");
+        const token = walletAddr;
         const config = {
             headers: {
                 Accept: "application/json, text/plain, */*",
@@ -264,7 +264,7 @@ function Profile() {
     const connectweb = async () => {
         const accessmaterContarct = await etherContract(accessmasterAddress, AccessMaster.abi)
         setHasRole(
-            await accessmaterContarct.hasRole(await accessmaterContarct.FLOW_CREATOR_ROLE(), wallet)
+            await accessmaterContarct.hasRole(await accessmaterContarct.FLOW_CREATOR_ROLE(), walletAddr)
         );
         const roleid = await accessmaterContarct.FLOW_CREATOR_ROLE();
         localStorage.setItem("platform_roleid", roleid);
@@ -276,7 +276,7 @@ function Profile() {
 
     useEffect(() => {
         const asyncFn = async () => {
-            const token = localStorage.getItem("platform_token");
+            const token = walletAddr;
             // connectweb();
             if (token) {
                 const profiledt = localStorage.getItem("profileuser");
@@ -418,7 +418,7 @@ function Profile() {
                 {profileDetails?.coverPictureUrl ? (
                     <div
                         className="w-full h-72 object-cover bg-gray-200" style={{
-                            backgroundImage: `url(${process.env.NEXT_PUBLIC_IPFS_GATEWAY}/${removePrefix(profileDetails?.coverPictureUrl)})`,
+                            backgroundImage: `url(https://cloudflare-ipfs.com/ipfs/${removePrefix(profileDetails?.coverPictureUrl)})`,
                             backgroundPosition: 'center',
                             backgroundSize: 'cover',
                             backgroundRepeat: 'no-repeat',
@@ -437,7 +437,7 @@ function Profile() {
                             <img
                                 className="text-3xl text-gray-500 w-48 h-48 rounded-full"
                                 alt=""
-                                src={`${process.env.NEXT_PUBLIC_IPFS_GATEWAY}/${removePrefix(
+                                src={`https://cloudflare-ipfs.com/ipfs/${removePrefix(
                                     profileDetails?.profilePictureUrl
                                 )}`}
                             />

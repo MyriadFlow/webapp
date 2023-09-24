@@ -17,10 +17,9 @@ import Loader from "../Components/Loader";
 import Slider from "react-slick";
 import SmallCard from "../Components/Cards/SmallCard";
 import { useData } from "../context/data";
-
-const tradhubAddress = process.env.NEXT_PUBLIC_TRADEHUB_ADDRESS;
-const graphqlAPI = process.env.NEXT_PUBLIC_MARKETPLACE_API;
-const accessmasterAddress = process.env.NEXT_PUBLIC_ACCESS_MASTER_ADDRESS;
+import { useAccount } from "wagmi";
+import Typewriter from '../Components/Typewriter';
+import styles from '../styles/Typewritter.module.css';
 
 export default function LandingPage() {
 
@@ -38,73 +37,72 @@ export default function LandingPage() {
   const [loading, setLoading] = useState(false);
 
   const itemStatus = new Map(["NONEXISTANT", "SALE", "AUCTION", "SOLD", "REMOVED"].map((v, index) => [index, v]))
-  const walletAddr = useSelector(selectUser);
-  var wallet = walletAddr ? walletAddr[0] : "";
+  const walletAddr = useAccount().address;
   const [hasRole, setHasRole] = useState(true);
 
-  const getLandingData = async () => {
-    const token = localStorage.getItem("platform_token");
-    const config = {
-      headers: {
-        Accept: "application/json, text/plain, */*",
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    };
-    setLoading(true);
-    axios.get(`https://testnet.gateway.myriadflow.com/api/v1.0/marketplace/itemIds`, config)
-      .then(async (res) => {
-        const tradhubContarct = await etherContract(tradhubAddress, Tradhub.abi)
-        const saleInput = res.data.payload.map(i => parseInt(i))
-        const { saleStarteds } =  []
-        const finalResult = []
-        Promise.all(saleStarteds.map(async (item) => {
-          const itemResult = await tradhubContarct.idToMarketItem(item.itemId)
-          const nftData = await getMetaData(item.metaDataURI);
-          finalResult.push({
-            ...item, ...nftData,
-            image: nftData?.image ? `${process.env.NEXT_PUBLIC_IPFS_GATEWAY}${removePrefix(nftData?.image)}` : "",
-            status: itemStatus.get(parseInt(itemResult.status))
-          })
-        })).then(() => {
-          setInfo(finalResult)
-        })
-        setLoading(true);
-      })
-      .catch((error) => {
-        console.log(error);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
-  };
-  useEffect(() => {
-    const token = localStorage.getItem("platform_token");
-    if (token) {
-      getLandingData();
-    }
-  }, [])
+  // const getLandingData = async () => {
+  //   const token = localStorage.getItem("platform_token");
+  //   const config = {
+  //     headers: {
+  //       Accept: "application/json, text/plain, */*",
+  //       "Content-Type": "application/json",
+  //       Authorization: `Bearer ${token}`,
+  //     },
+  //   };
+  //   setLoading(true);
+  //   axios.get(`https://testnet.gateway.myriadflow.com/api/v1.0/marketplace/itemIds`, config)
+  //     .then(async (res) => {
+  //       const tradhubContarct = await etherContract(tradhubAddress, Tradhub.abi)
+  //       const saleInput = res.data.payload.map(i => parseInt(i))
+  //       const { saleStarteds } =  []
+  //       const finalResult = []
+  //       Promise.all(saleStarteds.map(async (item) => {
+  //         const itemResult = await tradhubContarct.idToMarketItem(item.itemId)
+  //         const nftData = await getMetaData(item.metaDataURI);
+  //         finalResult.push({
+  //           ...item, ...nftData,
+  //           image: nftData?.image ? `${process.env.NEXT_PUBLIC_IPFS_GATEWAY}${removePrefix(nftData?.image)}` : "",
+  //           status: itemStatus.get(parseInt(itemResult.status))
+  //         })
+  //       })).then(() => {
+  //         setInfo(finalResult)
+  //       })
+  //       setLoading(true);
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //     })
+  //     .finally(() => {
+  //       setLoading(false);
+  //     });
+  // };
+  // useEffect(() => {
+  //   const token = localStorage.getItem("platform_token");
+  //   if (token) {
+  //     getLandingData();
+  //   }
+  // }, [])
 
-  useEffect(() => {
-    const asyncFn = async () => {
-      const token = localStorage.getItem("platform_token");
-      if (token) {
-      }
+  // useEffect(() => {
+  //   const asyncFn = async () => {
+  //     const token = localStorage.getItem("platform_token");
+  //     if (token) {
+  //     }
 
-      const accessmaterContarct = await etherContract(
-        accessmasterAddress,
-        AccessMater.abi
-      );
-      setHasRole(
-        await accessmaterContarct.hasRole(
-          await accessmaterContarct.FLOW_CREATOR_ROLE(),
-          wallet
-        )
-      );
+  //     const accessmaterContarct = await etherContract(
+  //       accessmasterAddress,
+  //       AccessMater.abi
+  //     );
+  //     setHasRole(
+  //       await accessmaterContarct.hasRole(
+  //         await accessmaterContarct.FLOW_CREATOR_ROLE(),
+  //         wallet
+  //       )
+  //     );
 
-    };
-    asyncFn();
-  }, [hasRole]);
+  //   };
+  //   asyncFn();
+  // }, [hasRole]);
   return (
     <>
       <Layout
@@ -296,21 +294,31 @@ export default function LandingPage() {
             <div className=" py-16 flex lg:flex-row flex-col justify-center items-center">
               <div className="basis-1/3">
                 <div className="text-center p-2">
-                  <h3 className="text-3xl lg:w-1/2 font-poppins font-bold capitalize mb-8 mx-auto text-gray-500 dark:text-white">
-                    Create NFT marketplace for your community
+                  <h3 className="text-3xl lg:w-1/2 font-poppins font-bold capitalize mx-auto text-gray-500 dark:text-white">
+                    Create NFT marketplace for your
                   </h3>
+                  <Typewriter
+            strings={[
+              'Community',
+              'Organiser',
+              'Businesses',
+              'Audience'
+            ]}
+            wrapperClassName={styles.typewriterWrapper}
+            cursorClassName={styles.typewriterCursor}
+          />
                   <div className="items-center lg:py-4 md:py-4">
                     <div>
-                      <button className="py-3 px-6 text-gray-500 dark:text-white font-semibold mb-8 lg:mb-0 border rounded-full">
+                      <button className="py-3 px-10 text-gray-500 dark:text-white font-semibold mb-8 lg:mb-0 border rounded-full">
                         <Link href="/create">
-                          <span className="font-raleway font-bold text-gray-500 dark:text-whit">
-                            Create NFT
+                          <span className="font-raleway font-bold text-gray-500 dark:text-white">
+                          Explore More
                           </span>
                         </Link>
                       </button>
                     </div>
                   </div>
-                  <div className="items-center ">
+                  {/* <div className="items-center ">
                     <div>
                       <button className="py-3 px-6 text-gray-500 dark:text-white font-semibold mb-8 lg:mb-0 explore-btn-border">
                         <Link href="/explore">
@@ -320,7 +328,7 @@ export default function LandingPage() {
                         </Link>
                       </button>
                     </div>
-                  </div>
+                  </div> */}
                 </div>
               </div>
               <div className="basis-1/4 mb-10 lg:mb-0">

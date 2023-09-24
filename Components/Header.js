@@ -16,13 +16,14 @@ import etherContract from "../utils/web3Modal";
 import SimpleDropdown from "./SimpleDropdown";
 // import useAddress from '@thirdweb-dev/react';
 import { useData } from "../context/data";
-const accessmasterAddress = process.env.NEXT_PUBLIC_ACCESS_MASTER_ADDRESS;
+import { useAccount } from "wagmi";
+import { ConnectButton } from '@rainbow-me/rainbowkit';
+
 function Header() {
 
   const { resdata } = useData();
 
-  const address = useAddress();
-  const { contract } = useContract(address);
+  const address = useAccount().address;
   const [dropmenu, setDropMenu] = useState(false);
   const [hidefilter, setHideFilter] = useState(false);
   const router = useRouter();
@@ -44,23 +45,23 @@ function Header() {
   const handleNav = () => {
     setNavOpen((prev) => !prev);
   };
-  const user = useSelector(selectUser);
-  const walletAddress = user ? user[0] : "";
+  const user = useAccount().address;
+  const walletAddress = useAccount().address;
 
   const [hasRole, setHasRole] = useState(false);
   const [hasRoleOperator, setHasRoleOperator] = useState(false);
 
-  useEffect(() => {
-    const asyncFn = async () => {
-      const accessmaterContarct = await etherContract(accessmasterAddress, Accessmater.abi)
-      setHasRole(
-        await accessmaterContarct.hasRole(await accessmaterContarct.FLOW_CREATOR_ROLE(), walletAddress)
-      );
-      setHasRoleOperator(
-        await accessmaterContarct.hasRole(await accessmaterContarct.FLOW_CREATOR_ROLE(), walletAddress))
-    }
-    asyncFn();
-  }, [])
+  // useEffect(() => {
+  //   const asyncFn = async () => {
+  //     const accessmaterContarct = await etherContract(accessmasterAddress, Accessmater.abi)
+  //     setHasRole(
+  //       await accessmaterContarct.hasRole(await accessmaterContarct.FLOW_CREATOR_ROLE(), walletAddress)
+  //     );
+  //     setHasRoleOperator(
+  //       await accessmaterContarct.hasRole(await accessmaterContarct.FLOW_CREATOR_ROLE(), walletAddress))
+  //   }
+  //   asyncFn();
+  // }, [])
 
   return (
     <header className="border-b-[1px] dark:body-back body-back-light dark:border-[#bf2180] border-[#eff1f6] body-back">
@@ -114,9 +115,9 @@ function Header() {
               </div>
             </Link>
 
-            <Link className="text-gray-800 dark:text-white" href="/collection">
+            <Link className="text-gray-800 dark:text-white" href="/collections">
               <div
-                className={router.pathname == "/collection" ? "active " : ""}
+                className={router.pathname == "/collections" ? "active " : ""}
               >
                 Collections
               </div>
@@ -166,7 +167,8 @@ function Header() {
                       )}
                     </div> */}
                     <div className={styles.connect}>
-                      <ConnectWallet className="bg-gradient-to-r from-indigo-500 via-purple-500 to-gray-500 ..." />
+                    <ConnectButton chainStatus="icon"/>
+                      {/* <ConnectWallet className="bg-gradient-to-r from-indigo-500 via-purple-500 to-gray-500 ..." /> */}
                     </div>
                   </div>
                 </div>
@@ -285,7 +287,8 @@ function Header() {
               <div className="flex flex-col items-center">
 
                 <div className={styles.connect}>
-                  <ConnectWallet className="bg-gradient-to-r from-indigo-500 via-purple-500 to-gray-500 ..." />
+                <ConnectButton chainStatus="icon"/>
+                  {/* <ConnectWallet className="bg-gradient-to-r from-indigo-500 via-purple-500 to-gray-500 ..." /> */}
                 </div>
 
 

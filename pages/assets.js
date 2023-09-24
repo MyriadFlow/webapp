@@ -26,6 +26,8 @@ import Image from "next/image";
 import etherContract from "../utils/web3Modal";
 import WalletConnectProvider from "@walletconnect/web3-provider";
 import { Modal } from "react-bootstrap";
+import { useAccount } from "wagmi";
+
 const style = {
   position: "absolute",
   top: "50%",
@@ -39,9 +41,9 @@ const style = {
   px: 4,
   pb: 3,
 };
-const tradhubAddress = process.env.NEXT_PUBLIC_TRADEHUB_ADDRESS;
-const fusionseriesAddress =process.env.NEXT_PUBLIC_FUSIONSERIES_ADDRESS;
-const accessmasterAddress =process.env.NEXT_PUBLIC_ACCESS_MASTER_ADDRESS;
+const tradhubAddress = "0x1509f86D76A683B3DD9199dd286e26eb7d136519";
+const fusionseriesAddress ="0x1A8e9eCf0f1C94D367E455C7BDFfCC340c9c6028";
+const accessmasterAddress ="0xb4f7ba8C7d818a208Cd89B127a126DD2aa45aDae";
 
 export default function CreateItem() {
   const [toggle, setToggle] = useState(false);
@@ -309,7 +311,7 @@ export default function CreateItem() {
     setOpen(false);
   };
 
-  const walletAddr = useSelector(selectUser);
+  const walletAddr = useAccount().address;
   var wallet = walletAddr ? walletAddr[0] : "";
 
   const [hasRole, setHasRole] = useState(false);
