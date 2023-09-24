@@ -21,13 +21,12 @@ import { buyItem } from "../pages/api/buyItem";
 import { saleStartedQuery } from "../utils/gqlUtil";
 import axios from "axios";
 import etherContract from "../utils/web3Modal";
-import Tradhub from '../artifacts/contracts/tradehub/TradeHub.sol/TradeHub.json';
+import Tradhub from "../artifacts/contracts/tradehub/TradeHub.sol/TradeHub.json";
 import { useAccount } from "wagmi";
 
 const BASE_URL = "https://testnet.launch.myriadflow.com/";
 
 const Home = () => {
-
   const walletaddr = useAccount().address;
 
   const allfilter = {
@@ -35,13 +34,12 @@ const Home = () => {
     maxPrice: 100,
     allassets: "",
     buynow: "",
-    availability: ""
+    availability: "",
   };
 
   const onUpdatefilter = (e) => {
     const { name, value } = e.target;
     setfiltersection({ ...filterSection, [name]: value });
-
   };
 
   const router = useRouter();
@@ -73,8 +71,6 @@ const Home = () => {
   const [auction, setAuction] = useState([]);
   const [shallowData, setShallowData] = useState([]);
   const [page, setPage] = useState("sale");
-
-
 
   const datasort = [
     { id: 0, label: sortOldNew },
@@ -137,12 +133,14 @@ const Home = () => {
 
   const pricefilter = () => {
     let filteredData = [...shallowData];
-    filteredData = filteredData.filter(item =>
-      getEthPrice(item.price) >= inputValue && getEthPrice(item.price) <= inputmaxValue
+    filteredData = filteredData.filter(
+      (item) =>
+        getEthPrice(item.price) >= inputValue &&
+        getEthPrice(item.price) <= inputmaxValue
     );
 
     setData(filteredData);
-  }
+  };
 
   useEffect(() => {
     // Filter data based on min and max prices
@@ -215,27 +213,29 @@ const Home = () => {
       });
   };
 
-
   const applyFilter = (type) => {
     let filterproducts = [...data];
     switch (type) {
       case "price":
-        filterproducts = filterproducts.filter(item => item.price >= filterSection.minPrice && item.price <= filterSection.maxPrice)
-        setData(filterproducts)
-        break
+        filterproducts = filterproducts.filter(
+          (item) =>
+            item.price >= filterSection.minPrice &&
+            item.price <= filterSection.maxPrice
+        );
+        setData(filterproducts);
+        break;
       default:
         setData(filterproducts);
     }
-  }
+  };
   const market = async (sortType) => {
     const refineArray = {};
     refineArray.saleStarteds = [];
-    const response = await fetch("/api/salegraph");
+    const response = await fetch(`/api/salegraph?subgraphUrl=${graphqlAPI}`);
     const result = await response.json();
     console.log("result", result);
 
     const status = async () => {
-
       const tokenTimestampMap = {};
 
       for (const obj of result.saleStarteds) {
@@ -257,7 +257,8 @@ const Home = () => {
           } else {
             // If tokenId exists, compare timestamps and update if current obj has a more recent timestamp
             const currentTimestamp = obj.blockTimestamp;
-            const existingTimestamp = tokenTimestampMap[obj.itemId].blockTimestamp;
+            const existingTimestamp =
+              tokenTimestampMap[obj.itemId].blockTimestamp;
             if (currentTimestamp > existingTimestamp) {
               tokenTimestampMap[obj.itemId] = obj;
             }
@@ -268,11 +269,9 @@ const Home = () => {
         // Only add items with transaction.status equal to 1 to the filtered array
         // Iterate over tokenTimestampMap and push each object to refineArray.saleStarteds
         refineArray.saleStarteds = Object.values(tokenTimestampMap);
-
       }
     };
 
-    
     await status();
     console.log(refineArray);
     console.log("sale assets count", refineArray.saleStarteds.length);
@@ -285,8 +284,10 @@ const Home = () => {
           const nftData = await getMetaData(obj.metaDataURI);
           const { name, description, categories, image } = nftData;
           const likeCount = await getLikes(obj.itemId);
-          const date = new Date(parseInt(obj.blockTimestamp + '000')).toDateString();
-          console.log("date", date)
+          const date = new Date(
+            parseInt(obj.blockTimestamp + "000")
+          ).toDateString();
+          console.log("date", date);
           return {
             ...obj,
             date,
@@ -304,15 +305,22 @@ const Home = () => {
 
     let sortedNFts;
 
-    if (sortType === 'new') {
-      sortedNFts = [...fResult].filter((item => new Date(item.date).getMonth() === ((new Date().getMonth() - 1 + 12) % 12) || new Date(item.date).getMonth() === new Date().getMonth())).sort((a, b) => {
-        const dateComparison = new Date(a.date) - new Date(b.date);
-        if (dateComparison === 0) {
-          return a.itemId - b.itemId;
-        }
-        return dateComparison;
-      });
-    } else if (sortType === 'old') {
+    if (sortType === "new") {
+      sortedNFts = [...fResult]
+        .filter(
+          (item) =>
+            new Date(item.date).getMonth() ===
+              (new Date().getMonth() - 1 + 12) % 12 ||
+            new Date(item.date).getMonth() === new Date().getMonth()
+        )
+        .sort((a, b) => {
+          const dateComparison = new Date(a.date) - new Date(b.date);
+          if (dateComparison === 0) {
+            return a.itemId - b.itemId;
+          }
+          return dateComparison;
+        });
+    } else if (sortType === "old") {
       sortedNFts = [...fResult].sort((a, b) => {
         const dateComparison = new Date(a.date) - new Date(b.date);
         if (dateComparison === 0) {
@@ -391,7 +399,6 @@ const Home = () => {
       description="Shows the created categories of the Nfts"
     >
       {model && <BuyAsset open={model} setOpen={setmodel} message={modelmsg} />}
-      
 
       <main className="dark:body-back body-back-light min-h-screen">
         <div className="border-b py-4 w-full flex justify-evenly">
@@ -401,8 +408,9 @@ const Home = () => {
             }`}
             onClick={() => setPage("sale")}
           >
-              <div className="text-sm lg:text-xl md:text-lg font-semibold">Sale</div>
-
+            <div className="text-sm lg:text-xl md:text-lg font-semibold">
+              Sale
+            </div>
           </div>
           <div
             className={`rounded-full text-center text-gray-500 dark:text-gray dark:hover:bg-white  cursor-pointer px-16 py-3 border-b-2 border-transparent transition-all ${
@@ -410,23 +418,37 @@ const Home = () => {
             }`}
             onClick={() => setPage("auction")}
           >
-              <div className="text-sm lg:text-xl md:text-lg font-semibold">Auction</div>
+            <div className="text-sm lg:text-xl md:text-lg font-semibold">
+              Auction
+            </div>
           </div>
         </div>
 
-
-
-        <button data-drawer-target="logo-sidebar" data-drawer-toggle="logo-sidebar" aria-controls="logo-sidebar" type="button"
+        <button
+          data-drawer-target="logo-sidebar"
+          data-drawer-toggle="logo-sidebar"
+          aria-controls="logo-sidebar"
+          type="button"
           onClick={() => {
             setHideFilter(!hidefilter);
           }}
-          className="inline-flex items-center p-2 mt-2 ml-6 text-xl text-gray-800 dark:text-white rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600">
+          className="inline-flex items-center p-2 mt-2 ml-6 text-xl text-gray-800 dark:text-white rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+        >
           <span className="mr-36">Sort assets</span>
-          <svg className="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-            <path clipRule="evenodd" fillRule="evenodd" d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z"></path>
+          <svg
+            className="w-6 h-6"
+            aria-hidden="true"
+            fill="currentColor"
+            viewBox="0 0 20 20"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              clipRule="evenodd"
+              fillRule="evenodd"
+              d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z"
+            ></path>
           </svg>
         </button>
-
 
         {/* <div>
           <div
@@ -447,44 +469,58 @@ const Home = () => {
                     ? items.find((item) => item.id == selectedItem).label
                     : "Select Newest and Oldest"}
                   <i
-                    className={`fa fa-chevron-right icon ${isOpenSortOldNew && "open"
-                      }`}
+                    className={`fa fa-chevron-right icon ${
+                      isOpenSortOldNew && "open"
+                    }`}
                   ></i>
                 </div>
                 <div className={`dropdown-body ${isOpenSortOldNew && "open"}`}>
-
                   <div className="flex justify-between mt-5">
-                    <button className={`bg-blue-500 font-bold py-2 px-8 rounded-full ${buttonstyle === "new" ? "bg-white text-black" : "text-white hover:bg-white hover:text-black"
-                      }`} onClick={handleButtonClick}>
+                    <button
+                      className={`bg-blue-500 font-bold py-2 px-8 rounded-full ${
+                        buttonstyle === "new"
+                          ? "bg-white text-black"
+                          : "text-white hover:bg-white hover:text-black"
+                      }`}
+                      onClick={handleButtonClick}
+                    >
                       Newest
                     </button>
-                    <button className={`bg-blue-500 font-bold py-2 px-10 rounded-full ${buttonstyle === "old" ? "bg-white text-black" : "text-white hover:bg-white hover:text-black"
-                      }`} onClick={handleoldButtonClick}>
+                    <button
+                      className={`bg-blue-500 font-bold py-2 px-10 rounded-full ${
+                        buttonstyle === "old"
+                          ? "bg-white text-black"
+                          : "text-white hover:bg-white hover:text-black"
+                      }`}
+                      onClick={handleoldButtonClick}
+                    >
                       Oldest
                     </button>
                   </div>
 
-                  {items.sort((a, b) => new Date(b.date) - new Date(a.date)).map((item) => {
-                    return (
-                      <div
-                        className="dropdown-item"
-                        onClick={(e) => handleItemClick(e.target.itemId)}
-                        id={item.itemId}
-                        key={item.itemId}
-                      >
-                        <span
-                          className={`dropdown-item-dot ${item.itemId == selectedItem && "selected"
-                            }`}
+                  {items
+                    .sort((a, b) => new Date(b.date) - new Date(a.date))
+                    .map((item) => {
+                      return (
+                        <div
+                          className="dropdown-item"
+                          onClick={(e) => handleItemClick(e.target.itemId)}
+                          id={item.itemId}
+                          key={item.itemId}
                         >
-                          {" "}
-                        </span>
-                        {item.date}
-                      </div>
-                    );
-                  })}
+                          <span
+                            className={`dropdown-item-dot ${
+                              item.itemId == selectedItem && "selected"
+                            }`}
+                          >
+                            {" "}
+                          </span>
+                          {item.date}
+                        </div>
+                      );
+                    })}
                 </div>
               </div>
-
 
               <div className="dropdown">
                 <div className="dropdown-header" onClick={toggleDropdownMedia}>
@@ -492,8 +528,9 @@ const Home = () => {
                     ? items.find((item) => item.id == selectedMedia).label
                     : "Media Type"}
                   <i
-                    className={`fa fa-chevron-right icon ${isOpenMedia && "open"
-                      }`}
+                    className={`fa fa-chevron-right icon ${
+                      isOpenMedia && "open"
+                    }`}
                   ></i>
                 </div>
                 <div className={`dropdown-body-media ${isOpenMedia && "open"}`}>
@@ -518,16 +555,30 @@ const Home = () => {
                     ? items.find((item) => item.id == selectedAvail).label
                     : "Availability"}
                   <i
-                    className={`fa fa-chevron-right icon ${isOpenAvail && "open"
-                      }`}
+                    className={`fa fa-chevron-right icon ${
+                      isOpenAvail && "open"
+                    }`}
                   ></i>
                 </div>
                 <div className={`dropdown-body ${isOpenAvail && "open"}`}>
                   <div className="flex justify-between mt-5">
-                    <div onClick={() => applyFilter("availibility", "allassets")} value={filterSection.allassets} className="all-buy"> All</div>
-                    <div onClick={() => applyFilter("buyNow", "allassets")} value={filterSection.buynow} className="media-type"> Buy Now</div>
+                    <div
+                      onClick={() => applyFilter("availibility", "allassets")}
+                      value={filterSection.allassets}
+                      className="all-buy"
+                    >
+                      {" "}
+                      All
+                    </div>
+                    <div
+                      onClick={() => applyFilter("buyNow", "allassets")}
+                      value={filterSection.buynow}
+                      className="media-type"
+                    >
+                      {" "}
+                      Buy Now
+                    </div>
                   </div>
-
                 </div>
               </div>
 
@@ -537,8 +588,9 @@ const Home = () => {
                     ? items.find((item) => item.id == selectedCreator).label
                     : "Creator Status"}
                   <i
-                    className={`fa fa-chevron-right icon ${isOpenCreator && "open"
-                      }`}
+                    className={`fa fa-chevron-right icon ${
+                      isOpenCreator && "open"
+                    }`}
                   ></i>
                 </div>
                 <div className={`dropdown-body ${isOpenCreator && "open"}`}>
@@ -559,8 +611,9 @@ const Home = () => {
                     ? items.find((item) => item.id == selectedPrice).label
                     : "Price"}
                   <i
-                    className={`fa fa-chevron-right icon ${isopenprice && "open"
-                      }`}
+                    className={`fa fa-chevron-right icon ${
+                      isopenprice && "open"
+                    }`}
                   ></i>
                 </div>
                 <div className={`dropdown-body ${isopenprice && "open"}`}>
@@ -598,12 +651,16 @@ const Home = () => {
                       ></input>
                     </div>
                     <div className="m-2 p-2 mt-4 rounded bg-blue-100 dark:bg-blue-900">
-                      <button className="text-blue-500 dark:text-blue-200" onClick={pricefilter}>Filter</button>
+                      <button
+                        className="text-blue-500 dark:text-blue-200"
+                        onClick={pricefilter}
+                      >
+                        Filter
+                      </button>
                     </div>
                   </div>
                 </div>
               </div>
-
 
               <div className="dropdown">
                 <div className="dropdown-header" onClick={toggleDropChain}>
@@ -611,40 +668,83 @@ const Home = () => {
                     ? items.find((item) => item.id == selectedChain).label
                     : "Chain"}
                   <i
-                    className={`fa fa-chevron-right icon ${isOpenChain && "open"
-                      }`}
+                    className={`fa fa-chevron-right icon ${
+                      isOpenChain && "open"
+                    }`}
                   ></i>
                 </div>
                 <div className={`dropdown-body ${isOpenChain && "open"}`}>
-                  <ul className="p-3 space-y-3 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownCheckboxButton">
+                  <ul
+                    className="p-3 space-y-3 text-sm text-gray-700 dark:text-gray-200"
+                    aria-labelledby="dropdownCheckboxButton"
+                  >
                     <li>
                       <div className="flex items-center">
-                        <input id="checkbox-item-1" type="checkbox" value="" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500" />
-                        <label for="checkbox-item-1" className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Ethereum</label>
+                        <input
+                          id="checkbox-item-1"
+                          type="checkbox"
+                          value=""
+                          className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
+                        />
+                        <label
+                          for="checkbox-item-1"
+                          className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                        >
+                          Ethereum
+                        </label>
                       </div>
                     </li>
                     <li>
                       <div className="flex items-center">
-                        <input id="checkbox-item-2" type="checkbox" value="" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500" />
-                        <label for="checkbox-item-2" className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Polygon</label>
+                        <input
+                          id="checkbox-item-2"
+                          type="checkbox"
+                          value=""
+                          className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
+                        />
+                        <label
+                          for="checkbox-item-2"
+                          className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                        >
+                          Polygon
+                        </label>
                       </div>
                     </li>
                     <li>
                       <div className="flex items-center">
-                        <input id="checkbox-item-3" type="checkbox" value="" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500" />
-                        <label for="checkbox-item-3" className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Optimism</label>
+                        <input
+                          id="checkbox-item-3"
+                          type="checkbox"
+                          value=""
+                          className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
+                        />
+                        <label
+                          for="checkbox-item-3"
+                          className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                        >
+                          Optimism
+                        </label>
                       </div>
                     </li>
                     <li>
                       <div className="flex items-center">
-                        <input id="checkbox-item-4" type="checkbox" value="" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500" />
-                        <label for="checkbox-item-4" className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Arbitrum</label>
+                        <input
+                          id="checkbox-item-4"
+                          type="checkbox"
+                          value=""
+                          className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
+                        />
+                        <label
+                          for="checkbox-item-4"
+                          className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                        >
+                          Arbitrum
+                        </label>
                       </div>
                     </li>
                   </ul>
                 </div>
               </div>
-
 
               <div className="dropdown">
                 <div className="dropdown-header" onClick={toggleDropContract}>
@@ -652,114 +752,176 @@ const Home = () => {
                     ? items.find((item) => item.id == selectedContract).label
                     : "Contract"}
                   <i
-                    className={`fa fa-chevron-right icon ${isOpenContract && "open"
-                      }`}
+                    className={`fa fa-chevron-right icon ${
+                      isOpenContract && "open"
+                    }`}
                   ></i>
                 </div>
                 <div className={`dropdown-body ${isOpenContract && "open"}`}>
-                  <ul className="p-3 space-y-3 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownCheckboxButton">
+                  <ul
+                    className="p-3 space-y-3 text-sm text-gray-700 dark:text-gray-200"
+                    aria-labelledby="dropdownCheckboxButton"
+                  >
                     <li>
                       <div className="flex items-center">
-                        <input id="checkbox-item-5" type="checkbox" value="" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500" />
-                        <label for="checkbox-item-5" className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Edition</label>
+                        <input
+                          id="checkbox-item-5"
+                          type="checkbox"
+                          value=""
+                          className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
+                        />
+                        <label
+                          for="checkbox-item-5"
+                          className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                        >
+                          Edition
+                        </label>
                       </div>
                     </li>
                     <li>
                       <div className="flex items-center">
-                        <input id="checkbox-item-6" type="checkbox" value="" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500" />
-                        <label for="checkbox-item-6" className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Rentable</label>
+                        <input
+                          id="checkbox-item-6"
+                          type="checkbox"
+                          value=""
+                          className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
+                        />
+                        <label
+                          for="checkbox-item-6"
+                          className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                        >
+                          Rentable
+                        </label>
                       </div>
                     </li>
                     <li>
                       <div className="flex items-center">
-                        <input id="checkbox-item-7" type="checkbox" value="" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500" />
-                        <label for="checkbox-item-7" className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Crescendo</label>
+                        <input
+                          id="checkbox-item-7"
+                          type="checkbox"
+                          value=""
+                          className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
+                        />
+                        <label
+                          for="checkbox-item-7"
+                          className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                        >
+                          Crescendo
+                        </label>
                       </div>
                     </li>
                     <li>
                       <div className="flex items-center">
-                        <input id="checkbox-item-8" type="checkbox" value="" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500" />
-                        <label for="checkbox-item-8" className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">ZKEdition</label>
+                        <input
+                          id="checkbox-item-8"
+                          type="checkbox"
+                          value=""
+                          className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
+                        />
+                        <label
+                          for="checkbox-item-8"
+                          className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                        >
+                          ZKEdition
+                        </label>
                       </div>
                     </li>
                     <li>
                       <div className="flex items-center">
-                        <input id="checkbox-item-9" type="checkbox" value="" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500" />
-                        <label for="checkbox-item-9" className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Staking</label>
+                        <input
+                          id="checkbox-item-9"
+                          type="checkbox"
+                          value=""
+                          className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
+                        />
+                        <label
+                          for="checkbox-item-9"
+                          className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                        >
+                          Staking
+                        </label>
                       </div>
                     </li>
                     <li>
                       <div className="flex items-center">
-                        <input id="checkbox-item-10" type="checkbox" value="" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500" />
-                        <label for="checkbox-item-10" className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Treasury</label>
+                        <input
+                          id="checkbox-item-10"
+                          type="checkbox"
+                          value=""
+                          className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
+                        />
+                        <label
+                          for="checkbox-item-10"
+                          className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                        >
+                          Treasury
+                        </label>
                       </div>
                     </li>
                   </ul>
                 </div>
               </div>
-
             </div>
           )}
-          {
-            page== "sale" && (
-<div className="my-10 lg:mx-6 md:mx-4 mx-0 h-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 w-full">
-            {data?.length ? (
-              data?.map((item) => {
-                return (
-                  <div
-                    key={item?.itemId}
-                    className=" border-white mycard p-3 shadow-lg w-full cursor-pointer"
-                  >
-                    <Link key={item?.itemId} href={`/explore/${item?.itemId}`}>
-                      <div>
-                      <HomeComp uri={item ? item?.metaDataURI : ""} />
-                        <div className="flex items-center justify-between mb-2">
-                          <div className="text-sm font-bold text-gray-500 dark:text-white">
-                            Price{" "}
-                          </div>
-                          <div className="flex items-center">
-                            <FaEthereum className="w-4 text-gray-500 dark:text-white" />
-                            <div className="text-gray-500 dark:text-white font-semibold">
-                              {getEthPrice(item?.price)} MATIC
+          {page == "sale" && (
+            <div className="my-10 lg:mx-6 md:mx-4 mx-0 h-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 w-full">
+              {data?.length ? (
+                data?.map((item) => {
+                  return (
+                    <div
+                      key={item?.itemId}
+                      className=" border-white mycard p-3 shadow-lg w-full cursor-pointer"
+                    >
+                      <Link
+                        key={item?.itemId}
+                        href={`/explore/${item?.itemId}`}
+                      >
+                        <div>
+                          <HomeComp uri={item ? item?.metaDataURI : ""} />
+                          <div className="flex items-center justify-between mb-2">
+                            <div className="text-sm font-bold text-gray-500 dark:text-white">
+                              Price{" "}
+                            </div>
+                            <div className="flex items-center">
+                              <FaEthereum className="w-4 text-gray-500 dark:text-white" />
+                              <div className="text-gray-500 dark:text-white font-semibold">
+                                {getEthPrice(item?.price)} MATIC
+                              </div>
                             </div>
                           </div>
                         </div>
-                      </div>
-                    </Link>
-                    {/* <button onClick={() => AddLike(item?.itemId)}>
+                      </Link>
+                      {/* <button onClick={() => AddLike(item?.itemId)}>
                       likes:{item?.likeCount}
                       {item?.date}
                       {item?.categories}
                     </button> */}
 
-                    <button
-                      onClick={() => buyNft(item)}
-                      className="text-gray-500 dark:text-black bg-[#CAFC01] w-full rounded-md py-2 font-bold"
-                    >
-                      Buy Now
-                    </button>
+                      <button
+                        onClick={() => buyNft(item)}
+                        className="text-gray-500 dark:text-black bg-[#CAFC01] w-full rounded-md py-2 font-bold"
+                      >
+                        Buy Now
+                      </button>
+                    </div>
+                  );
+                })
+              ) : loading ? (
+                <Loader />
+              ) : (
+                !loading &&
+                !data && (
+                  <div className="flex">
+                    <div className="text-2xl pb-10 font-bold text-center text-gray-500 dark:text-white">
+                      You have not created Any Assets
+                    </div>
                   </div>
-                );
-              })
-            ) : loading ? (
-              <Loader />
-            ) : (!loading && !data && (
-              <div className="flex">
-                <div className="text-2xl pb-10 font-bold text-center text-gray-500 dark:text-white">
-                  You have not created Any Assets
-                </div>
-              </div>)
-            )}
-          </div>
-            )
-          }
-          
+                )
+              )}
+            </div>
+          )}
 
-          {page == "auction" && (
-          <div className="p-4 px-10">
-            auction data
-          </div>
-        )}
+          {page == "auction" && <div className="p-4 px-10">auction data</div>}
 
           {/* <div className=" p-4">
               {auction.length > 0 ? (
@@ -795,7 +957,6 @@ const Home = () => {
               )}
             </div> */}
         </div>
-
       </main>
     </Layout>
   );

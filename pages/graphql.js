@@ -1,12 +1,27 @@
 import { useEffect, useState } from "react";
+import { useData } from "../context/data";
 
 export default function Home() {
   const [data, setData] = useState(null);
 
+  const { resdata } = useData();
+
+  const graphql = resdata?.Storefront.subgraphUrl;
+  console.log(graphql);
+
+  const regex = /^(.*?)(?=\/graphql)/;
+  
+  // Use the regular expression to extract the URL
+  const match = graphql?.match(regex);
+
+  // Extract the matched URL or set it to null if no match was found
+  const graphqlAPI = match ? match[0] : null;
+  console.log(graphqlAPI);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("/api/graphql");
+        const response = await fetch(`/api/graphql?subgraphUrl=${graphqlAPI}`);
         const responseData = await response.json();
         console.log(responseData);
         setData(responseData);

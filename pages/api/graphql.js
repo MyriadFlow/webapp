@@ -2,7 +2,8 @@
 import axios from "axios";
 
 export default async function handler(req, res) {
-  const endPoint = "http://18.119.142.140:8000/subgraphs/name/kek";
+  const { subgraphUrl } = req.query;
+  const endPoint = `${subgraphUrl}`;
   const headers = {
     "Content-Type": "application/json",
   };

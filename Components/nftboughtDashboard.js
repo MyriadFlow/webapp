@@ -9,15 +9,14 @@ import { ethers } from "ethers";
 import Loader from "../Components/Loader";
 import BuyAsset from "./buyAssetModal";
 import etherContract from "../utils/web3Modal";
-import Tradhub from '../artifacts/contracts/tradehub/TradeHub.sol/TradeHub.json';
+import Tradhub from "../artifacts/contracts/tradehub/TradeHub.sol/TradeHub.json";
 // import { buyNFT } from "../pages/api/buyNFT";
 // import { buyNFT } from "./api/buyNFT";
 import { sellItem } from "../pages/api/sellItem";
-import { useRouter } from 'next/router';
+import { useRouter } from "next/router";
 import { useAccount } from "wagmi";
 
 function NftboughtDashboard() {
-
   const router = useRouter();
 
   function getEthPrice(price) {
@@ -54,8 +53,6 @@ function NftboughtDashboard() {
     const refineArray = {};
     refineArray.itemSolds = [];
 
-
-
     const response = await fetch(`/api/soldgraph?walletAddress=${walletAddr}`);
     const result = await response.json();
 
@@ -83,7 +80,8 @@ function NftboughtDashboard() {
           } else {
             // If tokenId exists, compare timestamps and update if current obj has a more recent timestamp
             const currentTimestamp = obj.blockTimestamp;
-            const existingTimestamp = tokenTimestampMap[obj.itemId].blockTimestamp;
+            const existingTimestamp =
+              tokenTimestampMap[obj.itemId].blockTimestamp;
             if (currentTimestamp > existingTimestamp) {
               tokenTimestampMap[obj.itemId] = obj;
             }
@@ -100,7 +98,6 @@ function NftboughtDashboard() {
     await status();
     console.log(refineArray);
     console.log("buy assets count", refineArray.itemSolds.length);
-
 
     setData(refineArray.itemSolds);
     setLoading(false);
@@ -171,14 +168,29 @@ function NftboughtDashboard() {
         {showModal && selectedNFT ? (
           <>
             <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none dark:body-back body-back-light">
-
-
-              <div className="py-12 transition duration-150 ease-in-out z-10 absolute top-0 right-0 bottom-0 left-0" id="modal">
-                <div role="alert" className="container mx-auto w-2/3 rounded-lg">
+              <div
+                className="py-12 transition duration-150 ease-in-out z-10 absolute top-0 right-0 bottom-0 left-0"
+                id="modal"
+              >
+                <div
+                  role="alert"
+                  className="container mx-auto w-2/3 rounded-lg"
+                >
                   <div className="relative py-4 bg-white shadow-md rounded border border-gray-400 rounded-2xl">
                     <div className="w-full flex justify-start text-gray-600 mb-3">
                       <button onClick={() => setShowModal(false)}>
-                        <svg xmlns="http://www.w3.org/2000/svg" className="icon icon-tabler icon-tabler-x mr-4 ml-4" width="20" height="20" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          className="icon icon-tabler icon-tabler-x mr-4 ml-4"
+                          width="20"
+                          height="20"
+                          viewBox="0 0 24 24"
+                          stroke-width="2.5"
+                          stroke="currentColor"
+                          fill="none"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        >
                           <path stroke="none" d="M0 0h24v24H0z" />
                           <line x1="18" y1="6" x2="6" y2="18" />
                           <line x1="6" y1="6" x2="18" y2="18" />
@@ -193,7 +205,6 @@ function NftboughtDashboard() {
                     <div class="flex p-10 ml-10">
                       {/* <input type="file" className="btn btn-primary btn-md ml-36" style={{ marginBottom: 20, marginTop: 20, width: "50%" }} onChange={(e) => { uploadImage(e) }} /> */}
                       <div className="w-1/2">
-
                         <div class="flex items-center mb-4 justify-between">
                           <div>
                             <h3 className="text-2xl font-semibold text-gray-900">
@@ -203,7 +214,13 @@ function NftboughtDashboard() {
                               The item is listed at the price you set.
                             </p>
                           </div>
-                          <input id="default-radio-1" type="radio" value="" name="default-radio" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
+                          <input
+                            id="default-radio-1"
+                            type="radio"
+                            value=""
+                            name="default-radio"
+                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                          />
                         </div>
                         <div class="flex items-center justify-between">
                           <div>
@@ -215,21 +232,32 @@ function NftboughtDashboard() {
                             </p>
                           </div>
 
-                          <input checked id="default-radio-2" type="radio" value="" name="default-radio" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
+                          <input
+                            checked
+                            id="default-radio-2"
+                            type="radio"
+                            value=""
+                            name="default-radio"
+                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                          />
                         </div>
-
-
 
                         <h3 className="text-2xl font-semibold text-gray-900 mt-10">
                           Set a price
                         </h3>
-                        <p className="font-semibold text-gray-900 mt-4 mb-2">Starting Price</p>
+                        <p className="font-semibold text-gray-900 mt-4 mb-2">
+                          Starting Price
+                        </p>
                         <div className="mb-2">
-                          <input type="number" id="default-input" 
-                          placeholder="Enter Price"
-                          value={price}
-                          onChange={handlePriceChange}
-                          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required />
+                          <input
+                            type="number"
+                            id="default-input"
+                            placeholder="Enter Price"
+                            value={price}
+                            onChange={handlePriceChange}
+                            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                            required
+                          />
                         </div>
                         {/* <p className="font-semibold text-gray-900 mt-4 mb-2">Duration</p>
                         <div className="mb-2">
@@ -247,7 +275,6 @@ function NftboughtDashboard() {
                         <img src="/vr.png" className="rounded-lg" />
                       </div>
                     </div>
-
                   </div>
                 </div>
               </div>
@@ -280,7 +307,9 @@ function NftboughtDashboard() {
                       </div>
                       <div class="flex">
                         <div className="font-bold">Wallet Address: </div>
-                        <div className="text-md ml-2">{item?.buyer.slice(-6)}</div>
+                        <div className="text-md ml-2">
+                          {item?.buyer.slice(-6)}
+                        </div>
                       </div>
                     </div>
                   </Link>
@@ -301,7 +330,6 @@ function NftboughtDashboard() {
                       className="text-black font-bold"
                     >
                       Put to marketplace
-
                     </button>
 
                     {isPriceInputVisible && (
@@ -316,7 +344,12 @@ function NftboughtDashboard() {
                         />
 
                         {/* Add a button to submit the price */}
-                        <button onClick={() => sellNft(item, price)} className="bg-blue-500 text-white px-4 py-2 mt-2">Put {price} to Marketplace</button>
+                        <button
+                          onClick={() => sellNft(item, price)}
+                          className="bg-blue-500 text-white px-4 py-2 mt-2"
+                        >
+                          Put {price} to Marketplace
+                        </button>
                       </div>
                     )}
                   </div>
