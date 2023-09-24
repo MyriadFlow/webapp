@@ -1,25 +1,10 @@
 // pages/api/graphql.js
 import axios from "axios";
-import { useData } from "../../context/data";
 
 export default async function handler(req, res) {
     const { nftid } = req.query;
 
-    const { resdata } = useData();
-
-  const graphql = resdata?.Storefront.subgraphUrl;
-  console.log(graphql);
-
-  const regex = /^(.*?)(?=\/graphql)/;
-
-  // Use the regular expression to extract the URL
-  const match = graphql?.match(regex);
-
-  // Extract the matched URL or set it to null if no match was found
-  const graphqlAPI = match ? match[0] : null;
-  console.log(graphqlAPI);
-
-  const endPoint = graphqlAPI;
+  const endPoint = "http://3.15.54.199:8000/subgraphs/name/fnl";
   const headers = {
     "Content-Type": "application/json",
   };
