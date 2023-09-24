@@ -26,6 +26,8 @@ import Image from "next/image";
 import etherContract from "../utils/web3Modal";
 import WalletConnectProvider from "@walletconnect/web3-provider";
 import { Modal } from "react-bootstrap";
+import { useAccount } from "wagmi";
+
 const style = {
   position: "absolute",
   top: "50%",
@@ -309,7 +311,7 @@ export default function CreateItem() {
     setOpen(false);
   };
 
-  const walletAddr = useSelector(selectUser);
+  const walletAddr = useAccount().address;
   var wallet = walletAddr ? walletAddr[0] : "";
 
   const [hasRole, setHasRole] = useState(false);
