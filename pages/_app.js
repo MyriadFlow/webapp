@@ -9,6 +9,7 @@ import "../styles/globals.css";
 import Loader from "../Components/Loader";
 import { DataProvider,useData } from "../context/data";
 import { authorize } from '../utils/api';
+import axios from 'axios';
 
 import '@rainbow-me/rainbowkit/styles.css';
 import {
