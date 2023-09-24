@@ -5,10 +5,10 @@ const BASE_URL = "https://testnet.gateway.myriadflow.com/";
 import { convertUtf8ToHex } from "@walletconnect/utils";
 const Web3 = require("web3");
 import { useEffect, useState } from "react";
-
+import { useAccount } from "wagmi";
 
 const getProfile = async () => {
-    const token = localStorage.getItem("platform_token");
+    const token = useAccount().address;
     const config = {
         headers: {
             Accept: "application/json, text/plain, */*",

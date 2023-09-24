@@ -22,10 +22,14 @@ import { saleStartedQuery } from "../utils/gqlUtil";
 import axios from "axios";
 import etherContract from "../utils/web3Modal";
 import Tradhub from '../artifacts/contracts/tradehub/TradeHub.sol/TradeHub.json';
+import { useAccount } from "wagmi";
 
 const BASE_URL = "https://testnet.launch.myriadflow.com/";
 
 const Home = () => {
+
+  const walletaddr = useAccount().address;
+
   const allfilter = {
     minPrice: 0.1,
     maxPrice: 100,
@@ -178,7 +182,7 @@ const Home = () => {
     filterNFTs();
   }, []);
   const AddLike = (itemId) => {
-    const token = localStorage.getItem("platform_token");
+    const token = walletaddr;
     axios
       .post(
         `${BASE_URL}/api/v1.0/like/addUserLike/${itemId}`,
@@ -339,7 +343,7 @@ const Home = () => {
   };
   const getLikes = async (itemId) => {
     try {
-      const token = localStorage.getItem("platform_token");
+      const token = walletaddr;
       const config = {
         headers: {
           Accept: "application/json, text/plain, */*",

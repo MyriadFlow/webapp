@@ -38,10 +38,6 @@ export default function LandingPage() {
 
   const itemStatus = new Map(["NONEXISTANT", "SALE", "AUCTION", "SOLD", "REMOVED"].map((v, index) => [index, v]))
   const walletAddr = useAccount().address;
-  localStorage.setItem("platform_token",walletAddr);
-  localStorage.setItem("platform_wallet",walletAddr);
-  console.log("platform_token",walletAddr);
-  var wallet = walletAddr ? walletAddr[0] : "";
   const [hasRole, setHasRole] = useState(true);
 
   // const getLandingData = async () => {

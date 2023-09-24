@@ -62,7 +62,7 @@ function Profile() {
 
     const updateData = async (e) => {
         e.preventDefault();
-        const token = localStorage.getItem("platform_token");
+        const token = walletAddr;
         try {
             if (
                 !updateProfile.name.trim() ||
@@ -111,7 +111,7 @@ function Profile() {
     };
 
     const getRole = async () => {
-        const token = localStorage.getItem("platform_token");
+        const token = walletAddr;
         const role_id = localStorage.getItem("platform_roleid");
 
         const config1 = {
@@ -197,7 +197,7 @@ function Profile() {
     };
 
     const getProfile = async () => {
-        const token = localStorage.getItem("platform_token");
+        const token = walletAddr;
         const config = {
             headers: {
                 Accept: "application/json, text/plain, */*",
@@ -276,7 +276,7 @@ function Profile() {
 
     useEffect(() => {
         const asyncFn = async () => {
-            const token = localStorage.getItem("platform_token");
+            const token = walletAddr;
             // connectweb();
             if (token) {
                 const profiledt = localStorage.getItem("profileuser");

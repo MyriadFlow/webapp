@@ -117,3 +117,11 @@
 //     </Layout>
 //   );
 // }
+
+
+export default function Manage() {
+
+    return(
+        <></>
+    )
+}

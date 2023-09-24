@@ -12,6 +12,7 @@ import BuyAsset from "../Components/buyAssetModal";
 import { saleStartedQuery } from "../utils/gqlUtil";
 import axios from "axios";
 import { buyItem } from "./api/buyItem";
+import { useAccount } from "wagmi";
 
 const BASE_URL = "https://testnet.launch.myriadflow.com/";
 
@@ -24,8 +25,10 @@ export default function Wishlist() {
 
   const [shallowData, setShallowData] = useState([]);
 
+  const walletaddr = useAccount().address;
+
   const getWishlist = () => {
-    const token = localStorage.getItem("platform_token");
+    const token = walletaddr;
     const config = {
       headers: {
         Accept: "application/json, text/plain, */*",

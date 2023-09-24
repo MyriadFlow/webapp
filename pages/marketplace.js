@@ -21,7 +21,6 @@ import { FaUserCircle, FaMapMarkerAlt, FaWallet, FaEnvelope } from "react-icons/
 import { useAccount } from "wagmi";
 import styles from '../styles/Typewritter.module.css';
 import Typewriter from '../Components/Typewriter';
-
 const tradhubAddress = "0x1509f86D76A683B3DD9199dd286e26eb7d136519";
 
 export default function Marketplace() {
@@ -46,7 +45,7 @@ export default function Marketplace() {
     const [hasRole, setHasRole] = useState(true);
 
     const getLandingData = async () => {
-        const token = localStorage.getItem("platform_token");
+        const token = walletAddr;
         const config = {
             headers: {
                 Accept: "application/json, text/plain, */*",
@@ -82,7 +81,7 @@ export default function Marketplace() {
             });
     };
     useEffect(() => {
-        const token = localStorage.getItem("platform_token");
+        const token = walletAddr;
         if (token) {
             getLandingData();
         }
