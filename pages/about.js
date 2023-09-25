@@ -20,14 +20,14 @@ export default function About() {
         <div className="w-4/5 mx-auto p-28 border rounded-lg" style={{backgroundColor: '#FFFFFF'}}> image</div>
         <div className="text-center">
 <div className="text-3xl font-bold pt-10">What we do</div>
-<div className="text-xl w-1/3 mx-auto mt-4 mb-20">Lorem ipsum dolor sit amet. Et odit quibusdam est 
+<div className="text-xl lg:w-1/3 md:w-1/3 mx-auto mt-4 mb-20">Lorem ipsum dolor sit amet. Et odit quibusdam est 
 saepe eaque qui enim reprehenderit quo voluptas 
 rerum. Sed voluptate possimus aut quidem 
 molestias cum velit enim rem maiores temporibus.</div>
 </div>
-      <div className="flex mx-auto items-center justify-center lg:flex-row flex-col lg:px-32 px-10 pb-10">
+      <div className="flex mx-auto items-center justify-center lg:flex-row flex-col lg:px-32 px-10 pb-60">
         
-        <div className="lg:w-1/2 w-full mt-6 lg:block hidden">
+        <div className="lg:w-1/2 w-full mt-6">
           <img src={resdata?.Storefront.relevantImage} alt="Picture of the owner" />
         </div>
         <div className="lg:w-1/2">
@@ -65,7 +65,7 @@ molestias cum velit enim rem maiores temporibus.</div>
             </Link>
           </div> */}
         </div>
-        {/* <div className="lg:w-1/2 w-full mt-6 lg:block hidden">
+        {/* <div className="lg:w-1/2 w-full mt-6 lg:hidden block">
           <img src={resdata?.Storefront.relevantImage} alt="Picture of the owner"/>
         </div> */}
       </div>
