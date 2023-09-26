@@ -13,8 +13,8 @@ import Tradhub from '../artifacts/contracts/tradehub/TradeHub.sol/TradeHub.json'
 import Loader from "./Loader";
 import { saleStartedQuery } from "../utils/gqlUtil";
 import etherContract from "../utils/web3Modal";
-const tradhubAddress="0x1509f86D76A683B3DD9199dd286e26eb7d136519";
-const accessmasterAddress = "0xb4f7ba8C7d818a208Cd89B127a126DD2aa45aDae";
+const tradhubAddress="0x0E934430687780555A24638730c6FC864485322E";
+const accessmasterAddress = "0x480A3DE285b221B5A44B60Bc017a3F06256c3a6e";
 import { useData } from "../context/data";
 
 import { useAccount } from "wagmi";
