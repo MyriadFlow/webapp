@@ -39,6 +39,7 @@ function NftboughtDashboard() {
   }
 
   const walletAddr = useAccount().address;
+  console.log("walletmy", walletAddr);
   var wallet = walletAddr ? walletAddr[0] : "";
   const [data, setData] = useState([]);
   const [auction, setAuction] = useState([]);
@@ -68,14 +69,20 @@ function NftboughtDashboard() {
     const refineArray = {};
     refineArray.itemSolds = [];
 
-    const response = await fetch(`/api/soldgraph?walletAddress=${walletAddr}?subgraphUrl=${graphqlAPI}`);
-    const result = await response.json();
+let result = {};
+    if (graphqlAPI && walletAddr) {
+      const response = await fetch(`/api/soldgraph?walletAddress=${walletAddr}?subgraphUrl=${graphqlAPI}`);
+      result = await response.json();
+
+    console.log("result new", result);
+    
 
     setLoading(true);
 
     const status = async () => {
       const tokenTimestampMap = {};
 
+      if (result.itemSolds && Array.isArray(result.itemSolds)) {
       for (const obj of result.itemSolds) {
         const tradhubAddress = "0x1509f86D76A683B3DD9199dd286e26eb7d136519";
         const tradhubContarct = await etherContract(
@@ -104,6 +111,7 @@ function NftboughtDashboard() {
         }
 
         console.log("tokenTimestampMap", tokenTimestampMap);
+      }
         // Only add items with transaction.status equal to 1 to the filtered array
         // Iterate over tokenTimestampMap and push each object to refineArray.saleStarteds
         refineArray.itemSolds = Object.values(tokenTimestampMap);
@@ -111,6 +119,7 @@ function NftboughtDashboard() {
     };
 
     await status();
+  }
     console.log(refineArray);
     console.log("buy assets count", refineArray.itemSolds.length);
 
