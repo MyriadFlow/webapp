@@ -290,7 +290,9 @@ export default function LandingPage() {
           {/* End Of highlights Section */}
 
           {/* highlights Section */}
-          <section className="dark:body-back body-back-light">
+          {
+            resdata?.profile.plan == "basic" && (
+<section className="dark:body-back body-back-light">
             <div className=" py-16 flex lg:flex-row flex-col justify-center items-center">
               <div className="basis-1/3">
                 <div className="text-center p-2">
@@ -300,7 +302,7 @@ export default function LandingPage() {
                   <Typewriter
             strings={[
               'Community',
-              'Organiser',
+              'Organization',
               'Businesses',
               'Audience'
             ]}
@@ -310,7 +312,7 @@ export default function LandingPage() {
                   <div className="items-center lg:py-4 md:py-4">
                     <div>
                       <button className="py-3 px-10 text-gray-500 dark:text-white font-semibold mb-8 lg:mb-0 border rounded-full">
-                        <Link href="/create">
+                        <Link href="">
                           <span className="font-raleway font-bold text-gray-500 dark:text-white">
                           Explore More
                           </span>
@@ -355,7 +357,11 @@ export default function LandingPage() {
 
             </div>
           </section>
+          
+            )
+          }
           {/* End Of highlights Section */}
+          
         </div>
       </Layout>
     </>
