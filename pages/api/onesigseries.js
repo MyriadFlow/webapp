@@ -5,14 +5,14 @@ export default async function handler(req, res) {
     const { nftid } = req.query;
 
     const { subgraphUrl } = req.query;
-    const endPoint = `${subgraphUrl}`;
+    const endPoint = "http://3.15.54.199:8000/subgraphs/name/v1/cstree";
     
   const headers = {
     "Content-Type": "application/json",
   };
 
   const AllBuildingQuery = `{
-    signatureSeriesAssetCreated(id: "${nftid}") {
+    signatureSeriesAssetCreateds(where: {tokenID: "${nftid}"} ) {
         id
           tokenID
           creator
@@ -24,8 +24,8 @@ export default async function handler(req, res) {
     }`;
 
   const graphqlQuery = {
-    operationName: "signatureSeriesAssetCreated",
-    query: `query signatureSeriesAssetCreated ${AllBuildingQuery}`,
+    operationName: "signatureSeriesAssetCreateds",
+    query: `query signatureSeriesAssetCreateds ${AllBuildingQuery}`,
     variables: {},
   };
 

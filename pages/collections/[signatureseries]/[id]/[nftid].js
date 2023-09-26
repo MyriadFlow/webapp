@@ -47,10 +47,10 @@ function Token() {
   const fetchAsset = async () => {
 
     if (signatureseries == "SignatureSeries") {
-      const response = await fetch(`/api/onesigseries?nftid=${nftid}?subgraphUrl=${graphqlAPI}`);
+      const response = await fetch(`/api/onesigseries?nftid=${nftid}`);
       const result = await response.json();
 
-      setData(result.signatureSeriesAssetCreated)
+      setData(result.signatureSeriesAssetCreateds[0])
       console.log("data", data, "result", result);
 
       const nftData = await getMetaData(data.metaDataURI);
