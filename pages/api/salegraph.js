@@ -9,18 +9,18 @@ export default async function handler(req, res) {
   };
 
   const AllBuildingQuery = `{
-    saleStarteds(orderBy: id) {
-        itemId
-        metaDataURI
-        nftContract
-        seller
-        tokenId
-        id
-        price
-        transactionHash
-        blockTimestamp
-        blockNumber
-      }
+    saleStarteds(orderBy: id,where: {itemId_not: "3"}) {
+      itemId
+      metaDataURI
+      nftContract
+      seller
+      tokenId
+      id
+      price
+      transactionHash
+      blockTimestamp
+      blockNumber
+    }
     }`;
 
   const graphqlQuery = {
