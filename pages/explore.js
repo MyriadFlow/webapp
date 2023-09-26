@@ -33,7 +33,7 @@ const Home = () => {
   const { resdata } = useData();
 
   const graphql = resdata?.Storefront.subgraphUrl;
-  console.log(graphql);
+  // console.log(graphql);
 
   const regex = /^(.*?)(?=\/graphql)/;
 
@@ -246,8 +246,12 @@ const Home = () => {
   const market = async (sortType) => {
     const refineArray = {};
     refineArray.saleStarteds = [];
-    const response = await fetch(`/api/salegraph?subgraphUrl=${graphqlAPI}?subgraphUrl=${graphqlAPI}`);
-    const result = await response.json();
+let result = {};
+    if(graphqlAPI)
+    {
+      const response = await fetch(`/api/salegraph?subgraphUrl=${graphqlAPI}`);
+    result = await response.json();
+  
     console.log("result", result);
 
     const status = async () => {
@@ -279,17 +283,20 @@ const Home = () => {
             }
           }
         }
+  
 
         console.log("tokenTimestampMap", tokenTimestampMap);
         // Only add items with transaction.status equal to 1 to the filtered array
         // Iterate over tokenTimestampMap and push each object to refineArray.saleStarteds
         refineArray.saleStarteds = Object.values(tokenTimestampMap);
       }
+  
     };
 
     await status();
     console.log(refineArray);
     console.log("sale assets count", refineArray.saleStarteds.length);
+}
 
     let fResult = [];
 

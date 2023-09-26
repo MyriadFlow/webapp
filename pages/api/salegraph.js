@@ -9,7 +9,7 @@ export default async function handler(req, res) {
   };
 
   const AllBuildingQuery = `{
-    saleStarteds(orderBy: id, skip: 2) {
+    saleStarteds(orderBy: id) {
         itemId
         metaDataURI
         nftContract
