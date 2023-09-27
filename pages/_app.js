@@ -10,6 +10,7 @@ import Loader from "../Components/Loader";
 import { DataProvider,useData } from "../context/data";
 import { authorize } from '../utils/api';
 import axios from 'axios';
+import Cookies from 'js-cookie';
 
 import '@rainbow-me/rainbowkit/styles.css';
 import {
@@ -60,7 +61,12 @@ function MyApp({ Component, pageProps }) {
       setInitialData(data);
     }
 
-    fetchInitialData();
+    // const mytoken = localStorage.getItem("platform_token");
+     const mytoken = Cookies.get("platform_token");
+    if(!mytoken)
+    {
+      fetchInitialData();
+    }
   }, []);
 
   useEffect(() => {
