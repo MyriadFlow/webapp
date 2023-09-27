@@ -192,7 +192,7 @@ let result = {};
     loadNFTs();
   });
   return (
-    <div className="min-h-screen body-back">
+    <div className="min-h-screen dark:body-back body-back-light">
       {model && <BuyAsset open={model} setOpen={setmodel} message={modelmsg} />}
       <div>
         {showModal && selectedNFT ? (

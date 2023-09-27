@@ -71,7 +71,7 @@ function Sigseries() {
     loadNFTs();
   });
   return (
-    <div className="min-h-screen body-back">
+    <div className="min-h-screen dark:body-back body-back-light">
       <div>
         <div className=" p-4 mt-10  h-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 ">
           {filter?.length > 0 ? (
