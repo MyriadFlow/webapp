@@ -18,7 +18,7 @@ export default function About() {
     >
       <div className="min-h-screen dark:body-back body-back-light">
         <div className="w-4/5 mx-auto p-28 border rounded-lg" style={{backgroundColor: '#FFFFFF'}}> image</div>
-        <div className="text-center">
+        <div className="text-center text-black dark:text-white">
 <div className="text-3xl font-bold pt-10">What we do</div>
 <div className="text-xl lg:w-1/3 md:w-1/3 mx-auto mt-4 mb-20">Lorem ipsum dolor sit amet. Et odit quibusdam est 
 saepe eaque qui enim reprehenderit quo voluptas 
@@ -30,7 +30,7 @@ molestias cum velit enim rem maiores temporibus.</div>
         <div className="lg:w-1/2 w-full mt-6">
           <img src={resdata?.Storefront.relevantImage} alt="Picture of the owner" />
         </div>
-        <div className="lg:w-1/2">
+        <div className="lg:w-1/2 text-black dark:text-white">
           <div className="text-3xl font-bold">Name</div>
           <div className="text-3xl mt-10">Profession</div>
           <div className="mt-16">Alex Turner is a visionary e-commerce entrepreneur with a passion for creating innovative
