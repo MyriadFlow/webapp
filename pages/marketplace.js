@@ -220,7 +220,7 @@ export default function Marketplace() {
                   <Typewriter
             strings={[
               'Community',
-              'Organiser',
+              'Organization',
               'Businesses',
               'Audience'
             ]}
