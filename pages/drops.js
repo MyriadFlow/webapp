@@ -24,8 +24,8 @@ export default function Rewards() {
           <div className='text-gray-500 dark:text-gray text-sm mb-10'>eligibility requirements</div>
 
           <div className='mt-10 text-2xl text-center text-gray-500 dark:text-white'>Stay Tunned For Upcoming Drops</div>
-          <div className='text-center mt-10 mb-10 bg-white text-black px-10 py-3 rounded-full ... text-sm'>
-            <Link className="rewards-style" href="/explore">
+          <div className='text-center mt-10 mb-10 dark:bg-white bg-blue-500 dark:text-black px-10 py-3 rounded-full ... text-sm'>
+            <Link className="" href="/explore">
               <div
                 className={router.pathname == "/explore" ? "active " : ""}
               >
