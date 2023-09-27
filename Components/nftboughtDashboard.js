@@ -50,6 +50,13 @@ function NftboughtDashboard() {
   const [price, setPrice] = useState(0);
   const [showModal, setShowModal] = useState(false);
   const [selectedNFT, setSelectedNFT] = useState(null);
+  const [toggle1, setToggle1] = useState(false);
+  const [toggle2, setToggle2] = useState(false);
+
+  const handleInputChange = () => {
+    setToggle1(!toggle1); // Toggle the state
+    setToggle2(!toggle2); 
+  };
 
   const fetchUserAssests = async (walletAddr) => {
     const query = gql`
@@ -238,6 +245,8 @@ let result = {};
                             </p>
                           </div>
                           <input
+                          // checked
+                          onClick={handleInputChange}
                             id="default-radio-1"
                             type="radio"
                             value=""
@@ -256,7 +265,7 @@ let result = {};
                           </div>
 
                           <input
-                            checked
+                            onClick={handleInputChange}
                             id="default-radio-2"
                             type="radio"
                             value=""
@@ -264,8 +273,10 @@ let result = {};
                             class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                           />
                         </div>
-
-                        <h3 className="text-2xl font-semibold text-gray-900 mt-10">
+                        {
+                          toggle1 && (
+                            <>
+                            <h3 className="text-2xl font-semibold text-gray-900 mt-10">
                           Set a price
                         </h3>
                         <p className="font-semibold text-gray-900 mt-4 mb-2">
@@ -293,6 +304,9 @@ let result = {};
                         >
                           Set
                         </button>
+                            </>
+                          )
+                        }
                       </div>
                       <div class="w-1/3 ml-10">
                         <img src="/vr.png" className="rounded-lg" />
