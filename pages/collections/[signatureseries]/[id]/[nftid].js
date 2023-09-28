@@ -17,11 +17,15 @@ import Link from "next/link";
 import { saleStartedQuery } from "../../../../utils/gqlUtil";
 import request from "graphql-request";
 import { useRouter } from 'next/router';
+import Tradhub from '../../../../artifacts/contracts/tradehub/TradeHub.sol/TradeHub.json'
 import FusionSeries from '../../../../artifacts/contracts/fusionseries/FusionSeries.sol/FusionSeries.json';
 import etherContract from "../../../../utils/web3Modal";
 import { useData } from "../../../../context/data";
+import { useAccount } from "wagmi";
 
 function Token() {
+
+  const myaddr = useAccount().address;
 
   const { resdata } = useData();
 
@@ -43,6 +47,30 @@ function Token() {
 
   const [data, setData] = useState([]);
   const [nftDatas, setNftDatas] = useState([]);
+  const [buybuttonshow, setbuybuttonshow] = useState(false);
+  const [owner, setowner] = useState(null);
+
+  const tradhubAddress = "0x0E934430687780555A24638730c6FC864485322E";
+
+  const findowner = async () =>{
+    const tradhubContarct = await etherContract(
+      tradhubAddress,
+      Tradhub.abi
+    );
+    const ownercheck = await tradhubContarct.idToMarketItem(nftid);
+    
+    console.log("ownercheck", ownercheck.seller, "myadd", myaddr);
+    setowner(ownercheck.seller);
+    if(ownercheck.seller != myaddr)
+    {
+      setbuybuttonshow(true);
+    }
+  }
+      
+  useEffect(() => {
+    findowner();
+  });
+
 
   const fetchAsset = async () => {
 
@@ -56,6 +84,10 @@ function Token() {
       const nftData = await getMetaData(data.metaDataURI);
       console.log("nftData", nftData);
       setNftDatas(nftData);
+
+      // const signatureaddress = id;
+      // const signaturecontract = await etherContract(signatureaddress, SignatureSeries.abi);
+      // const ownercheck = await signaturecontract.ownerOf(nftid);
     }
     else if (signatureseries == "FusionSeries") {
       const response = await fetch(`/api/onefusion?nftid=${nftid}`);
@@ -141,12 +173,21 @@ function Token() {
                 )
               }
               <div className="pt-10 pb-4 font-bold text-xl">{nftDatas?.name}</div>
-              <div className="pb-10">Owned by</div>
-              <div>Current price</div>
-              {/* { data && data.price && (
-                            <h2 className="font-bold text-xl">{getEthPrice(data?.price)} MATIC</h2>
-                            ) } */}
+              <div className="pb-10">
+              <span className="mr-4">Owned by</span>
+              {
+                owner && (<span>{owner.slice(-5)}</span>)
+              }
+              </div>
               <div className="lg:flex md:flex">
+                <div>
+              <div>Current price</div>
+              {/* { nftDatas && nftDatas.price && (
+                            <h2 className="font-bold text-xl">{getEthPrice(nftDatas?.price)} MATIC</h2>
+                            ) } */}
+                            </div>
+              <div className="ml-10">
+              { buybuttonshow && (
                 <button
                   onClick={() =>
                     buyItem(data, 1)
@@ -156,13 +197,16 @@ function Token() {
                   <span className="text-lg font-bold">Buy Now</span>
                   <BiWallet className="text-3xl" />
                 </button>
-                <button
+               )}
+               </div>
+                {/* <button
                   className="flex gap-x-2 items-center justify-center lg:px-10 md:px-10 px-3 py-3 lg:m-4 md:m-4 text-sm font-medium rounded-lg text-white border"
                 >
                   <BiWallet className="text-3xl" />
                   <span className="text-lg font-bold">Make an Offer</span>
 
-                </button>
+                </button> */}
+
               </div>
             </div>
 
