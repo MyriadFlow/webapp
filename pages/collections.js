@@ -86,11 +86,11 @@ const Collection = () => {
     <Layout title="Collections" description="Collection of assets you launched in various categories.">
     <div className="min-h-screen dark:body-back body-back-light">
     <div className="text-2xl font-semibold mb-4 pt-10 text-center dark:text-white text-gray-800">Collections</div>
-    <div className="pb-4 px-10 grid grid-cols-2 gap-8 sm:gap-6 lg:grid-cols-6 md:grid-cols-3 w-full pt-6 border-t">
+    <div className="pb-4 px-10 grid grid-cols-2 gap-8 sm:gap-6 lg:grid-cols-4 md:grid-cols-2 w-full pt-6 border-t">
       
           <div
-            className={`rounded-full text-center text-gray-500 dark:text-gray dark:hover:bg-white  cursor-pointer p-3 border-b-2 border-transparent transition-all ${
-              page === "signature" ? "bg-white" : ""
+            className={`rounded-full text-center text-gray-700 dark:text-white dark:hover:bg-white dark:hover:text-gray-800 hover:bg-blue-500  cursor-pointer p-3 border-b-2 border-transparent transition-all ${
+              page === "signature" ? "dark:bg-white bg-blue-500 text-white dark:text-gray-800" : ""
             }`}
             onClick={() => setPage("signature")}
            >
@@ -98,8 +98,8 @@ const Collection = () => {
           </div>
 
           <div
-            className={`rounded-full text-center text-gray-500 dark:text-gray dark:hover:bg-white  cursor-pointer p-3 border-b-2 border-transparent transition-all ${
-              page === "fusion" ? "bg-white" : ""
+            className={`rounded-full text-center text-gray-700 dark:text-white dark:hover:bg-white dark:hover:text-gray-800 hover:bg-blue-500  cursor-pointer p-3 border-b-2 border-transparent transition-all ${
+              page === "fusion" ? "dark:bg-white bg-blue-500 text-white dark:text-gray-800" : ""
             }`}
             onClick={() => setPage("fusion")}
            >
@@ -107,8 +107,8 @@ const Collection = () => {
           </div>
 
           <div
-            className={`rounded-full text-center text-gray-500 dark:text-gray dark:hover:bg-white  cursor-pointer p-3 border-b-2 border-transparent transition-all ${
-              page === "instagen" ? "bg-white" : ""
+            className={`rounded-full text-center text-gray-700 dark:text-white dark:hover:bg-white dark:hover:text-gray-800 hover:bg-blue-500  cursor-pointer p-3 border-b-2 border-transparent transition-all ${
+              page === "instagen" ? "dark:bg-white bg-blue-500 text-white dark:text-gray-800" : ""
             }`}
             onClick={() => setPage("instagen")}
           >
@@ -116,15 +116,15 @@ const Collection = () => {
           </div>
 
           <div
-            className={`rounded-full text-center text-gray-500 dark:text-gray dark:hover:bg-white  cursor-pointer p-3 border-b-2 border-transparent transition-all ${
-              page === "eternum" ? "bg-white" : ""
+            className={`rounded-full text-center text-gray-700 dark:text-white dark:hover:bg-white dark:hover:text-gray-800 hover:bg-blue-500  cursor-pointer p-3 border-b-2 border-transparent transition-all ${
+              page === "eternum" ? "dark:bg-white bg-blue-500 text-white dark:text-gray-800" : ""
             }`}
             onClick={() => setPage("eternum")}
           >
               <div className="text-sm lg:text-xl md:text-lg font-semibold">EternumPass</div>
           </div>
 
-          <div
+          {/* <div
             className={`rounded-full text-center text-gray-500 dark:text-gray dark:hover:bg-white  cursor-pointer p-3 border-b-2 border-transparent transition-all ${
               page === "eternal" ? "bg-white" : ""
             }`}
@@ -140,7 +140,7 @@ const Collection = () => {
             onClick={() => setPage("phygital")}
           >
               <div className="text-sm lg:text-xl md:text-lg font-semibold">Phygital NFTs</div>
-          </div>
+          </div> */}
         </div>
 
 
