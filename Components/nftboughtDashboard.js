@@ -16,6 +16,7 @@ import { sellItem } from "../pages/api/sellItem";
 import { useRouter } from "next/router";
 import { useAccount } from "wagmi";
 import { useData } from "../context/data";
+import axios from "axios";
 
 function NftboughtDashboard() {
   const router = useRouter();
@@ -55,77 +56,93 @@ function NftboughtDashboard() {
 
   const handleInputChange = () => {
     setToggle1(!toggle1); // Toggle the state
-    setToggle2(!toggle2); 
+    setToggle2(!toggle2);
   };
 
   const fetchUserAssests = async (walletAddr) => {
-    const query = gql`
-    query Query($where: ItemSold_filter) {
-      itemSolds(first: 100, where: {buyer: "${walletAddr}"}) {
-        itemId
-        tokenId
-        nftContract
-        metadataURI
-        seller
-        buyer   
-        blockTimestamp
-        price
-            }
-          }
-          `;
+  
     const refineArray = {};
     refineArray.itemSolds = [];
 
-let result = {};
+    let result = {};
     if (graphqlAPI && walletAddr) {
-      const response = await fetch(`/api/soldgraph?walletAddress=${walletAddr}?subgraphUrl=${graphqlAPI}`);
-      result = await response.json();
+      const endPoint = `${graphqlAPI}`;
+      const headers = {
+        "Content-Type": "application/json",
+      };
 
-    console.log("result new", result);
-    
+      const AllBuildingQuery = `{
+        itemSolds(where: {buyer: "${walletAddr}"}) {
+          id
+          itemId
+          metadataURI
+          nftContract
+          price
+          seller
+          tokenId
+          transactionHash
+          buyer
+          blockNumber
+          blockTimestamp
+    }
+  }`;
 
-    setLoading(true);
+      const graphqlQuery = {
+        operationName: "itemSolds",
+        query: `query itemSolds ${AllBuildingQuery}`,
+        variables: {},
+      };
 
-    const status = async () => {
-      const tokenTimestampMap = {};
+      const response = await axios.post(endPoint, graphqlQuery, { headers: headers });
 
-      for (const obj of result.itemSolds) {
-        const tradhubAddress = "0x0E934430687780555A24638730c6FC864485322E";
-        const tradhubContarct = await etherContract(
-          tradhubAddress,
-          Tradhub.abi
-        );
-        const transaction = await tradhubContarct.idToMarketItem(obj.itemId);
-        console.log("id" + obj.itemId);
-        console.log("transaction", transaction);
-        console.log("transaction", transaction.status == 3);
+      // const response = await fetch(`/api/soldgraph?walletAddress=${walletAddr}?subgraphUrl=${graphqlAPI}`);
+      result = await response.data.data;
 
-        if (transaction.status == 3) {
-          // Check if tokenId exists in tokenTimestampMap
-          if (!tokenTimestampMap[obj.itemId]) {
-            // If tokenId doesn't exist, add it with the current obj
-            tokenTimestampMap[obj.itemId] = obj;
-          } else {
-            // If tokenId exists, compare timestamps and update if current obj has a more recent timestamp
-            const currentTimestamp = obj.blockTimestamp;
-            const existingTimestamp =
-              tokenTimestampMap[obj.itemId].blockTimestamp;
-            if (currentTimestamp > existingTimestamp) {
+      console.log("result new", result);
+
+
+      setLoading(true);
+
+      const status = async () => {
+        const tokenTimestampMap = {};
+
+        for (const obj of result.itemSolds) {
+          const tradhubAddress = "0x2B6c5bd1da04BCcf7186879288a0E6dF266BcA17";
+          const tradhubContarct = await etherContract(
+            tradhubAddress,
+            Tradhub.abi
+          );
+          const transaction = await tradhubContarct.idToMarketItem(obj.itemId);
+          console.log("id" + obj.itemId);
+          console.log("transaction", transaction);
+          console.log("transaction", transaction.status == 3);
+
+          if (transaction.status == 3) {
+            // Check if tokenId exists in tokenTimestampMap
+            if (!tokenTimestampMap[obj.itemId]) {
+              // If tokenId doesn't exist, add it with the current obj
               tokenTimestampMap[obj.itemId] = obj;
+            } else {
+              // If tokenId exists, compare timestamps and update if current obj has a more recent timestamp
+              const currentTimestamp = obj.blockTimestamp;
+              const existingTimestamp =
+                tokenTimestampMap[obj.itemId].blockTimestamp;
+              if (currentTimestamp > existingTimestamp) {
+                tokenTimestampMap[obj.itemId] = obj;
+              }
             }
           }
+
+          console.log("tokenTimestampMap", tokenTimestampMap);
+
+          // Only add items with transaction.status equal to 1 to the filtered array
+          // Iterate over tokenTimestampMap and push each object to refineArray.saleStarteds
+          refineArray.itemSolds = Object.values(tokenTimestampMap);
         }
+      };
 
-        console.log("tokenTimestampMap", tokenTimestampMap);
-
-        // Only add items with transaction.status equal to 1 to the filtered array
-        // Iterate over tokenTimestampMap and push each object to refineArray.saleStarteds
-        refineArray.itemSolds = Object.values(tokenTimestampMap);
-      }
-    };
-
-    await status();
-  }
+      await status();
+    }
     console.log(refineArray);
     console.log("buy assets count", refineArray.itemSolds.length);
 
@@ -245,8 +262,8 @@ let result = {};
                             </p>
                           </div>
                           <input
-                          // checked
-                          onClick={handleInputChange}
+                            // checked
+                            onClick={handleInputChange}
                             id="default-radio-1"
                             type="radio"
                             value=""
@@ -276,34 +293,34 @@ let result = {};
                         {
                           toggle1 && (
                             <>
-                            <h3 className="text-2xl font-semibold text-gray-900 mt-10">
-                          Set a price
-                        </h3>
-                        <p className="font-semibold text-gray-900 mt-4 mb-2">
-                          Starting Price
-                        </p>
-                        <div className="mb-2">
-                          <input
-                            type="number"
-                            id="default-input"
-                            placeholder="Enter Price"
-                            value={price}
-                            onChange={handlePriceChange}
-                            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                            required
-                          />
-                        </div>
-                        {/* <p className="font-semibold text-gray-900 mt-4 mb-2">Duration</p>
+                              <h3 className="text-2xl font-semibold text-gray-900 mt-10">
+                                Set a price
+                              </h3>
+                              <p className="font-semibold text-gray-900 mt-4 mb-2">
+                                Starting Price
+                              </p>
+                              <div className="mb-2">
+                                <input
+                                  type="number"
+                                  id="default-input"
+                                  placeholder="Enter Price"
+                                  value={price}
+                                  onChange={handlePriceChange}
+                                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                  required
+                                />
+                              </div>
+                              {/* <p className="font-semibold text-gray-900 mt-4 mb-2">Duration</p>
                         <div className="mb-2">
                           <input type="text" id="default-input" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required />
                         </div> */}
-                        <button
-                          className="text-white bg-blue-500 text-sm px-20 py-3 mt-4 rounded-full border border-white shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                          type="button"
-                          onClick={() => sellNft(selectedNFT, price)}
-                        >
-                          Set
-                        </button>
+                              <button
+                                className="text-white bg-blue-500 text-sm px-20 py-3 mt-4 rounded-full border border-white shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                                type="button"
+                                onClick={() => sellNft(selectedNFT, price)}
+                              >
+                                Set
+                              </button>
                             </>
                           )
                         }
