@@ -10,6 +10,7 @@ import { useAccount } from "wagmi";
 import FusionSeries from '../../../../artifacts/contracts/fusionseries/FusionSeries.sol/FusionSeries.json';
 import etherContract from "../../../../utils/web3Modal";
 import { useData } from "../../../../context/data";
+import axios from "axios";
 
 export default function CollectionItem() {
 
@@ -50,23 +51,23 @@ export default function CollectionItem() {
   const fetchUserAssests = async (walletAddr) => {
 
     let result = [];
-    if (signatureseries == "SignatureSeries") {
-      const response = await fetch(`/api/sigseriescreated?subgraphUrl=${graphqlAPI}`);
-      result = await response.json();
-    }
-    else if (signatureseries == "FusionSeries") {
-      const response = await fetch(`/api/fusioncreated?subgraphUrl=${graphqlAPI}`);
-      result = await response.json();
-    }
-    else if (signatureseries == "InstaGen") {
-      const response = await fetch(`/api/instagencreated?subgraphUrl=${graphqlAPI}`);
-      result = await response.json();
-    }
-    else if (signatureseries == "EternumPass") {
-      const response = await fetch(`/api/eternumcreated?subgraphUrl=${graphqlAPI}`);
-      result = await response.json();
-    }
-    console.log("graphql data", result);
+    // if (signatureseries == "SignatureSeries") {
+    //   const response = await fetch(`/api/sigseriescreated?subgraphUrl=${graphqlAPI}`);
+    //   result = await response.json();
+    // }
+    // else if (signatureseries == "FusionSeries") {
+    //   const response = await fetch(`/api/fusioncreated?subgraphUrl=${graphqlAPI}`);
+    //   result = await response.json();
+    // }
+    // else if (signatureseries == "InstaGen") {
+    //   const response = await fetch(`/api/instagencreated?subgraphUrl=${graphqlAPI}`);
+    //   result = await response.json();
+    // }
+    // else if (signatureseries == "EternumPass") {
+    //   const response = await fetch(`/api/eternumcreated?subgraphUrl=${graphqlAPI}`);
+    //   result = await response.json();
+    // }
+    // console.log("graphql data", result);
 
     const contractaddr = { id };
 
@@ -88,8 +89,34 @@ export default function CollectionItem() {
       const { id } = router.query;
 
       const getSignetureSeriesAssets = async () => {
-        const response = await fetch(`/api/sigseriescreated?subgraphUrl=${graphqlAPI}`);
-        result = await response.json();
+        
+        const endPoint = `${graphqlAPI}`;
+      const headers = {
+        "Content-Type": "application/json",
+      };
+
+      const AllBuildingQuery = `{
+        signatureSeriesAssetCreateds(orderBy: id) {
+          id
+            tokenID
+            creator
+            metaDataURI
+            blockNumber
+            blockTimestamp
+            transactionHash
+        }
+      }`;
+
+      const graphqlQuery = {
+        operationName: "signatureSeriesAssetCreateds",
+        query: `query signatureSeriesAssetCreateds ${AllBuildingQuery}`,
+        variables: {},
+      };
+
+      const response = await axios.post(endPoint, graphqlQuery, { headers: headers });
+
+      // const response = await fetch(`/api/soldgraph?walletAddress=${walletAddr}?subgraphUrl=${graphqlAPI}`);
+      result = await response.data.data;
 
         const provider = new ethers.providers.Web3Provider(window.ethereum);
         let tranasactionHashArray = result.signatureSeriesAssetCreateds?.map(
@@ -123,8 +150,34 @@ export default function CollectionItem() {
       const { id } = router.query;
       
       const getSignetureSeriesAssets = async () => {
-        const response = await fetch(`/api/fusioncreated?subgraphUrl=${graphqlAPI}`);
-        result = await response.json();
+
+        const endPoint = `${graphqlAPI}`;
+      const headers = {
+        "Content-Type": "application/json",
+      };
+
+      const AllBuildingQuery = `{
+        fusionSeriesAssetCreateds(orderBy: id) {
+          amount
+          blockNumber
+          blockTimestamp
+          creator
+          id
+          tokenID
+          transactionHash
+        }
+      }`;
+
+      const graphqlQuery = {
+        operationName: "fusionSeriesAssetCreateds",
+        query: `query fusionSeriesAssetCreateds ${AllBuildingQuery}`,
+        variables: {},
+      };
+
+      const response = await axios.post(endPoint, graphqlQuery, { headers: headers });
+
+      // const response = await fetch(`/api/soldgraph?walletAddress=${walletAddr}?subgraphUrl=${graphqlAPI}`);
+      result = await response.data.data;
 
         const provider = new ethers.providers.Web3Provider(window.ethereum);
         let tranasactionHashArray = result.fusionSeriesAssetCreateds?.map(
@@ -172,8 +225,34 @@ export default function CollectionItem() {
       const { id } = router.query;
 
       const getSignetureSeriesAssets = async () => {
-        const response = await fetch(`/api/instagencreated?subgraphUrl=${graphqlAPI}`);
-        result = await response.json();
+        
+        const endPoint = `${graphqlAPI}`;
+      const headers = {
+        "Content-Type": "application/json",
+      };
+
+      const AllBuildingQuery = `{
+        instaGenAssetCreateds(orderBy: id){
+          creator
+          blockNumber
+          blockTimestamp
+          currentIndex
+          id
+          quantity
+          transactionHash
+          }
+        }`;
+
+      const graphqlQuery = {
+        operationName: "instaGenAssetCreateds",
+        query: `query instaGenAssetCreateds ${AllBuildingQuery}`,
+        variables: {},
+      };
+
+      const response = await axios.post(endPoint, graphqlQuery, { headers: headers });
+
+      // const response = await fetch(`/api/soldgraph?walletAddress=${walletAddr}?subgraphUrl=${graphqlAPI}`);
+      result = await response.data.data;
 
         const provider = new ethers.providers.Web3Provider(window.ethereum);
         let tranasactionHashArray = result.instaGenAssetCreateds?.map(
@@ -207,8 +286,34 @@ export default function CollectionItem() {
       const { id } = router.query;
 
       const getSignetureSeriesAssets = async () => {
-        const response = await fetch(`/api/eternumcreated?subgraphUrl=${graphqlAPI}`);
-        result = await response.json();
+        
+        const endPoint = `${graphqlAPI}`;
+      const headers = {
+        "Content-Type": "application/json",
+      };
+
+      const AllBuildingQuery = `{
+        signatureSeriesAssetCreateds(orderBy: id) {
+          id
+            tokenID
+            creator
+            metaDataURI
+            blockNumber
+            blockTimestamp
+            transactionHash
+        }
+      }`;
+
+      const graphqlQuery = {
+        operationName: "signatureSeriesAssetCreateds",
+        query: `query signatureSeriesAssetCreateds ${AllBuildingQuery}`,
+        variables: {},
+      };
+
+      const response = await axios.post(endPoint, graphqlQuery, { headers: headers });
+
+      // const response = await fetch(`/api/soldgraph?walletAddress=${walletAddr}?subgraphUrl=${graphqlAPI}`);
+      result = await response.data.data;
 
         const provider = new ethers.providers.Web3Provider(window.ethereum);
         let tranasactionHashArray = result.signatureSeriesAssetCreateds?.map(

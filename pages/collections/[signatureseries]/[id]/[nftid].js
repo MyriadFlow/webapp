@@ -50,7 +50,7 @@ function Token() {
   const [buybuttonshow, setbuybuttonshow] = useState(false);
   const [owner, setowner] = useState(null);
 
-  const tradhubAddress = "0x0E934430687780555A24638730c6FC864485322E";
+  const tradhubAddress = "0x2B6c5bd1da04BCcf7186879288a0E6dF266BcA17";
 
   const findowner = async () =>{
     const tradhubContarct = await etherContract(
@@ -75,8 +75,32 @@ function Token() {
   const fetchAsset = async () => {
 
     if (signatureseries == "SignatureSeries") {
-      const response = await fetch(`/api/onesigseries?nftid=${nftid}`);
-      const result = await response.json();
+
+      const endPoint = `${graphqlAPI}`;
+      const headers = {
+        "Content-Type": "application/json",
+      };
+
+      const AllBuildingQuery = `{
+        signatureSeriesAssetCreateds(where: {tokenID: "${nftid}"}) {
+          id
+            tokenID
+            creator
+            metaDataURI
+            blockNumber
+            blockTimestamp
+            transactionHash
+        }
+      }`;
+
+      const graphqlQuery = {
+        operationName: "signatureSeriesAssetCreateds",
+        query: `query signatureSeriesAssetCreateds ${AllBuildingQuery}`,
+        variables: {},
+      };
+
+      const response = await axios.post(endPoint, graphqlQuery, { headers: headers });
+      const result = await response.data.data;
 
       setData(result.signatureSeriesAssetCreateds[0])
       console.log("data", data, "result", result);
@@ -90,10 +114,34 @@ function Token() {
       // const ownercheck = await signaturecontract.ownerOf(nftid);
     }
     else if (signatureseries == "FusionSeries") {
-      const response = await fetch(`/api/onefusion?nftid=${nftid}`);
-      const result = await response.json();
+      
+      const endPoint = `${graphqlAPI}`;
+      const headers = {
+        "Content-Type": "application/json",
+      };
 
-      setData(result.fusionSeriesAssetCreated)
+      const AllBuildingQuery = `{
+        fusionSeriesAssetCreateds(where: {tokenID: "${nftid}"}) {
+          amount
+          blockNumber
+          blockTimestamp
+          creator
+          id
+          tokenID
+          transactionHash
+        }
+      }`;
+
+      const graphqlQuery = {
+        operationName: "fusionSeriesAssetCreateds",
+        query: `query fusionSeriesAssetCreateds ${AllBuildingQuery}`,
+        variables: {},
+      };
+
+      const response = await axios.post(endPoint, graphqlQuery, { headers: headers });
+      const result = await response.data.data;
+
+      setData(result.fusionSeriesAssetCreateds[0]);
       console.log("data", data, "result", result);
 
       const fusionAddress = id;
@@ -110,10 +158,34 @@ function Token() {
       setNftDatas(nftData);
     }
     else if (signatureseries == "InstaGen") {
-      const response = await fetch(`/api/oneinstagen?nftid=${nftid}`);
-      const result = await response.json();
+      
+      const endPoint = `${graphqlAPI}`;
+      const headers = {
+        "Content-Type": "application/json",
+      };
 
-      setData(result.instaGenAssetCreated)
+      const AllBuildingQuery = `{
+        instaGenAssetCreateds(where: {tokenID: "${nftid}"}){
+          creator
+          blockNumber
+          blockTimestamp
+          currentIndex
+          id
+          quantity
+          transactionHash
+          }
+        }`;
+
+      const graphqlQuery = {
+        operationName: "instaGenAssetCreateds",
+        query: `query instaGenAssetCreateds ${AllBuildingQuery}`,
+        variables: {},
+      };
+
+      const response = await axios.post(endPoint, graphqlQuery, { headers: headers });
+      const result = await response.data.data;
+
+      setData(result.instaGenAssetCreateds[0])
       console.log("data", data, "result", result);
 
       const nftData = await getMetaData(data.metaDataURI);
