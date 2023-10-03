@@ -89,7 +89,7 @@ const Collection = () => {
     <div className="pb-4 px-10 grid grid-cols-2 gap-8 sm:gap-6 lg:grid-cols-4 md:grid-cols-2 w-full pt-6 border-t">
       
           <div
-            className={`rounded-full text-center text-gray-700 dark:text-white dark:hover:bg-white dark:hover:text-gray-800 hover:bg-blue-500  cursor-pointer p-3 border-b-2 border-transparent transition-all ${
+            className={`rounded-full text-center text-gray-700 dark:text-gray-200 dark:hover:bg-white dark:hover:text-gray-800 hover:bg-blue-500  cursor-pointer p-3 border-b-2 border-transparent transition-all ${
               page === "signature" ? "dark:bg-white bg-blue-500 text-white dark:text-gray-800" : ""
             }`}
             onClick={() => setPage("signature")}
@@ -98,7 +98,7 @@ const Collection = () => {
           </div>
 
           <div
-            className={`rounded-full text-center text-gray-700 dark:text-white dark:hover:bg-white dark:hover:text-gray-800 hover:bg-blue-500  cursor-pointer p-3 border-b-2 border-transparent transition-all ${
+            className={`rounded-full text-center text-gray-700 dark:text-gray-200 dark:hover:bg-white dark:hover:text-gray-800 hover:bg-blue-500  cursor-pointer p-3 border-b-2 border-transparent transition-all ${
               page === "fusion" ? "dark:bg-white bg-blue-500 text-white dark:text-gray-800" : ""
             }`}
             onClick={() => setPage("fusion")}
@@ -107,7 +107,7 @@ const Collection = () => {
           </div>
 
           <div
-            className={`rounded-full text-center text-gray-700 dark:text-white dark:hover:bg-white dark:hover:text-gray-800 hover:bg-blue-500  cursor-pointer p-3 border-b-2 border-transparent transition-all ${
+            className={`rounded-full text-center text-gray-700 dark:text-gray-200 dark:hover:bg-white dark:hover:text-gray-800 hover:bg-blue-500  cursor-pointer p-3 border-b-2 border-transparent transition-all ${
               page === "instagen" ? "dark:bg-white bg-blue-500 text-white dark:text-gray-800" : ""
             }`}
             onClick={() => setPage("instagen")}
@@ -116,7 +116,7 @@ const Collection = () => {
           </div>
 
           <div
-            className={`rounded-full text-center text-gray-700 dark:text-white dark:hover:bg-white dark:hover:text-gray-800 hover:bg-blue-500  cursor-pointer p-3 border-b-2 border-transparent transition-all ${
+            className={`rounded-full text-center text-gray-700 dark:text-gray-200 dark:hover:bg-white dark:hover:text-gray-800 hover:bg-blue-500  cursor-pointer p-3 border-b-2 border-transparent transition-all ${
               page === "eternum" ? "dark:bg-white bg-blue-500 text-white dark:text-gray-800" : ""
             }`}
             onClick={() => setPage("eternum")}

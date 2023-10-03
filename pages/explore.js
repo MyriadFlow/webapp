@@ -453,7 +453,7 @@ let result = {};
       <main className="dark:body-back body-back-light min-h-screen">
         <div className="border-b py-4 w-full flex justify-evenly">
           <div
-            className={`rounded-full text-center text-gray-700 dark:text-white dark:hover:bg-white dark:hover:text-gray-800 hover:bg-blue-500 cursor-pointer px-20 py-3 border-b-2 border-transparent transition-all ${
+            className={`rounded-full text-center text-gray-700 dark:text-gray-200 dark:hover:bg-white dark:hover:text-gray-800 hover:bg-blue-500 cursor-pointer px-20 py-3 border-b-2 border-transparent transition-all ${
               page === "sale" ? "dark:bg-white bg-blue-500 text-white dark:text-gray-800" : ""
             }`}
             onClick={() => setPage("sale")}
@@ -463,7 +463,7 @@ let result = {};
             </div>
           </div>
           <div
-            className={`rounded-full text-center text-gray-700 dark:text-white dark:hover:bg-white dark:hover:text-gray-800 hover:bg-blue-500 cursor-pointer px-16 py-3 border-b-2 border-transparent transition-all ${
+            className={`rounded-full text-center text-gray-700 dark:text-gray-200 dark:hover:bg-white dark:hover:text-gray-800 hover:bg-blue-500 cursor-pointer px-16 py-3 border-b-2 border-transparent transition-all ${
               page === "auction" ? "dark:bg-white bg-blue-500 text-white dark:text-gray-800" : ""
             }`}
             onClick={() => setPage("auction")}
