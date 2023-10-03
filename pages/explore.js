@@ -249,8 +249,36 @@ const Home = () => {
 let result = {};
     if(graphqlAPI)
     {
-      const response = await fetch(`/api/salegraph?subgraphUrl=${graphqlAPI}`);
-    result = await response.json();
+      const endPoint = `${graphqlAPI}`;
+      const headers = {
+        "Content-Type": "application/json",
+      };
+
+      const AllBuildingQuery = `{
+        saleStarteds(orderBy: id,where: {itemId_not: "3"}) {
+          itemId
+      metaDataURI
+      nftContract
+      seller
+      tokenId
+      id
+      price
+      transactionHash
+      blockTimestamp
+      blockNumber
+    }
+  }`;
+
+      const graphqlQuery = {
+        operationName: "saleStarteds",
+        query: `query saleStarteds ${AllBuildingQuery}`,
+        variables: {},
+      };
+
+      const response = await axios.post(endPoint, graphqlQuery, { headers: headers });
+
+      // const response = await fetch(`/api/soldgraph?walletAddress=${walletAddr}?subgraphUrl=${graphqlAPI}`);
+      result = await response.data.data;
   
     console.log("result", result);
 
@@ -258,7 +286,7 @@ let result = {};
       const tokenTimestampMap = {};
 
       for (const obj of result.saleStarteds) {
-        const tradhubAddress = "0x0E934430687780555A24638730c6FC864485322E";
+        const tradhubAddress = "0x2B6c5bd1da04BCcf7186879288a0E6dF266BcA17";
         const tradhubContarct = await etherContract(
           tradhubAddress,
           Tradhub.abi
