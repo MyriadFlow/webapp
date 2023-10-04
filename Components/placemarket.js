@@ -13,10 +13,10 @@ import Tradhub from '../artifacts/contracts/tradehub/TradeHub.sol/TradeHub.json'
 import Loader from "./Loader";
 import { saleStartedQuery } from "../utils/gqlUtil";
 import etherContract from "../utils/web3Modal";
-const tradhubAddress="0x0E934430687780555A24638730c6FC864485322E";
-const accessmasterAddress = "0x480A3DE285b221B5A44B60Bc017a3F06256c3a6e";
+const tradhubAddress="0x2B6c5bd1da04BCcf7186879288a0E6dF266BcA17";
+const accessmasterAddress = "0x2DCAa25aC0237841a4dB66F1C97b7baF8728d1d2";
 import { useData } from "../context/data";
-
+import axios from "axios";
 import { useAccount } from "wagmi";
 
 const MyAssets = () => {
@@ -52,8 +52,36 @@ const MyAssets = () => {
     const refineArray = {};
           refineArray.saleStarteds = [];
 
-          const response = await fetch(`/api/selfsalegraph?walletAddress=${walletAddr}?subgraphUrl=${graphqlAPI}`);
-          const result = await response.json();
+          if(walletAddr && graphqlAPI){
+
+          const endPoint = `${graphqlAPI}`;
+      const headers = {
+        "Content-Type": "application/json",
+      };
+
+      const AllBuildingQuery = `{
+        saleStarteds(orderBy: id, where:{seller: "${walletAddr}"}) {
+          itemId
+        metaDataURI
+        nftContract
+        seller
+        tokenId
+        id
+        price
+        transactionHash
+        blockTimestamp
+        blockNumber
+    }
+  }`;
+
+      const graphqlQuery = {
+        operationName: "saleStarteds",
+        query: `query saleStarteds ${AllBuildingQuery}`,
+        variables: {},
+      };
+
+      const response = await axios.post(endPoint, graphqlQuery, { headers: headers });
+      const result = await response.data.data;
 
           setLoading(true);
 
@@ -61,7 +89,7 @@ const MyAssets = () => {
             const tokenTimestampMap = {};
 
             for (const obj of result.saleStarteds) {
-              const tradhubAddress = "0x1509f86D76A683B3DD9199dd286e26eb7d136519";
+              const tradhubAddress = "0x2B6c5bd1da04BCcf7186879288a0E6dF266BcA17";
               const tradhubContarct = await etherContract(
                 tradhubAddress,
                 Tradhub.abi
@@ -94,6 +122,7 @@ const MyAssets = () => {
           };
       
             await status();
+        }
             console.log(refineArray);
 console.log("self sale assets count",refineArray.saleStarteds.length);
     setLoading(true);
@@ -102,7 +131,7 @@ console.log("self sale assets count",refineArray.saleStarteds.length);
   };
   useEffect(() => {
     fetchUserAssests();
-  }, []);
+  }, [walletAddr, graphqlAPI]);
 
   const listItem = async (tokenId, price) => {
     let transaction;
@@ -144,7 +173,7 @@ console.log("self sale assets count",refineArray.saleStarteds.length);
   }
 
   return (
-    <div className="p-4 px-10 min-h-screen body-back">
+    <div className="p-4 px-10 min-h-screen dark:body-back body-back-light">
       {model && <BuyAsset open={model} setOpen={setmodel} message={modelmsg} />}
       <div className=" p-4 mt-20  h-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
         {data.length > 0 ? (
