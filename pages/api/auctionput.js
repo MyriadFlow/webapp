@@ -3,14 +3,14 @@ import axios from "axios";
 
 export default async function handler(req, res) {
   const { subgraphUrl } = req.query;
-  const endPoint = `${subgraphUrl}`;
+  const endPoint = "https://mumbai.testgraph.myriadflow.com/subgraphs/name/v1/tstriop";
   
   const headers = {
     "Content-Type": "application/json",
   };
 
   const AllBuildingQuery = `{
-    auctionStarteds() {
+    auctionStarteds{
         auctioneer
         basePrice
         blockNumber

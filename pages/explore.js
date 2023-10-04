@@ -440,7 +440,7 @@ let result = {};
     const result = await response.json();
     console.log("result", response);
     setLoading(true);
-    // setAuction(result.auctionStarteds);
+    setAuction(result.auctionStarteds);
     setLoading(false);
   };
   return (
@@ -971,9 +971,7 @@ let result = {};
             </div>
           )}
 
-          {page == "auction" && <div className="p-4 px-10">auction data</div>}
-
-          {/* <div className=" p-4">
+          {page == "auction" && <div className="p-4 px-10">
               {auction.length > 0 ? (
                 auction.map((item) => {
                   return (
@@ -983,14 +981,14 @@ let result = {};
                     >
                       <Link key={item.itemId} href={`/assets/${item.id}`}>
                         <div>
-                          <HomeComp uri={item ? item.metadataURI : ""} />
+                        <HomeComp uri={item ? item?.metaDataURI : ""} />
 
                           <div>
                             <div className="font-bold mt-3">
-                              Wallet Address :
+                              Auctioneer :
                             </div>
                             <div className="text-xs">
-                              {item.highestBidder.slice(-6)}
+                              {item.auctioneer.slice(-6)}
                             </div>
                           </div>
                         </div>
@@ -1005,8 +1003,9 @@ let result = {};
                   You have not created Any Auction
                 </div>
               )}
-            </div> */}
-        </div>
+            </div>
+}
+</div>
       </main>
     </Layout>
   );
