@@ -17,6 +17,7 @@ import Link from "next/link";
 import { saleStartedQuery } from "../../../../utils/gqlUtil";
 import request from "graphql-request";
 import { useRouter } from 'next/router';
+import DateTimePicker from '../../../../Components/Datetimepicker';
 import Tradhub from '../../../../artifacts/contracts/tradehub/TradeHub.sol/TradeHub.json'
 import FusionSeries from '../../../../artifacts/contracts/fusionseries/FusionSeries.sol/FusionSeries.json';
 import etherContract from "../../../../utils/web3Modal";
@@ -282,6 +283,7 @@ function Token() {
               </div>
             </div>
 
+            { buybuttonshow && (
             <div className="pl-10 border border-gray-600 p-4">
               <div className="pt-10 pb-4 font-bold text-xl">Rental Duration</div>
               <div className="pb-10">Price</div>
@@ -290,7 +292,8 @@ function Token() {
                 <button
                   className="flex gap-x-2 items-center justify-center lg:px-10 md:px-10 px-3 py-3 my-4 text-sm font-medium rounded-lg text-white border"
                 >
-                  <span className="text-lg font-bold">Months Days Hours</span>
+                  {/* <span className="text-lg font-bold">Months Days Hours</span> */}
+                  <DateTimePicker />
                 </button>
                 <button
                   className="flex gap-x-2 items-center justify-center lg:px-10 md:px-10 px-3 py-3 lg:m-4 md:m-4 text-sm font-medium rounded-lg text-white bg-blue-700"
@@ -301,6 +304,7 @@ function Token() {
                 </button>
               </div>
             </div>
+            )}
           </div>
         </div>
       </div>

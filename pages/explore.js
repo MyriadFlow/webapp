@@ -422,26 +422,46 @@ let result = {};
     }
   };
   const fetchAuction = async () => {
-    const query = gql`
-      query Query($where: AuctionEnded_filter) {
-        auctionEndeds(first: 100) {
-          id
-          tokenId
-          nftContract
-          metadataURI
-          highestBidder
-          blockTimestamp
-        }
-      }
-    `;
     const refineArray = {};
     refineArray.auctionStarteds = [];
-    const response = await fetch("/api/auctionput");
-    const result = await response.json();
+    if (graphqlAPI) {
+      const endPoint = `${graphqlAPI}`;
+      const headers = {
+        "Content-Type": "application/json",
+      };
+
+      const AllBuildingQuery = `{
+        auctionStarteds{
+          auctioneer
+          basePrice
+          blockNumber
+          blockTimestamp
+          endTime
+          id
+          itemId
+          metaDataURI
+          nftContract
+          tokenId
+          transactionHash
+        }
+      }`;
+
+      const graphqlQuery = {
+        operationName: "auctionStarteds",
+        query: `query auctionStarteds ${AllBuildingQuery}`,
+        variables: {},
+      };
+
+      const response = await axios.post(endPoint, graphqlQuery, { headers: headers });
+      const result = await response.data.data;
+    
+    // const response = await fetch("/api/auctionput");
+    // const result = await response.json();
     console.log("result", response);
     setLoading(true);
     setAuction(result.auctionStarteds);
     setLoading(false);
+    }
   };
   return (
     <Layout
