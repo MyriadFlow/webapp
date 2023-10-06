@@ -20,6 +20,7 @@ import { useRouter } from 'next/router';
 import DateTimePicker from '../../../../Components/Datetimepicker';
 import Tradhub from '../../../../artifacts/contracts/tradehub/TradeHub.sol/TradeHub.json'
 import FusionSeries from '../../../../artifacts/contracts/fusionseries/FusionSeries.sol/FusionSeries.json';
+import SignatureSeries from '../../../../artifacts/contracts/signatureseries/SignatureSeries.sol/SignatureSeries.json';
 import etherContract from "../../../../utils/web3Modal";
 import { useData } from "../../../../context/data";
 import { useAccount } from "wagmi";
@@ -58,13 +59,30 @@ function Token() {
       tradhubAddress,
       Tradhub.abi
     );
+
+    const signatureaddress = id;
+      const signaturecontract = await etherContract(signatureaddress, SignatureSeries.abi);
+      const ownercheckifstatusis3 = await signaturecontract.ownerOf(nftid);
+
     const ownercheck = await tradhubContarct.idToMarketItem(nftid);
     
-    console.log("ownercheck", ownercheck.seller, "myadd", myaddr);
-    setowner(ownercheck.seller);
-    if(ownercheck.seller != myaddr)
+    console.log("ownercheck", ownercheck, "myadd", myaddr, "ownerof", ownercheckifstatusis3);
+    
+    if(ownercheck.status==3)
     {
+      setowner(ownercheckifstatusis3);
+      if(ownercheckifstatusis3 != myaddr)
+      {
       setbuybuttonshow(true);
+      }
+    }
+    else
+    {
+      setowner(ownercheck.seller);
+      if(ownercheck.seller != myaddr)
+    {
+      setbuybuttonshow(true);    
+    }
     }
   }
       
