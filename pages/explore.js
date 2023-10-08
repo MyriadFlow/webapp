@@ -12,6 +12,7 @@ import { request, gql } from "graphql-request";
 import BuyAsset from "../Components/buyAssetModal";
 import Loader from "../Components/Loader";
 import Layout from "../Components/Layout";
+// import CountdownTimer from '../Components/CountdownTimer';
 import { getMetaData, removePrefix } from "../utils/ipfsUtil";
 import { MarketPlaceCard } from "../Components/Cards/MarketPlaceCard";
 import { NavLink } from "reactstrap";
@@ -992,12 +993,13 @@ let result = {};
           )}
 
           {page == "auction" && <div className="p-4 px-10">
+            <div className="my-10 lg:mx-6 md:mx-4 mx-0 h-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 w-full">
               {auction.length > 0 ? (
                 auction.map((item) => {
                   return (
                     <div
                       key={item.id}
-                      className=" border-2 p-2.5 bg-white dark:bg-gray-900  rounded-lg shadow-lg w-full lg:w-72 hover:scale-105 duration-200 transform transition cursor-pointer border-2 dark:border-gray-800"
+                      className=" border-2 p-2.5 bg-white dark:bg-gray-900 grid rounded-lg shadow-lg w-full lg:w-72 hover:scale-105 duration-200 transform transition cursor-pointer border-2 dark:border-gray-800"
                     >
                       <Link key={item.itemId} href={`/assets/${item.id}`}>
                         <div>
@@ -1005,10 +1007,22 @@ let result = {};
 
                           <div>
                             <div className="font-bold mt-3">
-                              Auctioneer :
+                              Auctioneer : {item.auctioneer.slice(-6)}
                             </div>
-                            <div className="text-xs">
-                              {item.auctioneer.slice(-6)}
+                            {/* itemid = {item.itemId} */}
+                          </div>
+                          <div>
+                            <div className="font-bold mt-3">
+                              Base Price : {getEthPrice(item?.basePrice)} MATIC
+                            </div>
+                          </div>
+                          <div>
+                            <div className="font-bold mt-3">
+                              Auction ends : {' '}
+                              {new Date(item.endTime*1000).getDate().toString()}{' '}
+                              {new Date(item.endTime*1000).toLocaleString('default', { month: 'long' }).toString()} {' '}
+                              {new Date(item.endTime*1000).getFullYear().toString()}
+                              {/* <CountdownTimer key={item.itemId} endTime={item.endTime} /> */}
                             </div>
                           </div>
                         </div>
@@ -1023,6 +1037,7 @@ let result = {};
                   You have not created Any Auction
                 </div>
               )}
+            </div>
             </div>
 }
 </div>
