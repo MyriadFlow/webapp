@@ -52,6 +52,7 @@ function Token() {
   const [buybuttonshow, setbuybuttonshow] = useState(false);
   const [owner, setowner] = useState(null);
   const [rental, setrental] = useState(false);
+  const [rentinput, setrentinput] = useState(false);
   const [pricePerHour, setPricePerHour] = useState('');
 
   const [duration, setDuration] = useState({
@@ -65,9 +66,26 @@ function Token() {
     setDuration(newDuration);
   };
 
-  const rentToggle = () => {
-    setrental(!rental);
+  const rentToggle = async() => {
+    const signatureaddress = id;
+    const signaturecontract = await etherContract(signatureaddress, SignatureSeries.abi);
+    const isrentabledata = await signaturecontract.rentables(3);
+    if(isrentabledata.isRentable)
+    setrental(true);
+  else
+  setrental(false);
   };
+
+  const rentToggleoffon = ()=>{
+    setrentinput(!rentinput);
+  }
+
+  const rentoff = async ()=>{
+    const signatureaddress = id;
+    const signaturecontract = await etherContract(signatureaddress, SignatureSeries.abi);
+    const pricerent = await signaturecontract.rentables(3);
+    const offrent = await signaturecontract.setRentInfo(3, false, pricerent.hourlyRate);
+  }
 
   const handlePriceChange = (e) => {
     setPricePerHour(e.target.value);
@@ -77,7 +95,7 @@ function Token() {
     // Call the setRentInfo function with the obtained values
     const signatureaddress = id;
       const signaturecontract = await etherContract(signatureaddress, SignatureSeries.abi);
-      const rentinfo = await signaturecontract.setRentInfo(3, true, pricePerHour);
+      const rentinfo = await signaturecontract.setRentInfo(3, true, ethers.utils.parseEther(pricePerHour.toString()));
       console.log("rentinfo", rentinfo);
   };
 
@@ -88,8 +106,8 @@ function Token() {
     // Call the setRentInfo function with the obtained values
     const signatureaddress = id;
       const signaturecontract = await etherContract(signatureaddress, SignatureSeries.abi);
-      const rentinfo = await signaturecontract.setRentInfo(3, true, pricePerHour);
-      console.log("rentinfo", rentinfo);
+      const rent = await signaturecontract.rent(3, ethers.utils.parseEther(totalHours.toString()));
+      console.log("rented", rent);
   };
 
   const tradhubAddress = "0x2B6c5bd1da04BCcf7186879288a0E6dF266BcA17";
@@ -128,6 +146,10 @@ function Token() {
       
   useEffect(() => {
     findowner();
+  });
+
+  useEffect(() => {
+    rentToggle();
   });
 
 
@@ -345,9 +367,16 @@ function Token() {
             <div className="pl-10 border border-gray-600 p-4">
               <div className="pt-10 pb-4 font-bold text-xl">Rental Availability</div>
               <label class="relative inline-flex items-center cursor-pointer">
-  <input type="checkbox" value="" class="sr-only peer" onChange={rentToggle}/>
+                { !rental && (
+                  <input type="checkbox" value="" class="sr-only peer" onChange={rentToggleoffon}/>
+                )
+
+                }
+  { rental && (
+    <input type="checkbox" value="" checked class="sr-only peer" onChange={rentoff}/>
+  )}
   <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
-  <span class="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300">Toggle me</span>
+  {/* <span class="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300">Toggle me</span> */}
 </label>
 { rental && (
   <div>
@@ -358,10 +387,33 @@ function Token() {
   placeholder="Matic"
   value={pricePerHour}
   onChange={handlePriceChange}
-  className="flex gap-x-2 items-center justify-center lg:px-10 md:px-10 px-3 py-3 my-4 text-sm font-medium rounded-lg text-white border"
+  className="flex gap-x-2 items-center justify-center lg:px-10 md:px-10 px-3 py-3 my-4 text-sm font-medium rounded-lg text-gray-500 border"
 />
                 <button
-                  className="flex gap-x-2 items-center justify-center lg:px-10 md:px-10 px-3 py-3 lg:m-4 md:m-4 text-sm font-medium rounded-lg bg-white text-black"
+                  className="flex gap-x-2 items-center justify-center lg:px-10 md:px-10 px-3 py-3 lg:m-4 md:m-4 text-sm font-medium rounded-lg bg-white text-gray-500"
+                  onClick={handleSubmit}
+                  >
+                  <BiWallet className="text-3xl" />
+                  <span className="text-lg font-bold">Set Price</span>
+
+                </button>
+              </div>
+              </div>
+)}
+
+{ rentinput && (
+  <div>
+    <div className="pb-10">Price</div>
+  <div className="lg:flex md:flex">
+  <input
+  type="number"
+  placeholder="Matic"
+  value={pricePerHour}
+  onChange={handlePriceChange}
+  className="flex gap-x-2 items-center justify-center lg:px-10 md:px-10 px-3 py-3 my-4 text-sm font-medium rounded-lg text-gray-500 border"
+/>
+                <button
+                  className="flex gap-x-2 items-center justify-center lg:px-10 md:px-10 px-3 py-3 lg:m-4 md:m-4 text-sm font-medium rounded-lg bg-white text-gray-500"
                   onClick={handleSubmit}
                   >
                   <BiWallet className="text-3xl" />
