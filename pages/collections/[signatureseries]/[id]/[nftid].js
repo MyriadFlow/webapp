@@ -54,6 +54,7 @@ function Token() {
   const [rental, setrental] = useState(false);
   const [rentinput, setrentinput] = useState(false);
   const [pricePerHour, setPricePerHour] = useState('');
+  const [currentprice, setcurrentprice] = useState('');
 
   const [duration, setDuration] = useState({
     months: 0,
@@ -70,8 +71,15 @@ function Token() {
     const signatureaddress = id;
     const signaturecontract = await etherContract(signatureaddress, SignatureSeries.abi);
     const isrentabledata = await signaturecontract.rentables(3);
+    console.log("rentables data", isrentabledata);
+    const rate = isrentabledata.hourlyRate.toString();
+    console.log("rentables rate", isrentabledata.hourlyRate.toString());
+    console.log("ethers", ethers.utils.formatEther(rate).toString());
     if(isrentabledata.isRentable)
-    setrental(true);
+    {
+      setrental(true);
+      setcurrentprice(ethers.utils.formatEther(rate));
+    }
   else
   setrental(false);
   };
@@ -380,6 +388,7 @@ function Token() {
 </label>
 { rental && (
   <div>
+    <div className="text-green-500">Minimum price for 1 hour now is {currentprice} Matic</div>
     <div className="pb-10">Price</div>
   <div className="lg:flex md:flex">
   <input
