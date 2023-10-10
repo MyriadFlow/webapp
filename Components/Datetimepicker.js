@@ -14,7 +14,7 @@ function DateTimePicker() {
       <div className="text-black dark:text-white">
         <label>
           Months:
-          <select value={months} onChange={handleMonthsChange}>
+          <select value={months} onChange={handleMonthsChange} className="dark:bg-gray-500 bg-gray-200">
             {Array.from({ length: 13 }, (_, i) => (
               <option key={i} value={i}>
                 {i}
@@ -24,7 +24,7 @@ function DateTimePicker() {
         </label>
         <label>
           Days:
-          <select value={days} onChange={handleDaysChange}>
+          <select value={days} onChange={handleDaysChange} className="dark:bg-gray-500 bg-gray-200">
             {Array.from({ length: 32 }, (_, i) => (
               <option key={i} value={i}>
                 {i}
@@ -34,7 +34,7 @@ function DateTimePicker() {
         </label>
         <label>
           Hours:
-          <select value={hours} onChange={handleHoursChange}>
+          <select value={hours} onChange={handleHoursChange} className="dark:bg-gray-500 bg-gray-200">
             {Array.from({ length: 24 }, (_, i) => (
               <option key={i} value={i}>
                 {i}
