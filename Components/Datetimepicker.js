@@ -11,7 +11,7 @@ function DateTimePicker() {
     const handleHoursChange = (e) => setHours(parseInt(e.target.value, 10));
   
     return (
-      <div>
+      <div className="text-black dark:text-white">
         <label>
           Months:
           <select value={months} onChange={handleMonthsChange}>

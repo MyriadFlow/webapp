@@ -94,6 +94,8 @@ const Footer = () => {
                         </div>
                         <div>
                             <h2 className="mb-6 text-lg font-semibold text-gray-900 dark:text-white">Contact Us</h2>
+                            <div className="flex lg:flex-row md:flex-row flex-col">
+                                <div>
                             <ul className="text-gray-500 dark:text-gray-400 font-medium">
                                 {resdata && (<div className="flex mt-4 space-x-5 sm:mt-0">
                                     <Link href={resdata?.Storefront.discord} target="_blank" className="border rounded-md p-1.5 text-gray-500 hover:text-gray-900 dark:hover:text-white">
@@ -107,6 +109,13 @@ const Footer = () => {
                                             <path d="M28.3401 0.75H33.8534L21.8084 14.5167L35.9784 33.25H24.8818L16.1918 21.8883L6.24844 33.25H0.731771L13.6151 18.525L0.0234375 0.75H11.3984L19.2534 11.135L28.3368 0.75H28.3401ZM26.4051 29.95H29.4601L9.7401 3.87667H6.46177L26.4051 29.95Z" fill="current" />
                                         </svg>
                                     </Link>
+                                </div>
+                                )}
+                            </ul>
+                            </div>
+                            <div>
+                            <ul className="text-gray-500 dark:text-gray-400 font-medium mt-4 lg:mt-0 md:mt-0 md:mx-4 lg:mx-4">
+                                {resdata && (<div className="flex mt-4 space-x-5 lg:mt-0 md:mt-0">
                                     <Link href={resdata?.Storefront.instagram} target="_blank" className="border rounded-md p-1.5 text-gray-500 hover:text-gray-900 dark:hover:text-white">
                                         {/* <img src="/Vector2.png" /> */}
                                         <svg width="24" height="20" viewBox="0 0 38 28" fill="currentColor" xmlns="http://www.w3.org/2000/svg" className="dark:text-white text-gray-500">
@@ -122,11 +131,9 @@ const Footer = () => {
                                     </Link>
                                 </div>
                                 )}
-                                {resdata && (<div className="flex mt-4 space-x-5">
-
-                                </div>
-                                )}
                             </ul>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

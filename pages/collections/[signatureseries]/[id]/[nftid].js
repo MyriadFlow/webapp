@@ -51,6 +51,46 @@ function Token() {
   const [nftDatas, setNftDatas] = useState([]);
   const [buybuttonshow, setbuybuttonshow] = useState(false);
   const [owner, setowner] = useState(null);
+  const [rental, setrental] = useState(false);
+  const [pricePerHour, setPricePerHour] = useState('');
+
+  const [duration, setDuration] = useState({
+    months: 0,
+    days: 0,
+    hours: 0,
+  });
+
+  // Function to handle changes in the DateTimePicker
+  const handleDurationChange = (newDuration) => {
+    setDuration(newDuration);
+  };
+
+  const rentToggle = () => {
+    setrental(!rental);
+  };
+
+  const handlePriceChange = (e) => {
+    setPricePerHour(e.target.value);
+  };
+
+  const handleSubmit = async () => {
+    // Call the setRentInfo function with the obtained values
+    const signatureaddress = id;
+      const signaturecontract = await etherContract(signatureaddress, SignatureSeries.abi);
+      const rentinfo = await signaturecontract.setRentInfo(3, true, pricePerHour);
+      console.log("rentinfo", rentinfo);
+  };
+
+  const handleRenttime = async () => {
+    const { months, days, hours } = duration;
+    const totalHours = (months * 30 * 24) + (days * 24) + hours;
+    console.log("total hours for rent", totalHours);
+    // Call the setRentInfo function with the obtained values
+    const signatureaddress = id;
+      const signaturecontract = await etherContract(signatureaddress, SignatureSeries.abi);
+      const rentinfo = await signaturecontract.setRentInfo(3, true, pricePerHour);
+      console.log("rentinfo", rentinfo);
+  };
 
   const tradhubAddress = "0x2B6c5bd1da04BCcf7186879288a0E6dF266BcA17";
 
@@ -62,9 +102,9 @@ function Token() {
 
     const signatureaddress = id;
       const signaturecontract = await etherContract(signatureaddress, SignatureSeries.abi);
-      const ownercheckifstatusis3 = await signaturecontract.ownerOf(nftid);
+      const ownercheckifstatusis3 = await signaturecontract.ownerOf(3);
 
-    const ownercheck = await tradhubContarct.idToMarketItem(nftid);
+    const ownercheck = await tradhubContarct.idToMarketItem(10);
     
     console.log("ownercheck", ownercheck, "myadd", myaddr, "ownerof", ownercheckifstatusis3);
     
@@ -225,9 +265,9 @@ function Token() {
 
   return (
     <Layout>
-      <div className="min-h-screen p-8 mx-auto bg-[#f8f7fc] dark:bg-[#131417] dark:body-back body-back-light">
+      <div className="min-h-screen p-8 mx-auto bg-[#f8f7fc] dark:bg-[#131417] dark:body-back body-back-light text-black dark:text-white">
         <div className="flex flex-col lg:flex-row">
-          <div className="lg:w-1/3 border border-gray-600 p-4 mr-4">
+          <div className="lg:w-1/3 border border-gray-600 p-4 lg:mr-4">
             <AssetComp
               uri={data ? data?.metaDataURI : ""}
             />
@@ -301,7 +341,43 @@ function Token() {
               </div>
             </div>
 
-            { buybuttonshow && (
+            {/* { !buybuttonshow && ( */}
+            <div className="pl-10 border border-gray-600 p-4">
+              <div className="pt-10 pb-4 font-bold text-xl">Rental Availability</div>
+              <label class="relative inline-flex items-center cursor-pointer">
+  <input type="checkbox" value="" class="sr-only peer" onChange={rentToggle}/>
+  <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
+  <span class="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300">Toggle me</span>
+</label>
+{ rental && (
+  <div>
+    <div className="pb-10">Price</div>
+  <div className="lg:flex md:flex">
+  <input
+  type="number"
+  placeholder="Matic"
+  value={pricePerHour}
+  onChange={handlePriceChange}
+  className="flex gap-x-2 items-center justify-center lg:px-10 md:px-10 px-3 py-3 my-4 text-sm font-medium rounded-lg text-white border"
+/>
+                <button
+                  className="flex gap-x-2 items-center justify-center lg:px-10 md:px-10 px-3 py-3 lg:m-4 md:m-4 text-sm font-medium rounded-lg bg-white text-black"
+                  onClick={handleSubmit}
+                  >
+                  <BiWallet className="text-3xl" />
+                  <span className="text-lg font-bold">Set Price</span>
+
+                </button>
+              </div>
+              </div>
+)}
+              
+
+              
+            </div>
+            {/* )} */}
+
+            {/* { buybuttonshow && ( */}
             <div className="pl-10 border border-gray-600 p-4">
               <div className="pt-10 pb-4 font-bold text-xl">Rental Duration</div>
               <div className="pb-10">Price</div>
@@ -311,10 +387,11 @@ function Token() {
                   className="flex gap-x-2 items-center justify-center lg:px-10 md:px-10 px-3 py-3 my-4 text-sm font-medium rounded-lg text-white border"
                 >
                   {/* <span className="text-lg font-bold">Months Days Hours</span> */}
-                  <DateTimePicker />
+                  <DateTimePicker onChange={handleDurationChange}/>
                 </button>
                 <button
                   className="flex gap-x-2 items-center justify-center lg:px-10 md:px-10 px-3 py-3 lg:m-4 md:m-4 text-sm font-medium rounded-lg text-white bg-blue-700"
+                  onClick={handleRenttime}
                 >
                   <BiWallet className="text-3xl" />
                   <span className="text-lg font-bold">Rent Now</span>
@@ -322,7 +399,7 @@ function Token() {
                 </button>
               </div>
             </div>
-            )}
+            {/* )} */}
           </div>
         </div>
       </div>
