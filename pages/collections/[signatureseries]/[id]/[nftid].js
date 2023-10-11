@@ -111,11 +111,14 @@ function Token() {
     const totalHours = (months * 30 * 24) + (days * 24) + hours;
     console.log("total hours for rent", totalHours);
     const totalsec = totalHours * 60 * 60;
-    console.log("total seconds", totalHours*60*60);
+    // console.log("total seconds", totalHours*60*60);
     // Call the setRentInfo function with the obtained values
+    const options = {
+      value: ethers.utils.parseEther(currentprice.toString()).mul(totalHours)
+    };
     const signatureaddress = id;
       const signaturecontract = await etherContract(signatureaddress, SignatureSeries.abi);
-      const rent = await signaturecontract.rent(nftid, totalsec);
+      const rent = await signaturecontract.rent(nftid, totalHours,options);
       // console.log("rented", rent);
   };
 
