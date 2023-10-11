@@ -56,21 +56,19 @@ function Token() {
   const [pricePerHour, setPricePerHour] = useState('');
   const [currentprice, setcurrentprice] = useState('');
 
-  const [duration, setDuration] = useState({
-    months: 0,
-    days: 0,
-    hours: 0,
-  });
+  const [months, setMonths] = useState(0);
+  const [days, setDays] = useState(0);
+  const [hours, setHours] = useState(0);
 
-  // Function to handle changes in the DateTimePicker
-  const handleDurationChange = (newDuration) => {
-    setDuration(newDuration);
-  };
+  // Function to update the state when values change
+  const handleMonthsChange = (e) => setMonths(parseInt(e.target.value, 10));
+  const handleDaysChange = (e) => setDays(parseInt(e.target.value, 10));
+  const handleHoursChange = (e) => setHours(parseInt(e.target.value, 10));
 
   const rentToggle = async() => {
     const signatureaddress = id;
     const signaturecontract = await etherContract(signatureaddress, SignatureSeries.abi);
-    const isrentabledata = await signaturecontract.rentables(3);
+    const isrentabledata = await signaturecontract.rentables(nftid);
     console.log("rentables data", isrentabledata);
     const rate = isrentabledata.hourlyRate.toString();
     console.log("rentables rate", isrentabledata.hourlyRate.toString());
@@ -91,8 +89,8 @@ function Token() {
   const rentoff = async ()=>{
     const signatureaddress = id;
     const signaturecontract = await etherContract(signatureaddress, SignatureSeries.abi);
-    const pricerent = await signaturecontract.rentables(3);
-    const offrent = await signaturecontract.setRentInfo(3, false, pricerent.hourlyRate);
+    const pricerent = await signaturecontract.rentables(nftid);
+    const offrent = await signaturecontract.setRentInfo(nftid, false, pricerent.hourlyRate);
   }
 
   const handlePriceChange = (e) => {
@@ -103,19 +101,22 @@ function Token() {
     // Call the setRentInfo function with the obtained values
     const signatureaddress = id;
       const signaturecontract = await etherContract(signatureaddress, SignatureSeries.abi);
-      const rentinfo = await signaturecontract.setRentInfo(3, true, ethers.utils.parseEther(pricePerHour.toString()));
+      const rentinfo = await signaturecontract.setRentInfo(nftid, true, ethers.utils.parseEther(pricePerHour.toString()));
       console.log("rentinfo", rentinfo);
   };
 
   const handleRenttime = async () => {
-    const { months, days, hours } = duration;
+    // const { months, days, hours } = duration;
+    console.log("months", months, "days", days, "hours", hours);
     const totalHours = (months * 30 * 24) + (days * 24) + hours;
     console.log("total hours for rent", totalHours);
+    const totalsec = totalHours * 60 * 60;
+    console.log("total seconds", totalHours*60*60);
     // Call the setRentInfo function with the obtained values
     const signatureaddress = id;
       const signaturecontract = await etherContract(signatureaddress, SignatureSeries.abi);
-      const rent = await signaturecontract.rent(3, ethers.utils.parseEther(totalHours.toString()));
-      console.log("rented", rent);
+      const rent = await signaturecontract.rent(nftid, totalsec);
+      // console.log("rented", rent);
   };
 
   const tradhubAddress = "0x2B6c5bd1da04BCcf7186879288a0E6dF266BcA17";
@@ -128,7 +129,7 @@ function Token() {
 
     const signatureaddress = id;
       const signaturecontract = await etherContract(signatureaddress, SignatureSeries.abi);
-      const ownercheckifstatusis3 = await signaturecontract.ownerOf(3);
+      const ownercheckifstatusis3 = await signaturecontract.ownerOf(nftid);
 
     const ownercheck = await tradhubContarct.idToMarketItem(10);
     
@@ -197,10 +198,6 @@ function Token() {
       const nftData = await getMetaData(data.metaDataURI);
       console.log("nftData", nftData);
       setNftDatas(nftData);
-
-      // const signatureaddress = id;
-      // const signaturecontract = await etherContract(signatureaddress, SignatureSeries.abi);
-      // const ownercheck = await signaturecontract.ownerOf(nftid);
     }
     else if (signatureseries == "FusionSeries") {
       
@@ -410,7 +407,7 @@ function Token() {
               </div>
 )}
 
-{ rentinput && (
+{ rentinput && !rental && (
   <div>
     <div className="pb-10">Price</div>
   <div className="lg:flex md:flex">
@@ -432,10 +429,37 @@ function Token() {
               </div>
               </div>
 )}
-              
+   { signatureseries != "FusionSeries"  && (    
+          <div>
+            <div className="pt-10 pb-4 font-bold text-xl">Gifting</div>
+            <div className="lg:flex md:flex">
+                <input
+                type="number"
+                placeholder="Wallet Address"
+                value={pricePerHour}
+                onChange={handlePriceChange}
+                className="flex gap-x-2 items-center justify-center lg:px-10 md:px-10 px-3 py-3 my-4 text-sm font-medium rounded-lg text-gray-500 border"
+              />
+              <input
+                type="number"
+                placeholder="Time"
+                value={pricePerHour}
+                onChange={handlePriceChange}
+                className="flex lg:ml-4 md:ml-4 gap-x-2 items-center justify-center lg:px-10 md:px-10 px-3 py-3 my-4 text-sm font-medium rounded-lg text-gray-500 border"
+              />
+                <button
+                  className="flex gap-x-2 items-center justify-center lg:px-10 md:px-10 px-3 py-3 lg:m-4 md:m-4 text-sm font-medium rounded-lg bg-white text-gray-500"
+                  onClick={handleSubmit}
+                  >
+                  <BiWallet className="text-3xl" />
+                  <span className="text-lg font-bold">Set</span>
 
-              
+                </button>
+              </div>
             </div>
+               )}
+          </div>
+  
             {/* )} */}
 
             {/* { buybuttonshow && ( */}
@@ -448,7 +472,14 @@ function Token() {
                   className="flex gap-x-2 items-center justify-center lg:px-10 md:px-10 px-3 py-3 my-4 text-sm font-medium rounded-lg text-white border"
                 >
                   {/* <span className="text-lg font-bold">Months Days Hours</span> */}
-                  <DateTimePicker onChange={handleDurationChange}/>
+                  <DateTimePicker 
+                  months={months}
+                  days={days}
+                  hours={hours}
+                  onMonthsChange={handleMonthsChange}
+                  onDaysChange={handleDaysChange}
+                  onHoursChange={handleHoursChange}
+                  />
                 </button>
                 <button
                   className="flex gap-x-2 items-center justify-center lg:px-10 md:px-10 px-3 py-3 lg:m-4 md:m-4 text-sm font-medium rounded-lg text-white bg-blue-700"
