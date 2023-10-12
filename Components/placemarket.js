@@ -13,8 +13,6 @@ import Tradhub from '../artifacts/contracts/tradehub/TradeHub.sol/TradeHub.json'
 import Loader from "./Loader";
 import { saleStartedQuery } from "../utils/gqlUtil";
 import etherContract from "../utils/web3Modal";
-const tradhubAddress="0x2B6c5bd1da04BCcf7186879288a0E6dF266BcA17";
-const accessmasterAddress = "0x2DCAa25aC0237841a4dB66F1C97b7baF8728d1d2";
 import { useData } from "../context/data";
 import axios from "axios";
 import { useAccount } from "wagmi";
@@ -36,6 +34,9 @@ const MyAssets = () => {
   // Extract the matched URL or set it to null if no match was found
   const graphqlAPI = match ? match[0] : null;
   console.log(graphqlAPI);
+
+  const tradhubAddress = resdata?.TradehubAddress;
+  const accessmasterAddress = resdata?.accessMasterAddress;
 
   const router = useRouter();
   const [data, setData] = useState([]);
@@ -89,7 +90,7 @@ const MyAssets = () => {
             const tokenTimestampMap = {};
 
             for (const obj of result.saleStarteds) {
-              const tradhubAddress = "0x2B6c5bd1da04BCcf7186879288a0E6dF266BcA17";
+              const tradhubAddress = resdata?.TradehubAddress;
               const tradhubContarct = await etherContract(
                 tradhubAddress,
                 Tradhub.abi

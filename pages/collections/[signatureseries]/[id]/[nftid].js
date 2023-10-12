@@ -122,7 +122,7 @@ function Token() {
       // console.log("rented", rent);
   };
 
-  const tradhubAddress = "0x2B6c5bd1da04BCcf7186879288a0E6dF266BcA17";
+  const tradhubAddress = resdata?.TradehubAddress;
 
   const findowner = async () =>{
     const tradhubContarct = await etherContract(
