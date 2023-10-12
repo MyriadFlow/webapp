@@ -56,6 +56,7 @@ function Token() {
   const [pricePerHour, setPricePerHour] = useState('');
   const [currentprice, setcurrentprice] = useState('');
   const [nftitemid, setnftitemid] = useState('');
+  const [youcanrent,setyoucanrent] = useState(false);
 
   const [months, setMonths] = useState(0);
   const [days, setDays] = useState(0);
@@ -160,6 +161,77 @@ function Token() {
     }
   };
 
+  const canyourent = async () => {
+    if(data)
+    {
+      const endPoint = `${graphqlAPI}`;
+      const headers = {
+        "Content-Type": "application/json",
+      };
+
+      const AllBuildingQuery = `{
+        updateUsers(where: {tokenId: "${nftid}"}) {
+          tokenId
+          user
+          blockTimestamp
+          blockNumber
+          expires
+          id
+          transactionHash
+        }
+      }`;
+
+      const graphqlQuery = {
+        operationName: "updateUsers",
+        query: `query updateUsers ${AllBuildingQuery}`,
+        variables: {},
+      };
+
+      const response = await axios.post(endPoint, graphqlQuery, { headers: headers });
+      const result = await response.data.data;
+
+      // setnftitemid(result.updateUsers[0].itemId);
+      console.log("item id data", result);
+
+      const expiry = async () => {
+        const tokenTimestampMap = {};
+  
+        for (const obj of result?.updateUsers) {
+  
+            // Check if tokenId exists in tokenTimestampMap
+            if (!tokenTimestampMap[obj.tokenId]) {
+              // If tokenId doesn't exist, add it with the current obj
+              tokenTimestampMap[obj.tokenId] = obj;
+            } else {
+              // If tokenId exists, compare timestamps and update if current obj has a more recent timestamp
+              const currentTimestamp = obj.blockTimestamp;
+              const existingTimestamp =
+                tokenTimestampMap[obj.tokenId].blockTimestamp;
+              if (currentTimestamp > existingTimestamp) {
+                tokenTimestampMap[obj.tokenId] = obj;
+              }
+            }
+    
+  
+          console.log("tokenTimestampMap", tokenTimestampMap);
+
+          const currentTimestamp = Math.floor(Date.now() / 1000);
+          const givenTimestamp = parseInt(tokenTimestampMap[nftid].expires,10);
+
+          console.log(currentTimestamp, givenTimestamp);
+          
+          if(currentTimestamp>givenTimestamp)
+          {
+            setyoucanrent(true);
+          }
+        }
+    
+      };
+  
+      await expiry();
+    }
+  };
+
   const tradhubAddress = resdata?.TradehubAddress;
 
   const findowner = async () =>{
@@ -204,6 +276,10 @@ function Token() {
 
   useEffect(() => {
     itemid();
+  },[data]);
+
+  useEffect(() => {
+    canyourent();
   },[data]);
 
 
@@ -507,7 +583,7 @@ function Token() {
   
             {/* )} */}
 
-            {/* { buybuttonshow && rental && ( */}
+            { buybuttonshow && rental && youcanrent && (
             <div className="pl-10 border border-gray-600 p-4">
               <div className="pt-10 pb-4 font-bold text-xl">Rental Duration</div>
               <div className="pb-10">Price</div>
@@ -536,7 +612,11 @@ function Token() {
                 </button>
               </div>
             </div>
-            {/* )} */}
+            )}
+
+            { buybuttonshow && rental && !youcanrent && (
+<div> This asset is already rented</div>
+            )}
           </div>
         </div>
       </div>
