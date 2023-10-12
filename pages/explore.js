@@ -45,6 +45,8 @@ const Home = () => {
   const graphqlAPI = match ? match[0] : null;
   console.log(graphqlAPI);
 
+  const tradhubAddress = resdata?.TradehubAddress;
+
   const allfilter = {
     minPrice: 0.1,
     maxPrice: 100,
@@ -188,7 +190,7 @@ const Home = () => {
   async function buyNft(nft) {
     setmodelmsg("Buying in Progress");
     setLoading(true);
-    await buyItem(nft, 1, setmodel, setmodelmsg);
+    await buyItem(nft, 1, setmodel, setmodelmsg,tradhubAddress);
     router.push("/dashboard");
     setLoading(false);
   }
@@ -287,7 +289,7 @@ let result = {};
       const tokenTimestampMap = {};
 
       for (const obj of result.saleStarteds) {
-        const tradhubAddress = resdata?.TradehubAddress;
+        
         const tradhubContarct = await etherContract(
           tradhubAddress,
           Tradhub.abi

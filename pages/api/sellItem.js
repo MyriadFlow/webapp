@@ -6,10 +6,10 @@ import EternumPass from '../../artifacts/contracts/eturnumpass/EternumPass.sol/E
 import Tradehub from '../../artifacts/contracts/tradehub/TradeHub.sol/TradeHub.json';
 import etherContract from "../../utils/web3Modal";
 
-const tradhubAddress = "0x2B6c5bd1da04BCcf7186879288a0E6dF266BcA17";
+// const tradhubAddress = "0x2B6c5bd1da04BCcf7186879288a0E6dF266BcA17";
 
 
-export const sellItem = async (nft, quantity,price, setmodel, setmodelmsg) => {
+export const sellItem = async (nft, quantity,price, setmodel, setmodelmsg,tradhubAddress) => {
   const signatureaddress = nft.nftContract;
   const tradhubContarct = await etherContract(tradhubAddress, Tradehub.abi)
   const signatureContarct = await etherContract(signatureaddress, SignatureSeries.abi)

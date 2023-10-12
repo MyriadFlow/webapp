@@ -2,8 +2,8 @@ import { ethers } from "ethers";
 import Tradhub from '../../artifacts/contracts/tradehub/TradeHub.sol/TradeHub.json';
 import etherContract from "../../utils/web3Modal";
 
-const tradhubAddress = "0x2B6c5bd1da04BCcf7186879288a0E6dF266BcA17";
-export const buyItem = async (nft, quantity, setmodel, setmodelmsg) => {
+// const tradhubAddress = "0x2B6c5bd1da04BCcf7186879288a0E6dF266BcA17";
+export const buyItem = async (nft, quantity, setmodel, setmodelmsg,tradhubAddress) => {
   const tradhubContarct = await etherContract(tradhubAddress, Tradhub.abi)
 
   // setmodel(true);

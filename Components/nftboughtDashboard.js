@@ -35,6 +35,8 @@ function NftboughtDashboard() {
   const graphqlAPI = match ? match[0] : null;
   console.log(graphqlAPI);
 
+  const tradhubAddress = resdata?.TradehubAddress;
+
   function getEthPrice(price) {
     return ethers.utils.formatEther(price);
   }
@@ -107,7 +109,7 @@ function NftboughtDashboard() {
         const tokenTimestampMap = {};
 
         for (const obj of result.itemSolds) {
-          const tradhubAddress = resdata?.TradehubAddress;
+          
           const tradhubContarct = await etherContract(
             tradhubAddress,
             Tradhub.abi
@@ -177,7 +179,7 @@ function NftboughtDashboard() {
     setIsPriceInputVisible(false);
     setLoading(true);
     const newprice = ethers.utils.parseEther(price.toString());
-    await sellItem(nft, 1, newprice, setmodel, setmodelmsg);
+    await sellItem(nft, 1, newprice, setmodel, setmodelmsg,tradhubAddress);
     router.push("/explore");
     setLoading(false);
   }
