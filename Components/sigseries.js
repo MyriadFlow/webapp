@@ -18,7 +18,7 @@ import { useData } from "../context/data";
 
 function Sigseries() {
   const { resdata } = useData();
-  const apiUrl = `https://testnet.gateway.myriadflow.com/api/v1.0/webapp/contracts/${resdata.Storefront.id}`;
+  const apiUrl = `https://testnet.gateway.myriadflow.com/api/v1.0/webapp/contracts/${resdata?.Storefront.id}`;
 
   function getEthPrice(price) {
     return ethers.utils.formatEther(price);
