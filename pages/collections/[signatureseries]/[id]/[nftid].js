@@ -55,6 +55,7 @@ function Token() {
   const [rentinput, setrentinput] = useState(false);
   const [pricePerHour, setPricePerHour] = useState('');
   const [currentprice, setcurrentprice] = useState('');
+  const [nftitemid, setnftitemid] = useState('');
 
   const [months, setMonths] = useState(0);
   const [days, setDays] = useState(0);
@@ -122,6 +123,43 @@ function Token() {
       // console.log("rented", rent);
   };
 
+  const itemid = async () => {
+    if(data)
+    {
+      const endPoint = `${graphqlAPI}`;
+      const headers = {
+        "Content-Type": "application/json",
+      };
+
+      const AllBuildingQuery = `{
+        saleStarteds(where: {tokenId: "${nftid}", nftContract: "${id}"}) {
+          transactionHash
+          tokenId
+          seller
+          itemId
+          metaDataURI
+          nftContract
+          price
+          blockTimestamp
+          blockNumber
+          id
+        }
+      }`;
+
+      const graphqlQuery = {
+        operationName: "saleStarteds",
+        query: `query saleStarteds ${AllBuildingQuery}`,
+        variables: {},
+      };
+
+      const response = await axios.post(endPoint, graphqlQuery, { headers: headers });
+      const result = await response.data.data;
+
+      setnftitemid(result.saleStarteds[0].itemId);
+      console.log("item id data", result);
+    }
+  };
+
   const tradhubAddress = resdata?.TradehubAddress;
 
   const findowner = async () =>{
@@ -134,7 +172,7 @@ function Token() {
       const signaturecontract = await etherContract(signatureaddress, SignatureSeries.abi);
       const ownercheckifstatusis3 = await signaturecontract.ownerOf(nftid);
 
-    const ownercheck = await tradhubContarct.idToMarketItem(10);
+    const ownercheck = await tradhubContarct.idToMarketItem(nftitemid);
     
     console.log("ownercheck", ownercheck, "myadd", myaddr, "ownerof", ownercheckifstatusis3);
     
@@ -163,6 +201,10 @@ function Token() {
   useEffect(() => {
     rentToggle();
   });
+
+  useEffect(() => {
+    itemid();
+  },[data]);
 
 
   const fetchAsset = async () => {
@@ -465,7 +507,7 @@ function Token() {
   
             {/* )} */}
 
-            {/* { buybuttonshow && ( */}
+            {/* { buybuttonshow && rental && ( */}
             <div className="pl-10 border border-gray-600 p-4">
               <div className="pt-10 pb-4 font-bold text-xl">Rental Duration</div>
               <div className="pb-10">Price</div>
