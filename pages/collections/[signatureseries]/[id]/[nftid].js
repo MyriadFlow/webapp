@@ -156,8 +156,33 @@ function Token() {
       const response = await axios.post(endPoint, graphqlQuery, { headers: headers });
       const result = await response.data.data;
 
-      setnftitemid(result.saleStarteds[0].itemId);
-      console.log("item id data", result);
+      const AllBuildingQuery2 = `{
+        auctionStarteds(where: {tokenId: "${nftid}", nftContract: "${id}"}) {
+          itemId
+          tokenId
+          nftContract
+        }
+      }`;
+
+      const graphqlQuery2 = {
+        operationName: "auctionStarteds",
+        query: `query auctionStarteds ${AllBuildingQuery2}`,
+        variables: {},
+      };
+
+      const response2 = await axios.post(endPoint, graphqlQuery2, { headers: headers });
+      const result2 = await response2.data.data;
+
+      console.log("item id data", result, result2);
+
+      if(result?.saleStarteds.length>0)
+      {
+        setnftitemid(result?.saleStarteds[0].itemId);
+      }
+      else
+      {
+        setnftitemid(result2?.auctionStarteds[0].itemId);
+      }
     }
   };
 
@@ -191,7 +216,7 @@ function Token() {
       const result = await response.data.data;
 
       // setnftitemid(result.updateUsers[0].itemId);
-      console.log("item id data", result);
+      // console.log("item id data", result);
 
       const expiry = async () => {
         const tokenTimestampMap = {};
