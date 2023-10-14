@@ -480,7 +480,12 @@ function Token() {
               <div className="pb-10">
               <span className="mr-4">Owned by</span>
               {
-                owner && (<span>{owner.slice(-5)}</span>)
+                owner && owner!=myaddr && (
+                <span>{owner}</span>
+                )}
+               { owner && owner== myaddr &&(
+<span>You</span>
+                )
               }
               </div>
               <div className="lg:flex md:flex">

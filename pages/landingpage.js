@@ -313,7 +313,7 @@ export default function LandingPage() {
                   <div className="items-center lg:py-4 md:py-4">
                     <div>
                       <button className="py-3 px-10 text-gray-500 dark:text-white font-semibold mb-8 lg:mb-0 border rounded-full">
-                        <Link href="">
+                        <Link href="https://launchpad.myriadflow.com/" target="_blank">
                           <span className="font-raleway font-bold text-gray-500 dark:text-white">
                           Explore More
                           </span>
