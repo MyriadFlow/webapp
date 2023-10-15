@@ -613,7 +613,7 @@ function Token() {
   
             {/* )} */}
 
-            { buybuttonshow && rental && youcanrent && (
+            {/* { buybuttonshow && rental && youcanrent && ( */}
             <div className="pl-10 border border-gray-600 p-4">
               <div className="pt-10 pb-4 font-bold text-xl">Rental Duration</div>
               <div className="pb-10">Price</div>
@@ -642,11 +642,13 @@ function Token() {
                 </button>
               </div>
             </div>
-            )}
+            {/* )} */}
 
             { buybuttonshow && rental && !youcanrent && (
-<div> This asset is already rented</div>
-            )}
+            <div className="bg-white p-24 text-black m-4 w-1/2 font-bold rounded-2xl text-lg">
+<div> This NFT is already on rent. Explore other NFTs available for renting.</div>
+</div>
+           )}
           </div>
         </div>
       </div>

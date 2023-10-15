@@ -191,15 +191,23 @@ console.log("self sale assets count",refineArray.saleStarteds.length);
                 </Link>
               
                 <div className="flex justify-between mt-3 text-gray-500 dark:text-white">
-                  <div className="font-bold">Wallet Address :</div>
-                  <div className="text-xs">{item?.seller?.slice(-6)}</div>
+                  <div className="font-bold">Price :</div>
+                  <div className="text-xs">{ethers.utils.formatEther(item?.price)} MATIC</div>
                 </div>
-                <div className="px-4 py-4 bg-white  flex justify-center mt-3">
+                <div className="px-4 py-4 bg-white flex justify-center mt-3">
                   <button
                     onClick={() => placeNft(item?.tokenId)}
                     className="text-blue-500 hover:text-blue-400 font-bold"
                   >
                     Manage
+                  </button>
+                </div>
+                <div className="px-4 py-4 flex justify-center mt-3 border border-red-500">
+                  <button
+                    onClick={() => placeNft(item?.tokenId)}
+                    className="text-white hover:text-blue-400 font-bold"
+                  >
+                    Remove
                   </button>
                 </div>
               </div>

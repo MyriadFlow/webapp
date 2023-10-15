@@ -355,18 +355,18 @@ function NftboughtDashboard() {
                           Price:{" "}
                         </div>
                         <div className="flex items-center ml-4">
-                          <FaEthereum className="h-4 w-4 text-blue-400" />
+                          {/* <FaEthereum className="h-4 w-4 text-blue-400" /> */}
                           <div className="font-extralight dark:text-gray-400 ml-4">
                             {getEthPrice(item?.price)} MATIC
                           </div>
                         </div>
                       </div>
-                      <div class="flex">
+                      {/* <div class="flex">
                         <div className="font-bold">Wallet Address: </div>
                         <div className="text-md ml-2">
                           {item?.buyer.slice(-6)}
                         </div>
-                      </div>
+                      </div> */}
                     </div>
                   </Link>
 
