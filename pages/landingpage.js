@@ -20,6 +20,7 @@ import { useData } from "../context/data";
 import { useAccount } from "wagmi";
 import Typewriter from '../Components/Typewriter';
 import styles from '../styles/Typewritter.module.css';
+import AssetComp from "../Components/assetComp";
 
 export default function LandingPage() {
 
@@ -116,14 +117,14 @@ export default function LandingPage() {
             <div className="lg:flex xl:gap-8 lg:w-[1025px] x2:w-[1200px] xxl:w-[1400px] mx-auto lg:mt-12">
               <div className="text-center lg:text-left lg:w-1/2 pt-16 lg:mt-0  p-2 sm:p-4 lg:px-8 lg:pt-0">
                 <h3 className=" font-poppins font-bold m48:w-[470px] l32:w-[450px] xxl:w-auto  text-3xl sm:text-4xl lg:text-6xl x2:text-7xl xxl:text-8xl capitalize mb-8 x2:mb-10 mx-auto lg:mx-0 text-gray-800 dark:text-white">
-                  Collect and Trade the New Fresh Thing
-                  {/* {resdata?.Storefront.headline} */}
+                  {/* Collect and Trade the New Fresh Thing */}
+                  {resdata?.Storefront.storefrontHeadline}
                 </h3>
                 <h6 className="text-lg x2:text-2xl  m48:max-w-[487px] mx-auto lg:mx-0 lg:w-[80%] font-opensans mb-8 text-gray-500 dark:text-white">
-                  A NFT Marketplace to Explore the Digital Gold Mine, that
+                  {/* A NFT Marketplace to Explore the Digital Gold Mine, that
                   Supports the Creators. A Place where you can Create, Collect
-                  and Sell Digital Assets.
-                  {/* {resdata?.Storefront.storefrontDescription} */}
+                  and Sell Digital Assets. */}
+                  {resdata?.Storefront.storefrontDescription}
                 </h6>
                 <div className="lg:flex items-center lg:gap-x-4 x2:gap-x-6 xl:gap-x-10 mb-8 lg:mb-0">
                   <div>
@@ -138,7 +139,10 @@ export default function LandingPage() {
                 </div>
               </div>
               <div className="lg:w-1/2 lg:pr-8">
-                <img src="/design/2.jpg"/>
+                {/* <img src={resdata?.Storefront.storefrontImage}/> */}
+                <AssetComp
+              uri={resdata?.Storefront.storefrontImage}
+            />
                 {/* <div className="flex gap-2 m48:gap-3 lg:gap-5">
                   <div className="flex flex-col gap-5 w-1/3 justify-between">
                     <Image

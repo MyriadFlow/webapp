@@ -15,6 +15,7 @@ import Image from "next/image";
 import etherContract from "../utils/web3Modal";
 import SimpleDropdown from "./SimpleDropdown";
 // import useAddress from '@thirdweb-dev/react';
+import AssetComp from "./assetComp";
 import { useData } from "../context/data";
 import { useAccount } from "wagmi";
 import { ConnectButton } from '@rainbow-me/rainbowkit';
@@ -73,18 +74,23 @@ function Header() {
           />
           <Link href="/">
             <div className="pt-2 transition-all cursor-pointer">
-              <span className="dark:block hidden">
+              {/* <span className="dark:block hidden">
                 <Image alt="dark" src="/dark.svg" width="60" height="60" />
               </span>
               <span className="dark:hidden ">
                 <Image alt="light" src="/light.svg" width="60" height="60" />
-              </span>
+              </span> */}
+               <AssetComp
+              uri={
+                resdata?.Storefront.storefrontImage
+              }
+            />
             </div>
           </Link>
           <Link href="/">
             <div className="lg:text-3xl text-2xl lg:block md:block font-semibold cursor-pointer lg:pl-4 md:pl-4 pl-2 transition-all tracking-wide text-gray-800 dark:text-white">
-              MYRIADFLOW
-              {/* {resdata?.string} */}
+              {/* MYRIADFLOW */}
+              {resdata?.storefrontName}
             </div>
           </Link>
 

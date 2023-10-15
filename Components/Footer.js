@@ -3,6 +3,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { NavLink } from "reactstrap";
 import Image from "next/image";
+import AssetComp from "./assetComp";
 import { useData } from "../context/data";
 
 const Footer = () => {
@@ -18,14 +19,17 @@ const Footer = () => {
                 <div className="md:flex md:justify-between">
                     <div className="mb-6 md:mb-0 lg:w-1/3 md:w-1/2 w-full md:mx-10">
                         <Link href="https://myriadflow.com/" className="flex items-center">
-                            <img src={resdata?.Storefront.Profileimage} width="60" height="60" className="mr-3" />
+                            {/* <img src={resdata?.Storefront.Image} width="60" height="60" className="mr-3" /> */}
+                            <AssetComp
+              uri={resdata?.Storefront.storefrontImage}
+            />
                             <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white text-gray-900">
                                 {/* Myriadflow */}
-                                {resdata?.Storefront.string}
+                                {resdata?.Storefront.storefrontName}
                             </span>
                         </Link>
                         <div className="mt-10 dark:text-white text-gray-900">
-                            {resdata?.Storefront.description}
+                            {resdata?.Storefront.storefrontHeadline}
                         </div>
                     </div>
                     <div className="grid grid-cols-2 gap-8 sm:gap-6 lg:grid-cols-5 md:grid-cols-3">
