@@ -123,7 +123,7 @@ function Header() {
               </div>
             </Link>
 
-            {walletAddress && address && hasRole ? (
+            {/* {walletAddress && address && hasRole ? (
               <Link className="text-gray-800 dark:text-white" href={hasRole ? "/assets" : "/authWallet"}>
                 <div
                   className={router.pathname == "/assets" ? "active" : ""}
@@ -133,7 +133,7 @@ function Header() {
               </Link>
             ) : (
               ""
-            )}
+            )} */}
             {walletAddress && address ? (
               <Link className="text-gray-800 dark:text-white" href="/dashboard">
                 <div
@@ -166,7 +166,7 @@ function Header() {
                         <FaUserCircle className="text-3xl text-gray-500" />
                       )}
                     </div> */}
-                    <div className={styles.connect}>
+                    <div className="">
                     <ConnectButton chainStatus="icon"/>
                       {/* <ConnectWallet className="bg-gradient-to-r from-indigo-500 via-purple-500 to-gray-500 ..." /> */}
                     </div>
@@ -232,36 +232,40 @@ function Header() {
                   Explore
                 </div>
               </Link>
-              <Link href={hasRole ? "/assets" : "/authWallet"}>
+              
+              <Link href={"/collections"}>
                 <div className="block py-4 rounded-sm hover:bg-gray-300 transition duration-200 ease-in-out">
-                  Create
+                  Collections
                 </div>
               </Link>
+              
+              {walletAddress && address ? (
               <Link href="/dashboard">
                 <div className="block py-4 rounded-sm hover:bg-gray-300 transition duration-200 ease-in-out">
                   Dashboard
                 </div>
               </Link>
+              ): null}
 
-              {walletAddress && address ? (
+              {/* {walletAddress && address ? ( */}
                 <Link className="" href="/profile">
                   <div className="block py-4 rounded-sm hover:bg-gray-300 transition duration-200 ease-in-out">
                     My Profile
                   </div>
                 </Link>
-              ) : null}
+               {/* ) : null} */}
 
-              {walletAddress && address ? (
+              {/* {walletAddress && address ? ( */}
                 <Link className="" href="/wishlist">
                   <div
                     className="block py-4 rounded-sm hover:bg-gray-300 transition duration-200 ease-in-out"
                   >
-                    Wishlists
+                    Wishlist
                   </div>
                 </Link>
-              ) : null}
+               {/* ) : null} */}
 
-              {walletAddress && address ? (
+              {/* {walletAddress && address ? (
                 <Link className="" href="/manage">
                   <div
                     className="block py-4 rounded-sm hover:bg-gray-300 transition duration-200 ease-in-out"
@@ -269,12 +273,12 @@ function Header() {
                     Manage
                   </div>
                 </Link>
-              ) : null}
+              ) : null} */}
 
               {walletAddress && address ? (
                 <div className="mb-8 mt-2">
-                  <Link className="rewards-style" href="/drops">
-                    <div className="">
+                  <Link className="" href="/drops">
+                    <div className="rewards-style">
                       Drops
                     </div>
 
