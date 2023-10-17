@@ -293,20 +293,19 @@ export default function CollectionItem() {
       };
 
       const AllBuildingQuery = `{
-        signatureSeriesAssetCreateds(orderBy: id) {
+        nftminteds(orderBy: id) {
           id
-            tokenID
-            creator
-            metaDataURI
-            blockNumber
-            blockTimestamp
-            transactionHash
+    owner
+    tokenId
+    transactionHash
+    blockTimestamp
+    blockNumber
         }
       }`;
 
       const graphqlQuery = {
-        operationName: "signatureSeriesAssetCreateds",
-        query: `query signatureSeriesAssetCreateds ${AllBuildingQuery}`,
+        operationName: "nftminteds",
+        query: `query nftminteds ${AllBuildingQuery}`,
         variables: {},
       };
 
@@ -316,7 +315,7 @@ export default function CollectionItem() {
       result = await response.data.data;
 
         const provider = new ethers.providers.Web3Provider(window.ethereum);
-        let tranasactionHashArray = result.signatureSeriesAssetCreateds?.map(
+        let tranasactionHashArray = result.nftminteds?.map(
           (asset) => asset.transactionHash
         );
         const innerContractAddress = [];
@@ -331,7 +330,7 @@ export default function CollectionItem() {
                 id
               );
               innerContractAddress.push(
-                result.signatureSeriesAssetCreateds.find((asset) => asset.transactionHash === hash)
+                result.nftminteds.find((asset) => asset.transactionHash === hash)
               );
             }
             setAsseetsData(innerContractAddress);
@@ -404,16 +403,23 @@ export default function CollectionItem() {
                   >
                     <Link key={item?.tokenID} href={`/collections/${signatureseries}/${id}/${item?.tokenID}`}>
                       <div>
-                        <HomeComp uri={item ? item?.metaDataURI : ""} />
+                        {
+                          (signatureseries == "InstaGen" || signatureseries == "EternumPass") && (<img src="https://cloudflare-ipfs.com/ipfs/bafybeigyw25q6g6qetggruuocduhbxf6a7vrppl6lskve2th2lin37thnm"/>)
+                        }
+
+{
+                          signatureseries != "InstaGen" && signatureseries != "EternumPass" && (<HomeComp uri={item ? item?.metaDataURI : ""} />)
+                        }
+                        {/* <HomeComp uri={item ? item?.metaDataURI : ""} /> */}
 
                         <div className=" flex items-center justify-between mb-2">
                           <div className="font-1 text-sm font-bold mt-3">
-                            Price:{" "}
+                            {/* Price:{" "} */}
                           </div>
                           <div className="flex items-center ml-4">
-                            <FaEthereum className="h-4 w-4 text-blue-400" />
+                            {/* <FaEthereum className="h-4 w-4 text-blue-400" /> */}
                             <div className="font-extralight dark:text-gray-400 ml-4">
-                              token id: {item?.tokenID} {/* {getEthPrice(item?.price)} MATIC */}
+                              {/* token id: {item?.tokenID} {getEthPrice(item?.price)} MATIC */}
 
                               {/* meta: {uri(item?.tokenId)} */}
                             </div>

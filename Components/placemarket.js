@@ -15,6 +15,7 @@ import { saleStartedQuery } from "../utils/gqlUtil";
 import etherContract from "../utils/web3Modal";
 import { useData } from "../context/data";
 import axios from "axios";
+import { removeItem } from "../pages/api/removeitem";
 import { useAccount } from "wagmi";
 
 const MyAssets = () => {
@@ -48,6 +49,9 @@ const MyAssets = () => {
   const [model, setmodel] = useState(false);
   const [modelmsg, setmodelmsg] = useState("Transaction in progress!");
   const [alertMsg, setAlertMsg] = useState("Something went wrong");
+  const [showModal, setShowModal] = useState(false);
+  const [selectedNFT, setSelectedNFT] = useState(null);
+  const [price, setPrice] = useState(0);
 
   const fetchUserAssests = async () => {
     const refineArray = {};
@@ -173,9 +177,171 @@ console.log("self sale assets count",refineArray.saleStarteds.length);
     router.push("/explore");
   }
 
+  const submitNft = (nft) => {
+    // Implement your logic for selling the NFT here
+    // You can set isPriceInputVisible to true when you want to show the input field.
+    // setIsPriceInputVisible(true);
+    setSelectedNFT(nft);
+    setShowModal(true);
+  };
+
+  const handlePriceChange = (event) => {
+    const newPrice = event.target.valueAsNumber; // Parse the input value as a number
+    setPrice(newPrice);
+  };
+
+  async function removeNft(nft) {
+    setLoading(true);
+    await removeItem(nft,tradhubAddress);
+    setLoading(false);
+  }
+
   return (
     <div className="p-4 px-10 min-h-screen dark:body-back body-back-light">
       {model && <BuyAsset open={model} setOpen={setmodel} message={modelmsg} />}
+
+      {showModal && selectedNFT ? (
+          <>
+            <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none dark:body-back body-back-light">
+              <div
+                className="py-12 transition duration-150 ease-in-out z-10 absolute top-0 right-0 bottom-0 left-0"
+                id="modal"
+              >
+                <div
+                  role="alert"
+                  className="container mx-auto w-2/3 rounded-lg"
+                >
+                  <div className="relative py-4 bg-white shadow-md rounded border border-gray-400 rounded-2xl">
+                    <div className="w-full flex justify-start text-gray-600 mb-3">
+                      <button onClick={() => setShowModal(false)}>
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          className="icon icon-tabler icon-tabler-x mr-4 ml-4"
+                          width="20"
+                          height="20"
+                          viewBox="0 0 24 24"
+                          stroke-width="2.5"
+                          stroke="currentColor"
+                          fill="none"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        >
+                          <path stroke="none" d="M0 0h24v24H0z" />
+                          <line x1="18" y1="6" x2="6" y2="18" />
+                          <line x1="6" y1="6" x2="18" y2="18" />
+                        </svg>
+                      </button>
+
+                      <h3 className="text-2xl font-semibold text-gray-900 ml-6">
+                        Manage Asset
+                      </h3>
+                    </div>
+
+                    <div class="flex p-10 ml-10">
+                      {/* <input type="file" className="btn btn-primary btn-md ml-36" style={{ marginBottom: 20, marginTop: 20, width: "50%" }} onChange={(e) => { uploadImage(e) }} /> */}
+                      <div className="w-1/2">
+                        <div class="flex items-center mb-4 justify-between">
+                          <div>
+                          <button
+                                className="text-white bg-blue-600 text-sm px-20 py-3 mt-4 rounded-lg border border-white shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                                type="button"
+                                // onClick={() => sellNft(selectedNFT, price)}
+                              >
+                                Set to Auction
+                              </button>
+
+                            <h3 className="text-2xl font-semibold text-gray-900 text-center pt-10">
+                              or
+                            </h3>
+
+                            <p className="font-semibold text-gray-900 mt-4 mb-2">
+                                Update Price
+                              </p>
+                              <div className="mb-2">
+                                <input
+                                  type="number"
+                                  id="default-input"
+                                  placeholder="Enter Price"
+                                  value={price}
+                                  onChange={handlePriceChange}
+                                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                  required
+                                />
+                              </div>
+
+                              <button
+                                className="text-white bg-blue-500 text-sm px-20 py-3 mt-4 rounded-full border border-white shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                                type="button"
+                                onClick={() => sellNft(selectedNFT, price)}
+                              >
+                                Update
+                              </button>
+
+                              <button
+                                className="text-white bg-blue-600 text-sm px-20 py-3 mt-4 rounded-lg border border-white shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                                type="button"
+                                // onClick={() => sellNft(selectedNFT, price)}
+                              >
+                                Set to Sale
+                              </button>
+
+                            <h3 className="text-2xl font-semibold text-gray-900 text-center pt-10">
+                              or
+                            </h3>
+
+                            <p className="font-semibold text-gray-900 mt-4 mb-2">
+                                Update Base Price
+                              </p>
+                              <div className="mb-2">
+                                <input
+                                  type="number"
+                                  id="default-input"
+                                  placeholder="Enter Price"
+                                  value={price}
+                                  onChange={handlePriceChange}
+                                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                  required
+                                />
+                              </div>
+
+                              <p className="font-semibold text-gray-900 mt-4 mb-2">
+                                Update Time
+                              </p>
+                              <div className="mb-2">
+                                <input
+                                  type="number"
+                                  id="default-input"
+                                  placeholder="Enter Price"
+                                  value={price}
+                                  onChange={handlePriceChange}
+                                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                  required
+                                />
+                              </div>
+
+                              <button
+                                className="text-white bg-blue-500 text-sm px-20 py-3 mt-4 rounded-full border border-white shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                                type="button"
+                                onClick={() => sellNft(selectedNFT, price)}
+                              >
+                                Update
+                              </button>
+                          </div>
+                        </div>
+                        
+                      </div>
+                      <div class="w-1/3 ml-10">
+                        <img src="/vr.png" className="rounded-lg" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
+          </>
+        ) : null}
+      <div className="text-3xl">NFTs on Market</div>
       <div className=" p-4 mt-20  h-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
         {data.length > 0 ? (
           data?.map((item) => {
@@ -196,7 +362,8 @@ console.log("self sale assets count",refineArray.saleStarteds.length);
                 </div>
                 <div className="px-4 py-4 bg-white flex justify-center mt-3">
                   <button
-                    onClick={() => placeNft(item?.tokenId)}
+                    // onClick={() => placeNft(item?.tokenId)}
+                    onClick={() => submitNft(item)}
                     className="text-blue-500 hover:text-blue-400 font-bold"
                   >
                     Manage
@@ -204,7 +371,7 @@ console.log("self sale assets count",refineArray.saleStarteds.length);
                 </div>
                 <div className="px-4 py-4 flex justify-center mt-3 border border-red-500">
                   <button
-                    onClick={() => placeNft(item?.tokenId)}
+                    onClick={() => removeNft(item)}
                     className="text-white hover:text-blue-400 font-bold"
                   >
                     Remove

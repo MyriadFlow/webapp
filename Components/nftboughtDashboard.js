@@ -58,6 +58,11 @@ function NftboughtDashboard() {
 
   const handleInputChange = () => {
     setToggle1(!toggle1); // Toggle the state
+    setToggle2(false);
+  };
+
+  const handleInputChange2 = () => {
+    setToggle1(false); 
     setToggle2(!toggle2);
   };
 
@@ -284,7 +289,7 @@ function NftboughtDashboard() {
                           </div>
 
                           <input
-                            onClick={handleInputChange}
+                            onClick={handleInputChange2}
                             id="default-radio-2"
                             type="radio"
                             value=""
@@ -326,6 +331,41 @@ function NftboughtDashboard() {
                             </>
                           )
                         }
+
+{
+                          toggle2 && (
+                            <>
+                              <h3 className="text-2xl font-semibold text-gray-900 mt-10">
+                                Set a price
+                              </h3>
+                              <p className="font-semibold text-gray-900 mt-4 mb-2">
+                                Starting Price
+                              </p>
+                              <div className="mb-2">
+                                <input
+                                  type="number"
+                                  id="default-input"
+                                  placeholder="Enter Price"
+                                  value={price}
+                                  onChange={handlePriceChange}
+                                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                  required
+                                />
+                              </div>
+                              <p className="font-semibold text-gray-900 mt-4 mb-2">Duration</p>
+                        <div className="mb-2">
+                          <input type="text" id="default-input" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required />
+                        </div>
+                              <button
+                                className="text-white bg-blue-500 text-sm px-20 py-3 mt-4 rounded-full border border-white shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                                type="button"
+                                onClick={() => sellNft(selectedNFT, price)}
+                              >
+                                Set
+                              </button>
+                            </>
+                          )
+                        }
                       </div>
                       <div class="w-1/3 ml-10">
                         <img src="/vr.png" className="rounded-lg" />
@@ -338,7 +378,8 @@ function NftboughtDashboard() {
             <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
           </>
         ) : null}
-        <div className=" p-4 mt-10  h-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 ">
+        <div className="text-3xl">Owned NFTs</div>
+        <div className=" p-4 mt-10  h-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 ">  
           {data?.length > 0 ? (
             data?.map((item) => {
               return (
