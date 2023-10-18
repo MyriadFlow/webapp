@@ -13,6 +13,8 @@ import Tradhub from "../artifacts/contracts/tradehub/TradeHub.sol/TradeHub.json"
 // import { buyNFT } from "../pages/api/buyNFT";
 // import { buyNFT } from "./api/buyNFT";
 import { sellItem } from "../pages/api/sellItem";
+import { auctionItem } from "../pages/api/auctionItem";
+import DateTimePicker from './Datetimepicker';
 import { useRouter } from "next/router";
 import { useAccount } from "wagmi";
 import { useData } from "../context/data";
@@ -55,6 +57,16 @@ function NftboughtDashboard() {
   const [selectedNFT, setSelectedNFT] = useState(null);
   const [toggle1, setToggle1] = useState(false);
   const [toggle2, setToggle2] = useState(false);
+  const [currentprice, setcurrentprice] = useState('');
+
+  const [months, setMonths] = useState(0);
+  const [days, setDays] = useState(0);
+  const [hours, setHours] = useState(0);
+
+  // Function to update the state when values change
+  const handleMonthsChange = (e) => setMonths(parseInt(e.target.value, 10));
+  const handleDaysChange = (e) => setDays(parseInt(e.target.value, 10));
+  const handleHoursChange = (e) => setHours(parseInt(e.target.value, 10));
 
   const handleInputChange = () => {
     setToggle1(!toggle1); // Toggle the state
@@ -185,6 +197,21 @@ function NftboughtDashboard() {
     setLoading(true);
     const newprice = ethers.utils.parseEther(price.toString());
     await sellItem(nft, 1, newprice, setmodel, setmodelmsg,tradhubAddress);
+    router.push("/explore");
+    setLoading(false);
+  }
+
+  async function auctionNft(nft, price) {
+    setmodelmsg("Buying in Progress");
+    setIsPriceInputVisible(false);
+    setLoading(true);
+    const startprice = ethers.utils.parseEther(price.toString());
+    const totalHours = (months * 30 * 24) + (days * 24) + (hours);
+    // const options = {
+    //   value: totalHours.mul(60).mul(60)
+    // };
+    console.log("totalsec", totalHours*60*60);
+    await auctionItem(nft,1, startprice, totalHours*60*60, tradhubAddress);
     router.push("/explore");
     setLoading(false);
   }
@@ -353,13 +380,25 @@ function NftboughtDashboard() {
                                 />
                               </div>
                               <p className="font-semibold text-gray-900 mt-4 mb-2">Duration</p>
-                        <div className="mb-2">
-                          <input type="text" id="default-input" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required />
-                        </div>
+                        {/* <div className="mb-2"> */}
+                        <button
+                  className="flex gap-x-2 items-center justify-center lg:px-10 md:px-10 px-3 py-3 my-4 text-sm font-medium rounded-lg dark:bg-blue-500 border"
+                >
+                        <DateTimePicker 
+                  months={months}
+                  days={days}
+                  hours={hours}
+                  onMonthsChange={handleMonthsChange}
+                  onDaysChange={handleDaysChange}
+                  onHoursChange={handleHoursChange}
+                  />
+                  </button>
+                          {/* <input type="text" id="default-input" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required />
+                        </div> */}
                               <button
                                 className="text-white bg-blue-500 text-sm px-20 py-3 mt-4 rounded-full border border-white shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                                 type="button"
-                                onClick={() => sellNft(selectedNFT, price)}
+                                onClick={() => auctionNft(selectedNFT, price)}
                               >
                                 Set
                               </button>
