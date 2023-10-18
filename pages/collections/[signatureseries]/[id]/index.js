@@ -11,6 +11,7 @@ import FusionSeries from '../../../../artifacts/contracts/fusionseries/FusionSer
 import etherContract from "../../../../utils/web3Modal";
 import { useData } from "../../../../context/data";
 import axios from "axios";
+import EternumPass from '../../../../artifacts/contracts/eturnumpass/EternumPass.sol/EternumPass.json';
 
 export default function CollectionItem() {
 
@@ -44,9 +45,11 @@ export default function CollectionItem() {
   const [auction, setAuction] = useState([]);
   const [loading, setLoading] = useState(true);
   const [model, setmodel] = useState(false);
-
+  const [showModal, setShowModal] = useState(false);
+  const [showModal2, setShowModal2] = useState(false);
   const [modelmsg, setmodelmsg] = useState("buying in progress!");
   const [assetsData, setAsseetsData] = useState([]);
+  const [num, setNum] = useState(null);
 
   const fetchUserAssests = async (walletAddr) => {
 
@@ -366,10 +369,189 @@ export default function CollectionItem() {
     loadNFTs();
   });
 
+  const handlenumberChange = (event) => {
+    const newnum = event.target.valueAsNumber; // Parse the input value as a number
+    setNum(newnum);
+  };
+
+  async function subscribeNft() {
+    setmodelmsg("Buying in Progress");
+    setLoading(true);
+    const eternumcontract = await etherContract(id, EternumPass.abi);
+    const pubSalePrice = await eternumcontract.publicSalePrice();
+    await eternumcontract.subscribe({value : pubSalePrice})
+    setLoading(false);
+    setShowModal(false);
+  }
+
   return (
     <Layout>
       {/* <div>{id}</div> */}
       <div className="min-h-screen body-back">
+      {showModal && (
+          <>
+            <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none dark:body-back body-back-light">
+              <div
+                className="py-12 transition duration-150 ease-in-out z-10 absolute top-0 right-0 bottom-0 left-0"
+                id="modal"
+              >
+                <div
+                  role="alert"
+                  className="container mx-auto w-2/3 rounded-lg"
+                >
+                  <div className="relative py-4 bg-white shadow-md rounded border border-gray-400 rounded-2xl">
+                    <div className="w-full flex justify-start text-gray-600 mb-3">
+                      <button onClick={() => setShowModal(false)}>
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          className="icon icon-tabler icon-tabler-x mr-4 ml-4"
+                          width="20"
+                          height="20"
+                          viewBox="0 0 24 24"
+                          stroke-width="2.5"
+                          stroke="currentColor"
+                          fill="none"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        >
+                          <path stroke="none" d="M0 0h24v24H0z" />
+                          <line x1="18" y1="6" x2="6" y2="18" />
+                          <line x1="6" y1="6" x2="18" y2="18" />
+                        </svg>
+                      </button>
+                    </div>
+
+                    <div class="flex p-10 ml-10">
+                      {/* <input type="file" className="btn btn-primary btn-md ml-36" style={{ marginBottom: 20, marginTop: 20, width: "50%" }} onChange={(e) => { uploadImage(e) }} /> */}
+                      <div className="w-1/2">
+                        <div class="items-center mb-4 justify-between">
+                          <div>
+                            <h3 className="text-2xl font-semibold text-gray-900">
+                              Name
+                            </h3>
+                            <p className="font-semibold text-gray-900">
+                              Thecgfj
+                            </p>
+                          </div>
+                          <div class="items-center mb-4 justify-between mt-4">
+                          <div>
+                            <h3 className="text-2xl font-semibold text-gray-900">
+                              Description
+                            </h3>
+                            <p className="font-semibold text-gray-900">
+                              Thehdj
+                            </p>
+                          </div>
+                          </div>
+                          <div class="items-center mb-4 justify-between">
+                          <div>
+                            <h3 className="text-2xl font-semibold text-gray-900">
+                              Price
+                            </h3>
+                            <p className="font-semibold text-gray-900">
+                              0.038
+                            </p>
+                          </div> 
+                          </div> 
+                          <button
+                                className="text-white bg-blue-500 text-sm px-20 py-3 mt-4 rounded-full border border-white shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                                type="button"
+                                onClick={() => subscribeNft()}
+                              >
+                                Subscribe
+                              </button>  
+                        </div>
+                      </div>
+                      <div class="w-1/3 ml-10">
+                        <img src="/vr.png" className="rounded-lg" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
+          </>
+        )}
+
+{showModal2 && (
+          <>
+            <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none dark:body-back body-back-light">
+              <div
+                className="py-12 transition duration-150 ease-in-out z-10 absolute top-0 right-0 bottom-0 left-0"
+                id="modal"
+              >
+                <div
+                  role="alert"
+                  className="container mx-auto w-2/3 rounded-lg"
+                >
+                  <div className="relative py-4 bg-white shadow-md rounded border border-gray-400 rounded-2xl">
+                    <div className="w-full flex justify-start text-gray-600 mb-3">
+                      <button onClick={() => setShowModal2(false)}>
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          className="icon icon-tabler icon-tabler-x mr-4 ml-4"
+                          width="20"
+                          height="20"
+                          viewBox="0 0 24 24"
+                          stroke-width="2.5"
+                          stroke="currentColor"
+                          fill="none"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        >
+                          <path stroke="none" d="M0 0h24v24H0z" />
+                          <line x1="18" y1="6" x2="6" y2="18" />
+                          <line x1="6" y1="6" x2="18" y2="18" />
+                        </svg>
+                      </button>
+                    </div>
+
+                    <div class="flex p-10 ml-10">
+                      {/* <input type="file" className="btn btn-primary btn-md ml-36" style={{ marginBottom: 20, marginTop: 20, width: "50%" }} onChange={(e) => { uploadImage(e) }} /> */}
+                      <div className="w-1/2">
+                      <div>
+                          Enter No. of NFTs
+                          </div>
+                          <input
+                                  type="number"
+                                  id="default-input"
+                                  placeholder="Enter number"
+                                  value={num}
+                                  onChange={handlenumberChange}
+                                  className="my-4 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                  required
+                                />
+                          <div class="items-center mb-4 justify-between">
+                          <div className="flex">
+                            <h3 className="text-2xl font-semibold text-gray-900">
+                              Price
+                            </h3>
+                            <p className="text-2xl font-semibold text-gray-900 ml-4">
+                              0.038
+                            </p>
+                          </div> 
+                          
+                          <button
+                                className="text-white bg-blue-500 text-sm px-20 py-3 mt-4 rounded-full border border-white shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                                type="button"
+                                onClick={() => mintNft()}
+                              >
+                                Mint
+                              </button>  
+                        </div>
+                      </div>
+                      <div class="w-1/3 ml-10">
+                        <img src="/vr.png" className="rounded-lg" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
+          </>
+        )}
         <div
           className="w-full h-72 object-cover bg-gray-200" style={{
             backgroundImage: `url("")`,
@@ -388,11 +570,34 @@ export default function CollectionItem() {
                             /> */}
           </div>
         </div>
-        <div className='ml-16 mt-10 text-2xl font-bold'>
+        { signatureseries == "EternumPass" && (
+        <div className="flex items-center md:justify-end lg:-my-16 lg:mx-8 md:-my-16 md:mx-8 mt-8 justify-center lg:justify-end">
+                    <button
+                        className="bg-blue-500 text-white text-sm px-8 py-3 rounded-full border border-white shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                        type="button"
+                        onClick={() => setShowModal(true)}
+                    >
+                        Subscribe
+                    </button>
+                </div>
+          )}
+          { signatureseries == "InstaGen" && (
+        <div className="flex items-center md:justify-end lg:-my-16 lg:mx-8 md:-my-16 md:mx-8 mt-8 justify-center lg:justify-end">
+                    <button
+                        className="bg-blue-500 text-white text-sm px-8 py-3 rounded-full border border-white shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                        type="button"
+                        onClick={() => setShowModal2(true)}
+                    >
+                        Mint NFT
+                    </button>
+                </div>
+          )}
+        <div className='ml-16 mt-28 text-2xl font-bold'>
           {signatureseries
           }
         </div>
         <div>
+        
           <div className=" p-4 h-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {assetsData?.length > 0 ? (
               assetsData?.map((item) => {
