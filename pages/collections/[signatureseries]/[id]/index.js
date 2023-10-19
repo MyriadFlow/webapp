@@ -12,6 +12,7 @@ import etherContract from "../../../../utils/web3Modal";
 import { useData } from "../../../../context/data";
 import axios from "axios";
 import EternumPass from '../../../../artifacts/contracts/eturnumpass/EternumPass.sol/EternumPass.json';
+import Instagen from '../../../../artifacts/contracts/instagen/InstaGen.sol/InstaGen.json';
 
 export default function CollectionItem() {
 
@@ -382,6 +383,17 @@ export default function CollectionItem() {
     await eternumcontract.subscribe({value : pubSalePrice})
     setLoading(false);
     setShowModal(false);
+  }
+
+  async function mintNft() {
+    setmodelmsg("Buying in Progress");
+    setLoading(true);
+    const instagencontract = await etherContract(id, Instagen.abi);
+    const saleprice = await instagencontract.salePrice();
+    // const finalprice = ethers.utils.parseEther((saleprice).toString())*num;
+    await instagencontract.mint(num, {value : saleprice.mul(num)})
+    setLoading(false);
+    setShowModal2(false);
   }
 
   return (
