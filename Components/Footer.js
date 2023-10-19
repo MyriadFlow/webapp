@@ -18,14 +18,14 @@ const Footer = () => {
             <div className="mx-auto w-full max-w-screen-xl lg:p-0 py-6 lg:py-8 p-12">
                 <div className="md:flex md:justify-between">
                     <div className="mb-6 md:mb-0 lg:w-1/3 md:w-1/2 w-full md:mx-10">
-                        <Link href="https://myriadflow.com/" className="flex items-center">
+                        <Link href="https://myriadflow.com/" className="items-center">
                             {/* <img src={resdata?.Storefront.Image} width="60" height="60" className="mr-3" /> */}
                             <AssetComp
               uri={resdata?.Storefront.storefrontImage}
             />
                             <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white text-gray-900">
                                 {/* Myriadflow */}
-                                {resdata?.Storefront.storefrontName}
+                                {resdata?.Storefront.name}
                             </span>
                         </Link>
                         <div className="mt-10 dark:text-white text-gray-900">

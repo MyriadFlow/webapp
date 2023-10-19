@@ -90,7 +90,7 @@ function Header() {
           <Link href="/">
             <div className="lg:text-3xl text-2xl lg:block md:block font-semibold cursor-pointer lg:pl-4 md:pl-4 pl-2 transition-all tracking-wide text-gray-800 dark:text-white">
               {/* MYRIADFLOW */}
-              {resdata?.storefrontName}
+              {resdata?.Storefront.name}
             </div>
           </Link>
 
