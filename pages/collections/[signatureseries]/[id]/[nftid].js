@@ -56,15 +56,24 @@ function Token() {
   const [currentprice, setcurrentprice] = useState("");
   const [nftitemid, setnftitemid] = useState("");
   const [youcanrent, setyoucanrent] = useState(false);
+  const [address, setaddress] = useState("");
 
   const [months, setMonths] = useState(0);
   const [days, setDays] = useState(0);
   const [hours, setHours] = useState(0);
 
+  const [months2, setMonths2] = useState(0);
+  const [days2, setDays2] = useState(0);
+  const [hours2, setHours2] = useState(0);
+
   // Function to update the state when values change
   const handleMonthsChange = (e) => setMonths(parseInt(e.target.value, 10));
   const handleDaysChange = (e) => setDays(parseInt(e.target.value, 10));
   const handleHoursChange = (e) => setHours(parseInt(e.target.value, 10));
+
+  const handleMonthsChange2 = (e) => setMonths2(parseInt(e.target.value, 10));
+  const handleDaysChange2 = (e) => setDays2(parseInt(e.target.value, 10));
+  const handleHoursChange2 = (e) => setHours2(parseInt(e.target.value, 10));
 
   const rentToggle = async () => {
     const signatureaddress = id;
@@ -105,6 +114,10 @@ function Token() {
     setPricePerHour(e.target.value);
   };
 
+  const handleaddr = (e) => {
+    setaddress(e.target.value);
+  };
+
   const handleSubmit = async () => {
     // Call the setRentInfo function with the obtained values
     const signatureaddress = id;
@@ -118,6 +131,26 @@ function Token() {
       ethers.utils.parseEther(pricePerHour.toString())
     );
     console.log("rentinfo", rentinfo);
+  };
+
+  const handleSubmitaddr = async () => {
+    const signatureaddress = id;
+    const signaturecontract = await etherContract(
+      signatureaddress,
+      SignatureSeries.abi
+    );
+
+    console.log("months", months, "days", days, "hours", hours);
+    const totalHours = months * 30 * 24 + days * 24 + hours;
+    console.log("total hours for rent", totalHours);
+    const totalsec = totalHours * 60 * 60;
+
+    const setuser = await signaturecontract.setUser(
+      nftid,
+      address,
+      totalHours
+    );
+    console.log("rentinfo", setuser);
   };
 
   const handleRenttime = async () => {
@@ -263,6 +296,8 @@ function Token() {
           if (currentTimestamp > givenTimestamp) {
             setyoucanrent(true);
           }
+          else
+          setyoucanrent(false);
         }
       };
 
@@ -506,7 +541,7 @@ function Token() {
               </div>
             </div>
 
-            {/* { !buybuttonshow && ( */}
+            { !buybuttonshow && (
             <div className="pl-10 border border-gray-600 p-4">
               <div className="pt-10 pb-4 font-bold text-xl">
                 Rental Availability
@@ -580,25 +615,29 @@ function Token() {
               )}
               {signatureseries != "FusionSeries" && (
                 <div>
-                  <div className="pt-10 pb-4 font-bold text-xl">Gifting</div>
+                  <div className="pt-10 pb-4 font-bold text-xl">Set User</div>
                   <div className="lg:flex md:flex">
                     <input
-                      type="number"
+                      type="text"
                       placeholder="Wallet Address"
-                      value={pricePerHour}
-                      onChange={handlePriceChange}
+                      value={address}
+                      onChange={handleaddr}
                       className="flex gap-x-2 items-center justify-center lg:px-10 md:px-10 px-3 py-3 my-4 text-sm font-medium rounded-lg text-gray-500 border"
                     />
-                    <input
-                      type="number"
-                      placeholder="Time"
-                      value={pricePerHour}
-                      onChange={handlePriceChange}
-                      className="flex lg:ml-4 md:ml-4 gap-x-2 items-center justify-center lg:px-10 md:px-10 px-3 py-3 my-4 text-sm font-medium rounded-lg text-gray-500 border"
-                    />
+                    <button className="flex gap-x-2 items-center justify-center lg:px-10 md:px-10 px-3 py-3 my-4 text-sm font-medium rounded-lg text-white border">
+                  {/* <span className="text-lg font-bold">Months Days Hours</span> */}
+                  <DateTimePicker
+                    months={months2}
+                    days={days2}
+                    hours={hours2}
+                    onMonthsChange={handleMonthsChange2}
+                    onDaysChange={handleDaysChange2}
+                    onHoursChange={handleHoursChange2}
+                  />
+                </button>
                     <button
                       className="flex gap-x-2 items-center justify-center lg:px-10 md:px-10 px-3 py-3 lg:m-4 md:m-4 text-sm font-medium rounded-lg bg-white text-gray-500"
-                      onClick={handleSubmit}
+                      onClick={handleSubmitaddr}
                     >
                       <BiWallet className="text-3xl" />
                       <span className="text-lg font-bold">Set</span>
@@ -608,9 +647,9 @@ function Token() {
               )}
             </div>
 
-            {/* )} */}
+             )} 
 
-            {/* { buybuttonshow && rental && youcanrent && ( */}
+            { buybuttonshow && rental && youcanrent && (
             <div className="pl-10 border border-gray-600 p-4">
               <div className="pt-10 pb-4 font-bold text-xl">
                 Rental Duration
@@ -638,7 +677,7 @@ function Token() {
                 </button>
               </div>
             </div>
-            {/* )} */}
+            )}
 
             {buybuttonshow && rental && !youcanrent && (
               <div className="bg-white p-24 text-black m-4 w-1/2 font-bold rounded-2xl text-lg">
