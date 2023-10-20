@@ -10,7 +10,7 @@ export default function SomeComponent() {
   console.log(graphql);
 
   const regex = /^(.*?)(?=\/graphql)/;
-  
+
   // Use the regular expression to extract the URL
   const match = graphql?.match(regex);
 

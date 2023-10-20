@@ -1,4 +1,4 @@
-import { useRouter } from 'next/router';
+import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import HomeComp from "../../../../Components/homeComp";
@@ -7,15 +7,14 @@ import { ethers } from "ethers";
 import Loader from "../../../../Components/Loader";
 import Layout from "../../../../Components/Layout";
 import { useAccount } from "wagmi";
-import FusionSeries from '../../../../artifacts/contracts/fusionseries/FusionSeries.sol/FusionSeries.json';
+import FusionSeries from "../../../../artifacts/contracts/fusionseries/FusionSeries.sol/FusionSeries.json";
 import etherContract from "../../../../utils/web3Modal";
 import { useData } from "../../../../context/data";
 import axios from "axios";
-import EternumPass from '../../../../artifacts/contracts/eturnumpass/EternumPass.sol/EternumPass.json';
-import Instagen from '../../../../artifacts/contracts/instagen/InstaGen.sol/InstaGen.json';
+import EternumPass from "../../../../artifacts/contracts/eturnumpass/EternumPass.sol/EternumPass.json";
+import Instagen from "../../../../artifacts/contracts/instagen/InstaGen.sol/InstaGen.json";
 
 export default function CollectionItem() {
-
   const { resdata } = useData();
 
   const graphql = resdata?.Storefront.subgraphUrl;
@@ -53,7 +52,6 @@ export default function CollectionItem() {
   const [num, setNum] = useState(null);
 
   const fetchUserAssests = async (walletAddr) => {
-
     let result = [];
     // if (signatureseries == "SignatureSeries") {
     //   const response = await fetch(`/api/sigseriescreated?subgraphUrl=${graphqlAPI}`);
@@ -80,7 +78,7 @@ export default function CollectionItem() {
       const provider = new ethers.providers.Web3Provider(window.ethereum);
       const tx = await provider.getTransaction(transactionHash);
       console.log("transactionHash", transactionHash, "tx.to", tx.to);
-      console.log("here", id, " ", tx.to)
+      console.log("here", id, " ", tx.to);
       if (tx.to === id) {
         return true;
       }
@@ -89,17 +87,15 @@ export default function CollectionItem() {
     };
 
     if (signatureseries == "SignatureSeries") {
-
       const { id } = router.query;
 
       const getSignetureSeriesAssets = async () => {
-        
         const endPoint = `${graphqlAPI}`;
-      const headers = {
-        "Content-Type": "application/json",
-      };
+        const headers = {
+          "Content-Type": "application/json",
+        };
 
-      const AllBuildingQuery = `{
+        const AllBuildingQuery = `{
         signatureSeriesAssetCreateds(orderBy: id) {
           id
             tokenID
@@ -111,16 +107,18 @@ export default function CollectionItem() {
         }
       }`;
 
-      const graphqlQuery = {
-        operationName: "signatureSeriesAssetCreateds",
-        query: `query signatureSeriesAssetCreateds ${AllBuildingQuery}`,
-        variables: {},
-      };
+        const graphqlQuery = {
+          operationName: "signatureSeriesAssetCreateds",
+          query: `query signatureSeriesAssetCreateds ${AllBuildingQuery}`,
+          variables: {},
+        };
 
-      const response = await axios.post(endPoint, graphqlQuery, { headers: headers });
+        const response = await axios.post(endPoint, graphqlQuery, {
+          headers: headers,
+        });
 
-      // const response = await fetch(`/api/soldgraph?walletAddress=${walletAddr}?subgraphUrl=${graphqlAPI}`);
-      result = await response.data.data;
+        // const response = await fetch(`/api/soldgraph?walletAddress=${walletAddr}?subgraphUrl=${graphqlAPI}`);
+        result = await response.data.data;
 
         const provider = new ethers.providers.Web3Provider(window.ethereum);
         let tranasactionHashArray = result.signatureSeriesAssetCreateds?.map(
@@ -138,7 +136,9 @@ export default function CollectionItem() {
                 id
               );
               innerContractAddress.push(
-                result.signatureSeriesAssetCreateds.find((asset) => asset.transactionHash === hash)
+                result.signatureSeriesAssetCreateds.find(
+                  (asset) => asset.transactionHash === hash
+                )
               );
             }
             setAsseetsData(innerContractAddress);
@@ -149,18 +149,16 @@ export default function CollectionItem() {
       };
 
       await getSignetureSeriesAssets();
-    }
-    else if (signatureseries == "FusionSeries") {
+    } else if (signatureseries == "FusionSeries") {
       const { id } = router.query;
-      
+
       const getSignetureSeriesAssets = async () => {
-
         const endPoint = `${graphqlAPI}`;
-      const headers = {
-        "Content-Type": "application/json",
-      };
+        const headers = {
+          "Content-Type": "application/json",
+        };
 
-      const AllBuildingQuery = `{
+        const AllBuildingQuery = `{
         fusionSeriesAssetCreateds(orderBy: id) {
           amount
           blockNumber
@@ -172,16 +170,18 @@ export default function CollectionItem() {
         }
       }`;
 
-      const graphqlQuery = {
-        operationName: "fusionSeriesAssetCreateds",
-        query: `query fusionSeriesAssetCreateds ${AllBuildingQuery}`,
-        variables: {},
-      };
+        const graphqlQuery = {
+          operationName: "fusionSeriesAssetCreateds",
+          query: `query fusionSeriesAssetCreateds ${AllBuildingQuery}`,
+          variables: {},
+        };
 
-      const response = await axios.post(endPoint, graphqlQuery, { headers: headers });
+        const response = await axios.post(endPoint, graphqlQuery, {
+          headers: headers,
+        });
 
-      // const response = await fetch(`/api/soldgraph?walletAddress=${walletAddr}?subgraphUrl=${graphqlAPI}`);
-      result = await response.data.data;
+        // const response = await fetch(`/api/soldgraph?walletAddress=${walletAddr}?subgraphUrl=${graphqlAPI}`);
+        result = await response.data.data;
 
         const provider = new ethers.providers.Web3Provider(window.ethereum);
         let tranasactionHashArray = result.fusionSeriesAssetCreateds?.map(
@@ -205,7 +205,10 @@ export default function CollectionItem() {
               );
               if (asset) {
                 const fusionAddress = id;
-                const fusioncontract = await etherContract(fusionAddress, FusionSeries.abi)
+                const fusioncontract = await etherContract(
+                  fusionAddress,
+                  FusionSeries.abi
+                );
                 // Fetch metadata for the item using values from the asset
                 const tokenId = asset.tokenID; // Replace with the actual property name in your asset object
                 const meta = await fusioncontract.uri(tokenId);
@@ -224,18 +227,16 @@ export default function CollectionItem() {
       };
 
       await getSignetureSeriesAssets();
-    }
-    else if (signatureseries == "InstaGen" && result != null) {
+    } else if (signatureseries == "InstaGen" && result != null) {
       const { id } = router.query;
 
       const getSignetureSeriesAssets = async () => {
-        
         const endPoint = `${graphqlAPI}`;
-      const headers = {
-        "Content-Type": "application/json",
-      };
+        const headers = {
+          "Content-Type": "application/json",
+        };
 
-      const AllBuildingQuery = `{
+        const AllBuildingQuery = `{
         instaGenAssetCreateds(orderBy: id){
           creator
           blockNumber
@@ -247,16 +248,18 @@ export default function CollectionItem() {
           }
         }`;
 
-      const graphqlQuery = {
-        operationName: "instaGenAssetCreateds",
-        query: `query instaGenAssetCreateds ${AllBuildingQuery}`,
-        variables: {},
-      };
+        const graphqlQuery = {
+          operationName: "instaGenAssetCreateds",
+          query: `query instaGenAssetCreateds ${AllBuildingQuery}`,
+          variables: {},
+        };
 
-      const response = await axios.post(endPoint, graphqlQuery, { headers: headers });
+        const response = await axios.post(endPoint, graphqlQuery, {
+          headers: headers,
+        });
 
-      // const response = await fetch(`/api/soldgraph?walletAddress=${walletAddr}?subgraphUrl=${graphqlAPI}`);
-      result = await response.data.data;
+        // const response = await fetch(`/api/soldgraph?walletAddress=${walletAddr}?subgraphUrl=${graphqlAPI}`);
+        result = await response.data.data;
 
         const provider = new ethers.providers.Web3Provider(window.ethereum);
         let tranasactionHashArray = result.instaGenAssetCreateds?.map(
@@ -274,7 +277,9 @@ export default function CollectionItem() {
                 id
               );
               innerContractAddress.push(
-                result.instaGenAssetCreateds.find((asset) => asset.transactionHash === hash)
+                result.instaGenAssetCreateds.find(
+                  (asset) => asset.transactionHash === hash
+                )
               );
             }
             setAsseetsData(innerContractAddress);
@@ -285,18 +290,16 @@ export default function CollectionItem() {
       };
 
       await getSignetureSeriesAssets();
-    }
-    else if (signatureseries == "EternumPass") {
+    } else if (signatureseries == "EternumPass") {
       const { id } = router.query;
 
       const getSignetureSeriesAssets = async () => {
-        
         const endPoint = `${graphqlAPI}`;
-      const headers = {
-        "Content-Type": "application/json",
-      };
+        const headers = {
+          "Content-Type": "application/json",
+        };
 
-      const AllBuildingQuery = `{
+        const AllBuildingQuery = `{
         nftminteds(orderBy: id) {
           id
     owner
@@ -307,16 +310,18 @@ export default function CollectionItem() {
         }
       }`;
 
-      const graphqlQuery = {
-        operationName: "nftminteds",
-        query: `query nftminteds ${AllBuildingQuery}`,
-        variables: {},
-      };
+        const graphqlQuery = {
+          operationName: "nftminteds",
+          query: `query nftminteds ${AllBuildingQuery}`,
+          variables: {},
+        };
 
-      const response = await axios.post(endPoint, graphqlQuery, { headers: headers });
+        const response = await axios.post(endPoint, graphqlQuery, {
+          headers: headers,
+        });
 
-      // const response = await fetch(`/api/soldgraph?walletAddress=${walletAddr}?subgraphUrl=${graphqlAPI}`);
-      result = await response.data.data;
+        // const response = await fetch(`/api/soldgraph?walletAddress=${walletAddr}?subgraphUrl=${graphqlAPI}`);
+        result = await response.data.data;
 
         const provider = new ethers.providers.Web3Provider(window.ethereum);
         let tranasactionHashArray = result.nftminteds?.map(
@@ -334,7 +339,9 @@ export default function CollectionItem() {
                 id
               );
               innerContractAddress.push(
-                result.nftminteds.find((asset) => asset.transactionHash === hash)
+                result.nftminteds.find(
+                  (asset) => asset.transactionHash === hash
+                )
               );
             }
             setAsseetsData(innerContractAddress);
@@ -350,7 +357,6 @@ export default function CollectionItem() {
     setLoading(true);
     // setData(filteredData);
     setLoading(false);
-
   };
 
   async function loadNFTs() {
@@ -380,7 +386,7 @@ export default function CollectionItem() {
     setLoading(true);
     const eternumcontract = await etherContract(id, EternumPass.abi);
     const pubSalePrice = await eternumcontract.publicSalePrice();
-    await eternumcontract.subscribe({value : pubSalePrice})
+    await eternumcontract.subscribe({ value: pubSalePrice });
     setLoading(false);
     setShowModal(false);
   }
@@ -391,7 +397,7 @@ export default function CollectionItem() {
     const instagencontract = await etherContract(id, Instagen.abi);
     const saleprice = await instagencontract.salePrice();
     // const finalprice = ethers.utils.parseEther((saleprice).toString())*num;
-    await instagencontract.mint(num, {value : saleprice.mul(num)})
+    await instagencontract.mint(num, { value: saleprice.mul(num) });
     setLoading(false);
     setShowModal2(false);
   }
@@ -400,7 +406,7 @@ export default function CollectionItem() {
     <Layout>
       {/* <div>{id}</div> */}
       <div className="min-h-screen body-back">
-      {showModal && (
+        {showModal && (
           <>
             <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none dark:body-back body-back-light">
               <div
@@ -446,32 +452,32 @@ export default function CollectionItem() {
                             </p>
                           </div>
                           <div class="items-center mb-4 justify-between mt-4">
-                          <div>
-                            <h3 className="text-2xl font-semibold text-gray-900">
-                              Description
-                            </h3>
-                            <p className="font-semibold text-gray-900">
-                              Thehdj
-                            </p>
-                          </div>
+                            <div>
+                              <h3 className="text-2xl font-semibold text-gray-900">
+                                Description
+                              </h3>
+                              <p className="font-semibold text-gray-900">
+                                Thehdj
+                              </p>
+                            </div>
                           </div>
                           <div class="items-center mb-4 justify-between">
-                          <div>
-                            <h3 className="text-2xl font-semibold text-gray-900">
-                              Price
-                            </h3>
-                            <p className="font-semibold text-gray-900">
-                              0.038
-                            </p>
-                          </div> 
-                          </div> 
+                            <div>
+                              <h3 className="text-2xl font-semibold text-gray-900">
+                                Price
+                              </h3>
+                              <p className="font-semibold text-gray-900">
+                                0.038
+                              </p>
+                            </div>
+                          </div>
                           <button
-                                className="text-white bg-blue-500 text-sm px-20 py-3 mt-4 rounded-full border border-white shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                                type="button"
-                                onClick={() => subscribeNft()}
-                              >
-                                Subscribe
-                              </button>  
+                            className="text-white bg-blue-500 text-sm px-20 py-3 mt-4 rounded-full border border-white shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                            type="button"
+                            onClick={() => subscribeNft()}
+                          >
+                            Subscribe
+                          </button>
                         </div>
                       </div>
                       <div class="w-1/3 ml-10">
@@ -486,7 +492,7 @@ export default function CollectionItem() {
           </>
         )}
 
-{showModal2 && (
+        {showModal2 && (
           <>
             <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none dark:body-back body-back-light">
               <div
@@ -522,19 +528,17 @@ export default function CollectionItem() {
                     <div class="flex p-10 ml-10">
                       {/* <input type="file" className="btn btn-primary btn-md ml-36" style={{ marginBottom: 20, marginTop: 20, width: "50%" }} onChange={(e) => { uploadImage(e) }} /> */}
                       <div className="w-1/2">
-                      <div>
-                          Enter No. of NFTs
-                          </div>
-                          <input
-                                  type="number"
-                                  id="default-input"
-                                  placeholder="Enter number"
-                                  value={num}
-                                  onChange={handlenumberChange}
-                                  className="my-4 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                  required
-                                />
-                          <div class="items-center mb-4 justify-between">
+                        <div>Enter No. of NFTs</div>
+                        <input
+                          type="number"
+                          id="default-input"
+                          placeholder="Enter number"
+                          value={num}
+                          onChange={handlenumberChange}
+                          className="my-4 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                          required
+                        />
+                        <div class="items-center mb-4 justify-between">
                           <div className="flex">
                             <h3 className="text-2xl font-semibold text-gray-900">
                               Price
@@ -542,15 +546,15 @@ export default function CollectionItem() {
                             <p className="text-2xl font-semibold text-gray-900 ml-4">
                               0.038
                             </p>
-                          </div> 
-                          
+                          </div>
+
                           <button
-                                className="text-white bg-blue-500 text-sm px-20 py-3 mt-4 rounded-full border border-white shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                                type="button"
-                                onClick={() => mintNft()}
-                              >
-                                Mint
-                              </button>  
+                            className="text-white bg-blue-500 text-sm px-20 py-3 mt-4 rounded-full border border-white shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                            type="button"
+                            onClick={() => mintNft()}
+                          >
+                            Mint
+                          </button>
                         </div>
                       </div>
                       <div class="w-1/3 ml-10">
@@ -565,16 +569,17 @@ export default function CollectionItem() {
           </>
         )}
         <div
-          className="w-full h-72 object-cover bg-gray-200" style={{
+          className="w-full h-72 object-cover bg-gray-200"
+          style={{
             backgroundImage: `url("")`,
-            backgroundPosition: 'center',
-            backgroundSize: 'cover',
-            backgroundRepeat: 'no-repeat',
-          }}>
-        </div>
+            backgroundPosition: "center",
+            backgroundSize: "cover",
+            backgroundRepeat: "no-repeat",
+          }}
+        ></div>
 
         <div className="flex lg:flex-row md:flex-row flex-col items-center justify-start lg:-mt-24 md:-mt-24 -mt-16 lg:ml-16 md:ml-16">
-          <div className="rounded-xl h-48 w-48 ring-offset-2 ring-1 ring-black bg-gray-200" >
+          <div className="rounded-xl h-48 w-48 ring-offset-2 ring-1 ring-black bg-gray-200">
             {/* <img
                                 className="text-3xl text-gray-500 w-48 h-48 rounded-xl"
                                 alt=""
@@ -582,34 +587,30 @@ export default function CollectionItem() {
                             /> */}
           </div>
         </div>
-        { signatureseries == "EternumPass" && (
-        <div className="flex items-center md:justify-end lg:-my-16 lg:mx-8 md:-my-16 md:mx-8 mt-8 justify-center lg:justify-end">
-                    <button
-                        className="bg-blue-500 text-white text-sm px-8 py-3 rounded-full border border-white shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                        type="button"
-                        onClick={() => setShowModal(true)}
-                    >
-                        Subscribe
-                    </button>
-                </div>
-          )}
-          { signatureseries == "InstaGen" && (
-        <div className="flex items-center md:justify-end lg:-my-16 lg:mx-8 md:-my-16 md:mx-8 mt-8 justify-center lg:justify-end">
-                    <button
-                        className="bg-blue-500 text-white text-sm px-8 py-3 rounded-full border border-white shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                        type="button"
-                        onClick={() => setShowModal2(true)}
-                    >
-                        Mint NFT
-                    </button>
-                </div>
-          )}
-        <div className='ml-16 mt-28 text-2xl font-bold'>
-          {signatureseries
-          }
-        </div>
+        {signatureseries == "EternumPass" && (
+          <div className="flex items-center md:justify-end lg:-my-16 lg:mx-8 md:-my-16 md:mx-8 mt-8 justify-center lg:justify-end">
+            <button
+              className="bg-blue-500 text-white text-sm px-8 py-3 rounded-full border border-white shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+              type="button"
+              onClick={() => setShowModal(true)}
+            >
+              Subscribe
+            </button>
+          </div>
+        )}
+        {signatureseries == "InstaGen" && (
+          <div className="flex items-center md:justify-end lg:-my-16 lg:mx-8 md:-my-16 md:mx-8 mt-8 justify-center lg:justify-end">
+            <button
+              className="bg-blue-500 text-white text-sm px-8 py-3 rounded-full border border-white shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+              type="button"
+              onClick={() => setShowModal2(true)}
+            >
+              Mint NFT
+            </button>
+          </div>
+        )}
+        <div className="ml-16 mt-28 text-2xl font-bold">{signatureseries}</div>
         <div>
-        
           <div className=" p-4 h-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {assetsData?.length > 0 ? (
               assetsData?.map((item) => {
@@ -618,15 +619,20 @@ export default function CollectionItem() {
                     key={item.tokenID}
                     className=" border-2 p-2.5 rounded-lg shadow-lg w-full lg:w-72 hover:scale-105 duration-200 transform transition cursor-pointer border-2 dark:border-gray-500"
                   >
-                    <Link key={item?.tokenID} href={`/collections/${signatureseries}/${id}/${item?.tokenID}`}>
+                    <Link
+                      key={item?.tokenID}
+                      href={`/collections/${signatureseries}/${id}/${item?.tokenID}`}
+                    >
                       <div>
-                        {
-                          (signatureseries == "InstaGen" || signatureseries == "EternumPass") && (<img src="https://cloudflare-ipfs.com/ipfs/bafybeigyw25q6g6qetggruuocduhbxf6a7vrppl6lskve2th2lin37thnm"/>)
-                        }
+                        {(signatureseries == "InstaGen" ||
+                          signatureseries == "EternumPass") && (
+                          <img src="https://cloudflare-ipfs.com/ipfs/bafybeigyw25q6g6qetggruuocduhbxf6a7vrppl6lskve2th2lin37thnm" />
+                        )}
 
-{
-                          signatureseries != "InstaGen" && signatureseries != "EternumPass" && (<HomeComp uri={item ? item?.metaDataURI : ""} />)
-                        }
+                        {signatureseries != "InstaGen" &&
+                          signatureseries != "EternumPass" && (
+                            <HomeComp uri={item ? item?.metaDataURI : ""} />
+                          )}
                         {/* <HomeComp uri={item ? item?.metaDataURI : ""} /> */}
 
                         <div className=" flex items-center justify-between mb-2">
@@ -662,6 +668,5 @@ export default function CollectionItem() {
         </div>
       </div>
     </Layout>
-
   );
 }

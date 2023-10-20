@@ -7,50 +7,39 @@ import Router from "next/router";
 import { ThirdwebProvider, useAddress } from "@thirdweb-dev/react";
 import "../styles/globals.css";
 import Loader from "../Components/Loader";
-import { DataProvider,useData } from "../context/data";
-import { authorize } from '../utils/api';
-import axios from 'axios';
-import Cookies from 'js-cookie';
+import { DataProvider, useData } from "../context/data";
+import { authorize } from "../utils/api";
+import axios from "axios";
+import Cookies from "js-cookie";
 
-import '@rainbow-me/rainbowkit/styles.css';
-import {
-  getDefaultWallets,
-  RainbowKitProvider,
-} from '@rainbow-me/rainbowkit';
-import { configureChains, createConfig, WagmiConfig } from 'wagmi';
-import { polygonMumbai } from 'wagmi/chains';
-import {
-  mainnet,
-  polygon,
-  optimism,
-  arbitrum,
-  base,
-  zora,
-} from 'wagmi/chains';
-import { alchemyProvider } from 'wagmi/providers/alchemy';
-import { publicProvider } from 'wagmi/providers/public';
+import "@rainbow-me/rainbowkit/styles.css";
+import { getDefaultWallets, RainbowKitProvider } from "@rainbow-me/rainbowkit";
+import { configureChains, createConfig, WagmiConfig } from "wagmi";
+import { polygonMumbai } from "wagmi/chains";
+import { mainnet, polygon, optimism, arbitrum, base, zora } from "wagmi/chains";
+import { alchemyProvider } from "wagmi/providers/alchemy";
+import { publicProvider } from "wagmi/providers/public";
 const { chains, publicClient } = configureChains(
   [polygonMumbai, mainnet, polygon, optimism, arbitrum, base, zora],
   [
     alchemyProvider({ apiKey: "69qp-YAVmBUC_suyFxzrHw6eVzzpIwUE" }),
-    publicProvider()
+    publicProvider(),
   ]
 );
 const { connectors } = getDefaultWallets({
-  appName: 'My RainbowKit App',
-  projectId: 'abe2b237bacf50276c123ac3df643de3',
-  chains
+  appName: "My RainbowKit App",
+  projectId: "abe2b237bacf50276c123ac3df643de3",
+  chains,
 });
 const wagmiConfig = createConfig({
   autoConnect: true,
   connectors,
-  publicClient
-})
+  publicClient,
+});
 
 // Fixes: Hydration failed because the initial UI does not match what was rendered on the server.
 
 function MyApp({ Component, pageProps }) {
-
   const [isLoading, isSetLoading] = useState(false);
   const [initialData, setInitialData] = useState(null);
   const [resdata, setResdata] = useState(null);
@@ -62,9 +51,8 @@ function MyApp({ Component, pageProps }) {
     }
 
     // const mytoken = localStorage.getItem("platform_token");
-     const mytoken = Cookies.get("platform_token");
-    if(!mytoken)
-    {
+    const mytoken = Cookies.get("platform_token");
+    if (!mytoken) {
       fetchInitialData();
     }
   }, []);
@@ -72,7 +60,7 @@ function MyApp({ Component, pageProps }) {
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await fetch('/data.json');
+        const response = await fetch("/data.json");
         const data = await response.json();
         console.log("id", data);
 
@@ -82,7 +70,7 @@ function MyApp({ Component, pageProps }) {
 
         setResdata(resData);
       } catch (error) {
-        console.error('Error fetching data:', error);
+        console.error("Error fetching data:", error);
       }
     }
 
@@ -97,21 +85,21 @@ function MyApp({ Component, pageProps }) {
   Router.events.on("routeChangeComplete", (url) => {
     isSetLoading(false);
   });
-  
+
   return (
     <>
       {isLoading && <Loader />}
       <ThemeProvider enableSystem={true} attribute="class">
         {/* <ThirdwebProvider desiredChainId={desiredChainId}>
           <Provider store={store} > */}
-          <WagmiConfig config={wagmiConfig}>
-      <RainbowKitProvider chains={chains} initialChain={polygonMumbai}>
-          <DataProvider>
-          <Component {...pageProps} initialData={initialData}/>
-          </DataProvider>
+        <WagmiConfig config={wagmiConfig}>
+          <RainbowKitProvider chains={chains} initialChain={polygonMumbai}>
+            <DataProvider>
+              <Component {...pageProps} initialData={initialData} />
+            </DataProvider>
           </RainbowKitProvider>
-    </WagmiConfig>
-          {/* </Provider>
+        </WagmiConfig>
+        {/* </Provider>
         </ThirdwebProvider> */}
       </ThemeProvider>
     </>

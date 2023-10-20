@@ -32,9 +32,7 @@ function Asset({ asset }) {
   const [image, setImage] = useState("");
   const metadata = async () => {
     const { data } = await axios.get(
-      `https://cloudflare-ipfs.com/ipfs/${removePrefix(
-        asset?.metaDataURI
-      )}`
+      `https://cloudflare-ipfs.com/ipfs/${removePrefix(asset?.metaDataURI)}`
     );
     setResponse(data);
     if (data.image.length > 1) setImage(data.image);
@@ -56,24 +54,12 @@ function Asset({ asset }) {
       <div className="max-w-[1400px] mx-auto bg-[#f8f7fc] p-8 dark:bg-[#131417] my-8 rounded-3xl body-back">
         <div className="flex flex-col lg:flex-row gap-x-8">
           <div className="w-full lg:w-[50%]" onClick={() => isSetFull(true)}>
-            <AssetComp
-              uri={
-                asset
-                  ? asset?.metaDataURI
-                  : ""
-              }
-            />
+            <AssetComp uri={asset ? asset?.metaDataURI : ""} />
           </div>
           <div className="lg:w-[50%]">
             <div className="flex flex-col gap-y-4">
               <div className="text-gray-700 text-2xl font-medium">
-                <AssetHead
-                  uri={
-                    asset
-                      ? asset?.metaDataURI
-                      : ""
-                  }
-                />
+                <AssetHead uri={asset ? asset?.metaDataURI : ""} />
               </div>
               <div className="body-back">
                 <div className="">
@@ -172,9 +158,7 @@ function Asset({ asset }) {
                       <span className="text-lg font-medium">MATIC</span>
                     </div>
                     <button
-                      onClick={() =>
-                        buyItem(asset, setmodel, setmodelmsg)
-                      }
+                      onClick={() => buyItem(asset, setmodel, setmodelmsg)}
                       className="flex gap-x-2 items-center justify-center px-5 py-2 bg-blue-600 text-gray-500 dark:text-white text-sm font-small rounded-xl hover:bg-blue-500 focus:outline-none focus:bg-blue-500"
                     >
                       <span className="text-lg font-bold">Buy NFT</span>
@@ -186,23 +170,11 @@ function Asset({ asset }) {
 
               <div className="flex flex-col lg:flex-row my-8">
                 <div className="lg:w-1/2 bg-white rounded-lg">
-                  <AssetProps
-                    uri={
-                      asset
-                        ? asset?.metaDataURI
-                        : ""
-                    }
-                  />
+                  <AssetProps uri={asset ? asset?.metaDataURI : ""} />
                 </div>
                 <div className="mb-8 flex-shrink-0 lg:w-1/2 lg:mb-0 bg-white rounded-xl">
                   <div className="flex justify-center lg:justify-end">
-                    <AssetCategories
-                      uri={
-                        asset
-                          ? asset?.metaDataURI
-                          : ""
-                      }
-                    />
+                    <AssetCategories uri={asset ? asset?.metaDataURI : ""} />
                   </div>
                 </div>
               </div>
@@ -216,14 +188,14 @@ function Asset({ asset }) {
     </Layout>
   );
 }
-export async function  getServerSideProps (context) {
+export async function getServerSideProps(context) {
   const { id } = context.query;
   const { saleStarteds } = [];
-  console.log("id>>>>>>>>>>",saleStarteds);
+  console.log("id>>>>>>>>>>", saleStarteds);
   return {
     props: {
       asset: saleStarteds[0] ?? 0,
     },
   };
-};
+}
 export default Asset;

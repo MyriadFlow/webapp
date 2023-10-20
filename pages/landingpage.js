@@ -4,26 +4,25 @@ import BigCard from "../Components/Cards/BigCard";
 import Image from "next/image";
 import { useSelector } from "react-redux";
 import { selectUser } from "../slices/userSlice";
-import AccessMater from '../artifacts/contracts/accessmaster/AccessMaster.sol/AccessMaster.json'
+import AccessMater from "../artifacts/contracts/accessmaster/AccessMaster.sol/AccessMaster.json";
 import { BsHeart } from "react-icons/bs";
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import etherContract from "../utils/web3Modal";
 import { saleStartedQuery } from "../utils/gqlUtil";
 import { request, gql } from "graphql-request";
-import Tradhub from '../artifacts/contracts/tradehub/TradeHub.sol/TradeHub.json';
+import Tradhub from "../artifacts/contracts/tradehub/TradeHub.sol/TradeHub.json";
 import { getMetaData, removePrefix } from "../utils/ipfsUtil";
 import Loader from "../Components/Loader";
 import Slider from "react-slick";
 import SmallCard from "../Components/Cards/SmallCard";
 import { useData } from "../context/data";
 import { useAccount } from "wagmi";
-import Typewriter from '../Components/Typewriter';
-import styles from '../styles/Typewritter.module.css';
+import Typewriter from "../Components/Typewriter";
+import styles from "../styles/Typewritter.module.css";
 import AssetComp from "../Components/assetComp";
 
 export default function LandingPage() {
-
   const { resdata } = useData();
 
   const settings = {
@@ -37,7 +36,12 @@ export default function LandingPage() {
   const [info, setInfo] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  const itemStatus = new Map(["NONEXISTANT", "SALE", "AUCTION", "SOLD", "REMOVED"].map((v, index) => [index, v]))
+  const itemStatus = new Map(
+    ["NONEXISTANT", "SALE", "AUCTION", "SOLD", "REMOVED"].map((v, index) => [
+      index,
+      v,
+    ])
+  );
   const walletAddr = useAccount().address;
   const [hasRole, setHasRole] = useState(true);
 
@@ -140,9 +144,7 @@ export default function LandingPage() {
               </div>
               <div className="lg:w-1/2 lg:pr-8">
                 {/* <img src={resdata?.Storefront.storefrontImage}/> */}
-                <AssetComp
-              uri={resdata?.Storefront.storefrontImage}
-            />
+                <AssetComp uri={resdata?.Storefront.storefrontImage} />
                 {/* <div className="flex gap-2 m48:gap-3 lg:gap-5">
                   <div className="flex flex-col gap-5 w-1/3 justify-between">
                     <Image
@@ -210,9 +212,7 @@ export default function LandingPage() {
               </h1>
               <div className="max-w-[1280px] mx-auto rounded-3xl flex gap-7">
                 {info?.map(function (data, i) {
-
                   return (
-
                     <BigCard
                       key={i}
                       title={data.product_name}
@@ -229,7 +229,9 @@ export default function LandingPage() {
 
           {/* Trending Section */}
           <section className="dark:body-back-hl body-back-hl">
-            <h1 className=" text-4xl font-semibold pt-20 sm:ml-28 ml-10 dark:text-white text-gray-900">Trending NFTS</h1>
+            <h1 className=" text-4xl font-semibold pt-20 sm:ml-28 ml-10 dark:text-white text-gray-900">
+              Trending NFTS
+            </h1>
             <div className=" py-16 flex lg:flex-row flex-col justify-center items-center">
               <div className="basis-1/3">
                 <BigCard
@@ -260,10 +262,11 @@ export default function LandingPage() {
           </section>
           {/* End Of Trending Section */}
 
-
           {/* highlights Section */}
           <section className="dark:body-back-hl body-back-hl">
-            <h1 className=" text-4xl font-semibold pt-20 sm:ml-28 ml-10 dark:text-white text-gray-900">Top highlights of the week</h1>
+            <h1 className=" text-4xl font-semibold pt-20 sm:ml-28 ml-10 dark:text-white text-gray-900">
+              Top highlights of the week
+            </h1>
             <div className=" py-16 flex lg:flex-row flex-col justify-center items-center">
               <div className="basis-1/3">
                 <BigCard
@@ -295,37 +298,39 @@ export default function LandingPage() {
           {/* End Of highlights Section */}
 
           {/* highlights Section */}
-          {
-            resdata?.profile.plan == "basic" && (
-<section className="dark:body-back body-back-light">
-            <div className=" py-16 flex lg:flex-row flex-col justify-center items-center">
-              <div className="basis-1/3">
-                <div className="text-center p-2">
-                  <h3 className="text-3xl lg:w-1/2 font-poppins font-bold capitalize mx-auto text-gray-500 dark:text-white">
-                    Create NFT marketplace for your
-                  </h3>
-                  <Typewriter
-            strings={[
-              'Community',
-              'Organization',
-              'Businesses',
-              'Audience'
-            ]}
-            wrapperClassName={styles.typewriterWrapper}
-            cursorClassName={styles.typewriterCursor}
-          />
-                  <div className="items-center lg:py-4 md:py-4">
-                    <div>
-                      <button className="py-3 px-10 text-gray-500 dark:text-white font-semibold mb-8 lg:mb-0 border rounded-full">
-                        <Link href="https://launchpad.myriadflow.com/" target="_blank">
-                          <span className="font-raleway font-bold text-gray-500 dark:text-white">
-                          Explore More
-                          </span>
-                        </Link>
-                      </button>
+          {resdata?.profile.plan == "basic" && (
+            <section className="dark:body-back body-back-light">
+              <div className=" py-16 flex lg:flex-row flex-col justify-center items-center">
+                <div className="basis-1/3">
+                  <div className="text-center p-2">
+                    <h3 className="text-3xl lg:w-1/2 font-poppins font-bold capitalize mx-auto text-gray-500 dark:text-white">
+                      Create NFT marketplace for your
+                    </h3>
+                    <Typewriter
+                      strings={[
+                        "Community",
+                        "Organization",
+                        "Businesses",
+                        "Audience",
+                      ]}
+                      wrapperClassName={styles.typewriterWrapper}
+                      cursorClassName={styles.typewriterCursor}
+                    />
+                    <div className="items-center lg:py-4 md:py-4">
+                      <div>
+                        <button className="py-3 px-10 text-gray-500 dark:text-white font-semibold mb-8 lg:mb-0 border rounded-full">
+                          <Link
+                            href="https://launchpad.myriadflow.com/"
+                            target="_blank"
+                          >
+                            <span className="font-raleway font-bold text-gray-500 dark:text-white">
+                              Explore More
+                            </span>
+                          </Link>
+                        </button>
+                      </div>
                     </div>
-                  </div>
-                  {/* <div className="items-center ">
+                    {/* <div className="items-center ">
                     <div>
                       <button className="py-3 px-6 text-gray-500 dark:text-white font-semibold mb-8 lg:mb-0 explore-btn-border">
                         <Link href="/explore">
@@ -336,37 +341,33 @@ export default function LandingPage() {
                       </button>
                     </div>
                   </div> */}
+                  </div>
+                </div>
+                <div className="basis-1/4 mb-10 lg:mb-0">
+                  <figure className="max-w-xs relative transition-all duration-300 cursor-pointer filter border-4 ">
+                    <Link href="#">
+                      <img className="" src="vr.png" alt="image description" />
+                    </Link>
+                  </figure>
+                </div>
+                <div className="basis-1/4 mb-10 lg:mb-0">
+                  <figure className="max-w-xs relative transition-all duration-300 cursor-pointer filter border-4">
+                    <Link href="#">
+                      <img className="" src="vr.png" alt="image description" />
+                    </Link>
+                  </figure>
+                </div>
+                <div className="basis-1/4">
+                  <figure className="max-w-xs relative transition-all duration-300 cursor-pointer filter border-4">
+                    <Link href="#">
+                      <img className="" src="vr.png" alt="image description" />
+                    </Link>
+                  </figure>
                 </div>
               </div>
-              <div className="basis-1/4 mb-10 lg:mb-0">
-                <figure className="max-w-xs relative transition-all duration-300 cursor-pointer filter border-4 ">
-                  <Link href="#">
-                    <img className="" src="vr.png" alt="image description" />
-                  </Link>
-                </figure>
-              </div>
-              <div className="basis-1/4 mb-10 lg:mb-0">
-                <figure className="max-w-xs relative transition-all duration-300 cursor-pointer filter border-4">
-                  <Link href="#">
-                    <img className="" src="vr.png" alt="image description" />
-                  </Link>
-                </figure>
-              </div>
-              <div className="basis-1/4">
-                <figure className="max-w-xs relative transition-all duration-300 cursor-pointer filter border-4">
-                  <Link href="#">
-                    <img className="" src="vr.png" alt="image description" />
-                  </Link>
-                </figure>
-              </div>
-
-            </div>
-          </section>
-          
-            )
-          }
+            </section>
+          )}
           {/* End Of highlights Section */}
-          
         </div>
       </Layout>
     </>

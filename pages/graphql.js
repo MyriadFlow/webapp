@@ -10,7 +10,7 @@ export default function Home() {
   console.log(graphql);
 
   const regex = /^(.*?)(?=\/graphql)/;
-  
+
   // Use the regular expression to extract the URL
   const match = graphql?.match(regex);
 
@@ -21,7 +21,9 @@ export default function Home() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(`/api/graphql?subgraphUrl=${graphqlAPI}?subgraphUrl=${graphqlAPI}`);
+        const response = await fetch(
+          `/api/graphql?subgraphUrl=${graphqlAPI}?subgraphUrl=${graphqlAPI}`
+        );
         const responseData = await response.json();
         console.log(responseData);
         setData(responseData);

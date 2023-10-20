@@ -15,14 +15,18 @@ import FusionSeries from "../Components/fusionseries";
 import Instagen from "../Components/instagen";
 import Eternum from "../Components/eternumpass";
 import etherContract from "../utils/web3Modal";
-import Tradhub from '../artifacts/contracts/tradehub/TradeHub.sol/TradeHub.json'
+import Tradhub from "../artifacts/contracts/tradehub/TradeHub.sol/TradeHub.json";
 import { useAccount } from "wagmi";
 
 const Collection = () => {
   const [info, setInfo] = useState([]);
-  const itemStatus = new Map(["NONEXISTANT", "SALE", "AUCTION", "SOLD","REMOVED"].map((v,index)=>[index,v]));
-  const sortedCollection=async()=>{
-}
+  const itemStatus = new Map(
+    ["NONEXISTANT", "SALE", "AUCTION", "SOLD", "REMOVED"].map((v, index) => [
+      index,
+      v,
+    ])
+  );
+  const sortedCollection = async () => {};
   const walletAddr = useAccount().address;
   var wallet = walletAddr ? walletAddr[0] : "";
   const [data, setData] = useState([]);
@@ -32,29 +36,29 @@ const Collection = () => {
   const fetchUserAssests = async () => {
     setLoading(true);
     const query = gql`
-    query Query($where: AssetCreated_filter) {
-      assetCreateds(first:100){
-        id
-        tokenID
-        creator
-        blockNumber
-        blockTimestamp
-        metaDataURI
+      query Query($where: AssetCreated_filter) {
+        assetCreateds(first: 100) {
+          id
+          tokenID
+          creator
+          blockNumber
+          blockTimestamp
+          metaDataURI
+        }
       }
-          }
-          `;
+    `;
     const result = [];
-    const refineArray = []
-          // Promise.all(result.assetCreateds.map(async item=>{
-          //   const tradhubContarct = await etherContract(tradhubAddress, Tradhub.abi);
-          //   const itemResult = await tradhubContarct.idToMarketItem(item.tokenID)
-          //   const status=  itemStatus.get(parseInt(itemResult.status))
-          //   if(status=="SALE"){
-          //     refineArray.push(item.tokenID)
-          //   }
-          // })).then(()=>{
-          //   setData(result.assetCreateds.filter(assetItem=>refineArray.some(item=>item ===assetItem.tokenID)));
-          // })
+    const refineArray = [];
+    // Promise.all(result.assetCreateds.map(async item=>{
+    //   const tradhubContarct = await etherContract(tradhubAddress, Tradhub.abi);
+    //   const itemResult = await tradhubContarct.idToMarketItem(item.tokenID)
+    //   const status=  itemStatus.get(parseInt(itemResult.status))
+    //   if(status=="SALE"){
+    //     refineArray.push(item.tokenID)
+    //   }
+    // })).then(()=>{
+    //   setData(result.assetCreateds.filter(assetItem=>refineArray.some(item=>item ===assetItem.tokenID)));
+    // })
     setLoading(false);
   };
 
@@ -81,47 +85,66 @@ const Collection = () => {
     fetchUserAssests();
   }, []);
 
- 
   return (
-    <Layout title="Collections" description="Collection of assets you launched in various categories.">
-    <div className="min-h-screen dark:body-back body-back-light">
-    <div className="text-2xl font-semibold mb-4 pt-10 text-center dark:text-white text-gray-800">Collections</div>
-    <div className="pb-4 px-10 grid grid-cols-2 gap-8 sm:gap-6 lg:grid-cols-4 md:grid-cols-2 w-full pt-6 border-t">
-      
+    <Layout
+      title="Collections"
+      description="Collection of assets you launched in various categories."
+    >
+      <div className="min-h-screen dark:body-back body-back-light">
+        <div className="text-2xl font-semibold mb-4 pt-10 text-center dark:text-white text-gray-800">
+          Collections
+        </div>
+        <div className="pb-4 px-10 grid grid-cols-2 gap-8 sm:gap-6 lg:grid-cols-4 md:grid-cols-2 w-full pt-6 border-t">
           <div
             className={`rounded-full text-center text-gray-700 dark:text-gray-200 dark:hover:bg-white dark:hover:text-gray-800 hover:bg-blue-500  cursor-pointer p-3 border-b-2 border-transparent transition-all ${
-              page === "signature" ? "dark:bg-white bg-blue-500 text-white dark:text-gray-800" : ""
+              page === "signature"
+                ? "dark:bg-white bg-blue-500 text-white dark:text-gray-800"
+                : ""
             }`}
             onClick={() => setPage("signature")}
-           >
-              <div className="text-sm lg:text-xl md:text-lg font-semibold">SignatureSeries</div>
+          >
+            <div className="text-sm lg:text-xl md:text-lg font-semibold">
+              SignatureSeries
+            </div>
           </div>
 
           <div
             className={`rounded-full text-center text-gray-700 dark:text-gray-200 dark:hover:bg-white dark:hover:text-gray-800 hover:bg-blue-500  cursor-pointer p-3 border-b-2 border-transparent transition-all ${
-              page === "fusion" ? "dark:bg-white bg-blue-500 text-white dark:text-gray-800" : ""
+              page === "fusion"
+                ? "dark:bg-white bg-blue-500 text-white dark:text-gray-800"
+                : ""
             }`}
             onClick={() => setPage("fusion")}
-           >
-              <div className="text-sm lg:text-xl md:text-lg font-semibold">FusionSeries</div>
+          >
+            <div className="text-sm lg:text-xl md:text-lg font-semibold">
+              FusionSeries
+            </div>
           </div>
 
           <div
             className={`rounded-full text-center text-gray-700 dark:text-gray-200 dark:hover:bg-white dark:hover:text-gray-800 hover:bg-blue-500  cursor-pointer p-3 border-b-2 border-transparent transition-all ${
-              page === "instagen" ? "dark:bg-white bg-blue-500 text-white dark:text-gray-800" : ""
+              page === "instagen"
+                ? "dark:bg-white bg-blue-500 text-white dark:text-gray-800"
+                : ""
             }`}
             onClick={() => setPage("instagen")}
           >
-              <div className="text-sm lg:text-xl md:text-lg font-semibold">Instagen</div>
+            <div className="text-sm lg:text-xl md:text-lg font-semibold">
+              Instagen
+            </div>
           </div>
 
           <div
             className={`rounded-full text-center text-gray-700 dark:text-gray-200 dark:hover:bg-white dark:hover:text-gray-800 hover:bg-blue-500  cursor-pointer p-3 border-b-2 border-transparent transition-all ${
-              page === "eternum" ? "dark:bg-white bg-blue-500 text-white dark:text-gray-800" : ""
+              page === "eternum"
+                ? "dark:bg-white bg-blue-500 text-white dark:text-gray-800"
+                : ""
             }`}
             onClick={() => setPage("eternum")}
           >
-              <div className="text-sm lg:text-xl md:text-lg font-semibold">EternumPass</div>
+            <div className="text-sm lg:text-xl md:text-lg font-semibold">
+              EternumPass
+            </div>
           </div>
 
           {/* <div
@@ -143,33 +166,30 @@ const Collection = () => {
           </div> */}
         </div>
 
-
-
-{page == "signature" && (
+        {page == "signature" && (
           <div className="p-4 px-10">
             <SignatureSeries />
           </div>
         )}
 
-{page == "fusion" && (
+        {page == "fusion" && (
           <div className="p-4 px-10">
             <FusionSeries />
           </div>
         )}
 
-{page == "instagen" && (
+        {page == "instagen" && (
           <div className="p-4 px-10">
             <Instagen />
           </div>
         )}
 
-{page == "eternum" && (
+        {page == "eternum" && (
           <div className="p-4 px-10">
             <Eternum />
           </div>
         )}
-      
-    </div>
+      </div>
     </Layout>
   );
 };
