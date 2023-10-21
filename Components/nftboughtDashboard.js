@@ -39,6 +39,8 @@ function NftboughtDashboard() {
 
   const tradhubAddress = resdata?.TradehubAddress;
 
+  const apiUrl = `https://testnet.gateway.myriadflow.com/api/v1.0/webapp/contracts/${resdata?.Storefront.id}`;
+
   function getEthPrice(price) {
     return ethers.utils.formatEther(price);
   }
@@ -164,6 +166,29 @@ function NftboughtDashboard() {
     }
     console.log(refineArray);
     console.log("buy assets count", refineArray.itemSolds.length);
+
+    // Fetch contract data from the API
+const contractData = await fetch(apiUrl);
+const contractnamefind = await contractData.json();
+// Add contractName to each asset in refineArray.saleStarteds
+refineArray.itemSolds = refineArray.itemSolds.map((asset) => {
+  const matchingContract = contractnamefind?.find(
+    (contract) => 
+    {
+      console.log("Comparing to contract:", contract.contractAddress);
+    return contract.contractAddress.toLowerCase() === asset.nftContract;
+    // contract.contractAddress == asset.nftContract
+    }
+  );
+
+  console.log("findContractname",contractnamefind);
+  console.log("nftcontract",asset.nftContract);
+
+  return {
+    ...asset,
+    contractName: matchingContract ? matchingContract.contractName : '',
+  };
+});
 
     setData(refineArray.itemSolds);
     setLoading(false);
@@ -426,7 +451,7 @@ function NftboughtDashboard() {
                   key={item.itemId}
                   className=" border-2 p-2.5 rounded-lg shadow-lg w-full lg:w-72 hover:scale-105 duration-200 transform transition cursor-pointer border-2 dark:border-gray-500"
                 >
-                  <Link key={item?.itemId} href={`/assets/${item?.itemId}`}>
+                  <Link key={item?.itemId} href={`/collections/${item?.contractName}/${item?.nftContract}/${item?.tokenId}`}>
                     <div>
                       <HomeComp uri={item ? item?.metadataURI : ""} />
 

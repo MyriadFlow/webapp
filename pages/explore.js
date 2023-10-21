@@ -47,6 +47,8 @@ const Home = () => {
 
   const tradhubAddress = resdata?.TradehubAddress;
 
+  const apiUrl = `https://testnet.gateway.myriadflow.com/api/v1.0/webapp/contracts/${resdata?.Storefront.id}`;
+
   const allfilter = {
     minPrice: 0.1,
     maxPrice: 100,
@@ -258,7 +260,7 @@ let result = {};
       };
 
       const AllBuildingQuery = `{
-        saleStarteds(orderBy: id,where: {itemId_not: "3"}) {
+        saleStarteds(orderBy: id,where: {itemId: "6"}) {
           itemId
       metaDataURI
       nftContract
@@ -327,6 +329,29 @@ let result = {};
     await status();
     console.log(refineArray);
     console.log("sale assets count", refineArray.saleStarteds.length);
+
+        // Fetch contract data from the API
+const contractData = await fetch(apiUrl);
+const contractnamefind = await contractData.json();
+// Add contractName to each asset in refineArray.saleStarteds
+refineArray.saleStarteds = refineArray.saleStarteds.map((asset) => {
+  const matchingContract = contractnamefind?.find(
+    (contract) => 
+    {
+      console.log("Comparing to contract:", contract.contractAddress);
+    return contract.contractAddress.toLowerCase() === asset.nftContract;
+    // contract.contractAddress == asset.nftContract
+    }
+  );
+
+  console.log("findContractname",contractnamefind);
+  console.log("nftcontract",asset.nftContract);
+
+  return {
+    ...asset,
+    contractName: matchingContract ? matchingContract.contractName : '',
+  };
+});
 }
 
     let fResult = [];
@@ -460,8 +485,32 @@ let result = {};
     
     // const response = await fetch("/api/auctionput");
     // const result = await response.json();
-    console.log("result", response);
+    console.log("auction result", response);
     setLoading(true);
+
+        // Fetch contract data from the API
+const contractData = await fetch(apiUrl);
+const contractnamefind = await contractData.json();
+// Add contractName to each asset in refineArray.saleStarteds
+result.auctionStarteds = result.auctionStarteds.map((asset) => {
+  const matchingContract = contractnamefind?.find(
+    (contract) => 
+    {
+      console.log("Comparing to contract:", contract.contractAddress);
+    return contract.contractAddress.toLowerCase() === asset.nftContract;
+    // contract.contractAddress == asset.nftContract
+    }
+  );
+
+  console.log("findContractname",contractnamefind);
+  console.log("nftcontract",asset.nftContract);
+
+  return {
+    ...asset,
+    contractName: matchingContract ? matchingContract.contractName : '',
+  };
+});
+
     setAuction(result.auctionStarteds);
     setLoading(false);
     }
@@ -947,7 +996,7 @@ let result = {};
                     >
                       <Link
                         key={item?.itemId}
-                        href={`/explore/${item?.itemId}`}
+                        href={`/collections/${item?.contractName}/${item?.nftContract}/${item?.tokenId}`}
                       >
                         <div>
                           <HomeComp uri={item ? item?.metaDataURI : ""} />
@@ -956,7 +1005,7 @@ let result = {};
                               Price{" "}
                             </div>
                             <div className="flex items-center">
-                              <FaEthereum className="w-4 text-gray-500 dark:text-white" />
+                              {/* <FaEthereum className="w-4 text-gray-500 dark:text-white" /> */}
                               <div className="text-gray-500 dark:text-white font-semibold">
                                 {getEthPrice(item?.price)} MATIC
                               </div>
@@ -1003,13 +1052,19 @@ let result = {};
                       key={item.id}
                       className=" border-2 p-2.5 bg-white dark:bg-gray-900 grid rounded-lg shadow-lg w-full lg:w-72 hover:scale-105 duration-200 transform transition cursor-pointer border-2 dark:border-gray-800"
                     >
-                      <Link key={item.itemId} href={`/assets/${item.id}`}>
+                      <Link key={item.itemId} href={`/collections/${item?.contractName}/${item?.nftContract}/${item?.tokenId}`}>
                         <div>
                         <HomeComp uri={item ? item?.metaDataURI : ""} />
 
                           <div>
                             <div className="font-bold mt-3">
-                              Auctioneer : {item.auctioneer.slice(-6)}
+                              Auctioneer : 
+                              {
+                                item.auctioneer === walletaddr.toString() && (<span>You</span>)
+                              }
+                              {
+                                item.auctioneer!= walletaddr.toString() && (item.auctioneer.slice(-6))
+                              }
                             </div>
                             {/* itemid = {item.itemId} */}
                           </div>
