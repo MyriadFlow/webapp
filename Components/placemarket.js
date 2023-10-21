@@ -39,6 +39,8 @@ const MyAssets = () => {
   const tradhubAddress = resdata?.TradehubAddress;
   const accessmasterAddress = resdata?.accessMasterAddress;
 
+  const apiUrl = `https://testnet.gateway.myriadflow.com/api/v1.0/webapp/contracts/${resdata?.Storefront.id}`;
+
   const router = useRouter();
   const [data, setData] = useState([]);
   const [open, setOpen] = useState(false);
@@ -129,8 +131,32 @@ const MyAssets = () => {
             await status();
         }
             console.log(refineArray);
-console.log("self sale assets count",refineArray.saleStarteds.length);
+       console.log("self sale assets count",refineArray.saleStarteds.length);
     setLoading(true);
+
+// Fetch contract data from the API
+const contractData = await fetch(apiUrl);
+const contractnamefind = await contractData.json();
+// Add contractName to each asset in refineArray.saleStarteds
+refineArray.saleStarteds = refineArray.saleStarteds.map((asset) => {
+  const matchingContract = contractnamefind?.find(
+    (contract) => 
+    {
+      console.log("Comparing to contract:", contract.contractAddress);
+    return contract.contractAddress.toLowerCase() === asset.nftContract;
+    // contract.contractAddress == asset.nftContract
+    }
+  );
+
+  console.log("findContractname",contractnamefind);
+  console.log("nftcontract",asset.nftContract);
+
+  return {
+    ...asset,
+    contractName: matchingContract ? matchingContract.contractName : '',
+  };
+});
+
     setData(refineArray.saleStarteds);
     setLoading(false);
   };
@@ -350,7 +376,7 @@ console.log("self sale assets count",refineArray.saleStarteds.length);
                 key={item.itemId}
                 className=" border-2 p-2.5 dark:bg-[#1c1c24]  rounded-lg shadow-lg w-full lg:w-72 hover:scale-105 duration-200 transform transition cursor-pointer border-2 dark:border-gray-800"
               >
-                <Link key={item?.itemId} href={`/assets/${item?.tokenId}`}>
+                <Link key={item?.itemId} href={`/collections/${item?.contractName}/${item?.nftContract}/${item?.tokenId}`}>
                   <div>
                     <HomeComp uri={item ? item?.metaDataURI : ""} />
                   </div>

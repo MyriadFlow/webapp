@@ -624,7 +624,7 @@ function Token() {
                       onChange={handleaddr}
                       className="flex gap-x-2 items-center justify-center lg:px-10 md:px-10 px-3 py-3 my-4 text-sm font-medium rounded-lg text-gray-500 border"
                     />
-                    <button className="flex gap-x-2 items-center justify-center lg:px-10 md:px-10 px-3 py-3 my-4 text-sm font-medium rounded-lg text-white border">
+                    <button className="flex gap-x-2 items-center justify-center lg:px-10 md:px-10 px-3 py-3 my-4 mx-4 text-sm font-medium rounded-lg text-white border">
                   {/* <span className="text-lg font-bold">Months Days Hours</span> */}
                   <DateTimePicker
                     months={months2}
