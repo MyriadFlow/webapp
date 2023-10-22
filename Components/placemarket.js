@@ -15,6 +15,7 @@ import { saleStartedQuery } from "../utils/gqlUtil";
 import etherContract from "../utils/web3Modal";
 import { useData } from "../context/data";
 import axios from "axios";
+import DateTimePicker from './Datetimepicker';
 import { removeItem } from "../pages/api/removeitem";
 import { useAccount } from "wagmi";
 
@@ -54,8 +55,19 @@ const MyAssets = () => {
   const [alertMsg, setAlertMsg] = useState("Something went wrong");
   const [showModal, setShowModal] = useState(false);
   const [showModal2, setShowModal2] = useState(false);
+  const [toggle1, setToggle1] = useState(false);
+  const [toggle2, setToggle2] = useState(false);
   const [selectedNFT, setSelectedNFT] = useState(null);
   const [price, setPrice] = useState(0);
+
+  const [months, setMonths] = useState(0);
+  const [days, setDays] = useState(0);
+  const [hours, setHours] = useState(0);
+
+  // Function to update the state when values change
+  const handleMonthsChange = (e) => setMonths(parseInt(e.target.value, 10));
+  const handleDaysChange = (e) => setDays(parseInt(e.target.value, 10));
+  const handleHoursChange = (e) => setHours(parseInt(e.target.value, 10));
 
   const fetchUserAssests = async () => {
     const refineArray = {};
@@ -347,6 +359,14 @@ refineArray.auctionStarteds = refineArray.auctionStarteds.map((asset) => {
     setLoading(false);
   }
 
+  const handleInputChange = () => {
+    setToggle1(!toggle1); // Toggle the state
+  };
+  
+  const handleInputChange2 = () => {
+    setToggle2(!toggle2); // Toggle the state
+  };
+
   return (
     <div className="p-4 px-10 min-h-screen dark:body-back body-back-light">
       {model && <BuyAsset open={model} setOpen={setmodel} message={modelmsg} />}
@@ -397,9 +417,54 @@ refineArray.auctionStarteds = refineArray.auctionStarteds.map((asset) => {
                                 className="text-white bg-blue-600 text-sm px-20 py-3 mt-4 rounded-lg border border-white shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                                 type="button"
                                 // onClick={() => sellNft(selectedNFT, price)}
+                                onClick={()=> handleInputChange2()}
                               >
                                 Set to Auction
                               </button>
+
+                              {
+                          toggle2 && (
+                            <>
+                              <p className="font-semibold text-gray-900 mt-4 mb-2">
+                                Set starting Price
+                              </p>
+                              <div className="mb-2">
+                                <input
+                                  type="number"
+                                  id="default-input"
+                                  placeholder="Enter Price"
+                                  value={price}
+                                  onChange={handlePriceChange}
+                                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                  required
+                                />
+                              </div>
+                              <p className="font-semibold text-gray-900 mt-4 mb-2">Set Duration</p>
+                        {/* <div className="mb-2"> */}
+                        <button
+                  className="flex gap-x-2 items-center justify-center lg:px-10 md:px-10 px-3 py-3 my-4 text-sm font-medium rounded-lg dark:bg-blue-500 border"
+                >
+                        <DateTimePicker 
+                  months={months}
+                  days={days}
+                  hours={hours}
+                  onMonthsChange={handleMonthsChange}
+                  onDaysChange={handleDaysChange}
+                  onHoursChange={handleHoursChange}
+                  />
+                  </button>
+                          {/* <input type="text" id="default-input" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required />
+                        </div> */}
+                              <button
+                                className="text-white bg-blue-500 text-sm px-20 py-3 mt-4 rounded-full border border-white shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                                type="button"
+                                onClick={() => auctionNft(selectedNFT, price)}
+                              >
+                                Set
+                              </button>
+                            </>
+                          )
+                        }
 
                             <h3 className="text-2xl font-semibold text-gray-900 text-center pt-10">
                               or
@@ -489,9 +554,42 @@ refineArray.auctionStarteds = refineArray.auctionStarteds.map((asset) => {
                                 className="text-white bg-blue-600 text-sm px-20 py-3 mt-4 rounded-lg border border-white shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                                 type="button"
                                 // onClick={() => sellNft(selectedNFT, price)}
+                                onClick={()=> handleInputChange()}
                               >
                                 Set to Sale
                               </button>
+
+                              {
+                          toggle1 && (
+                            <>
+                              <p className="font-semibold text-gray-900 mt-4 mb-2">
+                                Set starting Price
+                              </p>
+                              <div className="mb-2">
+                                <input
+                                  type="number"
+                                  id="default-input"
+                                  placeholder="Enter Price"
+                                  value={price}
+                                  onChange={handlePriceChange}
+                                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                  required
+                                />
+                              </div>
+                              {/* <p className="font-semibold text-gray-900 mt-4 mb-2">Duration</p>
+                        <div className="mb-2">
+                          <input type="text" id="default-input" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required />
+                        </div> */}
+                              <button
+                                className="text-white bg-blue-500 text-sm px-20 py-3 mt-4 rounded-full border border-white shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                                type="button"
+                                onClick={() => sellNft(selectedNFT, price)}
+                              >
+                                Set
+                              </button>
+                            </>
+                          )
+                        }
 
                             <h3 className="text-2xl font-semibold text-gray-900 text-center pt-10">
                               or
