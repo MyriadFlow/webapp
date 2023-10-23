@@ -396,6 +396,13 @@ refineArray.auctionStarteds = refineArray.auctionStarteds.map((asset) => {
     setShowModal(false);
   }
 
+  async function acceptbid(nft) {
+    setLoading(true);
+    await acceptbidendauction(nft, tradhubAddress);
+    setLoading(false);
+    setShowModal2(false);
+  }
+
   const handleInputChange = () => {
     setToggle1(!toggle1); // Toggle the state
   };
@@ -590,8 +597,8 @@ refineArray.auctionStarteds = refineArray.auctionStarteds.map((asset) => {
                               <button
                                 className="text-white bg-blue-600 text-sm px-20 py-3 mt-4 rounded-lg border border-white shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                                 type="button"
-                                // onClick={() => sellNft(selectedNFT, price)}
-                                onClick={()=> handleInputChange()}
+                                onClick={() => acceptbid(selectedNFT)}
+                                // onClick={()=> handleInputChange()}
                               >
                                 Set to Sale
                               </button>
