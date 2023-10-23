@@ -18,6 +18,7 @@ import axios from "axios";
 import DateTimePicker from './Datetimepicker';
 import { removeItem } from "../pages/api/removeitem";
 import { updatePrice } from "../pages/api/updateprice";
+import { updateTime } from "../pages/api/updatetime";
 import { useAccount } from "wagmi";
 
 const MyAssets = () => {
@@ -372,6 +373,17 @@ refineArray.auctionStarteds = refineArray.auctionStarteds.map((asset) => {
     const newprice = ethers.utils.parseEther(saleprice.toString());
     await updatePrice(nft,tradhubAddress,newprice);
     setLoading(false);
+    setShowModal(false);
+  }
+
+  async function updateauctionfield(nft, saleprice) {
+    setLoading(true);
+    const newprice = ethers.utils.parseEther(saleprice.toString());
+    await updatePrice(nft,tradhubAddress,newprice);
+    const updateauctiontime = (months * 30 * 24) + (days * 24) + (hours);
+    await updateTime(nft, tradhubAddress, updateauctiontime*60*60);
+    setLoading(false);
+    setShowModal2(false);
   }
 
   const handleInputChange = () => {
@@ -618,8 +630,8 @@ refineArray.auctionStarteds = refineArray.auctionStarteds.map((asset) => {
                                   type="number"
                                   id="default-input"
                                   placeholder="Enter Price"
-                                  value={price}
-                                  onChange={handlePriceChange}
+                                  value={updatesaleprice}
+                                  onChange={handlesalePriceChange}
                                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                   required
                                 />
@@ -646,7 +658,7 @@ refineArray.auctionStarteds = refineArray.auctionStarteds.map((asset) => {
                               <button
                                 className="text-white bg-blue-500 text-sm px-20 py-3 mt-4 rounded-full border border-white shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                                 type="button"
-                                onClick={() => sellNft(selectedNFT, price)}
+                                onClick={() => updateauctionfield(selectedNFT, updatesaleprice)}
                               >
                                 Update
                               </button>
