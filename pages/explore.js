@@ -987,7 +987,7 @@ result.auctionStarteds = result.auctionStarteds.map((asset) => {
           )}
           {page == "sale" && (
             <div className="my-10 lg:mx-6 md:mx-4 mx-0 h-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 w-full">
-              {data?.length ? (
+              {data?.length > 0 ? (
                 data?.map((item) => {
                   return (
                     <div
@@ -1032,10 +1032,10 @@ result.auctionStarteds = result.auctionStarteds.map((asset) => {
                 <Loader />
               ) : (
                 !loading &&
-                !data && (
+                (
                   <div className="flex">
                     <div className="text-2xl pb-10 font-bold text-center text-gray-500 dark:text-white">
-                      You have not created Any Assets
+                      No asset on sale
                     </div>
                   </div>
                 )
@@ -1091,7 +1091,7 @@ result.auctionStarteds = result.auctionStarteds.map((asset) => {
                 <Loader />
               ) : (
                 <div className="text-2xl pb-10 font-bold text-center text-gray-500 dark:text-white">
-                  You have not created Any Auction
+                  No asset on auction
                 </div>
               )}
             </div>

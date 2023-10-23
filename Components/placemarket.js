@@ -695,8 +695,8 @@ refineArray.auctionStarteds = refineArray.auctionStarteds.map((asset) => {
           </>
         ) : null}
 
-      <div className="text-3xl">NFTs on Market</div>
-      <div className=" p-4 mt-20  h-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+      <div className="text-3xl ml-4">Your NFTs on sale</div>
+      <div className=" p-4 mt-10  h-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
         {data.length > 0 ? (
           data?.map((item) => {
             return (
@@ -743,7 +743,8 @@ refineArray.auctionStarteds = refineArray.auctionStarteds.map((asset) => {
         )}
       </div>
 
-      <div className=" p-4 mt-20  h-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+      <div className="text-3xl mt-20 ml-4">Your NFTs on auction</div>
+      <div className=" p-4 mt-10  h-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
         {auctiondata.length > 0 ? (
           auctiondata?.map((item) => {
             return (
@@ -758,7 +759,7 @@ refineArray.auctionStarteds = refineArray.auctionStarteds.map((asset) => {
                 </Link>
               
                 <div className="flex justify-between mt-3 text-gray-500 dark:text-white">
-                  <div className="font-bold">Price :</div>
+                  <div className="font-bold">Base Price :</div>
                   <div className="text-xs">{ethers.utils.formatEther(item?.basePrice)} MATIC</div>
                 </div>
                 <div className="px-4 py-4 bg-white flex justify-center mt-3">

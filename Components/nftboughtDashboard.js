@@ -537,7 +537,7 @@ setAuction(refineArray.auctionEndeds);
             <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
           </>
         ) : null}
-        <div className="text-3xl">Owned NFTs</div>
+        <div className="text-3xl ml-4 mt-10">These are the NFTs you own</div>
         <div className=" p-4 mt-10  h-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 ">  
           {data?.length > 0 ? (
             data?.map((item) => {
