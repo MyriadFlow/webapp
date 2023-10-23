@@ -19,6 +19,8 @@ import DateTimePicker from './Datetimepicker';
 import { removeItem } from "../pages/api/removeitem";
 import { updatePrice } from "../pages/api/updateprice";
 import { updateTime } from "../pages/api/updatetime";
+import { startAuction } from "../pages/api/startauction";
+import { acceptbidendauction } from "../pages/api/acceptbidendauction";
 import { useAccount } from "wagmi";
 
 const MyAssets = () => {
@@ -386,6 +388,14 @@ refineArray.auctionStarteds = refineArray.auctionStarteds.map((asset) => {
     setShowModal2(false);
   }
 
+  async function auctionNft(nft) {
+    setLoading(true);
+    const updateauctiontime = (months * 30 * 24) + (days * 24) + (hours);
+    await startAuction(nft, tradhubAddress, updateauctiontime*60*60);
+    setLoading(false);
+    setShowModal(false);
+  }
+
   const handleInputChange = () => {
     setToggle1(!toggle1); // Toggle the state
   };
@@ -452,7 +462,7 @@ refineArray.auctionStarteds = refineArray.auctionStarteds.map((asset) => {
                               {
                           toggle2 && (
                             <>
-                              <p className="font-semibold text-gray-900 mt-4 mb-2">
+                              {/* <p className="font-semibold text-gray-900 mt-4 mb-2">
                                 Set starting Price
                               </p>
                               <div className="mb-2">
@@ -465,7 +475,7 @@ refineArray.auctionStarteds = refineArray.auctionStarteds.map((asset) => {
                                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                   required
                                 />
-                              </div>
+                              </div> */}
                               <p className="font-semibold text-gray-900 mt-4 mb-2">Set Duration</p>
                         {/* <div className="mb-2"> */}
                         <button
@@ -485,7 +495,7 @@ refineArray.auctionStarteds = refineArray.auctionStarteds.map((asset) => {
                               <button
                                 className="text-white bg-blue-500 text-sm px-20 py-3 mt-4 rounded-full border border-white shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                                 type="button"
-                                onClick={() => auctionNft(selectedNFT, price)}
+                                onClick={() => auctionNft(selectedNFT)}
                               >
                                 Set
                               </button>
