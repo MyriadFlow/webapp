@@ -191,7 +191,7 @@ refineArray.saleStarteds = refineArray.saleStarteds.map((asset) => {
 
       const AllBuildingQuery = `{
         auctionStarteds(
-          where: {auctioneer: "0x313bfad1c87946bf893e2ecad141620eaa54943a"}) 
+          where: {auctioneer: "${walletAddr}"}) 
         {
           auctioneer
           blockNumber
@@ -232,9 +232,9 @@ refineArray.saleStarteds = refineArray.saleStarteds.map((asset) => {
               const transaction = await tradhubContarct.idToMarketItem(obj.itemId);
               console.log("id" + obj.itemId);
               console.log("transaction auction", transaction);
-              console.log("transaction", transaction.status == 4);
+              console.log("transaction", transaction.status == 2);
 
-              if (transaction.status == 4) {
+              if (transaction.status == 2) {
                 // Check if tokenId exists in tokenTimestampMap
                 if (!tokenTimestampMap[obj.itemId]) {
                   // If tokenId doesn't exist, add it with the current obj
@@ -614,15 +614,18 @@ refineArray.auctionStarteds = refineArray.auctionStarteds.map((asset) => {
                                 Update Time
                               </p>
                               <div className="mb-2">
-                                <input
-                                  type="number"
-                                  id="default-input"
-                                  placeholder="Enter Price"
-                                  value={price}
-                                  onChange={handlePriceChange}
-                                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                  required
-                                />
+                              <button
+                  className="flex gap-x-2 items-center justify-center lg:px-10 md:px-10 px-3 py-3 my-4 text-sm font-medium rounded-lg dark:bg-blue-500 border"
+                >
+                        <DateTimePicker 
+                  months={months}
+                  days={days}
+                  hours={hours}
+                  onMonthsChange={handleMonthsChange}
+                  onDaysChange={handleDaysChange}
+                  onHoursChange={handleHoursChange}
+                  />
+                  </button>
                               </div>
 
                               <button
