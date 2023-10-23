@@ -138,7 +138,7 @@ function NftboughtDashboard() {
           console.log("transaction", transaction);
           console.log("transaction", transaction.status == 3);
 
-          if (transaction.status == 3) {
+          if (transaction.status == 3 || transaction.status == 4) {
             // Check if tokenId exists in tokenTimestampMap
             if (!tokenTimestampMap[obj.itemId]) {
               // If tokenId doesn't exist, add it with the current obj
@@ -194,23 +194,118 @@ refineArray.itemSolds = refineArray.itemSolds.map((asset) => {
     setLoading(false);
   };
 
-  const fetchAuction = async (walletAddr) => {
-    const query = gql`
-    query Query($where: AuctionEnded_filter) {
-      auctionEndeds(first: 100, where: {highestBidder: "${walletAddr}"}) {
-        id
-        tokenId
-        nftContract
-        metadataURI
-        highestBidder   
-        blockTimestamp
+  const fetchUserAssestsauction = async (walletAddr) => {
+  
+    const refineArray = {};
+    refineArray.auctionEndeds = [];
+
+    let result = {};
+    if (graphqlAPI && walletAddr) {
+      const endPoint = `${graphqlAPI}`;
+      const headers = {
+        "Content-Type": "application/json",
+      };
+
+      const AllBuildingQuery = `{
+        auctionEndeds(where: {highestBidder: "${walletAddr}"}) {
+          auctionId
+          auctioneer
+          bid
+          blockNumber
+          blockTimestamp
+          highestBidder
+          id
+          metadataURI
+          nftContract
+          tokenId
+          transactionHash
+    }
+  }`;
+
+      const graphqlQuery = {
+        operationName: "auctionEndeds",
+        query: `query auctionEndeds ${AllBuildingQuery}`,
+        variables: {},
+      };
+
+      const response = await axios.post(endPoint, graphqlQuery, { headers: headers });
+
+      // const response = await fetch(`/api/soldgraph?walletAddress=${walletAddr}?subgraphUrl=${graphqlAPI}`);
+      result = await response.data.data;
+
+      console.log("result new auction", result);
+
+
+      setLoading(true);
+
+      const statusauction = async () => {
+        const tokenTimestampMap = {};
+
+        for (const obj of result.auctionEndeds) {
+          
+          const tradhubContarct = await etherContract(
+            tradhubAddress,
+            Tradhub.abi
+          );
+          const transaction = await tradhubContarct.idToMarketItem(obj.auctionId);
+          console.log("id" + obj.itemId);
+          console.log("transaction auctionEndeds", transaction);
+          console.log("transaction", transaction.status == 3);
+
+          if (transaction.status == 3) {
+            // Check if tokenId exists in tokenTimestampMap
+            if (!tokenTimestampMap[obj.itemId]) {
+              // If tokenId doesn't exist, add it with the current obj
+              tokenTimestampMap[obj.itemId] = obj;
+            } else {
+              // If tokenId exists, compare timestamps and update if current obj has a more recent timestamp
+              const currentTimestamp = obj.blockTimestamp;
+              const existingTimestamp =
+                tokenTimestampMap[obj.itemId].blockTimestamp;
+              if (currentTimestamp > existingTimestamp) {
+                tokenTimestampMap[obj.itemId] = obj;
+              }
             }
           }
-          `;
-    const result = [];
-    // setLoading(true);
-    setAuction(result.auctionEndeds);
-    // setLoading(false);
+
+          console.log("tokenTimestampMap", tokenTimestampMap);
+
+          // Only add items with transaction.status equal to 1 to the filtered array
+          // Iterate over tokenTimestampMap and push each object to refineArray.saleStarteds
+          refineArray.auctionEndeds = Object.values(tokenTimestampMap);
+        }
+      };
+
+      await statusauction();
+    }
+    console.log(refineArray);
+    console.log("buy auction assets count", refineArray.auctionEndeds.length);
+
+    // Fetch contract data from the API
+const contractData = await fetch(apiUrl);
+const contractnamefind = await contractData.json();
+// Add contractName to each asset in refineArray.saleStarteds
+refineArray.auctionEndeds = refineArray.auctionEndeds.map((asset) => {
+  const matchingContract = contractnamefind?.find(
+    (contract) => 
+    {
+      console.log("Comparing to contract:", contract.contractAddress);
+    return contract.contractAddress.toLowerCase() === asset.nftContract;
+    // contract.contractAddress == asset.nftContract
+    }
+  );
+
+  console.log("findContractname",contractnamefind);
+  console.log("nftcontract",asset.nftContract);
+
+  return {
+    ...asset,
+    contractName: matchingContract ? matchingContract.contractName : '',
+  };
+});
+
+setAuction(refineArray.auctionEndeds);
+    setLoading(false);
   };
 
   async function loadNFTs() {
@@ -260,7 +355,7 @@ refineArray.itemSolds = refineArray.itemSolds.map((asset) => {
     } else {
     }
     fetchUserAssests(`${localStorage.getItem("platform_wallet")}`);
-    fetchAuction(`${localStorage.getItem("platform_wallet")}`);
+    fetchUserAssestsauction(`${localStorage.getItem("platform_wallet")}`);
   }, []);
   const [loadingState, setLoadingState] = useState("not-loaded");
 
@@ -457,12 +552,12 @@ refineArray.itemSolds = refineArray.itemSolds.map((asset) => {
 
                       <div className=" flex items-center justify-between mb-2">
                         <div className="font-1 text-sm font-bold mt-3">
-                          Price:{" "}
+                          {/* Price:{" "} */}
                         </div>
                         <div className="flex items-center ml-4">
                           {/* <FaEthereum className="h-4 w-4 text-blue-400" /> */}
                           <div className="font-extralight dark:text-gray-400 ml-4">
-                            {getEthPrice(item?.price)} MATIC
+                            {/* {getEthPrice(item?.price)} MATIC */}
                           </div>
                         </div>
                       </div>
@@ -558,6 +653,82 @@ refineArray.itemSolds = refineArray.itemSolds.map((asset) => {
             </div>
           )}
         </div> */}
+        <div className=" p-4 mt-10  h-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 ">  
+          {auction?.length > 0 ? (
+            auction?.map((item) => {
+              return (
+                <div
+                  key={item.itemId}
+                  className=" border-2 p-2.5 rounded-lg shadow-lg w-full lg:w-72 hover:scale-105 duration-200 transform transition cursor-pointer border-2 dark:border-gray-500"
+                >
+                  <Link key={item?.itemId} href={`/collections/${item?.contractName}/${item?.nftContract}/${item?.tokenId}`}>
+                    <div>
+                      <HomeComp uri={item ? item?.metadataURI : ""} />
+
+                      <div className=" flex items-center justify-between mb-2">
+                        <div className="font-1 text-sm font-bold mt-3">
+                          {/* Base Price:{" "} */}
+                        </div>
+                        <div className="flex items-center ml-4">
+                          {/* <FaEthereum className="h-4 w-4 text-blue-400" /> */}
+                          <div className="font-extralight dark:text-gray-400 ml-4">
+                            {/* {getEthPrice(item?.basePrice)} MATIC */}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </Link>
+
+                  {/* <div className="flex items-center md:justify-end lg:-my-16 lg:mx-8 md:-my-16 md:mx-8 mt-8 justify-center lg:justify-end">
+                    <button
+                        className=" text-black text-sm px-8 py-3 rounded-full border border-white shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                        type="button"
+                        onClick={() => setShowModal(true)}
+                    >
+                        Put to Marketplace
+                    </button>
+                </div> */}
+                  <div className="px-4 py-4 bg-white  flex justify-center mt-5">
+                    <button
+                      // onClick={() => submitNft()}
+                      onClick={() => submitNft(item)}
+                      className="text-black font-bold"
+                    >
+                      Put to marketplace
+                    </button>
+
+                    {isPriceInputVisible && (
+                      <div>
+                        {/* Price input field */}
+                        <input
+                          type="number"
+                          placeholder="Enter Price"
+                          value={price}
+                          onChange={handlePriceChange}
+                          className="border border-gray-300 p-2 mt-2"
+                        />
+
+                        {/* Add a button to submit the price */}
+                        <button
+                          onClick={() => sellNft(item, price)}
+                          className="bg-blue-500 text-white px-4 py-2 mt-2"
+                        >
+                          Put {price} to Marketplace
+                        </button>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              );
+            })
+          ) : loading ? (
+            <Loader />
+          ) : (
+            <div className="text-2xl pb-10 text-center font-bold text-gray-500 dark:text-white">
+              You Haven&apos;t Buy Any Auction.
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );
