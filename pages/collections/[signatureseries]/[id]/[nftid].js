@@ -48,7 +48,9 @@ function Token() {
 
   const [data, setData] = useState([]);
   const [nftDatas, setNftDatas] = useState([]);
+  const [personisowner, setpersonisowner] = useState(false);
   const [buybuttonshow, setbuybuttonshow] = useState(false);
+  const [auctionbuttons,setauctionbuttons] = useState(false);
   const [owner, setowner] = useState(null);
   const [rental, setrental] = useState(false);
   const [rentinput, setrentinput] = useState(false);
@@ -330,14 +332,22 @@ function Token() {
 
     if (ownercheck.status == 3) {
       setowner(ownercheckifstatusis3);
-      if (ownercheckifstatusis3 != myaddr) {
-        setbuybuttonshow(true);
+      if (ownercheckifstatusis3 == myaddr) {
+        setpersonisowner(true);
       }
     } else {
       setowner(ownercheck.seller);
-      if (ownercheck.seller != myaddr) {
-        setbuybuttonshow(true);
+      if (ownercheck.seller == myaddr) {
+        setpersonisowner(true);
       }
+      if(ownercheck.status == 2)
+        {
+          setauctionbuttons(true);
+        }
+        if(ownercheck.status == 1)
+        {
+          setbuybuttonshow(true);
+        }
     }
   };
 
@@ -521,7 +531,7 @@ function Token() {
                             ) } */}
                 </div>
                 <div className="ml-10">
-                  {buybuttonshow && (
+                  {buybuttonshow && !personisowner &&(
                     <button
                       onClick={() => buyItem(data, 1)}
                       className="flex gap-x-2 items-center justify-center lg:px-10 md:px-10 px-3 py-3 my-4 text-sm font-medium rounded-lg bg-white text-black"
@@ -541,7 +551,41 @@ function Token() {
               </div>
             </div>
 
-            { !buybuttonshow && (
+            {
+               personisowner && auctionbuttons && (
+                <button
+                      // onClick={() => buyItem(data, 1)}
+                      className="flex gap-x-2 items-center justify-center lg:px-10 md:px-10 px-3 py-3 my-4 text-sm font-medium rounded-lg bg-white text-black"
+                    >
+                      <span className="text-lg font-bold">End Auction</span>
+                      {/* <BiWallet className="text-3xl" /> */}
+                    </button>
+              )
+            }
+
+            
+{
+               !personisowner && auctionbuttons && (
+                <div>
+                <button
+                      // onClick={() => buyItem(data, 1)}
+                      className="flex gap-x-2 items-center justify-center lg:px-10 md:px-10 px-3 py-3 my-4 text-sm font-medium rounded-lg bg-white text-black"
+                    >
+                      <span className="text-lg font-bold">Enter Price</span>
+                      {/* <BiWallet className="text-3xl" /> */}
+                    </button>
+                <button
+                      // onClick={() => buyItem(data, 1)}
+                      className="flex gap-x-2 items-center justify-center lg:px-10 md:px-10 px-3 py-3 my-4 text-sm font-medium rounded-lg bg-white text-black"
+                    >
+                      <span className="text-lg font-bold">Bid Now</span>
+                      {/* <BiWallet className="text-3xl" /> */}
+                    </button>
+                    </div>
+              )
+            }
+
+            { personisowner && !buybuttonshow && !auctionbuttons && (
             <div className="pl-10 border border-gray-600 p-4">
               <div className="pt-10 pb-4 font-bold text-xl">
                 Rental Availability
@@ -649,7 +693,7 @@ function Token() {
 
              )} 
 
-            { buybuttonshow && rental && youcanrent && (
+            { !personisowner && rental && youcanrent && (
             <div className="pl-10 border border-gray-600 p-4">
               <div className="pt-10 pb-4 font-bold text-xl">
                 Rental Duration
@@ -679,7 +723,7 @@ function Token() {
             </div>
             )}
 
-            {buybuttonshow && rental && !youcanrent && (
+            {!personisowner && rental && !youcanrent && (
               <div className="bg-white p-24 text-black m-4 w-1/2 font-bold rounded-2xl text-lg">
                 <div>
                   {" "}
