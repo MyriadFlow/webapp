@@ -56,9 +56,13 @@ function Token() {
   const [rentinput, setrentinput] = useState(false);
   const [pricePerHour, setPricePerHour] = useState("");
   const [currentprice, setcurrentprice] = useState("");
+  const [bidprice, setbidprice] = useState("");
   const [nftitemid, setnftitemid] = useState("");
   const [youcanrent, setyoucanrent] = useState(false);
   const [address, setaddress] = useState("");
+  const [assetprice, setassetprice] = useState("");
+  const [highestbid, sethighestbid] = useState("");
+  const [auctionendtime, setauctionendtime] = useState("");
 
   const [months, setMonths] = useState(0);
   const [days, setDays] = useState(0);
@@ -115,6 +119,10 @@ function Token() {
   const handlePriceChange = (e) => {
     setPricePerHour(e.target.value);
   };
+
+  const handlebidPriceChange = (e) => {
+    setbidprice(e.target.value);
+  }
 
   const handleaddr = (e) => {
     setaddress(e.target.value);
@@ -337,6 +345,9 @@ function Token() {
       }
     } else {
       setowner(ownercheck.seller);
+      setassetprice(ownercheck.price);
+      sethighestbid(ownercheck.highestBid);
+      setauctionendtime(ownercheck.auctioneEndTime);
       if (ownercheck.seller == myaddr) {
         setpersonisowner(true);
       }
@@ -523,13 +534,23 @@ function Token() {
                 {owner && owner != myaddr && <span>{owner}</span>}
                 {owner && owner == myaddr && <span>You</span>}
               </div>
+              { auctionbuttons && (
+                <div className="flex pb-10">
+                <div className="text-xl font-bold">Current Highest Bid:</div>
+                <div className="font-bold text-xl ml-4">{getEthPrice(highestbid)} MATIC</div>
+                </div>
+              )
+
+              }
               <div className="lg:flex md:flex">
                 <div>
-                  <div>Current price</div>
-                  {/* { nftDatas && nftDatas.price && (
-                            <h2 className="font-bold text-xl">{getEthPrice(nftDatas?.price)} MATIC</h2>
-                            ) } */}
+                  { auctionbuttons && (<div>Price</div>)}
+                  {buybuttonshow && (<div>Current price</div>)}
+                  { (auctionbuttons || buybuttonshow) && (
+                            <h2 className="font-bold text-xl">{getEthPrice(assetprice)} MATIC</h2>
+                            ) }
                 </div>
+                
                 <div className="ml-10">
                   {buybuttonshow && !personisowner &&(
                     <button
@@ -549,7 +570,29 @@ function Token() {
 
                 </button> */}
               </div>
+              { auctionbuttons && (
+                  <div className="flex mt-10">
+                  <div>Auction ends on</div>
+                  <div className="ml-2">
+                  {new Date(auctionendtime*1000).getDate().toString()}{' '}
+                  {new Date(auctionendtime*1000).toLocaleString('default', { month: 'long' }).toString()} {' '}
+                  {new Date(auctionendtime*1000).getFullYear().toString()}
+                  </div>
+                  <div className="ml-2">at</div>
+                  <div className="ml-2 text-red-500">
+                  
+  {new Date(auctionendtime * 1000).getHours() % 12 || 12}:
+  {String(new Date(auctionendtime * 1000).getMinutes()).padStart(2, '0')}:
+  {String(new Date(auctionendtime * 1000).getSeconds()).padStart(2, '0')}{' '}
+  {new Date(auctionendtime * 1000).getHours() > 11 ? 'PM' : 'AM'}
+                  </div>
+                  </div>
+                )
+
+                }
             </div>
+
+            
 
             {
                personisowner && auctionbuttons && (
@@ -566,21 +609,37 @@ function Token() {
             
 {
                !personisowner && auctionbuttons && (
-                <div>
+                <div className="w-1/2">
+<div class="flex">
+  
+  <input type="number" 
+   value={bidprice}
+   onChange={handlebidPriceChange}
+  id="website-admin" class="rounded-none rounded-l-lg border text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5 dark:bg-white dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-800 dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Enter bid price"/>
+  <span class="inline-flex items-center px-3 text-sm text-gray-900 border border-r-0 border-gray-300 rounded-r-md dark:bg-gray-600 dark:text-gray-400 dark:border-gray-600">
+    {/* <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+        <path d="M10 0a10 10 0 1 0 10 10A10.011 10.011 0 0 0 10 0Zm0 5a3 3 0 1 1 0 6 3 3 0 0 1 0-6Zm0 13a8.949 8.949 0 0 1-4.951-1.488A3.987 3.987 0 0 1 9 13h2a3.987 3.987 0 0 1 3.951 3.512A8.949 8.949 0 0 1 10 18Z"/>
+    </svg> */}
+    <BiWallet className="text-3xl" />
+  </span>
+</div>
+                  {/* <div>
+                    <input
+                      type="number"
+                      placeholder="Enter bid price"
+                      value={bidprice}
+                      onChange={handlebidPriceChange}
+                      className="flex gap-x-2 items-center justify-center lg:px-10 md:px-10 px-3 py-4 my-4 text-sm font-medium rounded-l-lg text-gray-500 bg-white"
+                    />
+                    </div> */}
+                    {/* <div>
+                      
                 <button
-                      // onClick={() => buyItem(data, 1)}
-                      className="flex gap-x-2 items-center justify-center lg:px-10 md:px-10 px-3 py-3 my-4 text-sm font-medium rounded-lg bg-white text-black"
+                      className="flex gap-x-2 items-center justify-center lg:px-10 md:px-10 px-0 py-2.5 my-4 text-sm font-medium rounded-r-lg bg-white text-black"
                     >
-                      <span className="text-lg font-bold">Enter Price</span>
-                      {/* <BiWallet className="text-3xl" /> */}
+                      <BiWallet className="text-3xl" />
                     </button>
-                <button
-                      // onClick={() => buyItem(data, 1)}
-                      className="flex gap-x-2 items-center justify-center lg:px-10 md:px-10 px-3 py-3 my-4 text-sm font-medium rounded-lg bg-white text-black"
-                    >
-                      <span className="text-lg font-bold">Bid Now</span>
-                      {/* <BiWallet className="text-3xl" /> */}
-                    </button>
+                    </div> */}
                     </div>
               )
             }
@@ -698,7 +757,7 @@ function Token() {
               <div className="pt-10 pb-4 font-bold text-xl">
                 Rental Duration
               </div>
-              <div className="pb-10">Price</div>
+              <div className="pb-10 text-green-500">Price per hour {currentprice} Matic</div>
 
               <div className="lg:flex md:flex">
                 <button className="flex gap-x-2 items-center justify-center lg:px-10 md:px-10 px-3 py-3 my-4 text-sm font-medium rounded-lg text-white border">
