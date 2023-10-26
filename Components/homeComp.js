@@ -36,7 +36,7 @@ const Homecomp = ({ uri }) => {
       />
       <div className="justify-between mt-3 text-gray-500 dark:text-white">
         <div>Asset Name: {response.name}</div>
-        <div>Asset Description: {response.description}</div>
+        {/* <div>Asset Description: {response.description}</div> */}
 
       </div>
       {/* <div className="flex justify-between mt-3 text-gray-500 dark:text-white">
