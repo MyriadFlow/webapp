@@ -516,6 +516,23 @@ function Token() {
     return ethers.utils.formatEther(price);
   }
 
+  async function buyNft(nftid, quantity) {
+    const tradhubContarct = await etherContract(tradhubAddress, Tradhub.abi)
+  try {
+    const options = {
+      value: ethers.BigNumber.from(assetprice).mul(quantity),
+    };
+    const transaction = await tradhubContarct.buyItem(nftid, quantity, options);
+    console.log(transaction);
+    await transaction.wait();
+    // setmodel(false);
+  } catch (e) {
+    console.log(e?.data?.message);
+    console.error(e);
+    // setmodelmsg(" Buying failed");
+  }
+  }
+
   return (
     <Layout>
       <div className="min-h-screen p-8 mx-auto bg-[#f8f7fc] dark:bg-[#131417] dark:body-back body-back-light text-black dark:text-white">
@@ -563,7 +580,7 @@ function Token() {
                 <div className="ml-10">
                   {buybuttonshow && !personisowner &&(
                     <button
-                      onClick={() => buyItem(data, 1)}
+                      onClick={() => buyNft(nftitemid,1)}
                       className="flex gap-x-2 items-center justify-center lg:px-10 md:px-10 px-3 py-3 my-4 text-sm font-medium rounded-lg bg-white text-black"
                     >
                       <span className="text-lg font-bold">Buy Now</span>
