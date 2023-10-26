@@ -6,7 +6,10 @@ export const placebid = async (itemid, tradhubAddress, bidprice) => {
   const tradhubContarct = await etherContract(tradhubAddress, Tradhub.abi)
 
   try {
-    const transaction = await tradhubContarct.placeBid(bidprice, itemid);
+    const options = {
+        value: ethers.BigNumber.from(bidprice),
+      };
+    const transaction = await tradhubContarct.placeBid(itemid, options);
     console.log(transaction);
     await transaction.wait();
   } catch (e) {

@@ -188,6 +188,7 @@ function Token() {
     // setLoading(true);
     const newprice = ethers.utils.parseEther(bidprice.toString());
     await placebid(nftitemid,tradhubAddress,newprice);
+    setbidprice("");
     // setLoading(false);
   };
 
