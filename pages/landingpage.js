@@ -44,6 +44,10 @@ export default function LandingPage() {
   );
   const walletAddr = useAccount().address;
   const [hasRole, setHasRole] = useState(true);
+  
+  useEffect(() => {
+      localStorage.setItem("platform_wallet", walletAddr);
+    }, [])
 
   // const getLandingData = async () => {
   //   const token = localStorage.getItem("platform_token");
