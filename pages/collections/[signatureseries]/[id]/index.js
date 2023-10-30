@@ -650,17 +650,17 @@ export default function CollectionItem() {
         )}
         <div className="ml-16 mt-10 text-2xl font-bold">{signatureseries}</div>
         <div className="ml-16 mt-4 text-xl font-bold">By Owner name</div>
-        <div className="lg:flex md:flex mb-10">
+        <div className="flex lg:flex-row md:flex-row flex-col mb-10">
         <div className="ml-16 mt-4 text-xl font-bold">Items {assetsData.length}</div>
-        <div className="ml-8 mt-4 text-xl font-bold">Created oct 2023</div>
-        <div className="ml-8 mt-4 text-xl font-bold">Chain Polygon</div>
-        <div className="ml-8 mt-4 text-xl font-bold">Category</div>
+        <div className="lg:ml-8 ml-16 mt-4 text-xl font-bold">Created oct 2023</div>
+        <div className="lg:ml-8 ml-16 mt-4 text-xl font-bold">Chain Polygon</div>
+        <div className="lg:ml-8 ml-16 mt-4 text-xl font-bold">Category</div>
         </div>
 
         <div className="lg:flex">
 
 <div>
-              <div className="dropdown2 ml-16 mt-10">
+              <div className="dropdown2 lg:ml-16 md:ml-16 mt-10 ml-4">
                  <div className="text-xl font-bold">Status</div>
                     <div className={`dropdown-body-media ${true && "open"}`}>
                           {categories.map((category, key) => {
@@ -678,7 +678,7 @@ export default function CollectionItem() {
                       </div>
                   </div>
 
-                  <div className="dropdown2 ml-16 mt-10">
+                  <div className="dropdown2 lg:ml-16 md:ml-16 mt-10 ml-4">
                 <div className="text-xl font-bold">
                   Price
                 </div>
@@ -717,11 +717,12 @@ export default function CollectionItem() {
               </div>
               </div>
 
-        <div>
-          <div className=" p-4 h-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="text-center lg:w-3/4 mt-10">
+          
             {assetsData?.length > 0 ? (
               assetsData?.map((item) => {
                 return (
+                  <div className=" p-4 h-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                   <div
                     key={item.tokenID}
                     className=" border-2 p-2.5 rounded-lg shadow-lg w-full lg:w-72 hover:scale-105 duration-200 transform transition cursor-pointer border-2 dark:border-gray-500"
@@ -762,6 +763,7 @@ export default function CollectionItem() {
                       </div>
                     </Link>
                   </div>
+                  </div>
                 );
               })
             ) : loading ? (
@@ -774,7 +776,6 @@ export default function CollectionItem() {
           </div>
         </div>
         </div>
-      </div>
     </Layout>
   );
 }
