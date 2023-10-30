@@ -265,6 +265,12 @@ text-fill-color: transparent;
     border-radius: 10px;
     box-shadow: 0 10px 25px rgba(0,0,0,.1);
   }
+
+  .dropdown2 {
+    width: 340px;
+    /* border-radius: 10px; */
+    /* box-shadow: 0 10px 25px rgba(0,0,0,.1); */
+  }
   
   .dropdown-header {
     padding: 15px;

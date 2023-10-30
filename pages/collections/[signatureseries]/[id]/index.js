@@ -51,6 +51,39 @@ export default function CollectionItem() {
   const [assetsData, setAsseetsData] = useState([]);
   const [num, setNum] = useState(null);
 
+  const [categories, setCategory] = useState([
+    "All",
+    "Listed",
+    "On Auction",
+    "New",
+    "Has Offers",
+  ]);
+
+  const [inputValue, setInputValue] = useState(0); // Initial value can be set accordingly
+
+  const handleInputChange = (e) => {
+    const newValue = e.target.value; // Convert to float or integer as needed
+    setInputValue(newValue);
+  };
+
+  const [inputmaxValue, setInputmaxValue] = useState(100); // Initial value can be set accordingly
+
+  const handleInputmaxChange = (e) => {
+    const newValue = e.target.value; // Convert to float or integer as needed
+    setInputmaxValue(newValue);
+  };
+
+  const pricefilter = () => {
+    let filteredData = [...shallowData];
+    filteredData = filteredData.filter(
+      (item) =>
+        getEthPrice(item.price) >= inputValue &&
+        getEthPrice(item.price) <= inputmaxValue
+    );
+
+    setData(filteredData);
+  };
+
   const fetchUserAssests = async (walletAddr) => {
     let result = [];
     // if (signatureseries == "SignatureSeries") {
@@ -571,7 +604,7 @@ export default function CollectionItem() {
         <div
           className="w-full h-72 object-cover bg-gray-200"
           style={{
-            backgroundImage: `url("")`,
+            backgroundImage: `url("/image181.png")`,
             backgroundPosition: "center",
             backgroundSize: "cover",
             backgroundRepeat: "no-repeat",
@@ -585,8 +618,14 @@ export default function CollectionItem() {
                                 alt=""
                                 src={resdata?.Storefront.Profileimage}
                             /> */}
+                            <img
+                                className="text-3xl text-gray-500 w-48 h-48 rounded-xl"
+                                alt=""
+                                src="/monkey.png"
+                            />
           </div>
         </div>
+
         {signatureseries == "EternumPass" && (
           <div className="flex items-center md:justify-end lg:-my-16 lg:mx-8 md:-my-16 md:mx-8 mt-8 justify-center lg:justify-end">
             <button
@@ -609,7 +648,75 @@ export default function CollectionItem() {
             </button>
           </div>
         )}
-        <div className="ml-16 mt-28 text-2xl font-bold">{signatureseries}</div>
+        <div className="ml-16 mt-10 text-2xl font-bold">{signatureseries}</div>
+        <div className="ml-16 mt-4 text-xl font-bold">By Owner name</div>
+        <div className="lg:flex md:flex mb-10">
+        <div className="ml-16 mt-4 text-xl font-bold">Items {assetsData.length}</div>
+        <div className="ml-8 mt-4 text-xl font-bold">Created oct 2023</div>
+        <div className="ml-8 mt-4 text-xl font-bold">Chain Polygon</div>
+        <div className="ml-8 mt-4 text-xl font-bold">Category</div>
+        </div>
+
+        <div className="lg:flex">
+
+<div>
+              <div className="dropdown2 ml-16 mt-10">
+                 <div className="text-xl font-bold">Status</div>
+                    <div className={`dropdown-body-media ${true && "open"}`}>
+                          {categories.map((category, key) => {
+                            return (
+                              <div className="flex mt-5 " key={key}>
+                                <button
+                                  onClick={() => filterNFTs(category)}
+                                  className="bg-blue-100 text-blue-800 text-lg mr-3 px-5 py-2 rounded dark:bg-blue-900 dark:text-blue-300 font-bold "
+                                >
+                                  {category}
+                                </button>
+                              </div>
+                            );
+                          })}
+                      </div>
+                  </div>
+
+                  <div className="dropdown2 ml-16 mt-10">
+                <div className="text-xl font-bold">
+                  Price
+                </div>
+                <div className={`dropdown-body ${true && "open"}`}>
+                  <div className="flex justify-between">
+                    <div className="input-type">
+                      <input
+                        className="input-number"
+                        id="mininput"
+                        type="number"
+                        placeholder="Min"
+                        value={inputValue}
+                        onChange={handleInputChange}
+                      ></input>
+                    </div>
+                    <div className="input-type ml-3">
+                      <input
+                        className="input-number"
+                        id="maxinput"
+                        type="number"
+                        placeholder="Max"
+                        value={inputmaxValue}
+                        onChange={handleInputmaxChange}
+                      ></input>
+                    </div>
+                    <div className="m-2 p-2 mt-4 rounded bg-blue-100 dark:bg-blue-900">
+                      <button
+                        className="text-blue-500 dark:text-blue-200"
+                        onClick={pricefilter}
+                      >
+                        Filter
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              </div>
+
         <div>
           <div className=" p-4 h-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {assetsData?.length > 0 ? (
@@ -665,6 +772,7 @@ export default function CollectionItem() {
               </div>
             )}
           </div>
+        </div>
         </div>
       </div>
     </Layout>
