@@ -722,9 +722,10 @@ export default function CollectionItem() {
             {assetsData?.length > 0 ? (
               assetsData?.map((item) => {
                 return (
-                  <div className=" p-4 h-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                  <div 
+                  key={item.tokenID}
+                  className=" p-4 h-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                   <div
-                    key={item.tokenID}
                     className=" border-2 p-2.5 rounded-lg shadow-lg w-full lg:w-72 hover:scale-105 duration-200 transform transition cursor-pointer border-2 dark:border-gray-500"
                   >
                     <Link
