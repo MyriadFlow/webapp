@@ -73,8 +73,114 @@ const binanceTestnet = {
   testnet: true, // Set to true to indicate that this is a BSC testnet configuration
 };
 
+// Add Ethereum Mainnet and Ropsten testnet
+const ethereumMainnet = {
+  id: 1, // The chain ID for Ethereum Mainnet
+  name: 'Ethereum',
+  network: 'ethereum',
+  iconUrl: 'https://example.com/ethereum-icon.svg', // Replace with the actual icon URL
+  iconBackground: '#fff', // Replace with the desired background color
+  nativeCurrency: {
+    decimals: 18,
+    name: 'Ether',
+    symbol: 'ETH',
+  },
+  rpcUrls: {
+    public: { http: ['https://mainnet.infura.io/v3/YOUR_INFURA_PROJECT_ID'] }, // Replace with your Infura project ID
+    default: { http: ['https://mainnet.infura.io/v3/YOUR_INFURA_PROJECT_ID'] },
+  },
+  blockExplorers: {
+    default: { name: 'Etherscan', url: 'https://etherscan.io/' },
+  },
+  testnet: false,
+};
+
+const sepoliaTestnet = {
+  id: 11155111, // The chain ID for Sepolia Testnet (you can adjust this as needed)
+  name: 'Sepolia Testnet',
+  network: 'ethereum',
+  iconUrl: 'https://example.com/sepolia-icon.svg', // Replace with the actual icon URL
+  iconBackground: '#fff', // Replace with the desired background color
+  nativeCurrency: {
+    decimals: 18,
+    name: 'Test Sepolia Ether',
+    symbol: 'tSETH',
+  },
+  rpcUrls: {
+    public: { http: ['https://sepolia-testnet-rpc-url.com'] }, // Replace with the actual Sepolia Testnet RPC URL
+    default: { http: ['https://sepolia-testnet-rpc-url.com'] },
+  },
+  blockExplorers: {
+    default: { name: 'Sepolia Explorer', url: 'https://sepolia-testnet-explorer.com' }, // Replace with the actual Sepolia Testnet block explorer URL
+  },
+  testnet: true,
+};
+
+const optimismTestnet = {
+  id: 420, // The chain ID for Optimism Testnet (you can adjust this as needed)
+  name: 'Optimism Testnet',
+  network: 'ethereum',
+  iconUrl: 'https://example.com/optimism-testnet-icon.svg', // Replace with the actual icon URL
+  iconBackground: '#fff', // Replace with the desired background color
+  nativeCurrency: {
+    decimals: 18,
+    name: 'Test Optimism Ether',
+    symbol: 'tOETH',
+  },
+  rpcUrls: {
+    public: { http: ['https://optimism-testnet-rpc-url.com'] }, // Replace with the actual Optimism Testnet RPC URL
+    default: { http: ['https://optimism-testnet-rpc-url.com'] },
+  },
+  blockExplorers: {
+    default: { name: 'Optimism Testnet Explorer', url: 'https://optimism-testnet-explorer.com' }, // Replace with the actual Optimism Testnet block explorer URL
+  },
+  testnet: true,
+};
+
+const arbitrumTestnet = {
+  id: 421613, // The chain ID for Arbitrum Testnet (you can adjust this as needed)
+  name: 'Arbitrum Testnet',
+  network: 'ethereum',
+  iconUrl: 'https://example.com/arbitrum-testnet-icon.svg', // Replace with the actual icon URL
+  iconBackground: '#fff', // Replace with the desired background color
+  nativeCurrency: {
+    decimals: 18,
+    name: 'Test Arbitrum Ether',
+    symbol: 'tAETH',
+  },
+  rpcUrls: {
+    public: { http: ['https://arbitrum-testnet-rpc-url.com'] }, // Replace with the actual Arbitrum Testnet RPC URL
+    default: { http: ['https://arbitrum-testnet-rpc-url.com'] },
+  },
+  blockExplorers: {
+    default: { name: 'Arbitrum Testnet Explorer', url: 'https://arbitrum-testnet-explorer.com' }, // Replace with the actual Arbitrum Testnet block explorer URL
+  },
+  testnet: true,
+};
+
+const baseTestnet = {
+  id: 84531, // The chain ID for Base Testnet (you can adjust this as needed)
+  name: 'Base Testnet',
+  network: 'ethereum',
+  iconUrl: 'https://example.com/base-testnet-icon.svg', // Replace with the actual icon URL
+  iconBackground: '#fff', // Replace with the desired background color
+  nativeCurrency: {
+    decimals: 18,
+    name: 'Test Base Ether',
+    symbol: 'tBETH',
+  },
+  rpcUrls: {
+    public: { http: ['https://base-testnet-rpc-url.com'] }, // Replace with the actual Base Testnet RPC URL
+    default: { http: ['https://base-testnet-rpc-url.com'] },
+  },
+  blockExplorers: {
+    default: { name: 'Base Testnet Explorer', url: 'https://base-testnet-explorer.com' }, // Replace with the actual Base Testnet block explorer URL
+  },
+  testnet: true,
+};
+
 const { chains, publicClient } = configureChains(
-  [ polygon, polygonMumbai, mainnet, optimism, arbitrum, base, binance, binanceTestnet],
+  [ polygon, polygonMumbai, ethereumMainnet, sepoliaTestnet, optimism, optimismTestnet, arbitrum, arbitrumTestnet, base, baseTestnet, binance, binanceTestnet],
   [
     alchemyProvider({ apiKey: "69qp-YAVmBUC_suyFxzrHw6eVzzpIwUE" }),
     publicProvider(),
