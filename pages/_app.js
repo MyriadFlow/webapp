@@ -15,12 +15,66 @@ import Cookies from "js-cookie";
 import "@rainbow-me/rainbowkit/styles.css";
 import { getDefaultWallets, RainbowKitProvider } from "@rainbow-me/rainbowkit";
 import { configureChains, createConfig, WagmiConfig } from "wagmi";
-import { polygonMumbai } from "wagmi/chains";
-import { mainnet, polygon, optimism, arbitrum, base, zora } from "wagmi/chains";
+import { polygonMumbai, mainnet, polygon, optimism, arbitrum, base } from "wagmi/chains";
 import { alchemyProvider } from "wagmi/providers/alchemy";
 import { publicProvider } from "wagmi/providers/public";
+
+const binance = {
+  id: 56, // The chain ID for Binance Smart Chain
+  name: 'Binance Smart Chain',
+  network: 'binance',
+  iconUrl: 'https://example.com/binance-icon.svg', // Replace with the actual icon URL
+  iconBackground: '#fff', // Replace with the desired background color
+  nativeCurrency: {
+    decimals: 18,
+    name: 'Binance Coin',
+    symbol: 'BNB',
+  },
+  rpcUrls: {
+    public: { http: ['https://bsc-dataseed.binance.org/'] }, // BSC public RPC URL
+    default: { http: ['https://bsc-dataseed.binance.org/'] }, // You can change this if needed
+  },
+  blockExplorers: {
+    default: { name: 'BscScan', url: 'https://bscscan.com/' }, // BscScan is a popular BSC block explorer
+  },
+  contracts: {
+    multicall3: {
+      address: '0x41263cdb56f1b6efc49f1c56b155ae7a9ccbde4b5', // Multicall contract address for BSC
+      blockCreated: 6_973_493, // Block number when the contract was created
+    },
+  },
+  testnet: false, // Set to true if you are configuring a BSC testnet
+};
+
+const binanceTestnet = {
+  id: 97, // The chain ID for Binance Smart Chain Testnet
+  name: 'Binance Smart Chain Testnet',
+  network: 'binance',
+  iconUrl: 'https://example.com/binance-testnet-icon.svg', // Replace with the actual icon URL
+  iconBackground: '#fff', // Replace with the desired background color
+  nativeCurrency: {
+    decimals: 18,
+    name: 'Test Binance Coin',
+    symbol: 'tBNB',
+  },
+  rpcUrls: {
+    public: { http: ['https://data-seed-prebsc-1-s1.binance.org:8545/'] }, // BSC Testnet public RPC URL
+    default: { http: ['https://data-seed-prebsc-1-s1.binance.org:8545/'] }, // You can change this if needed
+  },
+  blockExplorers: {
+    default: { name: 'BscScan Testnet', url: 'https://testnet.bscscan.com/' }, // BscScan Testnet block explorer
+  },
+  contracts: {
+    multicall3: {
+      address: '0x1ee38d535d541c55c9a2db7ba35126d6e4e9a6ed', // Multicall contract address for BSC Testnet
+      blockCreated: 8_694_853, // Block number when the contract was created
+    },
+  },
+  testnet: true, // Set to true to indicate that this is a BSC testnet configuration
+};
+
 const { chains, publicClient } = configureChains(
-  [polygonMumbai, mainnet, polygon, optimism, arbitrum, base, zora],
+  [ polygon, polygonMumbai, mainnet, optimism, arbitrum, base, binance, binanceTestnet],
   [
     alchemyProvider({ apiKey: "69qp-YAVmBUC_suyFxzrHw6eVzzpIwUE" }),
     publicProvider(),
